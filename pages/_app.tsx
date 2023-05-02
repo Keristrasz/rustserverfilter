@@ -6,7 +6,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 export default function App({ Component, pageProps }: AppProps) {
   //makes fetched data fresh for 60 seconds - no refetch for this perios
   const queryClient = new QueryClient({
-    defaultOptions: { queries: { staleTime: 1000 * 5 } },
+    defaultOptions: { queries: { staleTime: 1000 * 60 } },
   });
   return (
     <QueryClientProvider client={queryClient}>
