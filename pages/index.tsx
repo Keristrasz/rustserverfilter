@@ -50,8 +50,12 @@ interface ServerData {
       };
     };
   }[];
+  links: {
+    next?: string;
+    prev?: string;
+  };
 }
-
+let url: string = "https://api.battlemetrics.com/servers?filter[game]=rust";
 function Home() {
   const [search, setSearch] = useState("");
   const [minPlayers, setMinPlayers] = useState("");
@@ -94,7 +98,7 @@ function Home() {
     }
   };
 
-  const allCountries = ["USA", "GERMANY", "CHINA", "RUSSIA"];
+  const allCountries = ["US", "GE", "CA", "RU"];
 
   const handleExcludeCountryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const country = event.target.value;
@@ -105,19 +109,38 @@ function Home() {
     }
   };
 
-  let url = "https://api.battlemetrics.com/servers?filter[game]=rust";
-  const memoizedUrl = useMemo(() => url, [url]);
+  // /servers?sort=-details.rust_last_wipe&fields%5Bserver%5D=rank%2Cname%2Cplayers%2CmaxPlayers%2Caddress%2Cip%2Cport%2Ccountry%2Clocation%2Cdetails%2Cstatus&relations%5Bserver%5D=game%2CserverGroup&filter%5Bgame%5D=rust&filter%5Bsearch%5D=solo+&filter%5BmaxDistance%5D=1410&filter%5Bplayers%5D%5Bmin%5D=15
+
+  // const memoizedUrl = useMemo(() => url, [url]);
+
+  // %5D - ]
+  // %5C - [
+
+  //&& operator is used to conditionally add a parameter to the params object only if it is truthy. If the parameter is falsy (i.e., an empty string, null, undefined, etc.), it won't be added to the URL.
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    url = "https://api.battlemetrics.com/servers?filter[game]=rust";
     event.preventDefault();
+    const params = new URLSearchParams({
+      "filter[game]": "rust",
+      // search,
+      ...(minPlayers && { "filter[players][min]": minPlayers }),
+      ...(maxPlayers && { "filter[players][max]": maxPlayers }),
+      ...(countries.length > 0 && { "filter[countries]": countries.join(",") }),
+      // "filter[maxDistance]": maxDistance,
+      // "filter[playerCount]": playerCount,
+      // "filter[excludeCountries]": excludeCountries.join(","),
+    });
+    url = `https://api.battlemetrics.com/servers?${params.toString()}`;
+    console.log(url);
     getData.refetch();
   };
 
-  const fetchData = async () => await fetch(url).then((res) => res.json());
+  const fetchData = async (): Promise<ServerData> =>
+    await fetch(url).then((res) => res.json());
+
   //CANNOT BE CACHED! - Cache-Control: private; max-age=0
   const getData = useQuery({
-    queryKey: ["searchResults", memoizedUrl],
+    queryKey: ["searchResults"],
     queryFn: fetchData,
   });
 
@@ -134,20 +157,31 @@ function Home() {
         <h2 className="text-xl font-bold mb-2">Results</h2>
         <button
           disabled={getData.isFetching}
-          onClick={() => {
-            console.log(getData.data.links.next);
-            url = getData.data.links.next;
-            getData.refetch();
-          }}
+          onClick={() => {}}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
-          Next
+          Steam Server Query
         </button>
+        {getData.data.links.next && (
+          <button
+            disabled={getData.isFetching}
+            onClick={() => {
+              console.log(getData.data.links.next);
+              // @ts-ignore
+              url = getData.data.links.next;
+              getData.refetch();
+            }}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Next
+          </button>
+        )}
         {getData.data.links.prev && (
           <button
             disabled={getData.isFetching}
             onClick={() => {
               console.log(getData.data.links.prev);
+              // @ts-ignore
               url = getData.data.links.prev;
               getData.refetch();
             }}
