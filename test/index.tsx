@@ -1,8 +1,88 @@
 import SearchResults from "@/components/SearchResults";
 import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import {ServerPrimaryData} from "../mongoose/mongoosetypescript"
 
+// import { PrismaClient } from "@prisma/client";
+
+// const prisma = new PrismaClient();
+
+// async function getFirstTenObjects() {
+//   try {
+//     const objects = await prisma.collectionName.findMany({
+//       take: 10,
+//     });
+//     return objects;
+//   } catch (error) {
+//     console.error("Error retrieving objects:", error);
+//     throw error;
+//   } finally {
+//     await prisma.$disconnect();
+//   }
+// }
+
+// // Usage
+// getFirstTenObjects()
+//   .then((objects) => {
+//     console.log("First 10 objects:", objects);
+//   })
+//   .catch((error) => {
+//     console.error("Error:", error);
+//   });
+
+interface ServerData {
+  data: {
+    type: string;
+    id: string;
+    attributes: {
+      id: string;
+      name: string;
+      address: string | null;
+      ip: string;
+      port: number;
+      players: number;
+      maxPlayers: number;
+      rank: number;
+      location: [number, number];
+      status: string;
+      details: {
+        [key: string]: any;
+        reckoning: {
+          day: number;
+          hour: number;
+          minute: number;
+        }[];
+      };
+      private: boolean;
+      createdAt: string;
+      updatedAt: string;
+      portQuery: number;
+      country: string;
+      queryStatus: string;
+    };
+    relationships: {
+      game: {
+        data: {
+          type: string;
+          id: string;
+        };
+      };
+      serverGroup?: {
+        meta: {
+          [key: string]: any;
+        };
+        data: {
+          type: string;
+          id: string;
+        };
+      };
+    };
+  }[];
+  links: {
+    next?: string;
+    prev?: string;
+  };
+}
+let url: string = "https://api.battlemetrics.com/servers?filter[game]=rust";
 
 function Home() {
   const [search, setSearch] = useState("");
@@ -78,7 +158,8 @@ function Home() {
       // "filter[playerCount]": playerCount,
       // "filter[excludeCountries]": excludeCountries.join(","),
     });
-
+    url = `https://api.battlemetrics.com/servers?${params.toString()}`;
+    console.log(url);
     getData.refetch();
   };
 
