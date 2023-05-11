@@ -61,15 +61,14 @@ export const ServerPrimaryDataModel = mongoose.model(
   "ServerPrimaryCollection",
   new mongoose.Schema(
     {
-      _id: {
-        type: String,
-        required: true,
-        unique: true,
-      },
       addr: {
         type: String,
         required: true,
         unique: true,
+      },
+      gameport: {
+        type: Number,
+        required: true,
       },
       name: {
         type: String,
@@ -85,31 +84,31 @@ export const ServerPrimaryDataModel = mongoose.model(
       },
       modded: {
         type: Boolean,
-        required: true,
+        required: false,
       },
       vanilla: {
         type: Boolean,
-        required: true,
+        required: false,
       },
       wipe_rotation: {
         type: String,
-        required: true,
+        required: false,
       },
       born: {
         type: Number,
-        required: true,
+        required: false,
       },
       born_next: {
         type: Number,
-        required: true,
+        required: false,
       },
       max_group_size: {
         type: Number,
-        required: true,
+        required: false,
       },
       rate: {
         type: Number,
-        required: true,
+        required: false,
       },
       gametype: {
         type: [String],
@@ -117,7 +116,7 @@ export const ServerPrimaryDataModel = mongoose.model(
       },
       difficulty: {
         type: String,
-        required: true,
+        required: false,
       },
       rank: {
         type: Number,

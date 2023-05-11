@@ -1,10 +1,7 @@
 import SearchResults from "@/components/SearchResults";
 import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { ServerPrimaryDataType } from "../mongoose/mongoosetypescript";
-import { ServerPrimaryDataModel } from "@/mongoose/mongoosemodel";
-import { mockData } from "../mongoose/mock";
-import mongoose, { connect } from "mongoose";
+import { ServerPrimaryData } from "../mongoose/mongoosetypescript";
 
 function Home() {
   const [search, setSearch] = useState("");
@@ -15,7 +12,7 @@ function Home() {
   const [countries, setCountries] = useState<string[]>([]);
   const [excludeCountries, setExcludeCountries] = useState<string[]>([]);
 
-  const [results, setResults] = useState<ServerPrimaryDataType>();
+  const [results, setResults] = useState<ServerData>();
 
   console.log("index render");
 
@@ -59,6 +56,8 @@ function Home() {
     }
   };
 
+  // /servers?sort=-details.rust_last_wipe&fields%5Bserver%5D=rank%2Cname%2Cplayers%2CmaxPlayers%2Caddress%2Cip%2Cport%2Ccountry%2Clocation%2Cdetails%2Cstatus&relations%5Bserver%5D=game%2CserverGroup&filter%5Bgame%5D=rust&filter%5Bsearch%5D=solo+&filter%5BmaxDistance%5D=1410&filter%5Bplayers%5D%5Bmin%5D=15
+
   // const memoizedUrl = useMemo(() => url, [url]);
 
   // %5D - ]
@@ -82,37 +81,10 @@ function Home() {
     getData.refetch();
   };
 
-  // async function getFirstTenObjects() {
-  //   try {
-  //     await mongoose.connect('mongodb+srv://user:7o5InmsZJg2FqIgE@cluster6.jjfy6nr.mongodb.net/cluster6');
-  //     const objects = await ServerPrimaryDataModel.find().limit(10);
-  //     return objects;
-  //   } catch (error) {
-  //     console.error('Error retrieving objects:', error);
-  //     throw error;
-  //   } finally {
-  //     await mongoose.disconnect();
-  //   }
-  // }
+  const fetchData = async (): Promise<ServerData> =>
+    await fetch(url).then((res) => res.json());
 
-  const fetchData = async () => {
-    console.log("connecting to db");
-    await mongoose.connect(
-      "mongodb+srv://user:7o5InmsZJg2FqIgE@cluster6.jjfy6nr.mongodb.net/cluster6"
-    );
-    console.log("connected ");
-    const objects = await ServerPrimaryDataModel.find().limit(10);
-    return objects;
-  };
-
-  // const fetchData = async (): Promise<Array<ServerPrimaryDataType>> => {
-  //   return new Promise<Array<ServerPrimaryDataType>>((resolve) => {
-  //     setTimeout(() => {
-  //       resolve(mockData);
-  //     }, 1000);
-  //   });
-  // };
-
+  //CANNOT BE CACHED! - Cache-Control: private; max-age=0
   const getData = useQuery({
     queryKey: ["searchResults"],
     queryFn: fetchData,
@@ -127,16 +99,16 @@ function Home() {
 
   if (getData.status === "success")
     renderAllResults = (
-      <div className="overflow-x-auto max-w-[80rem]">
+      <div className="overflow-x-auto max-w-[53rem]">
         <h2 className="text-xl font-bold mb-2">Results</h2>
-        {/* <button
+        <button
           disabled={getData.isFetching}
           onClick={() => {}}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           Steam Server Query
-        </button> */}
-        {/* {getData.data.links.next && (
+        </button>
+        {getData.data.links.next && (
           <button
             disabled={getData.isFetching}
             onClick={() => {
@@ -163,82 +135,38 @@ function Home() {
           >
             Prev
           </button>
-        )} */}
+        )}
         <table className="table-fixed w-full">
           <thead className="bg-gray-50">
             <tr>
-              <th className="w-1/12 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                IP
+              <th className="w-1/4 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                ID
               </th>
-              <th className="w-1/12 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="w-1/4 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Name
               </th>
-              <th className="w-1/12 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Wiped
+              <th className="w-1/4 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                IP
               </th>
-              <th className="w-1/12 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Next Wipe
-              </th>
-              <th className="w-1/12 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Uptime
-              </th>
-              <th className="w-1/12 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Rates
-              </th>
-              <th className="w-1/12 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Modded
-              </th>
-              <th className="w-1/12 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Group size
-              </th>
-              <th className="w-1/12 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="w-1/4 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Players
-              </th>
-              <th className="w-1/12 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Country
-              </th>
-              <th className="w-2/12 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Distance
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {getData.data?.map((mappedObject) => (
-              <tr key={mappedObject.addr}>
-                <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {mappedObject.addr}
+            {getData.data?.data.map((result) => (
+              <tr key={result.id}>
+                <td className="w-1/4 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                  {result.id}
                 </td>
-                <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {mappedObject.name}
+                <td className="w-1/4 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                  {result.attributes.name}
                 </td>
-                <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {mappedObject.born}
+                <td className="w-1/4 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                  {result.attributes.ip}
                 </td>
-                <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {mappedObject.born_next}
-                </td>
-                <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {mappedObject.rules?.uptime}
-                </td>
-                <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {mappedObject.rate}
-                </td>
-                <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {mappedObject.modded?.toString()}
-                </td>
-                <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {mappedObject.max_group_size}
-                </td>
-                <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {mappedObject.players}
-                </td>
-                <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {mappedObject.rules?.location?.country}
-                </td>
-                <td className="w-2/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {mappedObject.rules?.location?.latitude === null
-                    ? "Not known"
-                    : `${mappedObject.rules?.location?.latitude} ${mappedObject.rules?.location?.longitude}`}
+                <td className="w-1/4 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                  {result.attributes.players}
                 </td>
               </tr>
             ))}
