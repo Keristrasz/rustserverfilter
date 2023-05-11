@@ -18,7 +18,7 @@ async function getFirstTenObjects(): Promise<ServerPrimaryData[]> {
   }
 }
 
-const ServerList = () => {
+const Home = () => {
   const queryClient = new QueryClient();
 
   const { data, isLoading, error } = useQuery<ServerPrimaryData[]>(
@@ -55,10 +55,4 @@ const ServerList = () => {
   );
 };
 
-const App = () => (
-  <QueryClientProvider client={new QueryClient()}>
-    <ServerList />
-  </QueryClientProvider>
-);
-
-export default App;
+export default Home;
