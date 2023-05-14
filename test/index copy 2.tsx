@@ -9,94 +9,48 @@ import * as Realm from "realm-web";
 import { useApp } from "../hooks/useApp";
 
 function Home() {
-  // const [filter, setFilter] = useState({
-  //   $and: [
-  //     { rate: 2 },
-  //     { players: { $gte: 10 } },
-  //     { max_group_size: 3 },
-  //     { "rules.size": 3500 },
-  //   ],
-  // });
-  // const [sorter, setSorter] = useState({ players: -1 });
-  // const [projection, setProjection] = useState({});
+  const [search, setSearch] = useState("");
+  const [minPlayers, setMinPlayers] = useState("");
+  const [maxPlayers, setMaxPlayers] = useState("");
+  const [maxDistance, setMaxDistance] = useState("");
+  const [playerCount, setPlayerCount] = useState("");
+  const [countries, setCountries] = useState<string[]>([]);
+  const [excludeCountries, setExcludeCountries] = useState<string[]>([]);
 
-  const [country, setCountry] = useState<string>("");
-  const [rate, setRate] = useState<number[]>([]);
-  const [minPlayers, setMinPlayers] = useState<number>();
-  const [maxPlayers, setMaxPlayers] = useState<number>();
-  const [searchName, setSearchName] = useState<string>("");
-  const [wipeRotation, setWipeRotation] = useState<string>("");
-  const [maxGroupSize, setMaxGroupSize] = useState<number>();
-  const [size, setSize] = useState<number>();
-  const [maxDistance, setMaxDistance] = useState<number>();
-  const [playerCount, setPlayerCount] = useState<number>();
-
-  const now = Math.floor(Date.now() / 1000) - 60;
-  console.log(now);
-  //, { born_next: { $gte: now } }, { born_next: { $ne: null } }, { born: { $ne: null } }
-  const [filter, setFilter] = useState({
-    $and: [{}],
-  });
-
-  const updateFilter = () => {
-    const newFilter = {
-      $and: [{}],
-    };
-
-    country ? newFilter.$and.push({ "rules.location.country": country }) : null;
-    size ? newFilter.$and.push({ "rules.size": size }) : null;
-    wipeRotation ? newFilter.$and.push({ wipe_rotation: wipeRotation }) : null;
-    minPlayers ? newFilter.$and.push({ players: { $gte: minPlayers } }) : null;
-    maxPlayers ? newFilter.$and.push({ players: { $lte: maxPlayers } }) : null;
-    searchName
-      ? newFilter.$and.push({ name: { $regex: searchName, $options: "i" } })
-      : null;
-    maxGroupSize ? newFilter.$and.push({ max_group_size: maxGroupSize }) : null;
-
-    rate.length !== 0 ? newFilter.$and.push({ rate: { $in: rate } }) : null;
-
-    setFilter(newFilter);
-    console.log(newFilter);
-  };
-
-  let sorter = {
-    // born_next: 1,
-  };
-  let projection = {};
+  const [results, setResults] = useState<ServerPrimaryDataType>();
 
   console.log("index render");
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchName(event.target.value);
+    setSearch(event.target.value);
   };
 
   const handleMinPlayersChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("handling");
-    setMinPlayers(Number(event.target.value));
-    console.log(minPlayers);
+    setMinPlayers(event.target.value);
   };
 
   const handleMaxPlayersChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMaxPlayers(Number(event.target.value));
+    setMaxPlayers(event.target.value);
   };
 
   const handleMaxDistanceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMaxDistance(Number(event.target.value));
+    setMaxDistance(event.target.value);
   };
 
   const handlePlayerCountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPlayerCount(Number(event.target.value));
+    setPlayerCount(event.target.value);
   };
 
   const handleCountryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCountry(event.target.value);
-    // if (countries.includes(country)) {
-    //   setCountries(countries.filter((c) => c !== country));
-    // } else {
-    //   setCountries([...countries, country]);
-    // }
+    const country = event.target.value;
+    if (countries.includes(country)) {
+      setCountries(countries.filter((c) => c !== country));
+    } else {
+      setCountries([...countries, country]);
+    }
   };
 
-  const allCountries = ["Czech Republic", "Germany", "Canada", "Russia"];
+  const allCountries = ["US", "GE", "CA", "RU"];
 
   const handleExcludeCountryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const country = event.target.value;
@@ -135,28 +89,28 @@ function Home() {
     { value: 4, label: "quad" },
     { value: 5, label: "penta" },
   ];
-
   const app = useApp();
-  console.log("authentication" + app);
-  // note: useEffect runs in the browser but does not run during server-side rendering
-  useEffect(() => {
-    // If no logged in user, log in
-    if (app && !app.currentUser) {
-      const anonymousUser = Realm.Credentials.anonymous();
-      app.logIn(anonymousUser);
-    }
-  }, [app, app?.currentUser]);
+  const [filter, setFilter] = useState({});
+  const [sorter, setSorter] = useState({});
+  const [projection, setProjection] = useState({});
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    getData.refetch();
+  };
 
   const fetchData = async (filter, sorter, projection) => {
-    console.log("fetching data");
+    // if (app?.currentUser) {
     const mongodb = app.currentUser?.mongoClient("mongodb-atlas");
     if (!mongodb) return;
     const collection = mongodb.db("cluster6").collection("serverprimarycollections");
-    const document = await collection.find(filter, {
-      projection: projection,
-      sort: sorter,
-      limit: 50,
-    });
+    const document = await collection.find(
+      // { rate: 3, players: { $gte: 100 } },
+      // { sort: { players: -1 }, limit: 50 }
+      filter,
+      { projection: projection, sort: sorter, limit: 50 }
+    );
     console.log(document);
     return document;
     // }
@@ -166,14 +120,6 @@ function Home() {
     queryKey: ["searchResults", filter, sorter, projection],
     queryFn: () => fetchData(filter, sorter, projection),
   });
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    updateFilter();
-    console.log(filter, minPlayers);
-    // getData.refetch();
-    fetchData(filter, sorter, projection);
-  };
 
   let renderAllResults;
 
@@ -281,7 +227,7 @@ function Home() {
               id="search"
               type="text"
               className="form-input rounded-md shadow-sm mt-1 block w-full"
-              value={searchName}
+              value={search}
               onChange={handleSearchChange}
             />
           </div>
@@ -336,6 +282,18 @@ function Home() {
               onChange={handleMaxDistanceChange}
             />
           </div>
+          <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 mb-4 sm:mb-0">
+            <label htmlFor="maxDistance" className="block text-gray-700 font-medium mb-2">
+              Max Group size
+            </label>
+            <input
+              id="maxDistance"
+              type="number"
+              className="form-input rounded-md shadow-sm mt-1 block w-full"
+              value={maxDistance}
+              onChange={handleMaxDistanceChange}
+            />
+          </div>
         </div>
         <div>
           <fieldset>
@@ -347,8 +305,8 @@ function Home() {
                   className="flex items-center mr-4 mb-2 cursor-pointer"
                 >
                   <input
-                    type="checkbox"
-                    className="form-checkbox text-blue-600"
+                    type="radio"
+                    className="form-radio text-blue-600"
                     value={option.value}
                     // checked={groupSize === option.value}
                     // onChange={() => setGroupSize(option.value)}
@@ -384,7 +342,7 @@ function Home() {
                     type="checkbox"
                     className="form-checkbox text-blue-600"
                     value={country}
-                    // checked={countries.includes(country)}
+                    checked={countries.includes(country)}
                     onChange={handleCountryChange}
                   />
                   <span className="ml-2 text-gray-700">{country}</span>
@@ -408,7 +366,7 @@ function Home() {
                     type="checkbox"
                     className="form-checkbox text-blue-600"
                     value={country}
-                    // checked={excludeCountries.includes(country)}
+                    checked={excludeCountries.includes(country)}
                     onChange={handleExcludeCountryChange}
                   />
                   <span className="ml-2 text-gray-700">{country}</span>
