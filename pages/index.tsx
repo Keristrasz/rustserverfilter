@@ -75,6 +75,43 @@ function Home() {
 
   const [sorter, setSorter] = useState({});
   const handleColumnSorter = (key) => {
+    // { born_next: { $gte: now }
+    if (key === "born") {
+      setFilter((prevValue) => {
+        console.log(prevValue);
+        console.log(prevValue.$and);
+        if (!prevValue.$and.some((el) => el.born)) {
+          let newValue = { ...prevValue };
+          newValue.$and = newValue.$and.filter((el) => !el.born_next);
+          newValue.$and.push({ born: { $lte: now } });
+          console.log("newValue = " + JSON.stringify(newValue));
+          return newValue;
+        }
+        return prevValue;
+      });
+    } else if (key === "born_next") {
+      setFilter((prevValue) => {
+        console.log(prevValue);
+        console.log(prevValue.$and);
+        if (!prevValue.$and.some((el) => el.born_next)) {
+          let newValue = { ...prevValue };
+          newValue.$and = newValue.$and.filter((el) => !el.born);
+          newValue.$and.push({ born_next: { $gte: now } });
+          console.log("newValue = " + JSON.stringify(newValue));
+          return newValue;
+        }
+        return prevValue;
+      });
+    } else {
+      setFilter((prevValue) => {
+        console.log(prevValue);
+        console.log(prevValue.$and);
+        let updatedValue = { ...prevValue };
+        updatedValue.$and = updatedValue.$and.filter((el) => !el.born && !el.born_next);
+        console.log("updatedValue = " + JSON.stringify(updatedValue));
+        return updatedValue;
+      });
+    }
     setSorter((prevSorter) => {
       // Check if the key already exists in the sorter
       if (prevSorter.hasOwnProperty(key)) {
@@ -93,16 +130,16 @@ function Home() {
 
   //SORTER END
 
-  const now = Math.floor(Date.now() / 1000) - 60;
+  const now = Math.floor(Date.now() / 1000 / 100) * 100 - 100;
 
   const [filter, setFilter] = useState({
-    $and: [{}],
+    $and: [{ rank: { $gte: 50 } }],
   });
   // { born_next: { $gte: now } }
 
   const updateFilter = () => {
     let newFilter = {
-      $and: [{}],
+      $and: [{ rank: { $gte: 50 } }],
     };
 
     country.length !== 0
@@ -112,7 +149,9 @@ function Home() {
     wipeRotation ? newFilter.$and.push({ wipe_rotation: wipeRotation }) : null;
     minPlayers ? newFilter.$and.push({ players: { $gte: minPlayers } }) : null;
     maxPlayers ? newFilter.$and.push({ players: { $lte: maxPlayers } }) : null;
-    searchName ? newFilter.$and.push({ name: { $regex: searchName, $options: "i" } }) : null;
+    searchName
+      ? newFilter.$and.push({ name: { $regex: searchName, $options: "i" } })
+      : null;
     maxGroupSize.length !== 0
       ? newFilter.$and.push({ max_group_size: { $in: maxGroupSize } })
       : null;
@@ -123,7 +162,7 @@ function Home() {
     // console.log(newFilter);
   };
 
-  let projection = {};
+  let projection = { gametype: 0, _id: 0, "rules.description": 0, "rules.url": 0 };
 
   // console.log("index render");
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -240,7 +279,7 @@ function Home() {
   };
 
   const getData = useQuery({
-    queryKey: ["searchResults", filter, sorter, projection],
+    queryKey: ["searchResults", filter, sorter],
     queryFn: () => fetchData(filter, sorter, projection),
     enabled: !!app && !!app.currentUser,
   });
@@ -254,6 +293,9 @@ function Home() {
   };
 
   const getTime = (timestamp) => {
+    if (timestamp < 1652630662) {
+      return "Unknown";
+    }
     const date = new Date(timestamp * 1000);
 
     const formattedDate = date.toLocaleString("en-US", {
@@ -293,7 +335,12 @@ function Home() {
     { isClicked: false, width: "1/12", name: "Group size", value: "max_group_size" },
     { isClicked: false, width: "1/12", name: "Players", value: "players" },
     { isClicked: false, width: "1/12", name: "Country", value: "rules.location.country" },
-    { isClicked: false, width: "1/12", name: "Distance", value: "rules.location.longitude" },
+    {
+      isClicked: false,
+      width: "1/12",
+      name: "Distance",
+      value: "rules.location.longitude",
+    },
   ];
 
   const handleResetForm = () => {
@@ -308,6 +355,7 @@ function Home() {
     setMaxDistance("");
     setPlayerCount("");
     setSorter({});
+    setFilter({ $and: [{ rank: { $gte: 50 } }] });
   };
 
   let renderAllResults;
@@ -330,7 +378,7 @@ function Home() {
                   key={el.value}
                   className={`w-${el.width} px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider`}
                 >
-                  {el.name}{" "}
+                  {el.name}
                   {sorter[el.value] === 1 ? "->" : sorter[el.value] === -1 ? "<-" : null}
                 </th>
               ))}
@@ -385,7 +433,10 @@ function Home() {
     );
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center min-h-screen">
+      <header className="w-full bg-blue-500 text-white py-4 px-6">
+        <h1 className="text-2xl font-bold">Search Form</h1>
+      </header>
       <form onSubmit={handleSubmit} className="bg-gray-100 rounded-lg p-6 space-y-6">
         <div className="flex flex-wrap justify-between items-center">
           <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 mb-4 sm:mb-0">
@@ -412,7 +463,10 @@ function Home() {
                 value={minPlayers}
                 onChange={handleMinPlayersChange}
               />
-              <label htmlFor="minPlayers" className="block text-gray-700 font-medium mb-2">
+              <label
+                htmlFor="minPlayers"
+                className="block text-gray-700 font-medium mb-2"
+              >
                 Max. Players
               </label>
               <input
@@ -497,10 +551,15 @@ function Home() {
         </div>
         <div>
           <fieldset>
-            <legend className="block text-gray-700 font-medium mb-2">Exclude Countries</legend>
+            <legend className="block text-gray-700 font-medium mb-2">
+              Exclude Countries
+            </legend>
             <div className="flex flex-wrap">
               {allCountries.map((country) => (
-                <label key={country} className="flex items-center mr-4 mb-2 cursor-pointer">
+                <label
+                  key={country}
+                  className="flex items-center mr-4 mb-2 cursor-pointer"
+                >
                   <input
                     type="checkbox"
                     className="form-checkbox text-blue-600"
