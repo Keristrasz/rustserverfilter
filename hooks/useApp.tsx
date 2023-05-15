@@ -9,3 +9,17 @@ export function useApp() {
   }, []);
   return app;
 }
+
+
+  // const app = useApp();
+  // console.log("authentication" + app);
+  // // note: useEffect runs in the browser but does not run during server-side rendering
+  // useEffect(() => {
+  //   // If no logged in user, log in
+  //   if (app && !app.currentUser) {
+  //     const anonymousUser = Realm.Credentials.anonymous();
+  //     app.logIn(anonymousUser);
+  //   }
+  // }, [app, app?.currentUser]);
+
+  // const [isLogged, setIsLogged] = useState(false);

@@ -1,31 +1,57 @@
-import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { useApp } from "@/hooks/useApp";
+const auth = async () => {
+  const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID);
+  if (app && !app.currentUser) {
+    console.log("app && !app.currentUser");
+    const anonymousUser = Realm.Credentials.anonymous();
+    await app.logIn(anonymousUser);
+  }
+  return app;
+};
 
-export default function AuthComponent() {
-  const { isLoading, error, data } = useQuery("authentication", () => {
-    const app = useApp();
-    console.log("authentication" + app);
-    // note: useEffect runs in the browser but does not run during server-side rendering
-    useEffect(() => {
-      // If no logged in user, log in
-      if (app && !app.currentUser) {
-        const anonymousUser = Realm.Credentials.anonymous();
-        app.logIn(anonymousUser);
-      }
-    }, [app, app?.currentUser]);
-    // Authentication logic here
-    // Return a promise or fetch request
+const fetchData = async (filter, sorter, projection) => {
+  const app = await auth();
+  console.log("fetching data", app);
+
+  const mongodb = app.currentUser?.mongoClient("mongodb-atlas");
+  if (!mongodb) return;
+
+  const collection = mongodb.db("cluster6").collection("serverprimarycollections");
+  const document = await collection.find(filter, {
+    projection,
+    sort: sorter,
+    limit: 30,
   });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  console.log(document);
+  return document;
+};
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+const MyComponent = () => {
+  const [filter, setFilter] = useState("");
+  const [sorter, setSorter] = useState("");
+  const [projection, setProjection] = useState("");
+  
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    updateFilter();
+  };
 
-  // Render the rest of your app components once authentication is successful
-  return <>{/* Your app components */}</>;
-}
+  const queryClient = useQueryClient();
+
+  const getData = useQuery({
+    queryKey: ["searchResults", filter, sorter, projection],
+    queryFn: () => fetchData(filter, sorter, projection),
+    enabled: !!queryClient.getQueryData(["userAuth"]),
+    refetchOnWindowFocus: false, // Disable refetching on window focus
+  });
+
+  useEffect(() => {
+    const fetchAuth = async () => {
+      await queryClient.prefetchQuery("userAuth", auth);
+    };
+
+    fetchAuth();
+  }, [queryClient]);
+
+  // Render the component
+};

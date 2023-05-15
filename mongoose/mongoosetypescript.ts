@@ -1,20 +1,20 @@
-export interface LocationRules {
+export interface LocationRulesType {
   latitude?: number;
   longitude?: number;
   country?: string;
 }
 
-export interface Rules {
+export interface RulesType {
   description?: string;
   fps_avg?: number;
   seed?: number;
   size?: number;
   url?: string;
   uptime?: number;
-  location?: LocationRules;
+  location?: LocationRulesType;
 }
 
-export interface ServerPrimaryData {
+export interface ServerPrimaryDataType {
   _id: string;
   addr: string;
   name: string;
@@ -30,6 +30,6 @@ export interface ServerPrimaryData {
   gametype?: string[];
   difficulty: string;
   rank?: number;
-  rules?: Rules;
+  rules?: RulesType;
   players_history?: number[][];
 }

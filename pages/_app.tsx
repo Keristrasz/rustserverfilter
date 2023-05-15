@@ -13,9 +13,12 @@ export default function App({ Component, pageProps }: AppProps) {
     // Disable automatic retries on failed requests
     defaultOptions: {
       queries: {
-        staleTime: 1000 * 30,
+        staleTime: 1000 * 60,
+        cacheTime: 1000 * 60,
         refetchOnMount: false,
+        refetchOnWindowFocus: false,
         retry: false,
+
         // suspense: true,
         // onError: (error) => {
         //   // Handle error globally, such as redirecting to a login page
