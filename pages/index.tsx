@@ -9,56 +9,38 @@ import * as Realm from "realm-web";
 import { useApp } from "../hooks/useApp";
 import Table from "../components/Table";
 import { timeStamp } from "console";
+import { allCountries } from "../mongoose/countries";
 
-// function calculateDistance(lat1, lon1, lat2, lon2) {
-//   const earthRadius = 6371; // Radius of the Earth in kilometers
-//   const dLat = toRadians(lat2 - lat1);
-//   const dLon = toRadians(lon2 - lon1);
+function toRadians(degrees) {
+  return degrees * (Math.PI / 180);
+}
 
-//   const a =
-//     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-//     Math.cos(toRadians(lat1)) *
-//       Math.cos(toRadians(lat2)) *
-//       Math.sin(dLon / 2) *
-//       Math.sin(dLon / 2);
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const earthRadius = 6371; // Radius of the Earth in kilometers
+  const dLat = toRadians(lat2 - lat1);
+  const dLon = toRadians(lon2 - lon1);
 
-//   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-//   const distance = Math.ceil(earthRadius * c);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRadians(lat1)) *
+      Math.cos(toRadians(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
 
-//   return distance;
-// }
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = Math.ceil(earthRadius * c);
+
+  return distance;
+}
 
 // function toRadians(degrees) {
 //   return degrees * (Math.PI / 180);
 // }
 
-// const targetLatitude = 48.8566;
-// const targetLongitude = 2.3522;
-
-// if (navigator.geolocation) {
-//   navigator.geolocation.getCurrentPosition(
-//     (position) => {
-//       const latitude = position.coords.latitude;
-//       const longitude = position.coords.longitude;
-
-//       // Use the latitude and longitude values as needed
-//       console.log(latitude, longitude);
-
-//       // Call a function or perform further operations with the location data
-//       // For example, you can calculate the distance between the user's location and a specific point
-//       const distance = calculateDistance(latitude, longitude, targetLatitude, targetLongitude);
-//       console.log(distance);
-//     },
-//     (error) => {
-//       console.error("Error retrieving location:", error);
-//     }
-//   );
-// } else {
-//   console.error("Geolocation is not supported by this browser.");
-// }
-
 function Home() {
   // const [projection, setProjection] = useState({});
+
+  const [userLocation, setUserLocation] = useState<userLocationType | null>(null);
 
   const [country, setCountry] = useState<string[]>([]);
   const [minPlayers, setMinPlayers] = useState<number | string>("");
@@ -71,11 +53,33 @@ function Home() {
   const [playerCount, setPlayerCount] = useState<number | string>("");
   const [rate, setRate] = useState<number[]>([]);
 
+  interface userLocationType {
+    longitude: number;
+    latitude: number;
+  }
+
+  useEffect(() => {
+    if (navigator.geolocation && !userLocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          let { latitude, longitude } = position.coords;
+          latitude = parseFloat(latitude.toFixed(4));
+          longitude = parseFloat(longitude.toFixed(4));
+          setUserLocation({ latitude, longitude });
+        },
+        (error) => {
+          console.error("Error retrieving location:", error);
+        }
+      );
+    }
+    //console.error("Geolocation is not supported by this browser.");
+  }, [userLocation]);
+
   //SORTER START
 
   const [sorter, setSorter] = useState({});
   const handleColumnSorter = (key) => {
-    // { born_next: { $gte: now }
+    // { born_next: { $gte: nowSeconds }
     if (key === "born") {
       setFilter((prevValue) => {
         console.log(prevValue);
@@ -83,7 +87,7 @@ function Home() {
         if (!prevValue.$and.some((el) => el.born)) {
           let newValue = { ...prevValue };
           newValue.$and = newValue.$and.filter((el) => !el.born_next);
-          newValue.$and.push({ born: { $lte: now } });
+          newValue.$and.push({ born: { $lte: nowSeconds, $gte: timestampTenMonthsAgo } });
           console.log("newValue = " + JSON.stringify(newValue));
           return newValue;
         }
@@ -96,7 +100,7 @@ function Home() {
         if (!prevValue.$and.some((el) => el.born_next)) {
           let newValue = { ...prevValue };
           newValue.$and = newValue.$and.filter((el) => !el.born);
-          newValue.$and.push({ born_next: { $gte: now } });
+          newValue.$and.push({ born_next: { $gte: nowSeconds } });
           console.log("newValue = " + JSON.stringify(newValue));
           return newValue;
         }
@@ -129,13 +133,15 @@ function Home() {
   };
 
   //SORTER END
-
-  const now = Math.floor(Date.now() / 1000 / 100) * 100 - 100;
+  const nowMiliseconds = new Date().getTime();
+  const nowSeconds = Math.floor(nowMiliseconds / 1000 / 100) * 100 - 100;
+  const timestampTenMonthsAgo = Math.floor(nowMiliseconds / 1000 - 28000000);
+  // console.log(nowMiliseconds, nowSeconds, timestampTenMonthsAgo);
 
   const [filter, setFilter] = useState({
     $and: [{ rank: { $gte: 50 } }],
   });
-  // { born_next: { $gte: now } }
+  // { born_next: { $gte: nowSeconds } }
 
   const updateFilter = () => {
     let newFilter = {
@@ -149,14 +155,24 @@ function Home() {
     wipeRotation ? newFilter.$and.push({ wipe_rotation: wipeRotation }) : null;
     minPlayers ? newFilter.$and.push({ players: { $gte: minPlayers } }) : null;
     maxPlayers ? newFilter.$and.push({ players: { $lte: maxPlayers } }) : null;
-    searchName
-      ? newFilter.$and.push({ name: { $regex: searchName, $options: "i" } })
-      : null;
+    searchName ? newFilter.$and.push({ name: { $regex: searchName, $options: "i" } }) : null;
     maxGroupSize.length !== 0
       ? newFilter.$and.push({ max_group_size: { $in: maxGroupSize } })
       : null;
-
     rate.length !== 0 ? newFilter.$and.push({ rate: { $in: rate } }) : null;
+    maxDistance && userLocation
+      ? newFilter.$and.push({
+          "rules.location": {
+            $geoWithin: {
+              $centerSphere: [
+                [userLocation.latitude, userLocation.longitude],
+                Number(parseFloat(maxDistance / 6371).toFixed(6)),
+              ],
+            },
+          },
+        })
+      : null;
+    //parseFloat(latitude.toFixed(4))
     console.log(newFilter);
     setFilter(newFilter);
     // console.log(newFilter);
@@ -183,11 +199,25 @@ function Home() {
 
   const handleMaxDistanceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-
+    if (navigator.geolocation && !userLocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          let { latitude, longitude } = position.coords;
+          latitude = parseFloat(latitude.toFixed(4));
+          longitude = parseFloat(longitude.toFixed(4));
+          setUserLocation({ latitude, longitude });
+        },
+        (error) => {
+          console.error("Error retrieving location:", error);
+        }
+      );
+    }
     setMaxDistance(value === "" ? "" : Number(value));
+    console.log(userLocation, maxDistance);
+    // console.error("Geolocation is not supported by this browser.")
   };
 
-  const handleCountryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const _handleCountryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (country.includes(event.target.value)) {
       setCountry(country.filter((c) => c !== event.target.value));
     } else {
@@ -217,7 +247,7 @@ function Home() {
     console.log(numberValue);
   };
 
-  const allCountries = ["Czech Republic", "Germany", "Canada", "Russia"];
+  // const allCountries = ["Czechia", "Germany", "Canada", "Russia"];
 
   const handleExcludeCountryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const country = event.target.value;
@@ -326,7 +356,7 @@ function Home() {
       name: "IP",
       value: "addr",
     },
-    { isClicked: false, width: "2/12", name: "Name", value: "name" },
+    { isClicked: false, width: "1/12", name: "Name", value: "name" },
     { isClicked: false, width: "1/12", name: "Rank", value: "rank" },
     { isClicked: false, width: "2/12", name: "Next Wipe", value: "born_next" },
     { isClicked: false, width: "2/12", name: "Wiped", value: "born" },
@@ -337,7 +367,7 @@ function Home() {
     { isClicked: false, width: "1/12", name: "Country", value: "rules.location.country" },
     {
       isClicked: false,
-      width: "1/12",
+      width: "2/12",
       name: "Distance",
       value: "rules.location.longitude",
     },
@@ -357,6 +387,47 @@ function Home() {
     setSorter({});
     setFilter({ $and: [{ rank: { $gte: 50 } }] });
   };
+  //
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedCountries, setSelectedCountries] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleCountryChange = (e) => {
+    const { value, checked } = e.target;
+    setSelectedCountries((prevSelected) => {
+      if (checked) {
+        setInputValue(""); // Clear input value when a country is checked
+        return [...prevSelected, value];
+      } else {
+        return prevSelected.filter((country) => country !== value);
+      }
+    });
+  };
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleInputKeyPress = (e) => {
+    if (e.key === "Enter" && inputValue) {
+      const country = inputValue.trim();
+      setSelectedCountries((prevSelected) => [...prevSelected, country]);
+      setInputValue("");
+    }
+  };
+
+  const handleRemoveCountry = (country) => {
+    setSelectedCountries((prevSelected) => prevSelected.filter((c) => c !== country));
+  };
+
+  const filteredOptions = allCountries.filter((country) =>
+    country.toLowerCase().startsWith(inputValue.toLowerCase())
+  );
+  //
 
   let renderAllResults;
 
@@ -376,7 +447,7 @@ function Home() {
                 <th
                   onClick={() => handleColumnSorter(el.value)}
                   key={el.value}
-                  className={`w-${el.width} px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider`}
+                  className={`w-${el.width} px-5 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider`}
                 >
                   {el.name}
                   {sorter[el.value] === 1 ? "->" : sorter[el.value] === -1 ? "<-" : null}
@@ -388,41 +459,48 @@ function Home() {
             {getData.data?.map((mappedObject: ServerPrimaryDataType) => {
               return (
                 <tr key={mappedObject.addr}>
-                  <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                  <td className="w-1/12 px-1 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                     {mappedObject.addr}
                   </td>
-                  <td className="w-4/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                  <td className="w-4/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                     {mappedObject.name}
                   </td>
-                  <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                  <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                     {mappedObject.rank}
                   </td>
-                  <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                  <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                     {getTime(mappedObject.born_next)}
                   </td>
-                  <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                  <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                     {getTime(mappedObject.born)}
                   </td>
-                  <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                  <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                     {getTimeUptime(mappedObject.rules?.uptime)}
                   </td>
-                  <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                  <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                     {mappedObject.rate}
                   </td>
 
-                  <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                  <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                     {mappedObject.max_group_size}
                   </td>
-                  <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                  <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                     {mappedObject.players}
                   </td>
-                  <td className="w-1/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                  <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                     {mappedObject.rules?.location?.country}
                   </td>
-                  <td className="w-2/12 px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                    {mappedObject.rules?.location?.latitude === null
-                      ? "Not known"
-                      : `${mappedObject.rules?.location?.latitude} ${mappedObject.rules?.location?.longitude}`}
+                  <td className="w-2/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                    {userLocation &&
+                    mappedObject.rules?.location?.latitude &&
+                    mappedObject.rules?.location?.longitude
+                      ? calculateDistance(
+                          mappedObject.rules?.location?.latitude,
+                          mappedObject.rules?.location?.longitude,
+                          userLocation.latitude,
+                          userLocation.longitude
+                        )
+                      : "not known"}
                   </td>
                 </tr>
               );
@@ -463,10 +541,7 @@ function Home() {
                 value={minPlayers}
                 onChange={handleMinPlayersChange}
               />
-              <label
-                htmlFor="minPlayers"
-                className="block text-gray-700 font-medium mb-2"
-              >
+              <label htmlFor="minPlayers" className="block text-gray-700 font-medium mb-2">
                 Max. Players
               </label>
               <input
@@ -530,7 +605,7 @@ function Home() {
             </div>
           </fieldset>
         </div>
-        <div>
+        {/* <div>
           <fieldset>
             <legend className="block text-gray-700 font-medium mb-2">Countries</legend>
             <div className="flex flex-wrap">
@@ -548,18 +623,77 @@ function Home() {
               ))}
             </div>
           </fieldset>
-        </div>
+        </div> */}
         <div>
+          <label className="block text-gray-700 font-medium mb-2">Countries</label>
+          <div className="relative">
+            <div
+              className="w-full py-2 pl-3 pr-2 text-left bg-white rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-300 flex flex-wrap"
+              onClick={handleToggle}
+            >
+              {selectedCountries.length > 0 ? (
+                selectedCountries.map((country) => (
+                  <span
+                    key={country}
+                    className="px-2 py-1 m-1 bg-blue-100 text-blue-800 rounded-md flex items-center"
+                  >
+                    {country}
+                    <button
+                      className="ml-1 text-blue-500 hover:text-blue-700 focus:outline-none"
+                      onClick={() => handleRemoveCountry(country)}
+                    >
+                      &#10005;
+                    </button>
+                  </span>
+                ))
+              ) : (
+                <span className="text-gray-400">Select countries</span>
+              )}
+              <input
+                type="text"
+                className="flex-grow ml-2 bg-transparent focus:outline-none"
+                placeholder="Type country"
+                value={inputValue}
+                onChange={handleInputChange}
+                onKeyPress={handleInputKeyPress}
+              />
+            </div>
+            {isOpen && (
+              <div className="absolute w-full mt-2 bg-white rounded-md shadow-lg">
+                <div className="max-h-80 overflow-auto">
+                  {filteredOptions.map((el) => (
+                    <label key={el} className="block px-4 py-2 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        className="form-checkbox text-blue-600"
+                        value={el}
+                        checked={selectedCountries.includes(el)}
+                        onChange={handleCountryChange}
+                      />
+                      <span className="ml-2 text-gray-700">{el}</span>
+                    </label>
+                  ))}
+                </div>
+                <div className="flex justify-end px-4 py-2">
+                  <button
+                    className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-500 focus:outline-none"
+                    onClick={handleToggle}
+                  >
+                    Done
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/*  */}
+        {/* <div>
           <fieldset>
-            <legend className="block text-gray-700 font-medium mb-2">
-              Exclude Countries
-            </legend>
+            <legend className="block text-gray-700 font-medium mb-2">Exclude Countries</legend>
             <div className="flex flex-wrap">
               {allCountries.map((country) => (
-                <label
-                  key={country}
-                  className="flex items-center mr-4 mb-2 cursor-pointer"
-                >
+                <label key={country} className="flex items-center mr-4 mb-2 cursor-pointer">
                   <input
                     type="checkbox"
                     className="form-checkbox text-blue-600"
@@ -572,7 +706,7 @@ function Home() {
               ))}
             </div>
           </fieldset>
-        </div>
+        </div> */}
         <button
           type="submit"
           disabled={getData.isFetching}
