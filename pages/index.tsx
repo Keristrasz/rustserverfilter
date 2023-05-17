@@ -1,62 +1,59 @@
 import SearchResults from "@/components/SearchResults";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { ServerPrimaryDataType } from "../mongoose/mongoosetypescript";
-// import { ServerPrimaryDataModel } from "@/mongoose/mongoosemodel";
-// import mongoose, { connect } from "mongoose";
-import { mockData } from "../mongoose/mock";
+import { ServerPrimaryDataType } from "../utils/mongoosetypescript";
+import { mockData } from "../utils/mock";
 import * as Realm from "realm-web";
 import { useApp } from "../hooks/useApp";
 import Table from "../components/Table";
 import { timeStamp } from "console";
-import { allCountries } from "../mongoose/countries";
 
-function toRadians(degrees) {
-  return degrees * (Math.PI / 180);
+import SelectCountries from "@/components/SelectCountries";
+import { groupSizeOptions, ratesOptions } from "@/utils/inputData";
+import { calculateDistance, getTime, getTimeUptime } from "@/utils/inputFunctions";
+
+//TODO Distance sort by loaded data
+
+interface userLocationType {
+  longitude: number;
+  latitude: number;
 }
 
-function calculateDistance(lat1, lon1, lat2, lon2) {
-  const earthRadius = 6371; // Radius of the Earth in kilometers
-  const dLat = toRadians(lat2 - lat1);
-  const dLon = toRadians(lon2 - lon1);
-
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(toRadians(lat1)) *
-      Math.cos(toRadians(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
-
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const distance = Math.ceil(earthRadius * c);
-
-  return distance;
+interface Filter {
+  $and: {
+    rank?: { $gte: number };
+    "rules.size"?: { $gte?: number; $lte?: number };
+    wipe_rotation?: string;
+    players?: { $gte?: number; $lte?: number };
+    name?: { $regex: string; $options: string };
+    max_group_size?: { $in: number[] };
+    rate?: { $in: number[] };
+    "rules.location.country"?: { $in?: string[]; $nin?: string[] };
+    "rules.location"?: {
+      $geoWithin?: {
+        $centerSphere: [number[], number];
+      };
+    };
+  }[];
 }
-
-// function toRadians(degrees) {
-//   return degrees * (Math.PI / 180);
-// }
 
 function Home() {
-  // const [projection, setProjection] = useState({});
+  const [minSize, setMinSize] = useState<number | string>("");
+  const [maxSize, setMaxSize] = useState<number | string>("");
+
+  const [includedCountries, setIncludedCountries] = useState<string[]>([]);
+  const [excludedCountries, setExcludeCountries] = useState<string[]>([]);
+  console.log(includedCountries, excludedCountries);
 
   const [userLocation, setUserLocation] = useState<userLocationType | null>(null);
 
-  const [country, setCountry] = useState<string[]>([]);
   const [minPlayers, setMinPlayers] = useState<number | string>("");
   const [maxPlayers, setMaxPlayers] = useState<number | string>("");
   const [searchName, setSearchName] = useState<string>("");
   const [wipeRotation, setWipeRotation] = useState<string>("");
   const [maxGroupSize, setMaxGroupSize] = useState<number[]>([]);
-  const [size, setSize] = useState<number | string>("");
   const [maxDistance, setMaxDistance] = useState<number | string>("");
-  const [playerCount, setPlayerCount] = useState<number | string>("");
   const [rate, setRate] = useState<number[]>([]);
-
-  interface userLocationType {
-    longitude: number;
-    latitude: number;
-  }
 
   useEffect(() => {
     if (navigator.geolocation && !userLocation) {
@@ -78,7 +75,7 @@ function Home() {
   //SORTER START
 
   const [sorter, setSorter] = useState({});
-  const handleColumnSorter = (key) => {
+  const handleSorter = (key: string) => {
     // { born_next: { $gte: nowSeconds }
     if (key === "born") {
       setFilter((prevValue) => {
@@ -106,6 +103,13 @@ function Home() {
         }
         return prevValue;
       });
+    } else if (
+      key === "rules.location.longitude" ||
+      key === "rules.location.country" ||
+      key === "addr" ||
+      key === "uptime"
+    ) {
+      return;
     } else {
       setFilter((prevValue) => {
         console.log(prevValue);
@@ -133,33 +137,41 @@ function Home() {
   };
 
   //SORTER END
+  const roundBySeconds = 100;
   const nowMiliseconds = new Date().getTime();
-  const nowSeconds = Math.floor(nowMiliseconds / 1000 / 100) * 100 - 100;
-  const timestampTenMonthsAgo = Math.floor(nowMiliseconds / 1000 - 28000000);
-  // console.log(nowMiliseconds, nowSeconds, timestampTenMonthsAgo);
+  const nowSeconds = Math.floor(nowMiliseconds / 1000 / roundBySeconds) * roundBySeconds - 100;
+  const timestampTenMonthsAgo =
+    Math.floor((nowMiliseconds / 1000 - 28000000) / roundBySeconds) * roundBySeconds;
 
-  const [filter, setFilter] = useState({
+  const [filter, setFilter] = useState<Filter>({
     $and: [{ rank: { $gte: 50 } }],
   });
-  // { born_next: { $gte: nowSeconds } }
 
   const updateFilter = () => {
-    let newFilter = {
+    let newFilter: Filter = {
       $and: [{ rank: { $gte: 50 } }],
     };
 
-    country.length !== 0
-      ? newFilter.$and.push({ "rules.location.country": { $in: country } })
-      : null;
-    size ? newFilter.$and.push({ "rules.size": size }) : null;
     wipeRotation ? newFilter.$and.push({ wipe_rotation: wipeRotation }) : null;
     minPlayers ? newFilter.$and.push({ players: { $gte: minPlayers } }) : null;
     maxPlayers ? newFilter.$and.push({ players: { $lte: maxPlayers } }) : null;
+    minSize ? newFilter.$and.push({ "rules.size": { $gte: minSize } }) : null;
+    maxSize ? newFilter.$and.push({ "rules.size": { $lte: maxSize } }) : null;
     searchName ? newFilter.$and.push({ name: { $regex: searchName, $options: "i" } }) : null;
     maxGroupSize.length !== 0
       ? newFilter.$and.push({ max_group_size: { $in: maxGroupSize } })
       : null;
     rate.length !== 0 ? newFilter.$and.push({ rate: { $in: rate } }) : null;
+    includedCountries.length !== 0 && excludedCountries.length === 0
+      ? newFilter.$and.push({ "rules.location.country": { $in: includedCountries } })
+      : null;
+    excludedCountries.length !== 0 && includedCountries.length === 0
+      ? newFilter.$and.push({ "rules.location.country": { $nin: excludedCountries } })
+      : null;
+    includedCountries.length !== 0 && excludedCountries.length !== 0
+      ? alert("There can be only included or excluded countries at once")
+      : null;
+
     maxDistance && userLocation
       ? newFilter.$and.push({
           "rules.location": {
@@ -193,8 +205,17 @@ function Home() {
 
   const handleMaxPlayersChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-
     setMaxPlayers(value === "" ? "" : Number(value));
+  };
+  const handleMinSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setMinSize(value === "" ? "" : Number(value));
+    console.log("handling");
+  };
+
+  const handleMaxSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setMaxSize(value === "" ? "" : Number(value));
   };
 
   const handleMaxDistanceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -215,15 +236,6 @@ function Home() {
     setMaxDistance(value === "" ? "" : Number(value));
     console.log(userLocation, maxDistance);
     // console.error("Geolocation is not supported by this browser.")
-  };
-
-  const _handleCountryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (country.includes(event.target.value)) {
-      setCountry(country.filter((c) => c !== event.target.value));
-    } else {
-      setCountry([...country, event.target.value]);
-    }
-    console.log(country);
   };
 
   const handleRateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -247,27 +259,6 @@ function Home() {
     console.log(numberValue);
   };
 
-  // const allCountries = ["Czechia", "Germany", "Canada", "Russia"];
-
-  const handleExcludeCountryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const country = event.target.value;
-    if (excludeCountries.includes(country)) {
-      setExcludeCountries(excludeCountries.filter((c) => c !== country));
-    } else {
-      setExcludeCountries([...excludeCountries, country]);
-    }
-  };
-
-  const groupSizeOptions = [
-    { value: 1, label: "solo" },
-    { value: 2, label: "duo" },
-    { value: 3, label: "trio" },
-    { value: 4, label: "quad" },
-    { value: 5, label: "penta" },
-  ];
-
-  const ratesOptions = [2, 3, 4, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000];
-
   const auth = async () => {
     const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID);
     if (app && !app.currentUser) {
@@ -283,6 +274,7 @@ function Home() {
   const { data: _app } = useQuery({
     queryKey: ["userAuth"],
     queryFn: auth,
+    keepPreviousData: true,
     cacheTime: 1000 * 999999,
     staleTime: 1000 * 999999,
   });
@@ -312,6 +304,7 @@ function Home() {
     queryKey: ["searchResults", filter, sorter],
     queryFn: () => fetchData(filter, sorter, projection),
     enabled: !!app && !!app.currentUser,
+    keepPreviousData: true,
   });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -320,33 +313,6 @@ function Home() {
 
     // getData.refetch();
     // fetchData(filter, sorter, projection);
-  };
-
-  const getTime = (timestamp) => {
-    if (timestamp < 1652630662) {
-      return "Unknown";
-    }
-    const date = new Date(timestamp * 1000);
-
-    const formattedDate = date.toLocaleString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    });
-
-    const dayMonth = date.toLocaleString("en-US", {
-      day: "2-digit",
-      month: "short",
-    });
-
-    return `${formattedDate}, ${dayMonth}`;
-  };
-
-  const getTimeUptime = (timestamp) => {
-    const date = new Date(timestamp * 1000);
-    const hours = date.getHours();
-
-    return `${hours} hours `;
   };
 
   const columnHeadings = [
@@ -374,64 +340,24 @@ function Home() {
   ];
 
   const handleResetForm = () => {
-    setCountry([]);
     setRate([]);
     setMinPlayers("");
     setMaxPlayers("");
     setSearchName("");
     setWipeRotation("");
     setMaxGroupSize([]);
-    setSize("");
+
     setMaxDistance("");
-    setPlayerCount("");
     setSorter({});
+    setExcludeCountries([]);
+    setIncludedCountries([]);
     setFilter({ $and: [{ rank: { $gte: 50 } }] });
   };
-  //
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedCountries, setSelectedCountries] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleCountryChange = (e) => {
-    const { value, checked } = e.target;
-    setSelectedCountries((prevSelected) => {
-      if (checked) {
-        setInputValue(""); // Clear input value when a country is checked
-        return [...prevSelected, value];
-      } else {
-        return prevSelected.filter((country) => country !== value);
-      }
-    });
-  };
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleInputKeyPress = (e) => {
-    if (e.key === "Enter" && inputValue) {
-      const country = inputValue.trim();
-      setSelectedCountries((prevSelected) => [...prevSelected, country]);
-      setInputValue("");
-    }
-  };
-
-  const handleRemoveCountry = (country) => {
-    setSelectedCountries((prevSelected) => prevSelected.filter((c) => c !== country));
-  };
-
-  const filteredOptions = allCountries.filter((country) =>
-    country.toLowerCase().startsWith(inputValue.toLowerCase())
-  );
-  //
 
   let renderAllResults;
+  let resultsName = "Results loaded";
 
-  if (getData.isLoading) renderAllResults = <div>Loading...</div>;
+  if (getData.isFetching) resultsName = "Loading results...";
 
   if (getData.error instanceof Error)
     renderAllResults = <div>An error has occurred: {getData.error.message}</div>;
@@ -439,13 +365,13 @@ function Home() {
   if (getData.status === "success")
     renderAllResults = (
       <div className="overflow-x-auto max-w-[80rem]">
-        <h2 className="text-xl font-bold mb-2">Results</h2>
+        <h2 className="text-xl font-bold mb-2">{resultsName}</h2>
         <table className="table-fixed w-full">
           <thead className="bg-gray-50">
             <tr>
               {columnHeadings.map((el) => (
                 <th
-                  onClick={() => handleColumnSorter(el.value)}
+                  onClick={() => handleSorter(el.value)}
                   key={el.value}
                   className={`w-${el.width} px-5 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider`}
                 >
@@ -565,6 +491,30 @@ function Home() {
               onChange={handleMaxDistanceChange}
             />
           </div>
+          <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 mb-4 sm:mb-0">
+            <label htmlFor="minPlayers" className="block text-gray-700 font-medium mb-2">
+              Min. Size
+            </label>
+            <div className="flex items-center">
+              <input
+                id="minSize"
+                type="number"
+                className="form-input rounded-md shadow-sm mt-1 block w-1/2 mr-2"
+                value={minSize}
+                onChange={handleMinSizeChange}
+              />
+              <label htmlFor="minPlayers" className="block text-gray-700 font-medium mb-2">
+                Max. Size
+              </label>
+              <input
+                id="maxSize"
+                type="number"
+                className="form-input rounded-md shadow-sm mt-1 block w-1/2"
+                value={maxSize}
+                onChange={handleMaxSizeChange}
+              />
+            </div>
+          </div>
         </div>
         <div>
           <fieldset>
@@ -605,108 +555,14 @@ function Home() {
             </div>
           </fieldset>
         </div>
-        {/* <div>
-          <fieldset>
-            <legend className="block text-gray-700 font-medium mb-2">Countries</legend>
-            <div className="flex flex-wrap">
-              {allCountries.map((el) => (
-                <label key={el} className="flex items-center mr-4 mb-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="form-checkbox text-blue-600"
-                    value={el}
-                    checked={country.includes(el)}
-                    onChange={handleCountryChange}
-                  />
-                  <span className="ml-2 text-gray-700">{el}</span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
-        </div> */}
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Countries</label>
-          <div className="relative">
-            <div
-              className="w-full py-2 pl-3 pr-2 text-left bg-white rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-300 flex flex-wrap"
-              onClick={handleToggle}
-            >
-              {selectedCountries.length > 0 ? (
-                selectedCountries.map((country) => (
-                  <span
-                    key={country}
-                    className="px-2 py-1 m-1 bg-blue-100 text-blue-800 rounded-md flex items-center"
-                  >
-                    {country}
-                    <button
-                      className="ml-1 text-blue-500 hover:text-blue-700 focus:outline-none"
-                      onClick={() => handleRemoveCountry(country)}
-                    >
-                      &#10005;
-                    </button>
-                  </span>
-                ))
-              ) : (
-                <span className="text-gray-400">Select countries</span>
-              )}
-              <input
-                type="text"
-                className="flex-grow ml-2 bg-transparent focus:outline-none"
-                placeholder="Type country"
-                value={inputValue}
-                onChange={handleInputChange}
-                onKeyPress={handleInputKeyPress}
-              />
-            </div>
-            {isOpen && (
-              <div className="absolute w-full mt-2 bg-white rounded-md shadow-lg">
-                <div className="max-h-80 overflow-auto">
-                  {filteredOptions.map((el) => (
-                    <label key={el} className="block px-4 py-2 cursor-pointer select-none">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox text-blue-600"
-                        value={el}
-                        checked={selectedCountries.includes(el)}
-                        onChange={handleCountryChange}
-                      />
-                      <span className="ml-2 text-gray-700">{el}</span>
-                    </label>
-                  ))}
-                </div>
-                <div className="flex justify-end px-4 py-2">
-                  <button
-                    className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-500 focus:outline-none"
-                    onClick={handleToggle}
-                  >
-                    Done
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
+          <label className="block text-gray-700 font-medium mb-2">Include Countries</label>
+          <SelectCountries countries={includedCountries} setCountries={setIncludedCountries} />
         </div>
-
-        {/*  */}
-        {/* <div>
-          <fieldset>
-            <legend className="block text-gray-700 font-medium mb-2">Exclude Countries</legend>
-            <div className="flex flex-wrap">
-              {allCountries.map((country) => (
-                <label key={country} className="flex items-center mr-4 mb-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="form-checkbox text-blue-600"
-                    value={country}
-                    // checked={excludeCountries.includes(country)}
-                    onChange={handleExcludeCountryChange}
-                  />
-                  <span className="ml-2 text-gray-700">{country}</span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
-        </div> */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-2">Exclude Countries</label>
+          <SelectCountries countries={excludedCountries} setCountries={setExcludeCountries} />
+        </div>
         <button
           type="submit"
           disabled={getData.isFetching}

@@ -1,10 +1,10 @@
 import SearchResults from "@/components/SearchResults";
 import { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { ServerPrimaryDataType } from "../mongoose/mongoosetypescript";
+import { ServerPrimaryDataType } from "../utils/mongoosetypescript";
 // import { ServerPrimaryDataModel } from "@/mongoose/mongoosemodel";
 // import mongoose, { connect } from "mongoose";
-import { mockData } from "../mongoose/mock";
+import { mockData } from "../utils/mock";
 import * as Realm from "realm-web";
 import { useApp } from "../hooks/useApp";
 
@@ -243,10 +243,7 @@ function Home() {
                 value={minPlayers}
                 onChange={handleMinPlayersChange}
               />
-              <label
-                htmlFor="minPlayers"
-                className="block text-gray-700 font-medium mb-2"
-              >
+              <label htmlFor="minPlayers" className="block text-gray-700 font-medium mb-2">
                 Max. Players
               </label>
               <input
@@ -334,10 +331,7 @@ function Home() {
             <legend className="block text-gray-700 font-medium mb-2">Countries</legend>
             <div className="flex flex-wrap">
               {allCountries.map((country) => (
-                <label
-                  key={country}
-                  className="flex items-center mr-4 mb-2 cursor-pointer"
-                >
+                <label key={country} className="flex items-center mr-4 mb-2 cursor-pointer">
                   <input
                     type="checkbox"
                     className="form-checkbox text-blue-600"
@@ -353,15 +347,10 @@ function Home() {
         </div>
         <div>
           <fieldset>
-            <legend className="block text-gray-700 font-medium mb-2">
-              Exclude Countries
-            </legend>
+            <legend className="block text-gray-700 font-medium mb-2">Exclude Countries</legend>
             <div className="flex flex-wrap">
               {allCountries.map((country) => (
-                <label
-                  key={country}
-                  className="flex items-center mr-4 mb-2 cursor-pointer"
-                >
+                <label key={country} className="flex items-center mr-4 mb-2 cursor-pointer">
                   <input
                     type="checkbox"
                     className="form-checkbox text-blue-600"
