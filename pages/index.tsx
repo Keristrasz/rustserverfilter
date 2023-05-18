@@ -1,12 +1,14 @@
 import SearchResults from "@/components/SearchResults";
-import { useState, useMemo, useEffect, useRef } from "react";
-import { useQuery } from "@tanstack/react-query";
+import React, { useState, useMemo, useEffect, useRef } from "react";
+import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import { ServerPrimaryDataType } from "../utils/mongoosetypescript";
 import { mockData } from "../utils/mock";
 import * as Realm from "realm-web";
 import { useApp } from "../hooks/useApp";
 import Table from "../components/Table";
 import { timeStamp } from "console";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 import SelectCountries from "@/components/SelectCountries";
 import { groupSizeOptions, ratesOptions } from "@/utils/inputData";
@@ -17,6 +19,10 @@ import { calculateDistance, getTime, getTimeUptime } from "@/utils/inputFunction
 interface userLocationType {
   longitude: number;
   latitude: number;
+}
+
+interface SorterType {
+  [key: string]: 1 | -1;
 }
 
 interface Filter {
@@ -74,7 +80,7 @@ function Home() {
 
   //SORTER START
 
-  const [sorter, setSorter] = useState({});
+  const [sorter, setSorter] = useState<SorterType | {}>({});
   const handleSorter = (key: string) => {
     // { born_next: { $gte: nowSeconds }
     if (key === "born") {
@@ -190,8 +196,6 @@ function Home() {
     // console.log(newFilter);
   };
 
-  let projection = { gametype: 0, _id: 0, "rules.description": 0, "rules.url": 0 };
-
   // console.log("index render");
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchName(event.target.value);
@@ -281,32 +285,189 @@ function Home() {
 
   const app = _app;
 
-  const fetchData = async (
-    filter,
-    sorter,
-    projection
-  ): Promise<ServerPrimaryDataType[] | undefined> => {
+  // const fetchData = async (
+  //   filter,
+  //   sorter,
+  //   projection
+  // ): Promise<ServerPrimaryDataType[] | undefined> => {
+  //   console.log("fetching data" + app);
+  //   if (!app) return;
+  //   const mongodb = app.currentUser?.mongoClient("mongodb-atlas");
+  //   if (!mongodb) return;
+  //   const collection = mongodb.db("cluster6").collection("serverprimarycollections");
+  //   const document = await collection.find(filter, {
+  //     projection: projection,
+  //     sort: sorter,
+  //     limit: 30,
+  //   });
+  //   console.log(document);
+  //   return document;
+  // };
+
+  // const getData = useQuery({
+  //   queryKey: ["searchResults", filter, sorter],
+  //   queryFn: () => fetchData(filter, sorter, projection),
+  //   enabled: !!app && !!app.currentUser,
+  //   keepPreviousData: true,
+  // });
+
+  const fetchData = async (filter, sorter, pageParam, pageSize) => {
     console.log("fetching data" + app);
-    if (!app) return;
+
     const mongodb = app.currentUser?.mongoClient("mongodb-atlas");
     if (!mongodb) return;
+
     const collection = mongodb.db("cluster6").collection("serverprimarycollections");
-    const document = await collection.find(filter, {
-      projection: projection,
-      sort: sorter,
-      limit: 30,
-    });
-    console.log(document);
-    return document;
+
+    // "$search": {
+    //   "index": "pagination-tutorial",
+    //   "text": {
+    //     "query": "tom hanks",
+    //     "path": "cast"
+    //   }
+
+    let pipeline = [
+      {
+        $project: {
+          gametype: 0,
+          _id: 0,
+          "rules.description": 0,
+          "rules.url": 0,
+          "rules.seed": 0,
+          "rules.fpv_avg": 0,
+          players_history: 0,
+          gameport: 0,
+        },
+      },
+      {
+        $match: filter,
+      },
+      // {
+      //   $sort: sorter,
+      // },
+      {
+        $facet: {
+          // rows: [
+          //   {
+          //     $skip: pageParam * pageSize || 0,
+          //   },
+          //   {
+          //     $limit: pageSize,
+          //   },
+          // ],
+          totalCount: [
+            {
+              $count: "totalCount",
+            },
+          ],
+          result: [
+            {
+              $skip: pageParam * pageSize || 0,
+            },
+            {
+              $limit: pageSize,
+            },
+          ],
+        },
+      },
+      // {
+      //   $set: {
+      //     totalRows: {
+      //       $arrayElemAt: ["$totalRows.totalDocs", 0],
+      //     },
+      //   },
+      // },
+    ];
+
+    if (JSON.stringify(sorter) !== "{}") {
+      pipeline.splice(2, 0, {
+        $sort: sorter,
+      });
+    }
+
+    console.log(JSON.stringify(sorter) === "{}", pipeline);
+    const [result] = await collection.aggregate(pipeline);
+
+    // const documents = result.rows;
+    // const totalCount = result.totalRows;
+
+    console.log(result);
+    return result;
   };
 
-  const getData = useQuery({
-    queryKey: ["searchResults", filter, sorter],
-    queryFn: () => fetchData(filter, sorter, projection),
-    enabled: !!app && !!app.currentUser,
-    keepPreviousData: true,
-  });
+  const pageSize = 30;
+  const { data, isFetching, error, status, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery(
+      ["searchResults", filter, sorter, pageSize],
+      ({ pageParam }) => fetchData(filter, sorter, pageParam, pageSize),
+      {
+        enabled: !!app && !!app.currentUser,
+        keepPreviousData: true,
+        getNextPageParam: (lastPage, allPages) => {
+          const { result } = lastPage;
+          const totalCount = lastPage.totalCount[0]?.totalCount || 0;
 
+          const totalDocumentsShown = allPages.reduce(
+            (count, page) => count + page.result.length,
+            0
+          );
+
+          console.log(totalDocumentsShown, totalCount);
+          console.log(totalDocumentsShown < totalCount);
+
+          if (totalDocumentsShown < totalCount) {
+            return allPages.length; // Return the next page number
+          }
+
+          return null; // No more pages to fetch
+        },
+      }
+    );
+
+  // Infinite scroll event handler
+  const handleScroll = () => {
+    console.log(hasNextPage);
+    if (
+      window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 50 &&
+      hasNextPage &&
+      !isFetchingNextPage
+    ) {
+      console.log("fetching next page");
+      fetchNextPage();
+    }
+  };
+
+  // const handleScroll = () => {
+  //   const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+  //   if (scrollTop + clientHeight >= scrollHeight) {
+  //     fetchNextPage();
+  //   }
+  // };
+
+  // Debounce function
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func.apply(null, args);
+      }, delay);
+    };
+  };
+
+  // Debounced scroll event handler
+  const debouncedHandleScroll = debounce(handleScroll, 250);
+
+  // Add scroll event listener
+  useEffect(() => {
+    console.log("scroll");
+    window.addEventListener("scroll", debouncedHandleScroll);
+    return () => {
+      window.removeEventListener("scroll", debouncedHandleScroll);
+    };
+  }, [debouncedHandleScroll]);
+
+  // setTimeout(() => console.log(data), 3000);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     updateFilter();
@@ -343,30 +504,36 @@ function Home() {
     setRate([]);
     setMinPlayers("");
     setMaxPlayers("");
+    setMinSize("");
+    setMaxSize("");
     setSearchName("");
     setWipeRotation("");
     setMaxGroupSize([]);
-
     setMaxDistance("");
     setSorter({});
     setExcludeCountries([]);
     setIncludedCountries([]);
     setFilter({ $and: [{ rank: { $gte: 50 } }] });
   };
-
+  const router = useRouter();
   let renderAllResults;
   let resultsName = "Results loaded";
 
-  if (getData.isFetching) resultsName = "Loading results...";
+  if (isFetching) resultsName = "Loading results...";
 
-  if (getData.error instanceof Error)
-    renderAllResults = <div>An error has occurred: {getData.error.message}</div>;
+  if (error instanceof Error)
+    renderAllResults = <div>An error has occurred: {error.message}</div>;
 
-  if (getData.status === "success")
+  if (status === "success")
     renderAllResults = (
-      <div className="overflow-x-auto max-w-[80rem]">
-        <h2 className="text-xl font-bold mb-2">{resultsName}</h2>
-        <table className="table-fixed w-full">
+      <div className="overflow-x-auto max-w-[80rem] m-4 ">
+        <h2
+          onClick={() => router.push("/129.232.159.202:10040")}
+          className="text-xl font-bold mb-2"
+        >
+          {resultsName}
+        </h2>
+        <table className="table-fixed w-full border-collapse rounded-lg ">
           <thead className="bg-gray-50">
             <tr>
               {columnHeadings.map((el) => (
@@ -382,66 +549,85 @@ function Home() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {getData.data?.map((mappedObject: ServerPrimaryDataType) => {
-              return (
-                <tr key={mappedObject.addr}>
-                  <td className="w-1/12 px-1 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                    {mappedObject.addr}
-                  </td>
-                  <td className="w-4/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                    {mappedObject.name}
-                  </td>
-                  <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                    {mappedObject.rank}
-                  </td>
-                  <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                    {getTime(mappedObject.born_next)}
-                  </td>
-                  <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                    {getTime(mappedObject.born)}
-                  </td>
-                  <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                    {getTimeUptime(mappedObject.rules?.uptime)}
-                  </td>
-                  <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                    {mappedObject.rate}
-                  </td>
-
-                  <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                    {mappedObject.max_group_size}
-                  </td>
-                  <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                    {mappedObject.players}
-                  </td>
-                  <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                    {mappedObject.rules?.location?.country}
-                  </td>
-                  <td className="w-2/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                    {userLocation &&
-                    mappedObject.rules?.location?.latitude &&
-                    mappedObject.rules?.location?.longitude
-                      ? calculateDistance(
-                          mappedObject.rules?.location?.latitude,
-                          mappedObject.rules?.location?.longitude,
-                          userLocation.latitude,
-                          userLocation.longitude
-                        )
-                      : "not known"}
+            {data.pages.map((page, pageIndex) => (
+              <React.Fragment key={pageIndex}>
+                <tr>
+                  {/* Empty row with border */}
+                  <td
+                    className="text-xs relative border-t text-center bg-indigo-200"
+                    colSpan={11}
+                  >
+                    NEW DATA
                   </td>
                 </tr>
-              );
-            })}
+
+                {page.result.map((mappedObject: ServerPrimaryDataType) => {
+                  return (
+                    <Link
+                      key={mappedObject.addr}
+                      href={`/${mappedObject.addr}`}
+                      className="table-row"
+                    >
+                      {/* <tr key={mappedObject.addr}> */}
+                      <td className="w-1/12 px-1 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                        {mappedObject.addr}
+                      </td>
+                      <td className="w-4/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                        {mappedObject.name}
+                      </td>
+                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                        {mappedObject.rank}
+                      </td>
+                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                        {getTime(mappedObject.born_next)}
+                      </td>
+                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                        {getTime(mappedObject.born)}
+                      </td>
+                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                        {getTimeUptime(mappedObject.rules?.uptime)}
+                      </td>
+                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                        {mappedObject.rate}
+                      </td>
+                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                        {mappedObject.max_group_size}
+                      </td>
+                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                        {mappedObject.players}
+                      </td>
+                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                        {mappedObject.rules?.location?.country}
+                      </td>
+                      <td className="w-2/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                        {userLocation &&
+                        mappedObject.rules?.location?.latitude &&
+                        mappedObject.rules?.location?.longitude
+                          ? calculateDistance(
+                              mappedObject.rules?.location?.latitude,
+                              mappedObject.rules?.location?.longitude,
+                              userLocation.latitude,
+                              userLocation.longitude
+                            )
+                          : "not known"}
+                      </td>
+                      {/* </tr> */}
+                    </Link>
+                  );
+                })}
+              </React.Fragment>
+            ))}
           </tbody>
         </table>
       </div>
     );
 
   return (
-    <div className="flex flex-col items-center min-h-screen">
+    <div className="flex flex-col items-center min-h-screen ">
       <header className="w-full bg-blue-500 text-white py-4 px-6">
         <h1 className="text-2xl font-bold">Search Form</h1>
       </header>
-      <form onSubmit={handleSubmit} className="bg-gray-100 rounded-lg p-6 space-y-6">
+      <form onSubmit={handleSubmit} className="bg-gray-100 rounded-lg p-6 space-y-6 m-4">
         <div className="flex flex-wrap justify-between items-center">
           <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 mb-4 sm:mb-0">
             <label htmlFor="search" className="block text-gray-700 font-medium mb-2">
@@ -457,7 +643,7 @@ function Home() {
           </div>
           <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 mb-4 sm:mb-0">
             <label htmlFor="minPlayers" className="block text-gray-700 font-medium mb-2">
-              Min. Players
+              Players
             </label>
             <div className="flex items-center">
               <input
@@ -467,15 +653,35 @@ function Home() {
                 value={minPlayers}
                 onChange={handleMinPlayersChange}
               />
-              <label htmlFor="minPlayers" className="block text-gray-700 font-medium mb-2">
-                Max. Players
-              </label>
+              <span className="text-gray-700">to</span>
               <input
                 id="maxPlayers"
                 type="number"
-                className="form-input rounded-md shadow-sm mt-1 block w-1/2"
+                className="form-input rounded-md shadow-sm mt-1 block w-1/2 ml-2"
                 value={maxPlayers}
                 onChange={handleMaxPlayersChange}
+              />
+            </div>
+          </div>
+          <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 mb-4 sm:mb-0">
+            <label htmlFor="minPlayers" className="block text-gray-700 font-medium mb-2">
+              Size
+            </label>
+            <div className="flex items-center">
+              <input
+                id="minSize"
+                type="number"
+                className="form-input rounded-md shadow-sm mt-1 block w-1/2 mr-2"
+                value={minSize}
+                onChange={handleMinSizeChange}
+              />
+              <span className="text-gray-700">to</span>
+              <input
+                id="maxSize"
+                type="number"
+                className="form-input rounded-md shadow-sm mt-1 block w-1/2 ml-2"
+                value={maxSize}
+                onChange={handleMaxSizeChange}
               />
             </div>
           </div>
@@ -491,33 +697,9 @@ function Home() {
               onChange={handleMaxDistanceChange}
             />
           </div>
-          <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 mb-4 sm:mb-0">
-            <label htmlFor="minPlayers" className="block text-gray-700 font-medium mb-2">
-              Min. Size
-            </label>
-            <div className="flex items-center">
-              <input
-                id="minSize"
-                type="number"
-                className="form-input rounded-md shadow-sm mt-1 block w-1/2 mr-2"
-                value={minSize}
-                onChange={handleMinSizeChange}
-              />
-              <label htmlFor="minPlayers" className="block text-gray-700 font-medium mb-2">
-                Max. Size
-              </label>
-              <input
-                id="maxSize"
-                type="number"
-                className="form-input rounded-md shadow-sm mt-1 block w-1/2"
-                value={maxSize}
-                onChange={handleMaxSizeChange}
-              />
-            </div>
-          </div>
         </div>
         <div>
-          <fieldset>
+          <fieldset className="mt-6">
             <legend className="block text-gray-700 font-medium mb-2">Rates</legend>
             <div className="flex flex-wrap">
               {ratesOptions.map((el) => (
@@ -534,7 +716,7 @@ function Home() {
               ))}
             </div>
           </fieldset>
-          <fieldset>
+          <fieldset className="mt-6">
             <legend className="block text-gray-700 font-medium mb-2">Group size</legend>
             <div className="flex flex-wrap">
               {groupSizeOptions.map((option) => (
@@ -565,7 +747,7 @@ function Home() {
         </div>
         <button
           type="submit"
-          disabled={getData.isFetching}
+          disabled={isFetching}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           Search
