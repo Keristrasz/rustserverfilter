@@ -2,18 +2,17 @@ import SearchResults from "@/components/SearchResults";
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import { ServerPrimaryDataType } from "../utils/mongoosetypescript";
-import { mockData } from "../utils/mock";
-import * as Realm from "realm-web";
-import { useApp } from "../hooks/useApp";
+import useUserAuth from "../hooks/useUserAuth";
 import Table from "../components/Table";
 import { timeStamp } from "console";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
+import { fetchData } from "@/utils/fetchData";
 import SelectCountries from "@/components/SelectCountries";
 import { groupSizeOptions, ratesOptions } from "@/utils/inputData";
 import { calculateDistance, getTime, getTimeUptime } from "@/utils/inputFunctions";
-
+import useCustomInfiniteQuery from "@/hooks/useCustomInfiniteQuery";
+import { useQueryClient } from "@tanstack/react-query";
 //TODO Distance sort by loaded data
 
 interface userLocationType {
@@ -49,7 +48,6 @@ function Home() {
 
   const [includedCountries, setIncludedCountries] = useState<string[]>([]);
   const [excludedCountries, setExcludeCountries] = useState<string[]>([]);
-  console.log(includedCountries, excludedCountries);
 
   const [userLocation, setUserLocation] = useState<userLocationType | null>(null);
 
@@ -79,7 +77,7 @@ function Home() {
   }, [userLocation]);
 
   //SORTER START
-
+  console.log(includedCountries, excludedCountries);
   const [sorter, setSorter] = useState<SorterType | {}>({});
   const handleSorter = (key: string) => {
     // { born_next: { $gte: nowSeconds }
@@ -145,7 +143,8 @@ function Home() {
   //SORTER END
   const roundBySeconds = 100;
   const nowMiliseconds = new Date().getTime();
-  const nowSeconds = Math.floor(nowMiliseconds / 1000 / roundBySeconds) * roundBySeconds - 100;
+  const nowSeconds =
+    Math.floor(nowMiliseconds / 1000 / roundBySeconds) * roundBySeconds - 100;
   const timestampTenMonthsAgo =
     Math.floor((nowMiliseconds / 1000 - 28000000) / roundBySeconds) * roundBySeconds;
 
@@ -163,7 +162,9 @@ function Home() {
     maxPlayers ? newFilter.$and.push({ players: { $lte: maxPlayers } }) : null;
     minSize ? newFilter.$and.push({ "rules.size": { $gte: minSize } }) : null;
     maxSize ? newFilter.$and.push({ "rules.size": { $lte: maxSize } }) : null;
-    searchName ? newFilter.$and.push({ name: { $regex: searchName, $options: "i" } }) : null;
+    searchName
+      ? newFilter.$and.push({ name: { $regex: searchName, $options: "i" } })
+      : null;
     maxGroupSize.length !== 0
       ? newFilter.$and.push({ max_group_size: { $in: maxGroupSize } })
       : null;
@@ -263,166 +264,19 @@ function Home() {
     console.log(numberValue);
   };
 
-  const auth = async () => {
-    const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID);
-    if (app && !app.currentUser) {
-      console.log("app && !app.currentUser");
-      //this creates new user I guess
-      const anonymousUser = Realm.Credentials.anonymous();
-      await app.logIn(anonymousUser);
-    }
-    return app;
-  };
-
-  //is useQuery necessary though here?
-  const { data: _app } = useQuery({
-    queryKey: ["userAuth"],
-    queryFn: auth,
-    keepPreviousData: true,
-    cacheTime: 1000 * 999999,
-    staleTime: 1000 * 999999,
-  });
-
-  const app = _app;
-
-  // const fetchData = async (
-  //   filter,
-  //   sorter,
-  //   projection
-  // ): Promise<ServerPrimaryDataType[] | undefined> => {
-  //   console.log("fetching data" + app);
-  //   if (!app) return;
-  //   const mongodb = app.currentUser?.mongoClient("mongodb-atlas");
-  //   if (!mongodb) return;
-  //   const collection = mongodb.db("cluster6").collection("serverprimarycollections");
-  //   const document = await collection.find(filter, {
-  //     projection: projection,
-  //     sort: sorter,
-  //     limit: 30,
-  //   });
-  //   console.log(document);
-  //   return document;
-  // };
-
-  // const getData = useQuery({
-  //   queryKey: ["searchResults", filter, sorter],
-  //   queryFn: () => fetchData(filter, sorter, projection),
-  //   enabled: !!app && !!app.currentUser,
-  //   keepPreviousData: true,
-  // });
-
-  const fetchData = async (filter, sorter, pageParam, pageSize) => {
-    console.log("fetching data" + app);
-
-    const mongodb = app.currentUser?.mongoClient("mongodb-atlas");
-    if (!mongodb) return;
-
-    const collection = mongodb.db("cluster6").collection("serverprimarycollections");
-
-    // "$search": {
-    //   "index": "pagination-tutorial",
-    //   "text": {
-    //     "query": "tom hanks",
-    //     "path": "cast"
-    //   }
-
-    let pipeline = [
-      {
-        $project: {
-          gametype: 0,
-          _id: 0,
-          "rules.description": 0,
-          "rules.url": 0,
-          "rules.seed": 0,
-          "rules.fpv_avg": 0,
-          players_history: 0,
-          gameport: 0,
-        },
-      },
-      {
-        $match: filter,
-      },
-      // {
-      //   $sort: sorter,
-      // },
-      {
-        $facet: {
-          // rows: [
-          //   {
-          //     $skip: pageParam * pageSize || 0,
-          //   },
-          //   {
-          //     $limit: pageSize,
-          //   },
-          // ],
-          totalCount: [
-            {
-              $count: "totalCount",
-            },
-          ],
-          result: [
-            {
-              $skip: pageParam * pageSize || 0,
-            },
-            {
-              $limit: pageSize,
-            },
-          ],
-        },
-      },
-      // {
-      //   $set: {
-      //     totalRows: {
-      //       $arrayElemAt: ["$totalRows.totalDocs", 0],
-      //     },
-      //   },
-      // },
-    ];
-
-    if (JSON.stringify(sorter) !== "{}") {
-      pipeline.splice(2, 0, {
-        $sort: sorter,
-      });
-    }
-
-    console.log(JSON.stringify(sorter) === "{}", pipeline);
-    const [result] = await collection.aggregate(pipeline);
-
-    // const documents = result.rows;
-    // const totalCount = result.totalRows;
-
-    console.log(result);
-    return result;
-  };
+  const app = useUserAuth();
 
   const pageSize = 30;
-  const { data, isFetching, error, status, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(
-      ["searchResults", filter, sorter, pageSize],
-      ({ pageParam }) => fetchData(filter, sorter, pageParam, pageSize),
-      {
-        enabled: !!app && !!app.currentUser,
-        keepPreviousData: true,
-        getNextPageParam: (lastPage, allPages) => {
-          const { result } = lastPage;
-          const totalCount = lastPage.totalCount[0]?.totalCount || 0;
 
-          const totalDocumentsShown = allPages.reduce(
-            (count, page) => count + page.result.length,
-            0
-          );
-
-          console.log(totalDocumentsShown, totalCount);
-          console.log(totalDocumentsShown < totalCount);
-
-          if (totalDocumentsShown < totalCount) {
-            return allPages.length; // Return the next page number
-          }
-
-          return null; // No more pages to fetch
-        },
-      }
-    );
+  const {
+    data,
+    isFetching,
+    error,
+    status,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useCustomInfiniteQuery(filter, sorter, pageSize, app);
 
   // Infinite scroll event handler
   const handleScroll = () => {
@@ -436,13 +290,6 @@ function Home() {
       fetchNextPage();
     }
   };
-
-  // const handleScroll = () => {
-  //   const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-  //   if (scrollTop + clientHeight >= scrollHeight) {
-  //     fetchNextPage();
-  //   }
-  // };
 
   // Debounce function
   const debounce = (func, delay) => {
@@ -467,13 +314,9 @@ function Home() {
     };
   }, [debouncedHandleScroll]);
 
-  // setTimeout(() => console.log(data), 3000);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     updateFilter();
-
-    // getData.refetch();
-    // fetchData(filter, sorter, projection);
   };
 
   const columnHeadings = [
@@ -738,12 +581,22 @@ function Home() {
           </fieldset>
         </div>
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Include Countries</label>
-          <SelectCountries countries={includedCountries} setCountries={setIncludedCountries} />
+          <label className="block text-gray-700 font-medium mb-2">
+            Include Countries
+          </label>
+          <SelectCountries
+            countries={includedCountries}
+            setCountries={setIncludedCountries}
+          />
         </div>
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Exclude Countries</label>
-          <SelectCountries countries={excludedCountries} setCountries={setExcludeCountries} />
+          <label className="block text-gray-700 font-medium mb-2">
+            Exclude Countries
+          </label>
+          <SelectCountries
+            countries={excludedCountries}
+            setCountries={setExcludeCountries}
+          />
         </div>
         <button
           type="submit"

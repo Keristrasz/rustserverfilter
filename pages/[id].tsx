@@ -1,12 +1,21 @@
+import React from "react";
+import { useRouter } from "next/router";
 
-
-import React from 'react';
-import { useRouter } from 'next/router';
+import { useQueryClient } from "@tanstack/react-query";
+import useCustomInfiniteQuery from "@/hooks/useCustomInfiniteQuery";
 
 const ServerPage = () => {
+  //   const {
+  //     data,
+  //     isFetching,
+  //     error,
+  //     status,
+  //     fetchNextPage,
+  //     hasNextPage,
+  //     isFetchingNextPage,
+  //   } = useCustomInfiniteQuery(filter, sorter, pageSize, app);
   const router = useRouter();
   const { id } = router.query;
-
   return (
     <div>
       <h1>Server Details</h1>
@@ -17,21 +26,11 @@ const ServerPage = () => {
 
 export default ServerPage;
 
-
-
-
-
-
-
-
-
-
 // import React from 'react';
 // import { useRouter } from 'next/router';
 
 // // Import other components or functions as needed
 // // ...
-
 
 // const ServerDetailsPage = () => {
 //   const router = useRouter();
@@ -52,13 +51,12 @@ export default ServerPage;
 
 // export default ServerDetailsPage;
 
-
 // const PostView = () => {
 //     const router = useRouter();
 //     const { postId } = router.query;
-  
+
 //     const { data: fetchedPost, isLoading } = usePost(postId as string);
-  
+
 //     if (isLoading || !fetchedPost) {
 //       return (
 //         <div className="flex justify-center items-center h-full">
@@ -66,7 +64,7 @@ export default ServerPage;
 //         </div>
 //       );
 //     }
-  
+
 //     return (
 //       <>
 //         <Header showBackArrow label="Tweet" />
@@ -76,6 +74,5 @@ export default ServerPage;
 //       </>
 //     );
 //   };
-  
+
 //   export default PostView;
-  
