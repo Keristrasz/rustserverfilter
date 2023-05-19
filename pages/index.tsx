@@ -220,7 +220,6 @@ function Home() {
                   className={`w-${el.width} px-5 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider`}
                 >
                   {el.name}
-
                   {sorter[el.value] === 1 ? "->" : sorter[el.value] === -1 ? "<-" : null}
                 </th>
               ))}
