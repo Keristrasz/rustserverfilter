@@ -1,4 +1,40 @@
-export const fetchData = async (filter, sorter, pageParam, pageSize, app) => {
+import { SorterType, FilterType } from "../utils/typesTypescript";
+
+type PipelineType = {
+  $project?: {
+    [field: string]: 0;
+  };
+  $match?: any;
+  $facet?: {
+    totalCount: [
+      {
+        $count: string;
+      }
+    ];
+    result: [
+      {
+        $skip?: number;
+      },
+      {
+        $limit: number;
+      }
+    ];
+  };
+  $set?: {
+    totalRows: {
+      $arrayElemAt: [string[], number];
+    };
+  };
+  $sort?: any;
+}[];
+
+export const fetchData = async (
+  filter: FilterType,
+  sorter: SorterType,
+  pageParam: number,
+  pageSize: number,
+  app: any
+) => {
   console.log("fetching data" + app);
 
   const mongodb = app.currentUser?.mongoClient("mongodb-atlas");
@@ -13,7 +49,7 @@ export const fetchData = async (filter, sorter, pageParam, pageSize, app) => {
   //     "path": "cast"
   //   }
 
-  let pipeline = [
+  let pipeline: PipelineType = [
     {
       $project: {
         gametype: 0,

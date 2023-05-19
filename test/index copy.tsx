@@ -1,7 +1,7 @@
-import SearchResults from "@/components/SearchResults";
+import SearchResults from "@/test/SearchResults";
 import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { ServerPrimaryData } from "../utils/mongoosetypescript";
+import { ServerPrimaryData } from "../utils/typesTypescript";
 
 function Home() {
   const [search, setSearch] = useState("");

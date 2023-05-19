@@ -1,46 +1,24 @@
-import SearchResults from "@/components/SearchResults";
 import React, { useState, useMemo, useEffect, useRef } from "react";
-import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
-import { ServerPrimaryDataType } from "../utils/mongoosetypescript";
+
+import {
+  ServerPrimaryDataType,
+  userLocationType,
+  SorterType,
+  FilterType,
+} from "../utils/typesTypescript";
 import useUserAuth from "../hooks/useUserAuth";
-import Table from "../components/Table";
-import { timeStamp } from "console";
+
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { fetchData } from "@/utils/fetchData";
+
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+
 import SelectCountries from "@/components/SelectCountries";
 import { groupSizeOptions, ratesOptions } from "@/utils/inputData";
 import { calculateDistance, getTime, getTimeUptime } from "@/utils/inputFunctions";
 import useCustomInfiniteQuery from "@/hooks/useCustomInfiniteQuery";
-import { useQueryClient } from "@tanstack/react-query";
+import useSorter from "@/hooks/useSorter";
+import useFilter from "@/hooks/useFilter";
 //TODO Distance sort by loaded data
-
-interface userLocationType {
-  longitude: number;
-  latitude: number;
-}
-
-interface SorterType {
-  [key: string]: 1 | -1;
-}
-
-interface Filter {
-  $and: {
-    rank?: { $gte: number };
-    "rules.size"?: { $gte?: number; $lte?: number };
-    wipe_rotation?: string;
-    players?: { $gte?: number; $lte?: number };
-    name?: { $regex: string; $options: string };
-    max_group_size?: { $in: number[] };
-    rate?: { $in: number[] };
-    "rules.location.country"?: { $in?: string[]; $nin?: string[] };
-    "rules.location"?: {
-      $geoWithin?: {
-        $centerSphere: [number[], number];
-      };
-    };
-  }[];
-}
 
 function Home() {
   const [minSize, setMinSize] = useState<number | string>("");
@@ -76,125 +54,32 @@ function Home() {
     //console.error("Geolocation is not supported by this browser.");
   }, [userLocation]);
 
-  //SORTER START
   console.log(includedCountries, excludedCountries);
+  //SORTER START
   const [sorter, setSorter] = useState<SorterType | {}>({});
-  const handleSorter = (key: string) => {
-    // { born_next: { $gte: nowSeconds }
-    if (key === "born") {
-      setFilter((prevValue) => {
-        console.log(prevValue);
-        console.log(prevValue.$and);
-        if (!prevValue.$and.some((el) => el.born)) {
-          let newValue = { ...prevValue };
-          newValue.$and = newValue.$and.filter((el) => !el.born_next);
-          newValue.$and.push({ born: { $lte: nowSeconds, $gte: timestampTenMonthsAgo } });
-          console.log("newValue = " + JSON.stringify(newValue));
-          return newValue;
-        }
-        return prevValue;
-      });
-    } else if (key === "born_next") {
-      setFilter((prevValue) => {
-        console.log(prevValue);
-        console.log(prevValue.$and);
-        if (!prevValue.$and.some((el) => el.born_next)) {
-          let newValue = { ...prevValue };
-          newValue.$and = newValue.$and.filter((el) => !el.born);
-          newValue.$and.push({ born_next: { $gte: nowSeconds } });
-          console.log("newValue = " + JSON.stringify(newValue));
-          return newValue;
-        }
-        return prevValue;
-      });
-    } else if (
-      key === "rules.location.longitude" ||
-      key === "rules.location.country" ||
-      key === "addr" ||
-      key === "uptime"
-    ) {
-      return;
-    } else {
-      setFilter((prevValue) => {
-        console.log(prevValue);
-        console.log(prevValue.$and);
-        let updatedValue = { ...prevValue };
-        updatedValue.$and = updatedValue.$and.filter((el) => !el.born && !el.born_next);
-        console.log("updatedValue = " + JSON.stringify(updatedValue));
-        return updatedValue;
-      });
-    }
-    setSorter((prevSorter) => {
-      // Check if the key already exists in the sorter
-      if (prevSorter.hasOwnProperty(key)) {
-        // Toggle the sort direction by multiplying the value by -1
-        const newSortValue = prevSorter[key] * -1;
-        // Remove the key if the sort direction is 1 (ascending)
-        console.log(sorter);
-        return { [key]: newSortValue }; //=== 1 ? {} : { [key]: newSortValue };
-      } else {
-        // Add the key with a default sort direction of -1 (descending)
-        console.log(sorter);
-        return { [key]: -1 };
-      }
-    });
-  };
-
-  //SORTER END
-  const roundBySeconds = 100;
-  const nowMiliseconds = new Date().getTime();
-  const nowSeconds =
-    Math.floor(nowMiliseconds / 1000 / roundBySeconds) * roundBySeconds - 100;
-  const timestampTenMonthsAgo =
-    Math.floor((nowMiliseconds / 1000 - 28000000) / roundBySeconds) * roundBySeconds;
-
-  const [filter, setFilter] = useState<Filter>({
+  const [filter, setFilter] = useState<FilterType>({
     $and: [{ rank: { $gte: 50 } }],
   });
 
-  const updateFilter = () => {
-    let newFilter: Filter = {
-      $and: [{ rank: { $gte: 50 } }],
-    };
+  const { handleSorter } = useSorter(setFilter, setSorter);
+  const { updateFilter } = useFilter(setFilter);
 
-    wipeRotation ? newFilter.$and.push({ wipe_rotation: wipeRotation }) : null;
-    minPlayers ? newFilter.$and.push({ players: { $gte: minPlayers } }) : null;
-    maxPlayers ? newFilter.$and.push({ players: { $lte: maxPlayers } }) : null;
-    minSize ? newFilter.$and.push({ "rules.size": { $gte: minSize } }) : null;
-    maxSize ? newFilter.$and.push({ "rules.size": { $lte: maxSize } }) : null;
-    searchName
-      ? newFilter.$and.push({ name: { $regex: searchName, $options: "i" } })
-      : null;
-    maxGroupSize.length !== 0
-      ? newFilter.$and.push({ max_group_size: { $in: maxGroupSize } })
-      : null;
-    rate.length !== 0 ? newFilter.$and.push({ rate: { $in: rate } }) : null;
-    includedCountries.length !== 0 && excludedCountries.length === 0
-      ? newFilter.$and.push({ "rules.location.country": { $in: includedCountries } })
-      : null;
-    excludedCountries.length !== 0 && includedCountries.length === 0
-      ? newFilter.$and.push({ "rules.location.country": { $nin: excludedCountries } })
-      : null;
-    includedCountries.length !== 0 && excludedCountries.length !== 0
-      ? alert("There can be only included or excluded countries at once")
-      : null;
-
-    maxDistance && userLocation
-      ? newFilter.$and.push({
-          "rules.location": {
-            $geoWithin: {
-              $centerSphere: [
-                [userLocation.latitude, userLocation.longitude],
-                Number(parseFloat(maxDistance / 6371).toFixed(6)),
-              ],
-            },
-          },
-        })
-      : null;
-    //parseFloat(latitude.toFixed(4))
-    console.log(newFilter);
-    setFilter(newFilter);
-    // console.log(newFilter);
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    updateFilter(
+      wipeRotation,
+      minPlayers,
+      maxPlayers,
+      minSize,
+      maxSize,
+      searchName,
+      maxGroupSize,
+      rate,
+      includedCountries,
+      excludedCountries,
+      maxDistance,
+      userLocation
+    );
   };
 
   // console.log("index render");
@@ -268,56 +153,10 @@ function Home() {
 
   const pageSize = 30;
 
-  const {
-    data,
-    isFetching,
-    error,
-    status,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useCustomInfiniteQuery(filter, sorter, pageSize, app);
+  const { data, isFetching, error, status, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useCustomInfiniteQuery(filter, sorter, pageSize, app);
 
-  // Infinite scroll event handler
-  const handleScroll = () => {
-    console.log(hasNextPage);
-    if (
-      window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 50 &&
-      hasNextPage &&
-      !isFetchingNextPage
-    ) {
-      console.log("fetching next page");
-      fetchNextPage();
-    }
-  };
-
-  // Debounce function
-  const debounce = (func, delay) => {
-    let timeoutId;
-    return (...args) => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        func.apply(null, args);
-      }, delay);
-    };
-  };
-
-  // Debounced scroll event handler
-  const debouncedHandleScroll = debounce(handleScroll, 250);
-
-  // Add scroll event listener
-  useEffect(() => {
-    console.log("scroll");
-    window.addEventListener("scroll", debouncedHandleScroll);
-    return () => {
-      window.removeEventListener("scroll", debouncedHandleScroll);
-    };
-  }, [debouncedHandleScroll]);
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    updateFilter();
-  };
+  useInfiniteScroll(hasNextPage, isFetchingNextPage, fetchNextPage);
 
   const columnHeadings = [
     {
@@ -358,7 +197,7 @@ function Home() {
     setIncludedCountries([]);
     setFilter({ $and: [{ rank: { $gte: 50 } }] });
   };
-  const router = useRouter();
+
   let renderAllResults;
   let resultsName = "Results loaded";
 
@@ -370,13 +209,8 @@ function Home() {
   if (status === "success")
     renderAllResults = (
       <div className="overflow-x-auto max-w-[80rem] m-4 ">
-        <h2
-          onClick={() => router.push("/129.232.159.202:10040")}
-          className="text-xl font-bold mb-2"
-        >
-          {resultsName}
-        </h2>
-        <table className="table-fixed w-full border-collapse rounded-lg ">
+        <h2 className="text-xl font-bold mb-2">{resultsName}</h2>
+        <table className="table-fixed w-full">
           <thead className="bg-gray-50">
             <tr>
               {columnHeadings.map((el) => (
@@ -386,13 +220,14 @@ function Home() {
                   className={`w-${el.width} px-5 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider`}
                 >
                   {el.name}
+
                   {sorter[el.value] === 1 ? "->" : sorter[el.value] === -1 ? "<-" : null}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {data.pages.map((page, pageIndex) => (
+            {data?.pages.map((page, pageIndex) => (
               <React.Fragment key={pageIndex}>
                 <tr>
                   {/* Empty row with border */}
@@ -428,7 +263,9 @@ function Home() {
                         {getTime(mappedObject.born)}
                       </td>
                       <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                        {getTimeUptime(mappedObject.rules?.uptime)}
+                        {mappedObject.rules?.uptime
+                          ? getTimeUptime(mappedObject.rules?.uptime)
+                          : "N/A"}
                       </td>
                       <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                         {mappedObject.rate}
@@ -581,22 +418,12 @@ function Home() {
           </fieldset>
         </div>
         <div>
-          <label className="block text-gray-700 font-medium mb-2">
-            Include Countries
-          </label>
-          <SelectCountries
-            countries={includedCountries}
-            setCountries={setIncludedCountries}
-          />
+          <label className="block text-gray-700 font-medium mb-2">Include Countries</label>
+          <SelectCountries countries={includedCountries} setCountries={setIncludedCountries} />
         </div>
         <div>
-          <label className="block text-gray-700 font-medium mb-2">
-            Exclude Countries
-          </label>
-          <SelectCountries
-            countries={excludedCountries}
-            setCountries={setExcludeCountries}
-          />
+          <label className="block text-gray-700 font-medium mb-2">Exclude Countries</label>
+          <SelectCountries countries={excludedCountries} setCountries={setExcludeCountries} />
         </div>
         <button
           type="submit"

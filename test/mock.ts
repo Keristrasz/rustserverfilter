@@ -1,4 +1,4 @@
-import { ServerPrimaryData } from "./mongoosetypescript";
+import { ServerPrimaryData } from "../utils/typesTypescript";
 
 export const mockData: Array<ServerPrimaryData> = [
   {

@@ -1,11 +1,11 @@
-import SearchResults from "@/components/SearchResults";
+import SearchResults from "@/test/SearchResults";
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
-import { ServerPrimaryDataType } from "../utils/mongoosetypescript";
-import { mockData } from "../utils/mock";
+import { ServerPrimaryDataType } from "../utils/typesTypescript";
+import { mockData } from "./mock";
 import * as Realm from "realm-web";
 import { useApp } from "../hooks/useApp";
-import Table from "../components/Table";
+import Table from "./Table";
 import { timeStamp } from "console";
 
 import SelectCountries from "@/components/SelectCountries";

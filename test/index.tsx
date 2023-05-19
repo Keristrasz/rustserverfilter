@@ -1,4 +1,4 @@
-import SearchResults from "@/components/SearchResults";
+import SearchResults from "@/test/SearchResults";
 import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 

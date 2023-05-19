@@ -4,6 +4,9 @@ function toRadians(degrees: number) {
 
 export function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
   const earthRadius = 6371; // Radius of the Earth in kilometers
+
+  const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
+
   const dLat = toRadians(lat2 - lat1);
   const dLon = toRadians(lon2 - lon1);
 
@@ -15,14 +18,17 @@ export function calculateDistance(lat1: number, lon1: number, lat2: number, lon2
       Math.sin(dLon / 2);
 
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const distance = Math.ceil(earthRadius * c);
+  const distance = Math.floor(earthRadius * c);
 
   return distance;
 }
 
 export function getTime(timestamp: number) {
+  if (timestamp == null) {
+    return "Not provided by server";
+  }
   if (timestamp < 1652630662) {
-    return "Unknown";
+    return "Too soon / too long ago";
   }
   const date = new Date(timestamp * 1000);
 

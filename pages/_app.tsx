@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { useApp } from "../hooks/useApp";
+// import { useApp } from "../hooks/useApp";
 import { useEffect } from "react";
 import * as Realm from "realm-web";
 

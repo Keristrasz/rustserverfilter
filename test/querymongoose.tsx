@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useQuery, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import mongoose from "mongoose";
-import { ServerPrimaryDataModel } from "../utils/mongoosemodel";
-import { ServerPrimaryData } from "../utils/mongoosetypescript";
+import { ServerPrimaryDataModel } from "./mongoosemodel";
+import { ServerPrimaryData } from "../utils/typesTypescript";
 
 async function getFirstTenObjects(): Promise<ServerPrimaryData[]> {
   try {
