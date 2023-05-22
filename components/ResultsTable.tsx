@@ -1,32 +1,89 @@
 import React from "react";
+import { useRouter } from "next/router";
+import { calculateDistance, getTime, getTimeUptime } from "@/utils/inputFunctions";
+import { ServerPrimaryDataType } from "@/utils/typesTypescript";
 
-function Results() {
+interface ResultsTableProps {
+  isFetching: boolean;
+  error: Error | null;
+  status: string;
+  updateSorter: (value: string) => void;
+  sorter: { [key: string]: number };
+  data: { pages: { result: ServerPrimaryDataType[] }[] } | undefined;
+  userLocation: { latitude: number; longitude: number } | null;
+}
+
+const columnHeadings = [
+  {
+    width: "1/12",
+    isClickable: false,
+    name: "IP",
+    value: "addr",
+  },
+  { isClickable: false, width: "1/12", name: "Name", value: "name" },
+  { isClickable: true, width: "1/12", name: "Rank", value: "rank" },
+  { isClickable: true, width: "2/12", name: "Next Wipe", value: "born_next" },
+  { isClickable: true, width: "2/12", name: "Wiped", value: "born" },
+  { isClickable: false, width: "1/12", name: "Uptime", value: "uptime" },
+  { isClickable: true, width: "1/12", name: "Rate", value: "rate" },
+  { isClickable: true, width: "1/12", name: "Group size", value: "max_group_size" },
+  { isClickable: true, width: "1/12", name: "Players", value: "players" },
+  { isClickable: false, width: "1/12", name: "Country", value: "rules.location.country" },
+  {
+    isClickable: false,
+    width: "2/12",
+    name: "Distance",
+    value: "rules.location.longitude",
+  },
+];
+
+const ResultsTable: React.FC<ResultsTableProps> = ({
+  isFetching,
+  error,
+  status,
+  updateSorter,
+  sorter,
+  data,
+  userLocation,
+}) => {
+  const router = useRouter();
   let renderAllResults;
   let resultsName = "Results loaded";
 
-  if (isFetching) resultsName = "Loading results...";
+  if (isFetching) {
+    resultsName = "Loading results...";
+  }
 
-  if (error instanceof Error)
+  if (error instanceof Error) {
     renderAllResults = <div>An error has occurred: {error.message}</div>;
+  }
 
-  if (status === "success")
+  if (status === "success") {
     renderAllResults = (
-      <div className="overflow-x-auto max-w-[80rem] m-4 ">
+      <div className="overflow-x-auto max-w-[80rem] m-4">
         <h2 className="text-xl font-bold mb-2">{resultsName}</h2>
-        <table className="table-fixed w-full border-collapse rounded-lg ">
+        <table className="table-fixed w-full">
           <thead className="bg-gray-50">
             <tr>
-              {columnHeadings.map((el) => (
-                <th
-                  onClick={() => handleSorter(el.value)}
-                  key={el.value}
-                  className={`w-${el.width} px-5 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider`}
-                >
-                  {el.name}
-
-                  {sorter[el.value] === 1 ? "->" : sorter[el.value] === -1 ? "<-" : null}
-                </th>
-              ))}
+              {columnHeadings.map((el) =>
+                el.isClickable ? (
+                  <th
+                    onClick={() => updateSorter(el.value)}
+                    key={el.value}
+                    className={`w-${el.width} px-5 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hover:cursor-pointer`}
+                  >
+                    {el.name}
+                    {sorter[el.value] === 1 ? "->" : sorter[el.value] === -1 ? "<-" : null}
+                  </th>
+                ) : (
+                  <th
+                    key={el.value}
+                    className={`w-${el.width} px-5 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider`}
+                  >
+                    {el.name}
+                  </th>
+                )
+              )}
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -42,20 +99,29 @@ function Results() {
                   </td>
                 </tr>
 
-                {page.result.map((mappedObject: ServerPrimaryDataType) => {
+                {page.result.map((mappedObject) => {
                   return (
-                    <Link
+                    <tr
                       key={mappedObject.addr}
-                      href={`/${mappedObject.addr}`}
-                      className="table-row"
+                      className="hover:bg-sky-500 clickable-row cursor-pointer"
+                      onClick={() => {
+                        router.push(`/${mappedObject.addr}`);
+                      }}
+                      role="link"
                     >
-                      {/* <tr key={mappedObject.addr}> */}
                       <td className="w-1/12 px-1 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                         {mappedObject.addr}
                       </td>
+
                       <td className="w-4/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                         {mappedObject.name}
+                        <noscript>
+                          <a href={`/${mappedObject.addr}`} className="table-row">
+                            {mappedObject.addr}
+                          </a>
+                        </noscript>
                       </td>
+
                       <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                         {mappedObject.rank}
                       </td>
@@ -94,8 +160,7 @@ function Results() {
                             )
                           : "not known"}
                       </td>
-                      {/* </tr> */}
-                    </Link>
+                    </tr>
                   );
                 })}
               </React.Fragment>
@@ -104,7 +169,9 @@ function Results() {
         </table>
       </div>
     );
+  }
   return renderAllResults;
-}
+};
 
-export default Results;
+export default React.memo(ResultsTable);
+// export default ResultsTable;

@@ -42,13 +42,6 @@ export const fetchData = async (
 
   const collection = mongodb.db("cluster6").collection("serverprimarycollections");
 
-  // "$search": {
-  //   "index": "pagination-tutorial",
-  //   "text": {
-  //     "query": "tom hanks",
-  //     "path": "cast"
-  //   }
-
   let pipeline: PipelineType = [
     {
       $project: {

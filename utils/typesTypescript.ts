@@ -62,3 +62,20 @@ export interface FilterType {
     };
   }[];
 }
+
+export interface UseFilterHookType {
+  updateFilter: (
+    wipeRotation: string | null,
+    minPlayers: string | null,
+    maxPlayers: string | null,
+    minSize: string | null,
+    maxSize: string | null,
+    searchName: string | null,
+    maxGroupSize: string[],
+    rate: string[],
+    includedCountries: string[],
+    excludedCountries: string[],
+    maxDistance: string | null,
+    userLocation: { latitude: number; longitude: number } | null
+  ) => void;
+}

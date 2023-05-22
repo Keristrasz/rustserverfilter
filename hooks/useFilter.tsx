@@ -1,25 +1,8 @@
-import { FilterType } from "@/utils/typesTypescript";
-
-type UseFilterHook = {
-  updateFilter: (
-    wipeRotation: string | null,
-    minPlayers: string | null,
-    maxPlayers: string | null,
-    minSize: string | null,
-    maxSize: string | null,
-    searchName: string | null,
-    maxGroupSize: string[],
-    rate: string[],
-    includedCountries: string[],
-    excludedCountries: string[],
-    maxDistance: string | null,
-    userLocation: { latitude: number; longitude: number } | null
-  ) => void;
-};
+import { FilterType, UseFilterHookType } from "@/utils/typesTypescript";
 
 const useFilter = (
   setFilter: React.Dispatch<React.SetStateAction<FilterType>>
-): UseFilterHook => {
+): UseFilterHookType => {
   const updateFilter = (
     wipeRotation: string | null,
     minPlayers: string | null,
@@ -45,8 +28,10 @@ const useFilter = (
     maxSize ? newFilter.$and.push({ "rules.size": { $lte: Number(maxSize) } }) : null;
     searchName ? newFilter.$and.push({ name: { $regex: searchName, $options: "i" } }) : null;
     maxGroupSize.length !== 0
-      ? newFilter.$and.push({ max_group_size: { $in: maxGroupSize } })
+      ? //@ts-ignore
+        newFilter.$and.push({ max_group_size: { $in: maxGroupSize } })
       : null;
+    //@ts-ignore
     rate.length !== 0 ? newFilter.$and.push({ rate: { $in: rate } }) : null;
     includedCountries.length !== 0 && excludedCountries.length === 0
       ? newFilter.$and.push({ "rules.location.country": { $in: includedCountries } })

@@ -20,6 +20,7 @@ const ServerPage = () => {
     <div>
       <h1>Server Details</h1>
       <p>Server ID: {id}</p>
+      <button onClick={() => router.back()}>Get Back</button>
     </div>
   );
 };

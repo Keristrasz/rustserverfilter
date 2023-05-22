@@ -1,18 +1,17 @@
 import { FilterType, SorterType } from "@/utils/typesTypescript";
 
 const useSorter = (
-  //   initialSorter: SorterType | {} = {},
   setFilter: React.Dispatch<React.SetStateAction<FilterType>>,
   setSorter: React.Dispatch<React.SetStateAction<SorterType>>
 ) => {
-  //   const [sorter, setSorter] = useState<SorterType | {}>(initialSorter);
   const roundBySeconds = 100;
   const nowMiliseconds = new Date().getTime();
   const nowSeconds = Math.floor(nowMiliseconds / 1000 / roundBySeconds) * roundBySeconds - 100;
   const timestampTenMonthsAgo =
     Math.floor((nowMiliseconds / 1000 - 28000000) / roundBySeconds) * roundBySeconds;
 
-  const handleSorter = (key: string) => {
+  const updateSorter = (key: string) => {
+    console.log(key);
     setFilter((prevValue) => {
       if (key === "born") {
         if (!prevValue.$and.some((el: any) => el.born)) {
@@ -28,13 +27,6 @@ const useSorter = (
           newValue.$and.push({ born_next: { $gte: nowSeconds } });
           return newValue;
         }
-      } else if (
-        key === "rules.location.longitude" ||
-        key === "rules.location.country" ||
-        key === "addr" ||
-        key === "uptime"
-      ) {
-        return prevValue;
       } else {
         let updatedValue: any = { ...prevValue };
         updatedValue.$and = updatedValue.$and.filter((el: any) => !el.born && !el.born_next);
@@ -43,7 +35,7 @@ const useSorter = (
 
       return prevValue;
     });
-
+    //@ts-ignore
     setSorter((prevSorter) => {
       // Check if the key already exists in the sorter
       if (prevSorter.hasOwnProperty(key)) {
@@ -58,7 +50,7 @@ const useSorter = (
     });
   };
 
-  return { handleSorter };
+  return { updateSorter };
 };
 
 export default useSorter;
