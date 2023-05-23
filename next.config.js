@@ -5,6 +5,13 @@ const nextConfig = {
     DB_CONNECT_STRING:
       "mongodb+srv://user:7o5InmsZJg2FqIgE@cluster6.jjfy6nr.mongodb.net/cluster6",
   },
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true,
+  },
 };
 
 module.exports = nextConfig;

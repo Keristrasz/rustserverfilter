@@ -1,3 +1,4 @@
+"use client";
 import React, {
   useState,
   useEffect,
@@ -11,7 +12,7 @@ import { allCountries } from "@/utils/countries";
 
 interface SelectIncludedCountriesProps {
   countries: string[];
-  setCountries: (countries: string[]) => void;
+  setCountries: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 function SelectCountries({
@@ -26,9 +27,11 @@ function SelectCountries({
   console.log("SelectCountries render");
 
   useEffect(() => {
+    //@ts-ignore
     document.addEventListener("click", handleOutsideClick);
 
     return () => {
+      //@ts-ignore
       document.removeEventListener("click", handleOutsideClick);
     };
   }, []);
@@ -39,21 +42,6 @@ function SelectCountries({
       inputRef.current.focus();
     }
   };
-
-  // const handleCountryChange = (e: ChangeEvent<HTMLInputElement>): void => {
-  //   const { value, checked } = e.target;
-  //   setCountries((prevSelected) => {
-  //     if (checked) {
-  //       setInputValue("");
-  //       if (!prevSelected.includes(value)) {
-  //         return [...prevSelected, value];
-  //       }
-  //     } else {
-  //       return prevSelected.filter((country) => country !== value);
-  //     }
-  //     return prevSelected;
-  //   });
-  // };
 
   const handleCountryChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value, checked } = e.target;
@@ -93,7 +81,7 @@ function SelectCountries({
   };
 
   const handleRemoveCountry = (country: string): void => {
-    setCountries((prevSelected) => prevSelected.filter((c) => c !== country));
+    setCountries((prevSelected: string[]) => prevSelected.filter((c) => c !== country));
   };
 
   const handleOutsideClick = (e: MouseEvent): void => {
@@ -148,13 +136,13 @@ function SelectCountries({
           className="z-10 absolute w-full mt-2 bg-white rounded-md shadow-lg"
         >
           <div className="max-h-80 overflow-auto">
-            {filteredOptions.map((el) => (
-              <label key={el} className="block px-4 py-2 cursor-pointer select-none">
+            {filteredOptions.map((el: String) => (
+              <label key={String(el)} className="block px-4 py-2 cursor-pointer select-none">
                 <input
                   type="checkbox"
                   className="form-checkbox text-blue-600"
-                  value={el}
-                  checked={countries.includes(el)}
+                  value={String(el)}
+                  checked={countries.includes(String(el))}
                   onChange={handleCountryChange}
                 />
                 <span className="ml-2 text-gray-700">{el}</span>

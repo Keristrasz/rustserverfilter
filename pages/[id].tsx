@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useQueryClient } from "@tanstack/react-query";
 import useCustomInfiniteQuery from "@/hooks/useCustomInfiniteQuery";
 
-const ServerPage = () => {
+const ServerDetailsPage = () => {
   //   const {
   //     data,
   //     isFetching,
@@ -25,7 +25,7 @@ const ServerPage = () => {
   );
 };
 
-export default ServerPage;
+export default ServerDetailsPage;
 
 // import React from 'react';
 // import { useRouter } from 'next/router';

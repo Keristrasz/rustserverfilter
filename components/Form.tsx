@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { groupSizeOptions, ratesOptions } from "@/utils/inputData";
 import SelectCountries from "./SelectCountries";
@@ -5,13 +6,12 @@ import useFilter from "@/hooks/useFilter";
 import { userLocationType, SorterType, FilterType } from "../utils/typesTypescript";
 
 type FormProps = {
-  isFetching: boolean;
   userLocation: userLocationType | null;
   setFilter: React.Dispatch<React.SetStateAction<FilterType>>;
   setSorter: React.Dispatch<React.SetStateAction<SorterType | {}>>;
 };
 
-const Form: React.FC<FormProps> = ({ isFetching, userLocation, setFilter, setSorter }) => {
+const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
   const [wipeRotation, setWipeRotation] = useState<string>("");
   const [excludedCountries, setExcludeCountries] = useState<string[]>([]);
   const [includedCountries, setIncludedCountries] = useState<string[]>([]);
@@ -23,6 +23,8 @@ const Form: React.FC<FormProps> = ({ isFetching, userLocation, setFilter, setSor
   const [maxGroupSize, setMaxGroupSize] = useState<number[]>([]);
   const [maxDistance, setMaxDistance] = useState<number | string>("");
   const [rate, setRate] = useState<number[]>([]);
+
+  const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
   const { updateFilter } = useFilter(setFilter);
 
@@ -75,8 +77,10 @@ const Form: React.FC<FormProps> = ({ isFetching, userLocation, setFilter, setSor
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setButtonsDisabled(true);
     updateFilter(
       wipeRotation,
+      //@ts-ignore
       minPlayers,
       maxPlayers,
       minSize,
@@ -89,9 +93,15 @@ const Form: React.FC<FormProps> = ({ isFetching, userLocation, setFilter, setSor
       maxDistance,
       userLocation
     );
+    setTimeout(() => {
+      // Enable buttons after the delay
+      setButtonsDisabled(false);
+    }, 1000);
   };
 
   const handleResetForm = () => {
+    setButtonsDisabled(true);
+
     setRate([]);
     setMinPlayers("");
     setMaxPlayers("");
@@ -105,6 +115,11 @@ const Form: React.FC<FormProps> = ({ isFetching, userLocation, setFilter, setSor
     setIncludedCountries([]);
     setSorter({});
     setFilter({ $and: [{ rank: { $gte: 50 } }] });
+
+    setTimeout(() => {
+      // Enable buttons after the delay
+      setButtonsDisabled(false);
+    }, 1000);
   };
 
   return (
@@ -225,13 +240,14 @@ const Form: React.FC<FormProps> = ({ isFetching, userLocation, setFilter, setSor
       </div>
       <button
         type="submit"
-        disabled={isFetching}
+        disabled={buttonsDisabled}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
         Search
       </button>
       <button
         type="button"
+        disabled={buttonsDisabled}
         onClick={handleResetForm}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >

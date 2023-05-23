@@ -7,41 +7,41 @@ type QueryResponseType = {
   totalCount: [{ totalCount: number }];
   result: ServerPrimaryDataType[];
 };
+let pageSize = 40;
 
-const pageSize = 30
-
-const useCustomInfiniteQuery = (
-  filter: FilterType,
-  sorter: SorterType,
-  app: any
-) => {
+const useCustomInfiniteQuery = (filter: FilterType, sorter: SorterType, app: any) => {
   const queryKey = ["searchResults", filter, sorter, pageSize];
+
   console.log("custom infinity query run");
+
   const queryFn = async ({ pageParam }: QueryFunctionContext): Promise<QueryResponseType> => {
-    console.log(pageParam);
+    // console.log(pageParam);
     const result = await fetchData(filter, sorter, pageParam, pageSize, app);
     return result;
   };
 
-  const queryOptions = useMemo(() => {
-    return {
-      enabled: !!app && !!app.currentUser,
-      keepPreviousData: true,
-      getNextPageParam: (lastPage: QueryResponseType, allPages: QueryResponseType[]) => {
-        const totalCount = lastPage.totalCount[0]?.totalCount || 0;
-        const totalDocumentsShown = allPages.reduce(
-          (count, page) => count + page.result.length,
-          0
-        );
-        console.log(lastPage, allPages);
-        if (totalDocumentsShown < totalCount) {
-          return allPages.length; // Return the next page number
-        }
+  const queryOptions = {
+    enabled: !!app && !!app.currentUser,
+    keepPreviousData: true,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    retry: false,
+    staleTime: 1000 * 60,
+    cacheTime: 1000 * 60,
+    getNextPageParam: (lastPage: QueryResponseType, allPages: QueryResponseType[]) => {
+      const totalCount = lastPage.totalCount[0]?.totalCount || 0;
+      const totalDocumentsShown = allPages.reduce(
+        (count, page) => count + page.result.length,
+        0
+      );
+      // console.log(lastPage, allPages);
+      if (totalDocumentsShown < totalCount) {
+        return allPages.length; // Return the next page number
+      }
 
-        return null; // No more pages to fetch
-      },
-    };
-  }, [app]);
+      return null; // No more pages to fetch
+    },
+  };
 
   const { data, isFetching, error, status, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery(queryKey, queryFn, queryOptions);
@@ -58,3 +58,29 @@ const useCustomInfiniteQuery = (
 };
 
 export default useCustomInfiniteQuery;
+
+// const queryOptions = useMemo(() => {
+//   return {
+//     enabled: !!app && !!app.currentUser,
+//     keepPreviousData: true,
+//     refetchOnMount: false,
+//     refetchOnWindowFocus: false,
+//     retry: false,
+//     staleTime: 1000 * 60,
+//     cacheTime: 1000 * 300,
+//     getNextPageParam: (lastPage: QueryResponseType, allPages: QueryResponseType[]) => {
+//       const totalCount = lastPage.totalCount[0]?.totalCount || 0;
+//       const totalDocumentsShown = allPages.reduce(
+//         (count, page) => count + page.result.length,
+//         0
+//       );
+//       console.log(lastPage, allPages);
+//       console.log(totalCount, totalDocumentsShown);
+//       if (totalDocumentsShown < totalCount) {
+//         return allPages.length; // Return the next page number
+//       }
+
+//       return null; // No more pages to fetch
+//     },
+//   };
+// }, [app]);

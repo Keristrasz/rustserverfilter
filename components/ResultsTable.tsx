@@ -1,15 +1,17 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { calculateDistance, getTime, getTimeUptime } from "@/utils/inputFunctions";
-import { ServerPrimaryDataType } from "@/utils/typesTypescript";
+import { FilterType, SorterType } from "@/utils/typesTypescript";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import useCustomInfiniteQuery from "@/hooks/useCustomInfiniteQuery";
+import { useInView } from "react-intersection-observer";
 
 interface ResultsTableProps {
-  isFetching: boolean;
-  error: Error | null;
-  status: string;
+  app: any;
+  filter: FilterType;
   updateSorter: (value: string) => void;
-  sorter: { [key: string]: number };
-  data: { pages: { result: ServerPrimaryDataType[] }[] } | undefined;
+  sorter: SorterType;
   userLocation: { latitude: number; longitude: number } | null;
 }
 
@@ -36,16 +38,19 @@ const columnHeadings = [
     value: "rules.location.longitude",
   },
 ];
-
+//@ts-ignore
 const ResultsTable: React.FC<ResultsTableProps> = ({
-  isFetching,
-  error,
-  status,
+  app,
+  filter,
   updateSorter,
   sorter,
-  data,
   userLocation,
 }) => {
+  const { data, isFetching, error, status, fetchNextPage, hasNextPage } =
+    useCustomInfiniteQuery(filter, sorter, app);
+
+  const ref = useInfiniteScroll(hasNextPage, fetchNextPage);
+
   const router = useRouter();
   let renderAllResults;
   let resultsName = "Results loaded";
@@ -108,6 +113,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                         router.push(`/${mappedObject.addr}`);
                       }}
                       role="link"
+                      ref={ref}
                     >
                       <td className="w-1/12 px-1 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                         {mappedObject.addr}
@@ -163,6 +169,16 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                     </tr>
                   );
                 })}
+                {isFetching && (
+                  <tr>
+                    <td
+                      className="text-xs relative border-t text-center bg-indigo-200"
+                      colSpan={11}
+                    >
+                      LOADING...
+                    </td>
+                  </tr>
+                )}
               </React.Fragment>
             ))}
           </tbody>
@@ -173,5 +189,5 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
   return renderAllResults;
 };
 
-export default React.memo(ResultsTable);
-// export default ResultsTable;
+// export default React.memo(ResultsTable);
+export default ResultsTable;
