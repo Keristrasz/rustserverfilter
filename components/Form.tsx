@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { groupSizeOptions, ratesOptions } from "@/utils/inputData";
+import { groupSizeOptions, ratesOptions, wipeRatesOptions } from "@/utils/inputData";
 import SelectCountries from "./SelectCountries";
 import useFilter from "@/hooks/useFilter";
 import { userLocationType, SorterType, FilterType } from "../utils/typesTypescript";
@@ -12,7 +12,7 @@ type FormProps = {
 };
 
 const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
-  const [wipeRotation, setWipeRotation] = useState<string>("");
+  const [wipeRotation, setWipeRotation] = useState<string[]>([]);
   const [excludedCountries, setExcludeCountries] = useState<string[]>([]);
   const [includedCountries, setIncludedCountries] = useState<string[]>([]);
   const [minSize, setMinSize] = useState<number | string>("");
@@ -21,12 +21,13 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
   const [maxPlayers, setMaxPlayers] = useState<number | string>("");
   const [searchName, setSearchName] = useState<string>("");
   const [maxGroupSize, setMaxGroupSize] = useState<number[]>([]);
+  const [minRank, setMinRank] = useState<number | string>("");
   const [maxDistance, setMaxDistance] = useState<number | string>("");
   const [rate, setRate] = useState<number[]>([]);
 
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
-  const { updateFilter } = useFilter(setFilter);
+  const updateFilter = useFilter(setFilter);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchName(event.target.value);
@@ -56,6 +57,10 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
     const value = event.target.value;
     setMaxDistance(value === "" ? "" : Number(value));
   };
+  const handleMinRankChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setMinRank(value === "" ? "" : Number(value));
+  };
 
   const handleRateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const numberValue = Number(event.target.value);
@@ -75,12 +80,21 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
     }
   };
 
+  const handleWipeRateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    if (wipeRotation.includes(value)) {
+      setWipeRotation(wipeRotation.filter((c) => c !== value));
+    } else {
+      setWipeRotation([...wipeRotation, value]);
+    }
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setButtonsDisabled(true);
     updateFilter(
+      minRank,
       wipeRotation,
-      //@ts-ignore
       minPlayers,
       maxPlayers,
       minSize,
@@ -103,12 +117,13 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
     setButtonsDisabled(true);
 
     setRate([]);
+    setMinRank("");
     setMinPlayers("");
     setMaxPlayers("");
     setMinSize("");
     setMaxSize("");
     setSearchName("");
-    setWipeRotation("");
+    setWipeRotation([]);
     setMaxGroupSize([]);
     setMaxDistance("");
     setExcludeCountries([]);
@@ -193,6 +208,18 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
             onChange={handleMaxDistanceChange}
           />
         </div>
+        <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 mb-4 sm:mb-0">
+          <label htmlFor="minRank" className="block text-gray-700 font-medium mb-2">
+            Min. rank
+          </label>
+          <input
+            id="minRank"
+            type="number"
+            className="form-input rounded-md shadow-sm mt-1 block w-full"
+            value={minRank}
+            onChange={handleMinRankChange}
+          />
+        </div>
       </div>
       <div>
         <fieldset className="mt-6">
@@ -216,7 +243,10 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
           <legend className="block text-gray-700 font-medium mb-2">Group size</legend>
           <div className="flex flex-wrap">
             {groupSizeOptions.map((option) => (
-              <label key={option.value} className="flex items-center mr-4 mb-2 cursor-pointer">
+              <label
+                key={option.value}
+                className="flex items-center mr-4 mb-2 cursor-pointer"
+              >
                 <input
                   type="checkbox"
                   className="form-checkbox text-blue-600"
@@ -229,14 +259,37 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
             ))}
           </div>
         </fieldset>
+        <fieldset className="mt-6">
+          <legend className="block text-gray-700 font-medium mb-2">Wipe rate</legend>
+          <div className="flex flex-wrap">
+            {wipeRatesOptions.map((option) => (
+              <label key={option} className="flex items-center mr-4 mb-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="form-checkbox text-blue-600"
+                  value={option}
+                  checked={wipeRotation.includes(option)}
+                  onChange={handleWipeRateChange}
+                />
+                <span className="ml-2 text-gray-700">{option}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
       </div>
       <div>
         <label className="block text-gray-700 font-medium mb-2">Include Countries</label>
-        <SelectCountries countries={includedCountries} setCountries={setIncludedCountries} />
+        <SelectCountries
+          countries={includedCountries}
+          setCountries={setIncludedCountries}
+        />
       </div>
       <div>
         <label className="block text-gray-700 font-medium mb-2">Exclude Countries</label>
-        <SelectCountries countries={excludedCountries} setCountries={setExcludeCountries} />
+        <SelectCountries
+          countries={excludedCountries}
+          setCountries={setExcludeCountries}
+        />
       </div>
       <button
         type="submit"

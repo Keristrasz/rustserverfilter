@@ -3,10 +3,11 @@ import type { AppProps } from "next/app";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
+import Layout from "@/components/Layout";
 
 export default function App({ Component, pageProps }: AppProps) {
   //makes fetched data fresh for 60 seconds - no refetch for this perios
-  const [queryClient] = useState(() => new QueryClient())
+  const [queryClient] = useState(() => new QueryClient());
 
   // const queryClient = new QueryClient({
   //   // Disable automatic retries on failed requests
@@ -23,7 +24,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

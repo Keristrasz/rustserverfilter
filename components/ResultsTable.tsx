@@ -1,51 +1,30 @@
-"use client";
-import React, { useEffect } from "react";
+import THead from "./THead";
+import React from "react";
 import { useRouter } from "next/router";
 import { calculateDistance, getTime, getTimeUptime } from "@/utils/inputFunctions";
 import { FilterType, SorterType } from "@/utils/typesTypescript";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useCustomInfiniteQuery from "@/hooks/useCustomInfiniteQuery";
-import { useInView } from "react-intersection-observer";
 
 interface ResultsTableProps {
   app: any;
   filter: FilterType;
-  updateSorter: (value: string) => void;
   sorter: SorterType;
   userLocation: { latitude: number; longitude: number } | null;
+  setFilter: React.Dispatch<React.SetStateAction<FilterType>>;
+  setSorter: React.Dispatch<React.SetStateAction<SorterType | {}>>;
 }
 
-const columnHeadings = [
-  {
-    width: "1/12",
-    isClickable: false,
-    name: "IP",
-    value: "addr",
-  },
-  { isClickable: false, width: "1/12", name: "Name", value: "name" },
-  { isClickable: true, width: "1/12", name: "Rank", value: "rank" },
-  { isClickable: true, width: "2/12", name: "Next Wipe", value: "born_next" },
-  { isClickable: true, width: "2/12", name: "Wiped", value: "born" },
-  { isClickable: false, width: "1/12", name: "Uptime", value: "uptime" },
-  { isClickable: true, width: "1/12", name: "Rate", value: "rate" },
-  { isClickable: true, width: "1/12", name: "Group size", value: "max_group_size" },
-  { isClickable: true, width: "1/12", name: "Players", value: "players" },
-  { isClickable: false, width: "1/12", name: "Country", value: "rules.location.country" },
-  {
-    isClickable: false,
-    width: "2/12",
-    name: "Distance",
-    value: "rules.location.longitude",
-  },
-];
 //@ts-ignore
 const ResultsTable: React.FC<ResultsTableProps> = ({
   app,
   filter,
-  updateSorter,
   sorter,
+  setFilter,
+  setSorter,
   userLocation,
 }) => {
+  console.log("resulttablerender");
   const { data, isFetching, error, status, fetchNextPage, hasNextPage } =
     useCustomInfiniteQuery(filter, sorter, app);
 
@@ -68,29 +47,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
       <div className="overflow-x-auto max-w-[80rem] m-4">
         <h2 className="text-xl font-bold mb-2">{resultsName}</h2>
         <table className="table-fixed w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              {columnHeadings.map((el) =>
-                el.isClickable ? (
-                  <th
-                    onClick={() => updateSorter(el.value)}
-                    key={el.value}
-                    className={`w-${el.width} px-5 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hover:cursor-pointer`}
-                  >
-                    {el.name}
-                    {sorter[el.value] === 1 ? "->" : sorter[el.value] === -1 ? "<-" : null}
-                  </th>
-                ) : (
-                  <th
-                    key={el.value}
-                    className={`w-${el.width} px-5 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider`}
-                  >
-                    {el.name}
-                  </th>
-                )
-              )}
-            </tr>
-          </thead>
+          <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} />
           <tbody className="bg-white divide-y divide-gray-200">
             {data?.pages.map((page, pageIndex) => (
               <React.Fragment key={pageIndex}>
@@ -189,5 +146,5 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
   return renderAllResults;
 };
 
-// export default React.memo(ResultsTable);
-export default ResultsTable;
+export default React.memo(ResultsTable);
+// export default ResultsTable;

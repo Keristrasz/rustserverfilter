@@ -49,7 +49,7 @@ export interface FilterType {
     born?: { $lte?: number; $gte?: number };
     rank?: { $gte: number };
     "rules.size"?: { $gte?: number; $lte?: number };
-    wipe_rotation?: string;
+    wipe_rotation?: { $in: string[] };
     players?: { $gte?: number; $lte?: number };
     name?: { $regex: string; $options: string };
     max_group_size?: { $in: number[] };
@@ -63,19 +63,18 @@ export interface FilterType {
   }[];
 }
 
-export interface UseFilterHookType {
-  updateFilter: (
-    wipeRotation: string | null,
-    minPlayers: string | null,
-    maxPlayers: string | null,
-    minSize: string | null,
-    maxSize: string | null,
-    searchName: string | null,
-    maxGroupSize: string[],
-    rate: string[],
-    includedCountries: string[],
-    excludedCountries: string[],
-    maxDistance: string | null,
-    userLocation: { latitude: number; longitude: number } | null
-  ) => void;
-}
+export type UseFilterHookType = (
+  minRank: number | string,
+  wipeRotation: string[],
+  minPlayers: number | string,
+  maxPlayers: number | string,
+  minSize: number | string,
+  maxSize: number | string,
+  searchName: string | null,
+  maxGroupSize: number[],
+  rate: number[],
+  includedCountries: string[],
+  excludedCountries: string[],
+  maxDistance: string | number,
+  userLocation: { latitude: number; longitude: number } | null
+) => void;

@@ -21,7 +21,7 @@ const useGeolocation = (
         }
       );
     }
-  }, [userLocation, setUserLocation]);
+  }, []);
 
   return userLocation;
 };
