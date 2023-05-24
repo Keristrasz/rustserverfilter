@@ -102,18 +102,18 @@ function SelectCountries({
   return (
     <div className="relative">
       <div
-        className="w-full py-2 pl-3 pr-2 text-left bg-white rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-300 flex flex-wrap"
+        className="max-w-full py-0.5 px-1.5 text-left bg-gray-800 rounded-md shadow-sm cursor-pointer flex flex-wrap"
         onClick={handleToggle}
       >
         {countries.length > 0 &&
           countries.map((country) => (
             <span
               key={country}
-              className="px-2 py-0 mx-1 bg-blue-100 text-blue-800 rounded-md flex items-center"
+              className="px-2 py-0 m-1 bg-red-700 text-gray-200  rounded-md flex items-center"
             >
               {country}
               <button
-                className="ml-1 text-blue-500 hover:text-blue-700 focus:outline-none"
+                className="ml-1 text-gray-200  focus:outline-none"
                 onClick={() => handleRemoveCountry(country)}
               >
                 &#10005;
@@ -122,7 +122,7 @@ function SelectCountries({
           ))}
         <input
           type="text"
-          className="flex-grow ml-2 bg-transparent focus:outline-none"
+          className="flex-grow bg-transparent focus:outline-none border-none focus:ring-0"
           placeholder="Type country"
           value={inputValue}
           onChange={handleInputChange}
@@ -133,19 +133,19 @@ function SelectCountries({
       {isOpen && (
         <div
           ref={optionsRef}
-          className="z-10 absolute w-full mt-2 bg-white rounded-md shadow-lg"
+          className="z-10 absolute w-full mt-2 bg-slate-800 rounded-md shadow-lg"
         >
           <div className="max-h-80 overflow-auto">
             {filteredOptions.map((el: String) => (
               <label key={String(el)} className="block px-4 py-2 cursor-pointer select-none">
                 <input
                   type="checkbox"
-                  className="form-checkbox text-blue-600"
+                  className="form-checkbox text-red-700"
                   value={String(el)}
                   checked={countries.includes(String(el))}
                   onChange={handleCountryChange}
                 />
-                <span className="ml-2 text-gray-700">{el}</span>
+                <span className="ml-2 text-gray-200">{el}</span>
               </label>
             ))}
           </div>

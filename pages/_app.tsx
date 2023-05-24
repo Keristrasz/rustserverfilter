@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout/Layout";
 
 export default function App({ Component, pageProps }: AppProps) {
   //makes fetched data fresh for 60 seconds - no refetch for this perios

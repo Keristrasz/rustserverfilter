@@ -3,8 +3,10 @@ import { userLocationType, SorterType, FilterType } from "../utils/typesTypescri
 import useUserAuth from "../hooks/useUserAuth";
 import useGeolocation from "@/hooks/useGeolocation";
 
-import ResultsTable from "@/components/ResultsTable";
-import Form from "@/components/Form";
+import ResultsTable from "@/components/HOC/ResultsTable";
+import Form from "@/components/HOC/Form";
+import BodyWrapper from "@/components/layout/BodyWrapper";
+
 //TODO Distance sort by loaded data
 
 function Home() {
@@ -20,7 +22,7 @@ function Home() {
   useGeolocation(userLocation, setUserLocation);
 
   return (
-    <div className="flex flex-col items-center min-h-screen ">
+    <BodyWrapper>
       <Form userLocation={userLocation} setFilter={setFilter} setSorter={setSorter} />
       <ResultsTable
         app={app}
@@ -30,7 +32,7 @@ function Home() {
         setSorter={setSorter}
         userLocation={userLocation}
       />
-    </div>
+    </BodyWrapper>
   );
 }
 

@@ -1,4 +1,4 @@
-import THead from "./THead";
+import THead from "../THead";
 import React from "react";
 import { useRouter } from "next/router";
 import { calculateDistance, getTime, getTimeUptime } from "@/utils/inputFunctions";
@@ -44,17 +44,17 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
 
   if (status === "success") {
     renderAllResults = (
-      <div className="overflow-x-auto max-w-[80rem] m-4">
-        <h2 className="text-xl font-bold mb-2">{resultsName}</h2>
+      <div className="overflow-x-auto m-4 mb-12 max-w-6xl">
+        <h2 className="text-xl font-bold mb-2 text-white">Results: {resultsName}</h2>
         <table className="table-fixed w-full">
           <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} />
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-gray-800 divide-y divide-gray-700">
             {data?.pages.map((page, pageIndex) => (
               <React.Fragment key={pageIndex}>
                 <tr>
                   {/* Empty row with border */}
                   <td
-                    className="text-xs relative border-t text-center bg-indigo-200"
+                    className="text-xs relative border-t text-center bg-red-700 text-white"
                     colSpan={11}
                   >
                     NEW DATA
@@ -65,18 +65,18 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   return (
                     <tr
                       key={mappedObject.addr}
-                      className="hover:bg-sky-500 clickable-row cursor-pointer"
+                      className="hover:bg-red-800 clickable-row cursor-pointer"
                       onClick={() => {
                         router.push(`/${mappedObject.addr}`);
                       }}
                       role="link"
                       ref={ref}
                     >
-                      <td className="w-1/12 px-1 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                      <td className="w-1/12 px-1 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-white">
                         {mappedObject.addr}
                       </td>
 
-                      <td className="w-4/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                      <td className="w-4/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-white">
                         {mappedObject.name}
                         <noscript>
                           <a href={`/${mappedObject.addr}`} className="table-row">
@@ -85,33 +85,33 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                         </noscript>
                       </td>
 
-                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-white">
                         {mappedObject.rank}
                       </td>
-                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-white">
                         {getTime(mappedObject.born_next)}
                       </td>
-                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-white">
                         {getTime(mappedObject.born)}
                       </td>
-                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-white">
                         {mappedObject.rules?.uptime
                           ? getTimeUptime(mappedObject.rules?.uptime)
                           : "N/A"}
                       </td>
-                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-white">
                         {mappedObject.rate}
                       </td>
-                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-white">
                         {mappedObject.max_group_size}
                       </td>
-                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-white">
                         {mappedObject.players}
                       </td>
-                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                      <td className="w-1/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-white">
                         {mappedObject.rules?.location?.country}
                       </td>
-                      <td className="w-2/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                      <td className="w-2/12 px-0.5 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-white">
                         {userLocation &&
                         mappedObject.rules?.location?.latitude &&
                         mappedObject.rules?.location?.longitude
@@ -129,7 +129,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                 {isFetching && (
                   <tr>
                     <td
-                      className="text-xs relative border-t text-center bg-indigo-200"
+                      className="text-xs relative border-t text-center bg-red-700 text-white"
                       colSpan={11}
                     >
                       LOADING...
