@@ -44,17 +44,17 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
 
   if (status === "success") {
     renderAllResults = (
-      <div className="overflow-x-auto m-4 mb-12 max-w-6xl">
+      <div className="overflow-x-auto m-4 mb-12 max-w-6xl ">
         <h2 className="text-xl font-bold mb-2 text-white">Results: {resultsName}</h2>
-        <table className="table-fixed w-full">
+        <table className="table-fixed w-full border border-black">
           <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} />
-          <tbody className="bg-gray-800 divide-y divide-gray-700">
+          <tbody className="bg-zinc-800 divide-y divide-zinc-700">
             {data?.pages.map((page, pageIndex) => (
               <React.Fragment key={pageIndex}>
                 <tr>
                   {/* Empty row with border */}
                   <td
-                    className="text-xs relative border-t text-center bg-red-700 text-white"
+                    className="text-xs relative border-t text-center bg-rustOne text-white"
                     colSpan={11}
                   >
                     NEW DATA
@@ -65,7 +65,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   return (
                     <tr
                       key={mappedObject.addr}
-                      className="hover:bg-red-800 clickable-row cursor-pointer"
+                      className="hover:bg-rustOne clickable-row cursor-pointer"
                       onClick={() => {
                         router.push(`/${mappedObject.addr}`);
                       }}
@@ -129,7 +129,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                 {isFetching && (
                   <tr>
                     <td
-                      className="text-xs relative border-t text-center bg-red-700 text-white"
+                      className="text-xs relative border-t text-center bg-rustOne text-white"
                       colSpan={11}
                     >
                       LOADING...

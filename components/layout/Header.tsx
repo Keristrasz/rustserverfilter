@@ -1,9 +1,11 @@
 import React from "react";
+import Image from "next/image";
 
 function Header() {
   return (
-    <header className="w-full bg-red-800 text-white py-2 px-6 top-0 z-50">
-      <h1 className="text-2xl font-bold">Search Form</h1>
+    <header className="flex justify-center w-full bg-rustOne">
+      <Image src="/logo.jpg" width={150} height={150} alt="Picture of the author" />
+      <h1 className="font-extrabold text-6xl mt-8 tracking-tight">HEADING</h1>
     </header>
   );
 }
