@@ -1,4 +1,4 @@
-import { SorterType, FilterType } from "../utils/typesTypescript";
+import { SorterType, FilterType } from "./typesTypescript";
 
 type PipelineType = {
   $project?: {
@@ -28,7 +28,7 @@ type PipelineType = {
   $sort?: any;
 }[];
 
-export const fetchData = async (
+export const fetchAllServers = async (
   filter: FilterType,
   sorter: SorterType,
   pageParam: number,

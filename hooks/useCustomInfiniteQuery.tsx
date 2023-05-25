@@ -1,5 +1,5 @@
 import { useInfiniteQuery, QueryFunctionContext } from "@tanstack/react-query";
-import { fetchData } from "@/utils/fetchData";
+import { fetchAllServers } from "@/utils/fetchAllServers";
 import { ServerPrimaryDataType, SorterType, FilterType } from "../utils/typesTypescript";
 import { useMemo } from "react";
 
@@ -16,7 +16,7 @@ const useCustomInfiniteQuery = (filter: FilterType, sorter: SorterType, app: any
 
   const queryFn = async ({ pageParam }: QueryFunctionContext): Promise<QueryResponseType> => {
     // console.log(pageParam);
-    const result = await fetchData(filter, sorter, pageParam, pageSize, app);
+    const result = await fetchAllServers(filter, sorter, pageParam, pageSize, app);
     return result;
   };
 
@@ -43,12 +43,21 @@ const useCustomInfiniteQuery = (filter: FilterType, sorter: SorterType, app: any
     },
   };
 
-  const { data, isFetching, error, status, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(queryKey, queryFn, queryOptions);
+  const {
+    data,
+    isFetching,
+    isLoading,
+    error,
+    status,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery(queryKey, queryFn, queryOptions);
 
   return {
     data,
     isFetching,
+    isLoading,
     error,
     status,
     fetchNextPage,

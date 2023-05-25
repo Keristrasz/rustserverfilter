@@ -140,16 +140,13 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
     >
       <div className="flex flex-wrap items-center justify-start">
         <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0">
-          <label
-            htmlFor="search"
-            className="block text-gray-200 font-semibold text-lg my-1"
-          >
+          <label htmlFor="search" className="block text-gray-200 font-semibold text-lg my-1">
             Search by name
           </label>
           <input
             id="search"
             type="text"
-            className={`form-input rounded-md shadow-sm mt-1 block w-full sm:w-64 border  bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 ${
+            className={`form-input  rounded-md shadow-sm mt-1 block w-full sm:w-64 border  bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 ${
               searchName ? "border-rustOne" : "border-black"
             }`}
             value={searchName}
@@ -159,10 +156,7 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
         </div>
 
         <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0">
-          <label
-            htmlFor="minRank"
-            className="block text-gray-200 font-semibold text-lg my-1"
-          >
+          <label htmlFor="minRank" className="block text-gray-200 font-semibold text-lg my-1">
             Server score
           </label>
           <input
@@ -226,10 +220,7 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
           </div>
         </div>
         <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0">
-          <label
-            htmlFor="minSize"
-            className="block text-gray-200 font-semibold text-lg my-1"
-          >
+          <label htmlFor="minSize" className="block text-gray-200 font-semibold text-lg my-1">
             Map size
           </label>
           <div className="flex items-center">
@@ -259,9 +250,7 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
       </div>
       <div>
         <fieldset className="mt-4">
-          <legend className="block text-gray-200 font-semibold text-lg mb-2">
-            RATES
-          </legend>
+          <legend className="block text-gray-200 font-semibold text-lg mb-2">RATES</legend>
           <div className="flex flex-wrap">
             {ratesOptions.map((option) => (
               <div
@@ -299,9 +288,7 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
           </div>
         </fieldset>
         <fieldset className="mt-6">
-          <legend className="block text-gray-200 font-semibold text-lg mb-1">
-            WIPE RATE
-          </legend>
+          <legend className="block text-gray-200 font-semibold text-lg mb-1">WIPE RATE</legend>
           <div className="flex flex-wrap">
             {wipeRatesOptions.map((option) => (
               <div
@@ -319,31 +306,27 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
           </div>
         </fieldset>
       </div>
-      <div className="flex flex-wrap w-full justify-center">
+      <div className="flex flex-wrap w-full justify-between">
         <div className="m-0 w-1/2 xl:max-w-[32.5em]">
           <label className="block text-gray-200 font-semibold text-lg my-1">
             Include Countries
           </label>
-          <SelectCountries
-            countries={includedCountries}
-            setCountries={setIncludedCountries}
-          />
+          <SelectCountries countries={includedCountries} setCountries={setIncludedCountries} />
         </div>
         <div className="m-0 w-1/2 xl:max-w-[32.5em] xl:ml-4">
           <label className="block text-gray-200 font-semibold text-lg my-1">
             Exclude Countries
           </label>
-          <SelectCountries
-            countries={excludedCountries}
-            setCountries={setExcludeCountries}
-          />
+          <SelectCountries countries={excludedCountries} setCountries={setExcludeCountries} />
         </div>
       </div>
       <div className="flex justify-center">
         <button
           type="submit"
           disabled={buttonsDisabled}
-          className="bg-rustOne text-white font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all hover:bg-green-600"
+          className={`bg-rustOne text-white font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all hover:bg-green-600 ${
+            buttonsDisabled ? "cursor-not-allowed" : "cursor-pointer"
+          }`}
         >
           Search
         </button>
@@ -351,7 +334,9 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
           type="button"
           disabled={buttonsDisabled}
           onClick={handleResetForm}
-          className="bg-rustOne text-white font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all hover:bg-green-600"
+          className={`bg-rustOne text-white font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all hover:bg-green-600 ${
+            buttonsDisabled ? "cursor-not-allowed" : "cursor-pointer"
+          }`}
         >
           Reset
         </button>

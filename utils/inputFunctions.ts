@@ -25,7 +25,7 @@ export function calculateDistance(lat1: number, lon1: number, lat2: number, lon2
 
 export function getTime(timestamp: number) {
   if (timestamp == null) {
-    return "Not provided by server";
+    return "";
   }
   if (timestamp < 1652630662) {
     return "Too soon / too long ago";
