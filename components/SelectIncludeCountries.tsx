@@ -15,7 +15,7 @@ interface SelectIncludedCountriesProps {
   setCountries: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-function SelectCountries({
+function SelectIncludeCountries({
   countries,
   setCountries,
 }: SelectIncludedCountriesProps): ReactElement {
@@ -24,7 +24,9 @@ function SelectCountries({
   const optionsRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  console.log("SelectCountries render");
+  console.log("SelectIncludeCountries render");
+  console.log(inputValue, optionsRef, inputRef);
+  console.log(inputValue);
 
   useEffect(() => {
     //@ts-ignore
@@ -35,6 +37,17 @@ function SelectCountries({
       document.removeEventListener("click", handleOutsideClick);
     };
   }, []);
+
+  useEffect(() => {
+    const storedCountries = localStorage.getItem("includedCountries");
+    if (storedCountries) {
+      setCountries(JSON.parse(storedCountries));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("includedCountries", JSON.stringify(countries));
+  }, [countries]);
 
   const handleToggle = (): void => {
     setIsOpen(!isOpen);
@@ -110,14 +123,9 @@ function SelectCountries({
             <span
               key={country}
               className="px-2 py-0 m-2 bg-rustOne text-gray-200  rounded-md flex items-center "
+              onClick={() => handleRemoveCountry(country)}
             >
-              {country}
-              <button
-                className="ml-1 text-gray-200  focus:outline-none"
-                onClick={() => handleRemoveCountry(country)}
-              >
-                &#10005;
-              </button>
+              {country} &#10005;
             </span>
           ))}
         <input
@@ -137,7 +145,10 @@ function SelectCountries({
         >
           <div className="max-h-80 overflow-auto">
             {filteredOptions.map((el: String) => (
-              <label key={String(el)} className="block px-4 py-2 cursor-pointer select-none">
+              <label
+                key={String(el)}
+                className="block px-4 py-2 cursor-pointer select-none"
+              >
                 <input
                   type="checkbox"
                   className="form-checkbox text-rustOne"
@@ -155,4 +166,4 @@ function SelectCountries({
   );
 }
 
-export default React.memo(SelectCountries);
+export default React.memo(SelectIncludeCountries);

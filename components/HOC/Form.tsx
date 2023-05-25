@@ -1,7 +1,7 @@
-"use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { groupSizeOptions, ratesOptions, wipeRatesOptions } from "@/utils/inputData";
-import SelectCountries from "../SelectCountries";
+import SelectIncludeCountries from "../SelectIncludeCountries";
+import SelectExcludeCountries from "../SelectExcludeCountries";
 import useFilter from "@/hooks/useFilter";
 import { userLocationType, SorterType, FilterType } from "../../utils/typesTypescript";
 
@@ -9,21 +9,66 @@ type FormProps = {
   userLocation: userLocationType | null;
   setFilter: React.Dispatch<React.SetStateAction<FilterType>>;
   setSorter: React.Dispatch<React.SetStateAction<SorterType | {}>>;
+  filter: FilterType;
+  sorter: SorterType;
 };
 
-const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
-  const [wipeRotation, setWipeRotation] = useState<string[]>([]);
+// Helper function to get data from local storage
+const getFromLocalStorage = (key: string, defaultValue: any): any => {
+  if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+    const storedValue = localStorage.getItem(key);
+    return storedValue !== null ? JSON.parse(storedValue) : defaultValue;
+  } else {
+    return defaultValue;
+  }
+};
+
+// Helper function to save data to local storage
+const saveToLocalStorage = (key: string, value: any): void => {
+  if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+};
+
+const Form: React.FC<FormProps> = ({
+  userLocation,
+  setFilter,
+  setSorter,
+  filter,
+  sorter,
+}) => {
+  const [wipeRotation, setWipeRotation] = useState<string[]>(
+    getFromLocalStorage("wipeRotation", [])
+  );
   const [excludedCountries, setExcludeCountries] = useState<string[]>([]);
+
   const [includedCountries, setIncludedCountries] = useState<string[]>([]);
-  const [minSize, setMinSize] = useState<number | string>("");
-  const [maxSize, setMaxSize] = useState<number | string>("");
-  const [minPlayers, setMinPlayers] = useState<number | string>("");
-  const [maxPlayers, setMaxPlayers] = useState<number | string>("");
-  const [searchName, setSearchName] = useState<string>("");
-  const [maxGroupSize, setMaxGroupSize] = useState<number[]>([]);
-  const [minRank, setMinRank] = useState<number | string>("");
-  const [maxDistance, setMaxDistance] = useState<number | string>("");
-  const [rate, setRate] = useState<number[]>([]);
+
+  const [minSize, setMinSize] = useState<number | string>(
+    getFromLocalStorage("minSize", "")
+  );
+  const [maxSize, setMaxSize] = useState<number | string>(
+    getFromLocalStorage("maxSize", "")
+  );
+  const [minPlayers, setMinPlayers] = useState<number | string>(
+    getFromLocalStorage("minPlayers", "")
+  );
+  const [maxPlayers, setMaxPlayers] = useState<number | string>(
+    getFromLocalStorage("maxPlayers", "")
+  );
+  const [searchName, setSearchName] = useState<string>(
+    getFromLocalStorage("searchName", "")
+  );
+  const [maxGroupSize, setMaxGroupSize] = useState<number[]>(
+    getFromLocalStorage("maxGroupSize", [])
+  );
+  const [minRank, setMinRank] = useState<number | string>(
+    getFromLocalStorage("minRank", "")
+  );
+  const [maxDistance, setMaxDistance] = useState<number | string>(
+    getFromLocalStorage("maxDistance", "")
+  );
+  const [rate, setRate] = useState<number[]>(getFromLocalStorage("rate", []));
 
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
@@ -133,6 +178,38 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
     }, 1000);
   };
 
+  // const saveAllStatesToLocalStorage = () => {
+  //   saveToLocalStorage("wipeRotation", wipeRotation);
+  //   saveToLocalStorage("excludedCountries", excludedCountries);
+  //   saveToLocalStorage("includedCountries", includedCountries);
+  //   saveToLocalStorage("minSize", minSize);
+  //   saveToLocalStorage("maxSize", maxSize);
+  //   saveToLocalStorage("minPlayers", minPlayers);
+  //   saveToLocalStorage("maxPlayers", maxPlayers);
+  //   saveToLocalStorage("searchName", searchName);
+  //   saveToLocalStorage("maxGroupSize", maxGroupSize);
+  //   saveToLocalStorage("minRank", minRank);
+  //   saveToLocalStorage("maxDistance", maxDistance);
+  //   saveToLocalStorage("rate", rate);
+  //   console.log("stored to localstorage");
+  // };
+
+  useEffect(() => {
+    // Save data to local storage whenever the state changes
+    saveToLocalStorage("wipeRotation", wipeRotation);
+    saveToLocalStorage("minSize", minSize);
+    saveToLocalStorage("maxSize", maxSize);
+    saveToLocalStorage("minPlayers", minPlayers);
+    saveToLocalStorage("maxPlayers", maxPlayers);
+    saveToLocalStorage("searchName", searchName);
+    saveToLocalStorage("maxGroupSize", maxGroupSize);
+    saveToLocalStorage("minRank", minRank);
+    saveToLocalStorage("maxDistance", maxDistance);
+    saveToLocalStorage("rate", rate);
+
+    console.log("stored to localstorage");
+  }, [filter, sorter]);
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -140,7 +217,10 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
     >
       <div className="flex flex-wrap items-center justify-start">
         <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0">
-          <label htmlFor="search" className="block text-gray-200 font-semibold text-lg my-1">
+          <label
+            htmlFor="search"
+            className="block text-gray-200 font-semibold text-lg my-1"
+          >
             Search by name
           </label>
           <input
@@ -156,7 +236,10 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
         </div>
 
         <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0">
-          <label htmlFor="minRank" className="block text-gray-200 font-semibold text-lg my-1">
+          <label
+            htmlFor="minRank"
+            className="block text-gray-200 font-semibold text-lg my-1"
+          >
             Server score
           </label>
           <input
@@ -220,7 +303,10 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
           </div>
         </div>
         <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0">
-          <label htmlFor="minSize" className="block text-gray-200 font-semibold text-lg my-1">
+          <label
+            htmlFor="minSize"
+            className="block text-gray-200 font-semibold text-lg my-1"
+          >
             Map size
           </label>
           <div className="flex items-center">
@@ -250,7 +336,9 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
       </div>
       <div>
         <fieldset className="mt-4">
-          <legend className="block text-gray-200 font-semibold text-lg mb-2">RATES</legend>
+          <legend className="block text-gray-200 font-semibold text-lg mb-2">
+            RATES
+          </legend>
           <div className="flex flex-wrap">
             {ratesOptions.map((option) => (
               <div
@@ -288,7 +376,9 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
           </div>
         </fieldset>
         <fieldset className="mt-6">
-          <legend className="block text-gray-200 font-semibold text-lg mb-1">WIPE RATE</legend>
+          <legend className="block text-gray-200 font-semibold text-lg mb-1">
+            WIPE RATE
+          </legend>
           <div className="flex flex-wrap">
             {wipeRatesOptions.map((option) => (
               <div
@@ -311,13 +401,19 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter }) => {
           <label className="block text-gray-200 font-semibold text-lg my-1">
             Include Countries
           </label>
-          <SelectCountries countries={includedCountries} setCountries={setIncludedCountries} />
+          <SelectIncludeCountries
+            countries={includedCountries}
+            setCountries={setIncludedCountries}
+          />
         </div>
         <div className="m-0 w-1/2 xl:max-w-[32.5em] xl:ml-4">
           <label className="block text-gray-200 font-semibold text-lg my-1">
             Exclude Countries
           </label>
-          <SelectCountries countries={excludedCountries} setCountries={setExcludeCountries} />
+          <SelectExcludeCountries
+            countries={excludedCountries}
+            setCountries={setExcludeCountries}
+          />
         </div>
       </div>
       <div className="flex justify-center">

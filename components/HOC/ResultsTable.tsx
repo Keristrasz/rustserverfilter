@@ -101,7 +101,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
 
   if (status === "success") {
     isResultsRendered = (
-      <div className=" m-4 max-w-6xl ">
+      <div className="m-4 mb-8 max-w-6xl ">
         <table className="overflow-x-clip table-fixed w-full border border-black">
           <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} />
           <tbody className="bg-zinc-700 divide-y divide-zinc-950">
@@ -111,13 +111,14 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   className="text-sm relative text-center bg-green-600 text-gray-200"
                   colSpan={11}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
+                  SERVERS
                 </td>
               </tr>
             ) : (
               <tr>
                 <td
-                  className="text-sm relative text-center bg-red-600 text-gray-200"
+                  className="text-sm relative text-center bg-rustOne text-gray-200"
                   colSpan={11}
                 >
                   FOUND <b>0</b> SERVERS!
@@ -166,7 +167,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
       {isLoadingStatus}
       {isResultsRendered}
       {isFetching && !isLoading ? (
-        <div className="flex flex-wrap items-center">
+        <div className="flex flex-wrap items-center mb-16">
           <Spinner />
           <h2 className="text-2xl font-bold mx-1 text-gray-200"> Loading more data...</h2>
         </div>

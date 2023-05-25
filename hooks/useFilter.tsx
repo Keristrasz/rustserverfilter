@@ -38,17 +38,18 @@ const useFilter = (
       ? newFilter.$and.push({ wipe_rotation: { $in: wipeRotation } })
       : null;
     rate.length !== 0 ? newFilter.$and.push({ rate: { $in: rate } }) : null;
-    includedCountries.length !== 0 && excludedCountries.length === 0
-      ? newFilter.$and.push({ "rules.location.country": { $in: includedCountries } })
-      : null;
-    excludedCountries.length !== 0 && includedCountries.length === 0
-      ? newFilter.$and.push({ "rules.location.country": { $nin: excludedCountries } })
-      : null;
+
     includedCountries.length !== 0 && excludedCountries.length !== 0
       ? alert("There can be only included or excluded countries at once")
+      : includedCountries.length !== 0 && excludedCountries.length === 0
+      ? newFilter.$and.push({ "rules.location.country": { $in: includedCountries } })
+      : excludedCountries.length !== 0 && includedCountries.length === 0
+      ? newFilter.$and.push({ "rules.location.country": { $nin: excludedCountries } })
       : null;
-
-    maxDistance && userLocation
+    //@ts-ignore
+    maxDistance < 0
+      ? alert("Distance can not be a negative number")
+      : maxDistance && userLocation
       ? newFilter.$and.push({
           "rules.location": {
             $geoWithin: {
