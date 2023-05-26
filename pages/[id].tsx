@@ -7,11 +7,11 @@ import Spinner from "@/components/Spinner";
 const ServerDetailsPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { data, isLoading, error, status } = useCustomSingleQuery(id);
+  const { data, isLoading, error, status } = useCustomSingleQuery(id as string);
 
   const renderPlayerHistoryGraph = () => {
     if (data && data.players_history) {
-      const formattedData = data.players_history.map((entry) => ({
+      const formattedData = data.players_history.map((entry: number[]) => ({
         timestamp: entry[1],
         playerCount: entry[0],
       }));
@@ -42,7 +42,7 @@ const ServerDetailsPage = () => {
         </div>
       )}
 
-      {error && <div>An error has occurred: {error.message}</div>}
+      {error instanceof Error && <div>An error has occurred: {error.message}</div>}
 
       {status === "success" && (
         <div className="m-4 max-w-6xl">

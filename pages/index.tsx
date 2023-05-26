@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { userLocationType, SorterType, FilterType } from "../utils/typesTypescript";
+import {
+  userLocationType,
+  SorterType,
+  FilterType,
+  ServerPrimaryDataType,
+} from "../utils/typesTypescript";
 import useUserAuth from "../hooks/useUserAuth";
 import useGeolocation from "@/hooks/useGeolocation";
 
@@ -9,6 +14,40 @@ import BodyWrapper from "@/components/layout/BodyWrapper";
 import Heading from "@/components/UI/Heading";
 
 //TODO Distance sort by loaded data
+
+import { fetchAllServers } from "@/utils/fetchAllServers";
+import * as Realm from "realm-web";
+import { GetStaticProps } from "next";
+
+export const getStaticProps: GetStaticProps = async () => {
+  // Fetch initialSorter and initialFilter from an API or any other data source
+  console.log("staticprops1");
+  const initialSorter: SorterType = { players: -1 };
+  const initialFilter: FilterType = {
+    $and: [
+      { rank: { $gte: 50 } },
+      { rank: { $gte: 25 } },
+      { players: { $gte: 20 } },
+      { wipe_rotation: { $in: ["weekly", "biweekly", "monthly"] } },
+    ],
+  };
+  console.log("staticprops2");
+  const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
+  if (app && !app.currentUser) {
+    console.log("app && !app.currentUser");
+    const anonymousUser = Realm.Credentials.anonymous();
+    await app.logIn(anonymousUser);
+  }
+  console.log("staticprops3");
+  const initialData = await fetchAllServers(initialFilter, initialSorter, 0, 30, app);
+  console.log("staticProps2", initialData);
+  return {
+    props: {
+      initialData,
+    },
+    // revalidate: 60, // Re-generate the page every 60 seconds (optional)
+  };
+};
 
 // Helper function to get data from local storage
 const getFromLocalStorage = (key: string, defaultValue: any): any => {
@@ -27,21 +66,77 @@ const saveToLocalStorage = (key: string, value: any): void => {
   }
 };
 
-function Home() {
+// export const getStaticProps: GetStaticProps = async () => {
+//   // Fetch initialSorter and initialFilter from an API or any other data source
+//   const initialSorter: SorterType = { players: -1 }; // Corrected value to match SorterType
+//   const initialFilter: FilterType = {
+//     $and: [
+//       { rank: { $gte: 50 } },
+//       { rank: { $gte: 25 } },
+//       { players: { $gte: 20 } },
+//       { wipe_rotation: { $in: ["weekly", "biweekly", "monthly"] } },
+//     ],
+//   };
+
+//   return {
+//     props: {
+//       initialSorter,
+//       initialFilter,
+//     },
+//   };
+// };
+
+interface HomeProps {
+  // initialSorter: SorterType | {};
+  // initialFilter: FilterType;
+  initialData: ServerPrimaryDataType;
+}
+
+function Home({ initialData }: HomeProps) {
   console.log("rerender");
   const app = useUserAuth();
 
-  const [sorter, setSorter] = useState<SorterType | {}>(
-    getFromLocalStorage("sorter", {})
-  );
+  const [sorter, setSorter] = useState<SorterType | {}>(getFromLocalStorage("sorter", {}));
   const [filter, setFilter] = useState<FilterType>(
     getFromLocalStorage("filter", {
       $and: [{ rank: { $gte: 50 } }],
     })
   );
 
-  const [userLocation, setUserLocation] = useState<userLocationType | null>(null);
-  useGeolocation(userLocation, setUserLocation);
+  // const [sorter, setSorter] = useState<SorterType | {}>(initialSorter);
+  // const [filter, setFilter] = useState<FilterType>(initialFilter);
+
+  // useEffect(() => {
+  //   // Check if sorter value exists in localStorage and replace the initial value if it does
+  //   const sorterFromLocalStorage = getFromLocalStorage("sorter", null);
+  //   if (sorterFromLocalStorage && Object.keys(sorterFromLocalStorage).length > 0) {
+  //     setSorter(sorterFromLocalStorage);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   // Check if filter value exists in localStorage and replace the initial value if it does
+  //   const filterFromLocalStorage = getFromLocalStorage("filter", null);
+  //   if (filterFromLocalStorage && Object.keys(filterFromLocalStorage).length > 0) {
+  //     setFilter(filterFromLocalStorage);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   // Check if sorter value exists in localStorage and replace the initial value if it does
+  //   const sorterFromLocalStorage = getFromLocalStorage("sorter", null);
+  //   if (sorterFromLocalStorage !== null) {
+  //     setSorter(sorterFromLocalStorage);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   // Check if filter value exists in localStorage and replace the initial value if it does
+  //   const filterFromLocalStorage = getFromLocalStorage("filter", null);
+  //   if (filterFromLocalStorage !== null) {
+  //     setFilter(filterFromLocalStorage);
+  //   }
+  // }, []);
 
   useEffect(() => {
     saveToLocalStorage("sorter", sorter);
@@ -50,6 +145,9 @@ function Home() {
   useEffect(() => {
     saveToLocalStorage("filter", filter);
   }, [filter]);
+
+  const [userLocation, setUserLocation] = useState<userLocationType | null>(null);
+  useGeolocation(userLocation, setUserLocation);
 
   return (
     <BodyWrapper>
@@ -68,6 +166,7 @@ function Home() {
         setFilter={setFilter}
         setSorter={setSorter}
         userLocation={userLocation}
+        initialData={initialData}
       />
     </BodyWrapper>
   );

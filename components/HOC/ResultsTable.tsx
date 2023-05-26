@@ -7,6 +7,7 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useCustomInfiniteQuery from "@/hooks/useCustomInfiniteQuery";
 import { columnData } from "../THead";
 import Spinner from "../Spinner";
+import { resultsTableDataStaticProps } from "@/SSG/resultsTableData";
 
 interface ResultsTableProps {
   app: any;
@@ -15,6 +16,7 @@ interface ResultsTableProps {
   userLocation: { latitude: number; longitude: number } | null;
   setFilter: React.Dispatch<React.SetStateAction<FilterType>>;
   setSorter: React.Dispatch<React.SetStateAction<SorterType | {}>>;
+  initialData?: ServerPrimaryDataType;
 }
 
 interface ColumnDataType {
@@ -32,15 +34,16 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
   setFilter,
   setSorter,
   userLocation,
+  initialData,
 }) => {
   console.log("resulttablerender");
-  const { data, isFetching, isLoading, error, status, fetchNextPage, hasNextPage } =
+  const { queryData, isFetching, isLoading, error, status, fetchNextPage, hasNextPage } =
     useCustomInfiniteQuery(filter, sorter, app);
 
   const ref = useInfiniteScroll(hasNextPage, fetchNextPage);
-  console.log(data);
+  console.log(queryData);
   const router = useRouter();
-
+  let data = initialData || queryData;
   function getColumnValue(column: ColumnDataType, mappedServer: ServerPrimaryDataType) {
     const { value } = column;
 
@@ -111,8 +114,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   className="text-sm relative text-center bg-green-600 text-gray-200"
                   colSpan={11}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
-                  SERVERS
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
                 </td>
               </tr>
             ) : (

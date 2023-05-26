@@ -55,7 +55,7 @@ const useCustomInfiniteQuery = (filter: FilterType, sorter: SorterType, app: any
   } = useInfiniteQuery(queryKey, queryFn, queryOptions);
 
   return {
-    data,
+    queryData: data,
     isFetching,
     isLoading,
     error,
