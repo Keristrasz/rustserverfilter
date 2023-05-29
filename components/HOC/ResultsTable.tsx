@@ -2,12 +2,18 @@ import THead from "../THead";
 import React from "react";
 import { useRouter } from "next/router";
 import { calculateDistance, getTime, getTimeUptime } from "@/utils/inputFunctions";
-import { FilterType, SorterType, ServerPrimaryDataType } from "@/utils/typesTypescript";
+import {
+  FilterType,
+  SorterType,
+  ServerPrimaryDataType,
+  QueryResponseType,
+} from "@/utils/typesTypescript";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useCustomInfiniteQuery from "@/hooks/useCustomInfiniteQuery";
 import { columnData } from "../THead";
 import Spinner from "../Spinner";
 import { resultsTableDataStaticProps } from "@/SSG/resultsTableData";
+import { InfiniteData } from "@tanstack/react-query";
 
 interface ResultsTableProps {
   app: any;
@@ -16,7 +22,7 @@ interface ResultsTableProps {
   userLocation: { latitude: number; longitude: number } | null;
   setFilter: React.Dispatch<React.SetStateAction<FilterType>>;
   setSorter: React.Dispatch<React.SetStateAction<SorterType | {}>>;
-  initialData?: ServerPrimaryDataType;
+  initialData?: InfiniteData<QueryResponseType>;
 }
 
 interface ColumnDataType {
@@ -41,9 +47,16 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
     useCustomInfiniteQuery(filter, sorter, app);
 
   const ref = useInfiniteScroll(hasNextPage, fetchNextPage);
-  console.log(queryData);
+  console.log("QUERYDATA!" + queryData);
   const router = useRouter();
-  let data = initialData || queryData;
+  let data = queryData;
+  if (initialData) {
+    console.log("initialData exist?" + initialData);
+    console.log("initialData:" + JSON.stringify(data));
+    data = initialData;
+  }
+  console.log("data:" + data);
+  console.log("data:" + JSON.stringify(data));
   function getColumnValue(column: ColumnDataType, mappedServer: ServerPrimaryDataType) {
     const { value } = column;
 
@@ -114,7 +127,8 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   className="text-sm relative text-center bg-green-600 text-gray-200"
                   colSpan={11}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
+                  SERVERS
                 </td>
               </tr>
             ) : (

@@ -107,6 +107,6 @@ export const fetchAllServers = async (
   // const documents = result.rows;
   // const totalCount = result.totalRows;
 
-  console.log(result);
+  // console.log(result);
   return result;
 };

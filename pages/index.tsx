@@ -4,6 +4,7 @@ import {
   SorterType,
   FilterType,
   ServerPrimaryDataType,
+  QueryResponseType,
 } from "../utils/typesTypescript";
 import useUserAuth from "../hooks/useUserAuth";
 import useGeolocation from "@/hooks/useGeolocation";
@@ -12,15 +13,16 @@ import ResultsTable from "@/components/HOC/ResultsTable";
 import Form from "@/components/HOC/Form";
 import BodyWrapper from "@/components/layout/BodyWrapper";
 import Heading from "@/components/UI/Heading";
+import { InfiniteData } from "@tanstack/react-query";
 
-//TODO Distance sort by loaded data
+//TODO Distance sort by loaded initialData
 
 import { fetchAllServers } from "@/utils/fetchAllServers";
 import * as Realm from "realm-web";
 import { GetStaticProps } from "next";
 
 export const getStaticProps: GetStaticProps = async () => {
-  // Fetch initialSorter and initialFilter from an API or any other data source
+  // Fetch initialSorter and initialFilter from an API or any other initialData source
   console.log("staticprops1");
   const initialSorter: SorterType = { players: -1 };
   const initialFilter: FilterType = {
@@ -39,8 +41,13 @@ export const getStaticProps: GetStaticProps = async () => {
     await app.logIn(anonymousUser);
   }
   console.log("staticprops3");
-  const initialData = await fetchAllServers(initialFilter, initialSorter, 0, 30, app);
-  console.log("staticProps2", initialData);
+  const initialData: QueryResponseType = await fetchAllServers(
+    initialFilter,
+    initialSorter,
+    0,
+    30,
+    app
+  );
   return {
     props: {
       initialData,
@@ -49,7 +56,7 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-// Helper function to get data from local storage
+// Helper function to get initialData from local storage
 const getFromLocalStorage = (key: string, defaultValue: any): any => {
   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
     const storedValue = localStorage.getItem(key);
@@ -59,7 +66,7 @@ const getFromLocalStorage = (key: string, defaultValue: any): any => {
   }
 };
 
-// Helper function to save data to local storage
+// Helper function to save initialData to local storage
 const saveToLocalStorage = (key: string, value: any): void => {
   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
     localStorage.setItem(key, JSON.stringify(value));
@@ -67,7 +74,7 @@ const saveToLocalStorage = (key: string, value: any): void => {
 };
 
 // export const getStaticProps: GetStaticProps = async () => {
-//   // Fetch initialSorter and initialFilter from an API or any other data source
+//   // Fetch initialSorter and initialFilter from an API or any other initialData source
 //   const initialSorter: SorterType = { players: -1 }; // Corrected value to match SorterType
 //   const initialFilter: FilterType = {
 //     $and: [
@@ -89,14 +96,16 @@ const saveToLocalStorage = (key: string, value: any): void => {
 interface HomeProps {
   // initialSorter: SorterType | {};
   // initialFilter: FilterType;
-  initialData: ServerPrimaryDataType;
+  initialData: InfiniteData<QueryResponseType>;
 }
 
 function Home({ initialData }: HomeProps) {
   console.log("rerender");
   const app = useUserAuth();
 
-  const [sorter, setSorter] = useState<SorterType | {}>(getFromLocalStorage("sorter", {}));
+  const [sorter, setSorter] = useState<SorterType | {}>(
+    getFromLocalStorage("sorter", {})
+  );
   const [filter, setFilter] = useState<FilterType>(
     getFromLocalStorage("filter", {
       $and: [{ rank: { $gte: 50 } }],
@@ -184,9 +193,9 @@ export default Home;
 // import BodyWrapper from "@/components/layout/BodyWrapper";
 // import Heading from "@/components/UI/Heading";
 
-// //TODO Distance sort by loaded data
+// //TODO Distance sort by loaded initialData
 
-// // Helper function to get data from local storage
+// // Helper function to get initialData from local storage
 // const getFromLocalStorage = (key: string, defaultValue: any): any => {
 //   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
 //     const storedValue = localStorage.getItem(key);
@@ -196,7 +205,7 @@ export default Home;
 //   }
 // };
 
-// // Helper function to save data to local storage
+// // Helper function to save initialData to local storage
 // const saveToLocalStorage = (key: string, value: any): void => {
 //   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
 //     localStorage.setItem(key, JSON.stringify(value));
