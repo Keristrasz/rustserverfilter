@@ -13,11 +13,9 @@ let pageSize = 40;
 const useCustomInfiniteQuery = (filter: FilterType, sorter: SorterType, app: any) => {
   const queryKey = ["searchResults", filter, sorter, pageSize];
 
-  console.log("custom infinity query run");
+  // console.log("custom infinity query run");
 
-  const queryFn = async ({
-    pageParam,
-  }: QueryFunctionContext): Promise<QueryResponseType> => {
+  const queryFn = async ({ pageParam }: QueryFunctionContext): Promise<QueryResponseType> => {
     // console.log(pageParam);
     const result = await fetchAllServers(filter, sorter, pageParam, pageSize, app);
     return result;
@@ -29,8 +27,8 @@ const useCustomInfiniteQuery = (filter: FilterType, sorter: SorterType, app: any
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     retry: false,
-    staleTime: 1000 * 60,
-    cacheTime: 1000 * 60,
+    staleTime: 1000 * 300,
+    cacheTime: 1000 * 300,
     getNextPageParam: (lastPage: QueryResponseType, allPages: QueryResponseType[]) => {
       const totalCount = lastPage.totalCount[0]?.totalCount || 0;
       const totalDocumentsShown = allPages.reduce(

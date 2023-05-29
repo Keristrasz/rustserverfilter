@@ -1,7 +1,7 @@
 import THead from "../THead";
 import React from "react";
 import { useRouter } from "next/router";
-import { calculateDistance, getTime, getTimeUptime } from "@/utils/inputFunctions";
+import { calculateDistance, getTime } from "@/utils/inputFunctions";
 import {
   FilterType,
   SorterType,
@@ -12,7 +12,6 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useCustomInfiniteQuery from "@/hooks/useCustomInfiniteQuery";
 import { columnData } from "../THead";
 import Spinner from "../Spinner";
-import { resultsTableDataStaticProps } from "@/SSG/resultsTableData";
 import { InfiniteData } from "@tanstack/react-query";
 
 interface ResultsTableProps {
@@ -42,21 +41,18 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
   userLocation,
   initialData,
 }) => {
-  console.log("resulttablerender");
+  // console.log("resulttablerender");
   const { queryData, isFetching, isLoading, error, status, fetchNextPage, hasNextPage } =
     useCustomInfiniteQuery(filter, sorter, app);
 
   const ref = useInfiniteScroll(hasNextPage, fetchNextPage);
-  console.log("QUERYDATA!" + queryData);
+
   const router = useRouter();
-  let data = queryData;
-  if (initialData) {
-    console.log("initialData exist?" + initialData);
-    console.log("initialData:" + JSON.stringify(data));
-    data = initialData;
+  let data = initialData;
+  if (queryData) {
+    data = queryData;
   }
-  console.log("data:" + data);
-  console.log("data:" + JSON.stringify(data));
+
   function getColumnValue(column: ColumnDataType, mappedServer: ServerPrimaryDataType) {
     const { value } = column;
 
@@ -127,8 +123,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   className="text-sm relative text-center bg-green-600 text-gray-200"
                   colSpan={11}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
-                  SERVERS
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
                 </td>
               </tr>
             ) : (
@@ -144,7 +139,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
 
             {data?.pages.map((page, pageIndex) => (
               <React.Fragment key={pageIndex}>
-                {page.result.map((mappedServer) => {
+                {page.result.map((mappedServer: ServerPrimaryDataType) => {
                   return (
                     <tr
                       key={mappedServer.addr}
@@ -178,6 +173,73 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
       </div>
     );
   }
+
+  //for getStaticProps
+
+  if (initialData && !isResultsRendered) {
+    console.log("initialData && !isResultsRendered");
+    isResultsRendered = (
+      <div className="m-4 mb-8 max-w-6xl ">
+        <table className="overflow-x-clip table-fixed w-full border border-black">
+          <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} />
+          <tbody className="bg-zinc-700 divide-y divide-zinc-950">
+            {data?.pages[0]?.totalCount[0]?.totalCount ? (
+              <tr>
+                <td
+                  className="text-sm relative text-center bg-green-600 text-gray-200"
+                  colSpan={11}
+                >
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
+                </td>
+              </tr>
+            ) : (
+              <tr>
+                <td
+                  className="text-sm relative text-center bg-rustOne text-gray-200"
+                  colSpan={11}
+                >
+                  FOUND <b>0</b> SERVERS!
+                </td>
+              </tr>
+            )}
+
+            {data?.pages.map((page, pageIndex) => (
+              <React.Fragment key={pageIndex}>
+                {page.result.map((mappedServer: ServerPrimaryDataType) => {
+                  return (
+                    <tr
+                      key={mappedServer.addr}
+                      className="hover:bg-rustOne clickable-row cursor-pointer"
+                      onClick={() => {
+                        router.push(`/${mappedServer.addr}`);
+                      }}
+                      role="link"
+                      ref={ref}
+                    >
+                      {columnData.map((column) => (
+                        <td
+                          key={column.value}
+                          className={`${column.styles} px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200`}
+                        >
+                          {getColumnValue(column, mappedServer)}
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })}
+                {page.result.length > 0 && (
+                  <tr>
+                    <td className="bg-green-700" colSpan={11}></td>
+                  </tr>
+                )}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
   return (
     <>
       {isLoadingStatus}
@@ -192,5 +254,5 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
   );
 };
 
-export default React.memo(ResultsTable);
-// export default ResultsTable;
+// export default React.memo(ResultsTable);
+export default ResultsTable;

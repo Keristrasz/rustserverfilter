@@ -26,12 +26,7 @@ export const getStaticProps: GetStaticProps = async () => {
   console.log("staticprops1");
   const initialSorter: SorterType = { players: -1 };
   const initialFilter: FilterType = {
-    $and: [
-      { rank: { $gte: 50 } },
-      { rank: { $gte: 25 } },
-      { players: { $gte: 20 } },
-      { wipe_rotation: { $in: ["weekly", "biweekly", "monthly"] } },
-    ],
+    $and: [{ rank: { $gte: 500 } }, { players: { $gte: 20 } }],
   };
   console.log("staticprops2");
   const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
@@ -41,13 +36,19 @@ export const getStaticProps: GetStaticProps = async () => {
     await app.logIn(anonymousUser);
   }
   console.log("staticprops3");
-  const initialData: QueryResponseType = await fetchAllServers(
+
+  const _initialData: QueryResponseType = await fetchAllServers(
     initialFilter,
     initialSorter,
     0,
     30,
     app
   );
+
+  const initialData = {
+    pages: [_initialData],
+  };
+
   return {
     props: {
       initialData,
@@ -73,26 +74,6 @@ const saveToLocalStorage = (key: string, value: any): void => {
   }
 };
 
-// export const getStaticProps: GetStaticProps = async () => {
-//   // Fetch initialSorter and initialFilter from an API or any other initialData source
-//   const initialSorter: SorterType = { players: -1 }; // Corrected value to match SorterType
-//   const initialFilter: FilterType = {
-//     $and: [
-//       { rank: { $gte: 50 } },
-//       { rank: { $gte: 25 } },
-//       { players: { $gte: 20 } },
-//       { wipe_rotation: { $in: ["weekly", "biweekly", "monthly"] } },
-//     ],
-//   };
-
-//   return {
-//     props: {
-//       initialSorter,
-//       initialFilter,
-//     },
-//   };
-// };
-
 interface HomeProps {
   // initialSorter: SorterType | {};
   // initialFilter: FilterType;
@@ -103,49 +84,12 @@ function Home({ initialData }: HomeProps) {
   console.log("rerender");
   const app = useUserAuth();
 
-  const [sorter, setSorter] = useState<SorterType | {}>(
-    getFromLocalStorage("sorter", {})
-  );
+  const [sorter, setSorter] = useState<SorterType | {}>(getFromLocalStorage("sorter", {}));
   const [filter, setFilter] = useState<FilterType>(
     getFromLocalStorage("filter", {
       $and: [{ rank: { $gte: 50 } }],
     })
   );
-
-  // const [sorter, setSorter] = useState<SorterType | {}>(initialSorter);
-  // const [filter, setFilter] = useState<FilterType>(initialFilter);
-
-  // useEffect(() => {
-  //   // Check if sorter value exists in localStorage and replace the initial value if it does
-  //   const sorterFromLocalStorage = getFromLocalStorage("sorter", null);
-  //   if (sorterFromLocalStorage && Object.keys(sorterFromLocalStorage).length > 0) {
-  //     setSorter(sorterFromLocalStorage);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   // Check if filter value exists in localStorage and replace the initial value if it does
-  //   const filterFromLocalStorage = getFromLocalStorage("filter", null);
-  //   if (filterFromLocalStorage && Object.keys(filterFromLocalStorage).length > 0) {
-  //     setFilter(filterFromLocalStorage);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   // Check if sorter value exists in localStorage and replace the initial value if it does
-  //   const sorterFromLocalStorage = getFromLocalStorage("sorter", null);
-  //   if (sorterFromLocalStorage !== null) {
-  //     setSorter(sorterFromLocalStorage);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   // Check if filter value exists in localStorage and replace the initial value if it does
-  //   const filterFromLocalStorage = getFromLocalStorage("filter", null);
-  //   if (filterFromLocalStorage !== null) {
-  //     setFilter(filterFromLocalStorage);
-  //   }
-  // }, []);
 
   useEffect(() => {
     saveToLocalStorage("sorter", sorter);

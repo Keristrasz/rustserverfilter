@@ -78,3 +78,8 @@ export type UseFilterHookType = (
   maxDistance: string | number,
   userLocation: { latitude: number; longitude: number } | null
 ) => void;
+
+export type QueryResponseType = {
+  totalCount: [{ totalCount: number }];
+  result: ServerPrimaryDataType[];
+};

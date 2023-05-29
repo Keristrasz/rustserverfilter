@@ -12,6 +12,21 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+
+  //for caching the pages correctly, but doesnt look like its working?
+  // async headers() {
+  //   return [
+  //     {
+  //       source: "/path/to/static/page",
+  //       headers: [
+  //         {
+  //           key: "Cache-Control",
+  //           value: "s-maxage=600, stale-while-revalidate",
+  //         },
+  //       ],
+  //     },
+  //   ];
+  // },
 };
 
 module.exports = nextConfig;

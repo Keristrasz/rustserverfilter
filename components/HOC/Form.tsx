@@ -30,13 +30,7 @@ const saveToLocalStorage = (key: string, value: any): void => {
   }
 };
 
-const Form: React.FC<FormProps> = ({
-  userLocation,
-  setFilter,
-  setSorter,
-  filter,
-  sorter,
-}) => {
+const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter, filter, sorter }) => {
   const [wipeRotation, setWipeRotation] = useState<string[]>(
     getFromLocalStorage("wipeRotation", [])
   );
@@ -44,27 +38,19 @@ const Form: React.FC<FormProps> = ({
 
   const [includedCountries, setIncludedCountries] = useState<string[]>([]);
 
-  const [minSize, setMinSize] = useState<number | string>(
-    getFromLocalStorage("minSize", "")
-  );
-  const [maxSize, setMaxSize] = useState<number | string>(
-    getFromLocalStorage("maxSize", "")
-  );
+  const [minSize, setMinSize] = useState<number | string>(getFromLocalStorage("minSize", ""));
+  const [maxSize, setMaxSize] = useState<number | string>(getFromLocalStorage("maxSize", ""));
   const [minPlayers, setMinPlayers] = useState<number | string>(
     getFromLocalStorage("minPlayers", "")
   );
   const [maxPlayers, setMaxPlayers] = useState<number | string>(
     getFromLocalStorage("maxPlayers", "")
   );
-  const [searchName, setSearchName] = useState<string>(
-    getFromLocalStorage("searchName", "")
-  );
+  const [searchName, setSearchName] = useState<string>(getFromLocalStorage("searchName", ""));
   const [maxGroupSize, setMaxGroupSize] = useState<number[]>(
     getFromLocalStorage("maxGroupSize", [])
   );
-  const [minRank, setMinRank] = useState<number | string>(
-    getFromLocalStorage("minRank", "")
-  );
+  const [minRank, setMinRank] = useState<number | string>(getFromLocalStorage("minRank", ""));
   const [maxDistance, setMaxDistance] = useState<number | string>(
     getFromLocalStorage("maxDistance", "")
   );
@@ -210,6 +196,14 @@ const Form: React.FC<FormProps> = ({
     console.log("stored to localstorage");
   }, [filter, sorter]);
 
+  const [isSSG, setIsSSG] = useState(false);
+
+  useEffect(() => {
+    setIsSSG(true);
+  }, []);
+
+  console.log(maxPlayers, minRank, "wiperotation:" + wipeRotation, maxGroupSize);
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -217,17 +211,14 @@ const Form: React.FC<FormProps> = ({
     >
       <div className="flex flex-wrap items-center justify-start">
         <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0">
-          <label
-            htmlFor="search"
-            className="block text-gray-200 font-semibold text-lg my-1"
-          >
+          <label htmlFor="search" className="block text-gray-200 font-semibold text-lg my-1">
             Search by name
           </label>
           <input
             id="search"
             type="text"
             className={`form-input  rounded-md shadow-sm mt-1 block w-full sm:w-64 border  bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 ${
-              searchName ? "border-rustOne" : "border-black"
+              isSSG && searchName ? "border-rustOne" : "border-black"
             }`}
             value={searchName}
             placeholder="Server name"
@@ -236,17 +227,14 @@ const Form: React.FC<FormProps> = ({
         </div>
 
         <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0">
-          <label
-            htmlFor="minRank"
-            className="block text-gray-200 font-semibold text-lg my-1"
-          >
+          <label htmlFor="minRank" className="block text-gray-200 font-semibold text-lg my-1">
             Server score
           </label>
           <input
             id="minRank"
             type="number"
             className={`form-input rounded-md shadow-sm mt-1 block w-full sm:w-48 bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 border  ${
-              minRank ? "border-rustOne" : "border-black"
+              isSSG && minRank ? "border-rustOne" : "border-black"
             }`}
             value={minRank}
             placeholder="Min"
@@ -264,7 +252,7 @@ const Form: React.FC<FormProps> = ({
             id="maxDistance"
             type="number"
             className={`form-input rounded-md shadow-sm mt-1 block w-full sm:w-48 bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 border  ${
-              maxDistance ? "border-rustOne" : "border-black"
+              isSSG && maxDistance ? "border-rustOne" : "border-black"
             }`}
             value={maxDistance}
             placeholder="Max"
@@ -284,7 +272,7 @@ const Form: React.FC<FormProps> = ({
               type="number"
               value={minPlayers}
               className={`form-input rounded-md shadow-sm block w-1/2 sm:w-48 mr-2 border  bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 ${
-                minPlayers ? "border-rustOne" : "border-black"
+                isSSG && minPlayers ? "border-rustOne" : "border-black"
               }`}
               placeholder="Min"
               onChange={handleMinPlayersChange}
@@ -294,7 +282,7 @@ const Form: React.FC<FormProps> = ({
               id="maxPlayers"
               type="number"
               className={`form-input rounded-md shadow-sm block w-1/2 sm:w-48 ml-2 bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 border  ${
-                maxPlayers ? "border-rustOne" : "border-black"
+                isSSG && maxPlayers ? "border-rustOne" : "border-black"
               }`}
               value={maxPlayers}
               placeholder="Max"
@@ -303,10 +291,7 @@ const Form: React.FC<FormProps> = ({
           </div>
         </div>
         <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0">
-          <label
-            htmlFor="minSize"
-            className="block text-gray-200 font-semibold text-lg my-1"
-          >
+          <label htmlFor="minSize" className="block text-gray-200 font-semibold text-lg my-1">
             Map size
           </label>
           <div className="flex items-center">
@@ -314,7 +299,7 @@ const Form: React.FC<FormProps> = ({
               id="minSize"
               type="number"
               className={`form-input rounded-md shadow-sm block w-1/2 sm:w-48 mr-2 bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 border ${
-                minSize ? "border-rustOne" : "border-black"
+                isSSG && minSize ? "border-rustOne" : "border-black"
               }`}
               value={minSize}
               placeholder="Min"
@@ -325,7 +310,7 @@ const Form: React.FC<FormProps> = ({
               id="maxSize"
               type="number"
               className={`form-input rounded-md shadow-sm block w-1/2 sm:w-48 ml-2 bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 border ${
-                maxSize ? "border-rustOne" : "border-black"
+                isSSG && maxSize ? "border-rustOne" : "border-black"
               }`}
               value={maxSize}
               placeholder="Max"
@@ -336,15 +321,13 @@ const Form: React.FC<FormProps> = ({
       </div>
       <div>
         <fieldset className="mt-4">
-          <legend className="block text-gray-200 font-semibold text-lg mb-2">
-            RATES
-          </legend>
+          <legend className="block text-gray-200 font-semibold text-lg mb-2">RATES</legend>
           <div className="flex flex-wrap">
             {ratesOptions.map((option) => (
               <div
                 key={option.value}
                 className={`cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-[3.225em] text-center border border-black ${
-                  rate.includes(option.value)
+                  isSSG && rate.includes(option.value)
                     ? "bg-rustOne text-white"
                     : "bg-zinc-700 text-gray-200"
                 }`}
@@ -364,7 +347,7 @@ const Form: React.FC<FormProps> = ({
               <div
                 key={option.value}
                 className={`cursor-pointer rounded-md px-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border border-black ${
-                  maxGroupSize.includes(option.value)
+                  isSSG && maxGroupSize.includes(option.value)
                     ? "bg-rustOne text-white"
                     : "bg-zinc-700 text-gray-200"
                 }`}
@@ -376,15 +359,13 @@ const Form: React.FC<FormProps> = ({
           </div>
         </fieldset>
         <fieldset className="mt-6">
-          <legend className="block text-gray-200 font-semibold text-lg mb-1">
-            WIPE RATE
-          </legend>
+          <legend className="block text-gray-200 font-semibold text-lg mb-1">WIPE RATE</legend>
           <div className="flex flex-wrap">
             {wipeRatesOptions.map((option) => (
               <div
                 key={option.value}
                 className={`cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-24 text-center border border-black ${
-                  wipeRotation.includes(option.value)
+                  isSSG && wipeRotation.includes(option.value)
                     ? "bg-rustOne text-white"
                     : "bg-zinc-700 text-gray-200"
                 }`}
@@ -420,8 +401,10 @@ const Form: React.FC<FormProps> = ({
         <button
           type="submit"
           disabled={buttonsDisabled}
-          className={`bg-rustOne text-white font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all hover:bg-green-600 ${
-            buttonsDisabled ? "cursor-not-allowed" : "cursor-pointer"
+          className={`bg-rustOne text-white font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all  ${
+            buttonsDisabled
+              ? "cursor-not-allowed  hover:bg-green-800"
+              : "cursor-pointer  hover:bg-green-600"
           }`}
         >
           Search
@@ -430,8 +413,10 @@ const Form: React.FC<FormProps> = ({
           type="button"
           disabled={buttonsDisabled}
           onClick={handleResetForm}
-          className={`bg-rustOne text-white font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all hover:bg-green-600 ${
-            buttonsDisabled ? "cursor-not-allowed" : "cursor-pointer"
+          className={`bg-rustOne text-white font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all  ${
+            buttonsDisabled
+              ? "cursor-not-allowed hover:bg-green-800"
+              : "cursor-pointer  hover:bg-green-600"
           }`}
         >
           Reset

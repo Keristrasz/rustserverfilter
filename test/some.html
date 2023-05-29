@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="next-head-count" content="2" />
+    <link rel="preload" href="/_next/static/css/354b8b91ae19e514.css" as="style" />
+    <link rel="stylesheet" href="/_next/static/css/354b8b91ae19e514.css" data-n-g="" />
+    <noscript data-n-css=""></noscript>
+    <script
+      defer=""
+      nomodule=""
+      src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"
+    ></script>
+    <script src="/_next/static/chunks/webpack-ffd36a98ae66bff3.js" defer=""></script>
+    <script src="/_next/static/chunks/framework-2c79e2a64abdb08b.js" defer=""></script>
+    <script src="/_next/static/chunks/main-4df221df76d0b5c0.js" defer=""></script>
+    <script src="/_next/static/chunks/pages/_app-8195088bbf442e31.js" defer=""></script>
+    <script src="/_next/static/chunks/3a59a859-d4c8bfc6dce3555c.js" defer=""></script>
+    <script src="/_next/static/chunks/421-aa3f8fdf6aa888b5.js" defer=""></script>
+    <script src="/_next/static/chunks/pages/index-3442ffa7fca69ca8.js" defer=""></script>
+    <script src="/_next/static/thZ6YyNWDO2AV_o5TNkkC/_buildManifest.js" defer=""></script>
+    <script src="/_next/static/thZ6YyNWDO2AV_o5TNkkC/_ssgManifest.js" defer=""></script>
+  </head>
+  <body>
+    <div id="__next">
+      <div class="flex flex-col min-h-screen">
+        <header class="flex justify-center w-full bg-rustOne">
+          <img
+            alt="Picture of the author"
+            loading="lazy"
+            width="150"
+            height="150"
+            decoding="async"
+            data-nimg="1"
+            style="color: transparent"
+            srcset="
+              /_next/image?url=%2Flogo.jpg&amp;w=256&amp;q=75 1x,
+              /_next/image?url=%2Flogo.jpg&amp;w=384&amp;q=75 2x
+            "
+            src="/_next/image?url=%2Flogo.jpg&amp;w=384&amp;q=75"
+          />
+          <h1 class="font-extrabold text-6xl mt-8 tracking-tight">HEADING</h1>
+        </header>
+        <div class="flex flex-col items-center">
+          <form
+            class="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 space-y-4 m-4 mt-8 max-w-6xl border border-black"
+          >
+            <div class="flex flex-wrap items-center justify-start">
+              <div
+                class="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0"
+              >
+                <label for="search" class="block text-gray-200 font-semibold text-lg my-1"
+                  >Search by name</label
+                ><input
+                  id="search"
+                  type="text"
+                  class="form-input rounded-md shadow-sm mt-1 block w-full sm:w-64 border bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 border-black"
+                  placeholder="Server name"
+                  value=""
+                />
+              </div>
+              <div
+                class="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0"
+              >
+                <label for="minRank" class="block text-gray-200 font-semibold text-lg my-1"
+                  >Server score</label
+                ><input
+                  id="minRank"
+                  type="number"
+                  class="form-input rounded-md shadow-sm mt-1 block w-full sm:w-48 bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 border border-black"
+                  placeholder="Min"
+                  value=""
+                />
+              </div>
+              <div
+                class="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0"
+              >
+                <label for="maxDistance" class="block text-gray-200 font-semibold text-lg my-1"
+                  >Server distance</label
+                ><input
+                  id="maxDistance"
+                  type="number"
+                  class="form-input rounded-md shadow-sm mt-1 block w-full sm:w-48 bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 border border-black"
+                  placeholder="Max"
+                  value=""
+                />
+              </div>
+              <div
+                class="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0"
+              >
+                <label for="minPlayers" class="block text-gray-200 font-semibold text-lg my-1"
+                  >Players</label
+                >
+                <div class="flex items-center">
+                  <input
+                    id="minPlayers"
+                    type="number"
+                    class="form-input rounded-md shadow-sm block w-1/2 sm:w-48 mr-2 border bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 border-black"
+                    placeholder="Min"
+                    value=""
+                  /><span class="text-gray-200">to</span
+                  ><input
+                    id="maxPlayers"
+                    type="number"
+                    class="form-input rounded-md shadow-sm block w-1/2 sm:w-48 ml-2 bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 border border-black"
+                    placeholder="Max"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0"
+              >
+                <label for="minSize" class="block text-gray-200 font-semibold text-lg my-1"
+                  >Map size</label
+                >
+                <div class="flex items-center">
+                  <input
+                    id="minSize"
+                    type="number"
+                    class="form-input rounded-md shadow-sm block w-1/2 sm:w-48 mr-2 bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 border border-black"
+                    placeholder="Min"
+                    value=""
+                  /><span class="text-gray-200">to</span
+                  ><input
+                    id="maxSize"
+                    type="number"
+                    class="form-input rounded-md shadow-sm block w-1/2 sm:w-48 ml-2 bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 border border-black"
+                    placeholder="Max"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div>
+              <fieldset class="mt-4">
+                <legend class="block text-gray-200 font-semibold text-lg mb-2">RATES</legend>
+                <div class="flex flex-wrap">
+                  <div
+                    class="cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-[3.225em] text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    2x
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-[3.225em] text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    3x
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-[3.225em] text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    4x
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-[3.225em] text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    5x
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-[3.225em] text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    10x
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-[3.225em] text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    20x
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-[3.225em] text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    25x
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-[3.225em] text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    50x
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-[3.225em] text-center border border-black bg-zinc-700 text-gray-200"
+                  > 
+                    100x
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-[3.225em] text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    200x
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-[3.225em] text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    250x
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-[3.225em] text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    500x
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-[3.225em] text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    1000x
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset class="mt-6">
+                <legend class="block text-gray-200 font-semibold text-lg mb-2">
+                  GROUP SIZE
+                </legend>
+                <div class="flex flex-wrap">
+                  <div
+                    class="cursor-pointer rounded-md px-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    Solo
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    Duo
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    Trio
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    Quad
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    Max 5
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    Max 6
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    Max 7
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    Max 8
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset class="mt-6">
+                <legend class="block text-gray-200 font-semibold text-lg mb-1">
+                  WIPE RATE
+                </legend>
+                <div class="flex flex-wrap">
+                  <div
+                    class="cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-24 text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    Weekly
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-24 text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    Biweekly
+                  </div>
+                  <div
+                    class="cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-24 text-center border border-black bg-zinc-700 text-gray-200"
+                  >
+                    Monthly
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+            <div class="flex flex-wrap w-full justify-between">
+              <div class="m-0 w-1/2 xl:max-w-[32.5em]">
+                <label class="block text-gray-200 font-semibold text-lg my-1"
+                  >Include Countries</label
+                >
+                <div class="relative">
+                  <div
+                    class="border border-black py-0.5 px-1.5 text-left bg-zinc-700 rounded-md shadow-sm cursor-pointer flex flex-wrap"
+                  >
+                    <input
+                      type="text"
+                      class="flex-grow bg-transparent focus:outline-none border-none focus:ring-0"
+                      placeholder="Type country"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="m-0 w-1/2 xl:max-w-[32.5em] xl:ml-4">
+                <label class="block text-gray-200 font-semibold text-lg my-1"
+                  >Exclude Countries</label
+                >
+                <div class="relative">
+                  <div
+                    class="border border-black py-0.5 px-1.5 text-left bg-zinc-700 rounded-md shadow-sm cursor-pointer flex flex-wrap"
+                  >
+                    <input
+                      type="text"
+                      class="flex-grow bg-transparent focus:outline-none border-none focus:ring-0"
+                      placeholder="Type country"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-center">
+              <button
+                type="submit"
+                class="bg-rustOne text-white font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all hover:bg-green-600 cursor-pointer"
+              >
+                Search</button
+              ><button
+                type="button"
+                class="bg-rustOne text-white font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all hover:bg-green-600 cursor-pointer"
+              >
+                Reset
+              </button>
+            </div>
+          </form>
+          <h2 class="text-2xl font-bold mx-2 mt-4 text-gray-200">Results loaded</h2>
+        </div>
+        <footer class="w-full bg-zinc-600 text-white py-2 px-4 mt-auto left-0 bottom-0 h-8">
+          <h4 class="text-sm font-bold m-0">...Footer</h4>
+        </footer>
+      </div>
+    </div>
+    <script id="__NEXT_DATA__" type="application/json">
+      {
+        "props": {
+          "pageProps": {
+            "initialData": {
+              "pages": [
+                {
+                  "totalCount": [{ "totalCount": 2480 }],
+                  "result": [
+                    {
+                      "addr": "172.111.33.9:28018",
+                      "born": 1685336424,
+                      "born_next": 1685941224,
+                      "difficulty": null,
+                      "max_group_size": null,
+                      "max_players": 350,
+                      "modded": false,
+                      "name": "Rustafied.com - AU Odd",
+                      "players": 499,
+                      "rank": 1307,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly",
+                      "rules": {
+                        "fps_avg": 57.95,
+                        "size": 4000,
+                        "uptime": 7082,
+                        "location": {
+                          "latitude": -33.912186,
+                          "longitude": 151.193736,
+                          "country": "Australia"
+                        }
+                      }
+                    },
+                    {
+                      "addr": "51.161.198.48:28015",
+                      "born": 1685325575,
+                      "born_next": 1685930375,
+                      "difficulty": null,
+                      "max_group_size": null,
+                      "max_players": 360,
+                      "modded": true,
+                      "name": "[AU/NZ] Upsurge Mondays 3x | 29/5 *NO BLUEPRINTS*",
+                      "players": 434,
+                      "rank": 1281,
+                      "rate": 3,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly",
+                      "rules": {
+                        "location": {
+                          "latitude": -33.83965,
+                          "longitude": 151.20541,
+                          "country": "Australia"
+                        }
+                      }
+                    },
+                    {
+                      "addr": "208.52.152.49:28015",
+                      "born": 1685203170,
+                      "born_next": 1685807970,
+                      "difficulty": null,
+                      "max_group_size": null,
+                      "max_players": 400,
+                      "modded": true,
+                      "name": "US Rustinity 5x No BPs|PVP|Better Loot+|Kits|Shop|x5NoBPs|10xCo",
+                      "players": 395,
+                      "rank": 1301,
+                      "rate": 10,
+                      "vanilla": false,
+                      "wipe_rotation": "weekly",
+                      "rules": {
+                        "fps_avg": 44.47,
+                        "size": 4255,
+                        "uptime": 68696,
+                        "location": {
+                          "latitude": 32.8137,
+                          "longitude": -96.8704,
+                          "country": "United States"
+                        }
+                      }
+                    },
+                    {
+                      "addr": "199.231.233.36:28015",
+                      "born": 1685296690,
+                      "born_next": 1685901490,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 425,
+                      "modded": true,
+                      "name": "WARBANDITS.GG US 2X |Solo/Duo/Trio|LootX2| JUST WIPED 05/28",
+                      "players": 381,
+                      "rank": 1312,
+                      "rate": 2,
+                      "vanilla": false,
+                      "wipe_rotation": "weekly",
+                      "rules": {
+                        "fps_avg": 57.93,
+                        "size": 3850,
+                        "uptime": 237404,
+                        "location": {
+                          "latitude": 32.799977,
+                          "longitude": -96.78399,
+                          "country": "United States"
+                        }
+                      }
+                    },
+                    {
+                      "addr": "154.16.128.32:28015",
+                      "born": 1685210370,
+                      "born_next": 1685815170,
+                      "difficulty": null,
+                      "max_group_size": null,
+                      "max_players": 325,
+                      "modded": true,
+                      "name": "Vital Rust - US 10x | No BPs | Kits | Clans",
+                      "players": 322,
+                      "rank": 1302,
+                      "rate": 10,
+                      "vanilla": false,
+                      "wipe_rotation": "weekly",
+                      "rules": {
+                        "fps_avg": 29.98,
+                        "size": 4700,
+                        "uptime": 7887,
+                        "location": {
+                          "latitude": 32.7797,
+                          "longitude": -96.8022,
+                          "country": "United States"
+                        }
+                      }
+                    },
+                    {
+                      "addr": "208.103.169.97:28015",
+                      "born": 1685041230,
+                      "born_next": 1685646030,
+                      "difficulty": null,
+                      "max_group_size": null,
+                      "max_players": 325,
+                      "modded": false,
+                      "name": "Rustoria.co - US Main",
+                      "players": 308,
+                      "rank": 1297,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly",
+                      "rules": {
+                        "fps_avg": 29.88,
+                        "size": 4500,
+                        "uptime": 51227,
+                        "location": {
+                          "latitude": 32.8137,
+                          "longitude": -96.8704,
+                          "country": "United States"
+                        }
+                      }
+                    },
+                    {
+                      "addr": "45.88.230.93:28015",
+                      "born": 1685267983,
+                      "born_next": 1685872783,
+                      "difficulty": null,
+                      "max_group_size": null,
+                      "max_players": 300,
+                      "modded": true,
+                      "name": "Survivors.gg #7 [ 2x Vanilla ] FULLWIPED 28.05",
+                      "players": 295,
+                      "rank": 1306,
+                      "rate": 2,
+                      "vanilla": false,
+                      "wipe_rotation": "weekly",
+                      "rules": {
+                        "fps_avg": 30,
+                        "size": 3750,
+                        "uptime": 284237,
+                        "location": {
+                          "latitude": 51.477,
+                          "longitude": -0.1959,
+                          "country": "United Kingdom"
+                        }
+                      }
+                    },
+                    {
+                      "addr": "172.111.33.22:28015",
+                      "born": 1685246349,
+                      "born_next": 1685851149,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 275,
+                      "modded": true,
+                      "name": "WARBANDITS.GG AU 3X |Solo/Duo/Trio|LootX3| JUST WIPED 05/28",
+                      "players": 272,
+                      "rank": 1311,
+                      "rate": 3,
+                      "vanilla": false,
+                      "wipe_rotation": "weekly",
+                      "rules": {
+                        "fps_avg": 52.22,
+                        "size": 3850,
+                        "uptime": 10719,
+                        "location": {
+                          "latitude": -33.912186,
+                          "longitude": 151.193736,
+                          "country": "Australia"
+                        }
+                      }
+                    },
+                    {
+                      "addr": "91.142.79.100:28259",
+                      "born": 1683827007,
+                      "born_next": 1684431807,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 350,
+                      "modded": true,
+                      "name": "DIE TO CRY Solo|Duo|Trio WIPED:11.05",
+                      "players": 258,
+                      "rank": 100,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "91.142.79.100:28121",
+                      "born": 1683826966,
+                      "born_next": 1684431766,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 350,
+                      "modded": false,
+                      "name": "AGE OF RUST |Trio server|JustWiped| 11.05",
+                      "players": 258,
+                      "rank": 100,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "185.173.38.92:28259",
+                      "born": 1684069748,
+                      "born_next": 1684674548,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 350,
+                      "modded": true,
+                      "name": "DIE TO CRY Solo|Duo|Trio WIPED:14.05",
+                      "players": 256,
+                      "rank": 143,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "185.173.38.92:28121",
+                      "born": 1684069779,
+                      "born_next": 1684674579,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 350,
+                      "modded": false,
+                      "name": "AGE OF RUST |Trio server|JustWiped| 14.05",
+                      "players": 256,
+                      "rank": 141,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "5.188.80.37:21469",
+                      "born": 1684841569,
+                      "born_next": 1685446369,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 350,
+                      "modded": false,
+                      "name": "AGE OF RUST |Trio server|JustWiped| 23/05",
+                      "players": 254,
+                      "rank": 67,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "5.188.80.37:21479",
+                      "born": 1684841538,
+                      "born_next": 1685446338,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 350,
+                      "modded": true,
+                      "name": "DIE TO CRY Solo|Duo|Trio WIPED:23/05",
+                      "players": 254,
+                      "rank": 66,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "5.188.80.37:21579",
+                      "born": 1684847744,
+                      "born_next": 1685452544,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 350,
+                      "modded": true,
+                      "name": "DIE TO CRY Solo|Duo|Trio WIPED:23/05",
+                      "players": 253,
+                      "rank": 79,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "5.188.80.37:21569",
+                      "born": 1684847774,
+                      "born_next": 1685452574,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 350,
+                      "modded": false,
+                      "name": "AGE OF RUST |Trio server|JustWiped| 23/05",
+                      "players": 253,
+                      "rank": 75,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "199.231.233.76:28015",
+                      "born": 1685296681,
+                      "born_next": 1685901481,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 300,
+                      "modded": true,
+                      "name": "WARBANDITS.GG US 3X |Solo/Duo/Trio|LootX3| JUST WIPED 05/28",
+                      "players": 248,
+                      "rank": 1311,
+                      "rate": 3,
+                      "vanilla": false,
+                      "wipe_rotation": "weekly",
+                      "rules": {
+                        "fps_avg": 59.97,
+                        "size": 3850,
+                        "uptime": 237073,
+                        "location": {
+                          "latitude": 32.799977,
+                          "longitude": -96.78399,
+                          "country": "United States"
+                        }
+                      }
+                    },
+                    {
+                      "addr": "5.188.80.37:21499",
+                      "born": 1684841538,
+                      "born_next": 1685446338,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 275,
+                      "modded": true,
+                      "name": "Rust PLAY Vanilla [Solo Duo Trio] 23/5",
+                      "players": 247,
+                      "rank": 67,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "208.103.169.246:28015",
+                      "born": 1685023120,
+                      "born_next": 1685627920,
+                      "difficulty": null,
+                      "max_group_size": null,
+                      "max_players": 250,
+                      "modded": false,
+                      "name": "Rustoria.co - EU Main",
+                      "players": 246,
+                      "rank": 1287,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly",
+                      "rules": {
+                        "fps_avg": 29.83,
+                        "size": 4250,
+                        "uptime": 4518,
+                        "location": {
+                          "latitude": 51.5095,
+                          "longitude": -0.0955,
+                          "country": "United Kingdom"
+                        }
+                      }
+                    },
+                    {
+                      "addr": "5.188.80.37:21459",
+                      "born": 1684841570,
+                      "born_next": 1685446370,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 300,
+                      "modded": false,
+                      "name": "Noob World #1 Solo/Duo/Trio |FreshWiped| 23/05",
+                      "players": 246,
+                      "rank": 66,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "91.142.79.100:28101",
+                      "born": 1683826967,
+                      "born_next": 1684431767,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 300,
+                      "modded": false,
+                      "name": "Noob World #1 Solo/Duo/Trio |FreshWiped| 11.05",
+                      "players": 245,
+                      "rank": 100,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "91.142.79.100:28016",
+                      "born": 1683826935,
+                      "born_next": 1684431735,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 275,
+                      "modded": true,
+                      "name": "Rust PLAY Vanilla [Solo Duo Trio] 11/5",
+                      "players": 245,
+                      "rank": 100,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "185.173.38.92:28016",
+                      "born": 1684069748,
+                      "born_next": 1684674548,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 275,
+                      "modded": true,
+                      "name": "Rust PLAY Vanilla [Solo Duo Trio] 14/5",
+                      "players": 245,
+                      "rank": 141,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "5.188.80.37:21599",
+                      "born": 1684847743,
+                      "born_next": 1685452543,
+                      "difficulty": null,
+                      "max_group_size": 3,
+                      "max_players": 275,
+                      "modded": true,
+                      "name": "Rust PLAY Vanilla [Solo Duo Trio] 23/5",
+                      "players": 245,
+                      "rank": 79,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "185.244.180.25:28121",
+                      "born": 1684233279,
+                      "born_next": 1684838079,
+                      "difficulty": null,
+                      "max_group_size": null,
+                      "max_players": 250,
+                      "modded": false,
+                      "name": "Vanilla Classic 5X Wiped: 16.05",
+                      "players": 244,
+                      "rank": 159,
+                      "rate": 5,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "77.105.172.94:28111",
+                      "born": 1684320977,
+                      "born_next": 1684925777,
+                      "difficulty": null,
+                      "max_group_size": 2,
+                      "max_players": 300,
+                      "modded": true,
+                      "name": "Holy RUST [Vanilla/Max 2/BP WIPED: 17/5]",
+                      "players": 244,
+                      "rank": 50,
+                      "rate": null,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "77.223.100.182:28051",
+                      "born": 1684431833,
+                      "born_next": 1685036633,
+                      "difficulty": null,
+                      "max_group_size": 2,
+                      "max_players": 250,
+                      "modded": false,
+                      "name": "Ancient Rust x3 Solo Duo BP Wiped: 18/05",
+                      "players": 244,
+                      "rank": 63,
+                      "rate": 3,
+                      "vanilla": false,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "89.223.31.89:21479",
+                      "born": 1684830689,
+                      "born_next": 1685435489,
+                      "difficulty": null,
+                      "max_group_size": 2,
+                      "max_players": 250,
+                      "modded": true,
+                      "name": "INDUSTRIAL RUST 2X SOLO DUO Wiped: 23/5",
+                      "players": 244,
+                      "rank": 65,
+                      "rate": 2,
+                      "vanilla": false,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "188.68.218.66:21599",
+                      "born": 1684847751,
+                      "born_next": 1685452551,
+                      "difficulty": null,
+                      "max_group_size": 5,
+                      "max_players": 275,
+                      "modded": true,
+                      "name": "ZONA X5/MAX5/LOOT+/TP/KITS/WIPE 23/05",
+                      "players": 244,
+                      "rank": 51,
+                      "rate": 5,
+                      "vanilla": false,
+                      "wipe_rotation": "weekly"
+                    },
+                    {
+                      "addr": "176.124.223.251:28051",
+                      "born": 1683911693,
+                      "born_next": 1684516493,
+                      "difficulty": null,
+                      "max_group_size": null,
+                      "max_players": 250,
+                      "modded": false,
+                      "name": "Vanilla UrioRust X2 NoLimit BP Wiped: 12.05",
+                      "players": 243,
+                      "rank": 117,
+                      "rate": 2,
+                      "vanilla": true,
+                      "wipe_rotation": "weekly"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "__N_SSG": true
+        },
+        "page": "/",
+        "query": {},
+        "buildId": "thZ6YyNWDO2AV_o5TNkkC",
+        "isFallback": false,
+        "gsp": true,
+        "scriptLoader": []
+      }
+    </script>
+  </body>
+</html>

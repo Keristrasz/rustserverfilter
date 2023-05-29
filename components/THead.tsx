@@ -9,12 +9,6 @@ interface THeadProps {
 }
 
 export const columnData = [
-  // {
-  //   styles: "w-1/12",
-  //   isClickable: false,
-  //   name: "IP",
-  //   value: "addr",
-  // },
   { isClickable: true, styles: "w-1/12", name: "Score", value: "rank" },
   { isClickable: false, styles: "w-4/12", name: "Name", value: "name" },
   { isClickable: true, styles: "w-1/12", name: "Players", value: "players" },
@@ -22,7 +16,6 @@ export const columnData = [
   { isClickable: true, styles: "w-2/12", name: "Wiped", value: "born" },
   { isClickable: true, styles: "w-1/12", name: "Rate", value: "rate" },
   { isClickable: true, styles: "w-1/12", name: "Group size", value: "max_group_size" },
-  // { isClickable: false, styles: "1/12", name: "Uptime", value: "uptime" },
   { isClickable: false, styles: "w-2/12", name: "Country", value: "rules.location.country" },
   {
     isClickable: false,
