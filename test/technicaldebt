@@ -1,0 +1,85 @@
+// If you want to switch from Static Site Generation (SSG) to Client-Side Rendering (CSR) only after the initial load, you can conditionally render the page content using a flag to determine the rendering strategy.
+
+make site CSR after SSG initialload, so secondary load will be only CSR 
+
+// Here's an example of how you can achieve this in Next.js:
+
+// jsx
+// Copy code
+// import { useEffect, useState } from 'react';
+// import { useRouter } from 'next/router';
+
+// export default function MyPage({ initialData }) {
+//   const router = useRouter();
+//   const [isCSR, setIsCSR] = useState(false);
+//   const [data, setData] = useState(initialData);
+
+//   useEffect(() => {
+//     // Check if it's the initial load or a client-side navigation
+//     if (router.asPath !== router.route) {
+//       setIsCSR(true);
+//     }
+//   }, []);
+
+//   useEffect(() => {
+//     if (isCSR) {
+//       // Fetch the data and update the state
+//       fetchData().then((fetchedData) => {
+//         setData(fetchedData);
+//       });
+//     }
+//   }, [isCSR]);
+
+//   async function fetchData() {
+//     // Fetch the data from an API or other source
+//     const response = await fetch('/api/data');
+//     const data = await response.json();
+//     return data;
+//   }
+
+//   if (!isCSR) {
+//     return (
+//       <div>
+//         {/* Render your static page content */}
+//         <h1>My Page (Static)</h1>
+//         <p>{initialData}</p>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div>
+//       {/* Render your client-side rendered page content */}
+//       <h1>My Page (CSR)</h1>
+//       <p>{data}</p>
+//     </div>
+//   );
+// }
+
+// export async function getStaticProps() {
+//   // Fetch the initial data and pass it as props
+//   const initialData = await fetchData();
+//   return {
+//     props: {
+//       initialData,
+//     },
+//   };
+// }
+
+// async function fetchData() {
+//   // Fetch the initial data from an API or other source
+//   const response = await fetch('/api/data');
+//   const data = await response.json();
+//   return data;
+// }
+// In this example, we introduce the isCSR flag to determine if the page should be rendered using Client-Side Rendering (CSR). The flag is initially set to false for the first load, and then it's updated to true on subsequent client-side navigations.
+
+// During the initial load, the static page content is rendered based on the initialData prop. On subsequent client-side navigations, the client-side rendered page content is displayed, and the data is fetched using the fetchData function.
+
+// The getStaticProps function is used to fetch the initial data during the build process, ensuring that the initial static content is available. After that, the client-side rendering logic takes over for subsequent navigation.
+
+// Note that when switching from SSG to CSR, the data fetching and rendering will happen on the client-side, so there might be a brief loading time while the data is fetched.
+
+////////////////
+
+storing into local storage after every render?
