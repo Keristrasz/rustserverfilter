@@ -113,8 +113,8 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
 
   if (status === "success") {
     isResultsRendered = (
-      <div className="m-4 mb-8 max-w-6xl ">
-        <table className="overflow-x-clip table-fixed w-full border border-black">
+      <div className="overflow-x-clip m-4 mb-8 max-w-6xl ">
+        <table className=" table-fixed border w-full border-black  ">
           <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} />
           <tbody className="bg-zinc-700 divide-y divide-zinc-950">
             {data?.pages[0]?.totalCount[0]?.totalCount ? (
@@ -179,8 +179,8 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
   if (initialData && !isResultsRendered) {
     console.log("initialData && !isResultsRendered");
     isResultsRendered = (
-      <div className="m-4 mb-8 max-w-6xl ">
-        <table className="overflow-x-clip table-fixed w-full border border-black">
+      <div className="overflow-x-clip m-4 mb-8 max-w-6xl ">
+        <table className=" table-fixed border w-full border-black">
           <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} />
           <tbody className="bg-zinc-700 divide-y divide-zinc-950">
             {data?.pages[0]?.totalCount[0]?.totalCount ? (
