@@ -23,15 +23,28 @@ export function calculateDistance(lat1: number, lon1: number, lat2: number, lon2
   return distance;
 }
 
-export function getTime(timestamp: number) {
+export function getCustomDate(timestamp: number) {
   if (timestamp == null) {
     return "";
   }
   if (timestamp < 1652630662) {
     return "Too soon / too long ago";
   }
-  const date = new Date(timestamp * 1000);
 
+  const now = new Date();
+  const currentTimestamp = Math.floor(now.getTime() / 1000);
+
+  if (currentTimestamp - timestamp < 3600 && currentTimestamp - timestamp > 0) {
+    const minutes = Math.floor((currentTimestamp - timestamp) / 60);
+    return `${minutes} minutes ago`;
+  }
+
+  if (Math.abs(currentTimestamp - timestamp) < 3600) {
+    const minutes = Math.floor(Math.abs(currentTimestamp - timestamp) / 60);
+    return `In ${minutes} minutes`;
+  }
+
+  const date = new Date(timestamp * 1000);
   const formattedDate = date.toLocaleString("en-US", {
     hour: "2-digit",
     minute: "2-digit",

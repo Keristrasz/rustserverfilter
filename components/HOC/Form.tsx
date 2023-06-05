@@ -11,6 +11,7 @@ type FormProps = {
   setSorter: React.Dispatch<React.SetStateAction<SorterType | {}>>;
   filter: FilterType;
   sorter: SorterType;
+  isSSG: Boolean;
 };
 
 // Helper function to get data from local storage
@@ -30,7 +31,7 @@ const saveToLocalStorage = (key: string, value: any): void => {
   }
 };
 
-const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter, filter, sorter }) => {
+const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter, filter, sorter, isSSG }) => {
   const [wipeRotation, setWipeRotation] = useState<string[]>(
     getFromLocalStorage("wipeRotation", [])
   );
@@ -196,11 +197,7 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter, filter,
     console.log("stored to localstorage");
   }, [filter, sorter]);
 
-  const [isSSG, setIsSSG] = useState(false);
 
-  useEffect(() => {
-    setIsSSG(true);
-  }, []);
 
   console.log(maxPlayers, minRank, "wiperotation:" + wipeRotation, maxGroupSize);
 

@@ -1,7 +1,7 @@
 import THead from "../THead";
 import React from "react";
 import { useRouter } from "next/router";
-import { calculateDistance, getTime } from "@/utils/inputFunctions";
+import { calculateDistance, getCustomDate } from "@/utils/inputFunctions";
 import {
   FilterType,
   SorterType,
@@ -10,9 +10,27 @@ import {
 } from "@/utils/typesTypescript";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useCustomInfiniteQuery from "@/hooks/useCustomInfiniteQuery";
-import { columnData } from "../THead";
+
 import Spinner from "../Spinner";
 import { InfiniteData } from "@tanstack/react-query";
+import Link from "next/link";
+
+export const columnData = [
+  { isClickable: true, styles: "w-1/12", name: "Score", value: "rank" },
+  { isClickable: false, styles: "w-6/12", name: "Name", value: "name" },
+  { isClickable: true, styles: "w-1/12", name: "Players", value: "players" },
+  { isClickable: true, styles: "w-2/12", name: "Next Wipe", value: "born_next" },
+  { isClickable: true, styles: "w-2/12", name: "Last Wipe", value: "born" },
+  { isClickable: true, styles: "w-1/12", name: "Rate", value: "rate" },
+  { isClickable: true, styles: "w-1/12", name: "Group size", value: "max_group_size" },
+  { isClickable: false, styles: "w-2/12", name: "Country", value: "rules.location.country" },
+  {
+    isClickable: false,
+    styles: "w-1/12",
+    name: "Distance",
+    value: "rules.location.longitude",
+  },
+];
 
 interface ResultsTableProps {
   app: any;
@@ -22,6 +40,7 @@ interface ResultsTableProps {
   setFilter: React.Dispatch<React.SetStateAction<FilterType>>;
   setSorter: React.Dispatch<React.SetStateAction<SorterType | {}>>;
   initialData?: InfiniteData<QueryResponseType>;
+  isSSG: Boolean;
 }
 
 interface ColumnDataType {
@@ -40,6 +59,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
   setSorter,
   userLocation,
   initialData,
+  isSSG,
 }) => {
   // console.log("resulttablerender");
   const { queryData, isFetching, isLoading, error, status, fetchNextPage, hasNextPage } =
@@ -57,7 +77,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
     const { value } = column;
 
     if (value === "born_next" || value === "born") {
-      return getTime(mappedServer[value]);
+      return getCustomDate(mappedServer[value]);
     } else if (value === "rules.location.country") {
       return mappedServer.rules?.location?.country;
     } else if (value === "rules.location.longitude") {
@@ -115,7 +135,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
     isResultsRendered = (
       <div className="overflow-x-clip m-4 mb-8 max-w-6xl ">
         <table className=" table-fixed border w-full border-black  ">
-          <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} />
+          <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} isSSG={isSSG} />
           <tbody className="bg-zinc-700 divide-y divide-zinc-950">
             {data?.pages[0]?.totalCount[0]?.totalCount ? (
               <tr>
@@ -150,14 +170,25 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                       role="link"
                       ref={ref}
                     >
-                      {columnData.map((column) => (
-                        <td
-                          key={column.value}
-                          className={`${column.styles} px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200`}
-                        >
-                          {getColumnValue(column, mappedServer)}
-                        </td>
-                      ))}
+                      {columnData.map((column) =>
+                        column.value === "name" ? (
+                          <td
+                            key={column.value}
+                            className={`${column.styles} px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-green-500`}
+                          >
+                            <Link href={`/${mappedServer.addr}`}>
+                              {getColumnValue(column, mappedServer)}
+                            </Link>
+                          </td>
+                        ) : (
+                          <td
+                            key={column.value}
+                            className={`${column.styles} px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200`}
+                          >
+                            {getColumnValue(column, mappedServer)}
+                          </td>
+                        )
+                      )}
                     </tr>
                   );
                 })}
@@ -181,7 +212,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
     isResultsRendered = (
       <div className="overflow-x-clip m-4 mb-8 max-w-6xl ">
         <table className=" table-fixed border w-full border-black">
-          <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} />
+          <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} isSSG={isSSG} />
           <tbody className="bg-zinc-700 divide-y divide-zinc-950">
             {data?.pages[0]?.totalCount[0]?.totalCount ? (
               <tr>
@@ -216,14 +247,25 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                       role="link"
                       ref={ref}
                     >
-                      {columnData.map((column) => (
-                        <td
-                          key={column.value}
-                          className={`${column.styles} px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200`}
-                        >
-                          {getColumnValue(column, mappedServer)}
-                        </td>
-                      ))}
+                      {columnData.map((column) =>
+                        column.value === "name" ? (
+                          <td
+                            key={column.value}
+                            className={`${column.styles} px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-green-500`}
+                          >
+                            <Link href={`/${mappedServer.addr}`}>
+                              {getColumnValue(column, mappedServer)}
+                            </Link>
+                          </td>
+                        ) : (
+                          <td
+                            key={column.value}
+                            className={`${column.styles} px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200`}
+                          >
+                            {getColumnValue(column, mappedServer)}
+                          </td>
+                        )
+                      )}
                     </tr>
                   );
                 })}

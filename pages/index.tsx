@@ -102,6 +102,12 @@ function Home({ initialData }: HomeProps) {
   const [userLocation, setUserLocation] = useState<userLocationType | null>(null);
   useGeolocation(userLocation, setUserLocation);
 
+  const [isSSG, setIsSSG] = useState(false);
+
+  useEffect(() => {
+    setIsSSG(true);
+  }, []);
+
   return (
     <BodyWrapper>
       {/* <Heading /> */}
@@ -111,6 +117,7 @@ function Home({ initialData }: HomeProps) {
         setSorter={setSorter}
         filter={filter}
         sorter={sorter}
+        isSSG={isSSG}
       />
       <ResultsTable
         app={app}
@@ -120,6 +127,7 @@ function Home({ initialData }: HomeProps) {
         setSorter={setSorter}
         userLocation={userLocation}
         initialData={initialData}
+        isSSG={isSSG}
       />
     </BodyWrapper>
   );

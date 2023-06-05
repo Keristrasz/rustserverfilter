@@ -3,27 +3,123 @@ import { useRouter } from "next/router";
 import useCustomSingleQuery from "@/hooks/useCustomSingleQuery";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import Spinner from "@/components/Spinner";
+import { getCustomDate } from "@/utils/inputFunctions";
 
 const ServerDetailsPage = () => {
   const router = useRouter();
   const { id } = router.query;
   const { data, isLoading, error, status } = useCustomSingleQuery(id as string);
 
+  // const renderPlayerHistoryGraph = () => {
+  //   if (data && data.players_history) {
+  //     const formattedData = data.players_history.map((entry: number[]) => ({
+  //       timestamp: getTime(entry[1] / 1000),
+  //       playerCount: entry[0],
+  //     }));
+
+  //     return (
+  //       <LineChart width={500} height={300} data={formattedData}>
+  //         <XAxis dataKey="timestamp" />
+  //         <YAxis />
+  //         <Tooltip />
+  //         <Legend />
+  //         <Line type="monotone" dataKey="playerCount" name="Player Count" stroke="#8884d8" />
+  //       </LineChart>
+  //     );
+  //   }
+  //   return null;
+  // };
+
   const renderPlayerHistoryGraph = () => {
     if (data && data.players_history) {
-      const formattedData = data.players_history.map((entry: number[]) => ({
+      console.log(data.players_history);
+      const formattedData = data.players_history.map((entry: Number[]) => ({
         timestamp: entry[1],
         playerCount: entry[0],
       }));
 
+      const currentDate = new Date();
+      const currentTimestamp = Math.floor(currentDate.getTime());
+      const last7DaysDate = currentTimestamp - 86400 * 7 * 1000;
+      const last30DaysDate = currentTimestamp - 86400 * 31 * 1000;
+      const last3MonthsDate = currentTimestamp - 86400 * 31 * 3 * 1000;
+
+      console.log(last7DaysDate, currentTimestamp);
+
+      // const filteredData = formattedData.filter((entry) => {
+      //   const entryTimestamp = entry.timestamp;
+      //   entryTimestamp >= last7DaysDate && entryTimestamp <= currentTimestamp
+      //     ? getCustomDate(entryTimestamp / 1000)
+      //     : null;
+      // });
+
+      const filteredData = formattedData
+        .filter((entry: { timestamp: number; playerCount: number }) => {
+          const entryTimestamp = entry.timestamp;
+          return entryTimestamp >= last7DaysDate && entryTimestamp <= currentTimestamp;
+        })
+        .map((entry: { timestamp: number; playerCount: number }) => {
+          return {
+            timestamp: getCustomDate(entry.timestamp / 1000),
+            playerCount: entry.playerCount,
+          };
+        });
+
+      const filteredDataLast30Days = formattedData
+        .filter((entry: { timestamp: number; playerCount: number }) => {
+          const entryTimestamp = entry.timestamp;
+          return entryTimestamp >= last30DaysDate && entryTimestamp <= currentTimestamp;
+        })
+        .map((entry: { timestamp: number; playerCount: number }) => {
+          return {
+            timestamp: getCustomDate(entry.timestamp / 1000),
+            playerCount: entry.playerCount,
+          };
+        });
+
+      const filteredDataLast3Months = formattedData
+        .filter((entry: { timestamp: number; playerCount: number }) => {
+          const entryTimestamp = entry.timestamp;
+          return entryTimestamp >= last3MonthsDate && entryTimestamp <= currentTimestamp;
+        })
+        .map((entry: { timestamp: number; playerCount: number }) => {
+          return {
+            timestamp: getCustomDate(entry.timestamp / 1000),
+            playerCount: entry.playerCount,
+          };
+        });
+
+      console.log(filteredData, filteredDataLast30Days, filteredDataLast3Months);
+
       return (
-        <LineChart width={500} height={300} data={formattedData}>
-          <XAxis dataKey="timestamp" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="playerCount" name="Player Count" stroke="#8884d8" />
-        </LineChart>
+        <div>
+          <h3 className="text-xl font-bold text-gray-200">Player History (Last 7 Days)</h3>
+          <LineChart width={500} height={300} data={filteredData}>
+            <XAxis dataKey="timestamp" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="playerCount" name="Player Count" stroke="#8884d8" />
+          </LineChart>
+
+          <h3 className="text-xl font-bold text-gray-200">Player History (Last 30 Days)</h3>
+          <LineChart width={500} height={300} data={filteredDataLast30Days}>
+            <XAxis dataKey="timestamp" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="playerCount" name="Player Count" stroke="#8884d8" />
+          </LineChart>
+
+          <h3 className="text-xl font-bold text-gray-200">Player History (Last 3 Months)</h3>
+          <LineChart width={500} height={300} data={filteredDataLast3Months}>
+            <XAxis dataKey="timestamp" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="playerCount" name="Player Count" stroke="#8884d8" />
+          </LineChart>
+        </div>
       );
     }
     return null;
