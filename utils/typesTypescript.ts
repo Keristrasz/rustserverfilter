@@ -83,3 +83,11 @@ export type QueryResponseType = {
   totalCount: [{ totalCount: number }];
   result: ServerPrimaryDataType[];
 };
+
+export interface LocationData {
+  latitude: number;
+  longitude: number;
+  country: string;
+  city: string;
+  region: string;
+}

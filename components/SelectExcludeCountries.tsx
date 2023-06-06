@@ -141,14 +141,11 @@ function SelectExcludeCountries({
       {isOpen && (
         <div
           ref={optionsRef}
-          className="z-10 absolute w-full mt-2 bg-zinc-700 rounded-md shadow-lg"
+          className="z-50 absolute w-full mt-2 bg-zinc-700 rounded-md shadow-lg"
         >
           <div className="max-h-80 overflow-auto">
             {filteredOptions.map((el: String) => (
-              <label
-                key={String(el)}
-                className="block px-4 py-2 cursor-pointer select-none"
-              >
+              <label key={String(el)} className="block px-4 py-2 cursor-pointer select-none">
                 <input
                   type="checkbox"
                   className="form-checkbox text-rustOne"

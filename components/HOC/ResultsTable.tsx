@@ -165,7 +165,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                       key={mappedServer.addr}
                       className="hover:bg-rustOne clickable-row cursor-pointer"
                       onClick={() => {
-                        router.push(`/${mappedServer.addr}`);
+                        router.push(`/server/${mappedServer.addr}`);
                       }}
                       role="link"
                       ref={ref}
@@ -242,7 +242,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                       key={mappedServer.addr}
                       className="hover:bg-rustOne clickable-row cursor-pointer"
                       onClick={() => {
-                        router.push(`/${mappedServer.addr}`);
+                        router.push(`/server/${mappedServer.addr}`);
                       }}
                       role="link"
                       ref={ref}

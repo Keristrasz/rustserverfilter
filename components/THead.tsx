@@ -14,7 +14,7 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG }) =>
   const updateSorter = useSorter(setFilter, setSorter);
 
   return (
-    <thead className="bg-zinc-800 sticky top-0 z-50">
+    <thead className="bg-zinc-800 sticky top-0 z-10">
       <tr>
         {columnData.map((column) => {
           let sortColorClass = "";

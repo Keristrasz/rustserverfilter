@@ -20,6 +20,7 @@ import { InfiniteData } from "@tanstack/react-query";
 import { fetchAllServers } from "@/utils/fetchAllServers";
 import * as Realm from "realm-web";
 import { GetStaticProps } from "next";
+import Head from "next/head";
 
 export const getStaticProps: GetStaticProps = async () => {
   // Fetch initialSorter and initialFilter from an API or any other initialData source
@@ -110,7 +111,14 @@ function Home({ initialData }: HomeProps) {
 
   return (
     <BodyWrapper>
-      {/* <Heading /> */}
+      <Head>
+        <title>Rust server finder</title>
+        <meta
+          name="description"
+          content="Find, search, filter rust servers by wipe, solo, duo, trio and so on"
+          key="desc"
+        />
+      </Head>
       <Form
         userLocation={userLocation}
         setFilter={setFilter}

@@ -8,7 +8,7 @@ const projection = {
   //   "rules.description": 0,
   //   "rules.url": 0,
   //   "rules.seed": 0,
-  //   "rules.fpv_avg": 0,
+  "rules.fpv_avg": 0,
   //   players_history: 0,
   //   gameport: 0,
 };

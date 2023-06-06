@@ -1,6 +1,5 @@
-function toRadians(degrees: number) {
-  return degrees * (Math.PI / 180);
-}
+import axios from "axios";
+import { LocationData } from "./typesTypescript";
 
 export function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
   const earthRadius = 6371; // Radius of the Earth in kilometers
@@ -64,4 +63,24 @@ export function getTimeUptime(timestamp: number) {
   const hours = date.getHours();
 
   return `${hours} hours `;
+}
+
+export async function getLocation(ip: string): Promise<LocationData> {
+  const url = `https://ipapi.co/${ip}/json`;
+
+  try {
+    const response = await axios.get(url);
+    const { latitude, longitude, country_name, city, region } = response.data;
+    const returnData: LocationData = {
+      latitude,
+      longitude,
+      country: country_name,
+      city,
+      region,
+    };
+    return returnData;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 }
