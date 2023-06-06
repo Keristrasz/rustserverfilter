@@ -66,7 +66,9 @@ const ServerDetailsPage = () => {
       <div className="m-4 max-w-6xl flex flex-col justify-center items-center ">
         <div>
           <p>Server IP: {id}</p>
-          <button onClick={() => router.back()}>Get Back</button>
+          <button onClick={() => router.push("/", undefined, { shallow: true })}>
+            Get Back
+          </button>
         </div>
         {isLoading && (
           <main className="flex flex-wrap mt-4 justify-center items-center m-2">
