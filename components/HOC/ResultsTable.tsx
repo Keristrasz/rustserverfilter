@@ -23,7 +23,12 @@ export const columnData = [
   { isClickable: true, styles: "w-2/12", name: "Last Wipe", value: "born" },
   { isClickable: true, styles: "w-1/12", name: "Rate", value: "rate" },
   { isClickable: true, styles: "w-1/12", name: "Group size", value: "max_group_size" },
-  { isClickable: false, styles: "w-2/12", name: "Country", value: "rules.location.country" },
+  {
+    isClickable: false,
+    styles: "w-2/12",
+    name: "Country",
+    value: "rules.location.country",
+  },
   {
     isClickable: false,
     styles: "w-1/12",
@@ -135,7 +140,12 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
     isResultsRendered = (
       <div className="overflow-x-clip m-4 mb-8 max-w-6xl ">
         <table className=" table-fixed border w-full border-black  ">
-          <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} isSSG={isSSG} />
+          <THead
+            setFilter={setFilter}
+            setSorter={setSorter}
+            sorter={sorter}
+            isSSG={isSSG}
+          />
           <tbody className="bg-zinc-700 divide-y divide-zinc-950">
             {data?.pages[0]?.totalCount[0]?.totalCount ? (
               <tr>
@@ -143,7 +153,8 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   className="text-sm relative text-center bg-green-600 text-gray-200"
                   colSpan={11}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
+                  SERVERS
                 </td>
               </tr>
             ) : (
@@ -176,7 +187,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                             key={column.value}
                             className={`${column.styles} px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-green-500`}
                           >
-                            <Link href={`/${mappedServer.addr}`}>
+                            <Link href={`/server/${mappedServer.addr}`}>
                               {getColumnValue(column, mappedServer)}
                             </Link>
                           </td>
@@ -212,7 +223,12 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
     isResultsRendered = (
       <div className="overflow-x-clip m-4 mb-8 max-w-6xl ">
         <table className=" table-fixed border w-full border-black">
-          <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} isSSG={isSSG} />
+          <THead
+            setFilter={setFilter}
+            setSorter={setSorter}
+            sorter={sorter}
+            isSSG={isSSG}
+          />
           <tbody className="bg-zinc-700 divide-y divide-zinc-950">
             {data?.pages[0]?.totalCount[0]?.totalCount ? (
               <tr>
@@ -220,7 +236,8 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   className="text-sm relative text-center bg-green-600 text-gray-200"
                   colSpan={11}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
+                  SERVERS
                 </td>
               </tr>
             ) : (
@@ -253,7 +270,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                             key={column.value}
                             className={`${column.styles} px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-green-500`}
                           >
-                            <Link href={`/${mappedServer.addr}`}>
+                            <Link href={`/server/${mappedServer.addr}`}>
                               {getColumnValue(column, mappedServer)}
                             </Link>
                           </td>

@@ -15,6 +15,7 @@ import Link from "next/link";
 import { LocationData } from "@/utils/typesTypescript";
 import Head from "next/head";
 import { userLocationType } from "@/utils/typesTypescript";
+import ServerGraphs from "@/components/ServerGraphs";
 
 const ServerDetailsPage = () => {
   const router = useRouter();
@@ -24,7 +25,9 @@ const ServerDetailsPage = () => {
   const [userLocation, setUserLocation] = useState<userLocationType | null>(null);
   useGeolocation(userLocation, setUserLocation);
 
-  const [serverLocationData, setServerLocationData] = useState<LocationData | undefined>();
+  const [serverLocationData, setServerLocationData] = useState<
+    LocationData | undefined
+  >();
   console.log(serverLocationData);
   useEffect(() => {
     const fetchServerLocation = async () => {
@@ -38,7 +41,6 @@ const ServerDetailsPage = () => {
         console.log(error);
       }
     };
-
     fetchServerLocation();
   }, [data?.addr]);
 
@@ -48,122 +50,18 @@ const ServerDetailsPage = () => {
     return urlPattern.test(value);
   }
 
-  const renderPlayerHistoryGraph = () => {
-    if (data && data.players_history) {
-      console.log(data.players_history);
-      const formattedData = data.players_history.map((entry: Number[]) => ({
-        timestamp: entry[1],
-        playerCount: entry[0],
-      }));
-
-      const currentDate = new Date();
-      const currentTimestamp = Math.floor(currentDate.getTime());
-      const last3DaysDate = currentTimestamp - 86400 * 3 * 1000;
-      const last7DaysDate = currentTimestamp - 86400 * 7 * 1000;
-      const last30DaysDate = currentTimestamp - 86400 * 30 * 1000;
-      const last3MonthsDate = currentTimestamp - 86400 * 30 * 3 * 1000;
-
-      console.log(last7DaysDate, currentTimestamp);
-
-      const filteredDataLast3Days = formattedData
-        .filter((entry: { timestamp: number; playerCount: number }) => {
-          const entryTimestamp = entry.timestamp;
-          return entryTimestamp >= last3DaysDate && entryTimestamp <= currentTimestamp;
-        })
-        .map((entry: { timestamp: number; playerCount: number }) => {
-          return {
-            timestamp: getCustomDate(entry.timestamp / 1000),
-            playerCount: entry.playerCount,
-          };
-        });
-      const filteredDataLast7Days = formattedData
-        .filter((entry: { timestamp: number; playerCount: number }) => {
-          const entryTimestamp = entry.timestamp;
-          return entryTimestamp >= last7DaysDate && entryTimestamp <= currentTimestamp;
-        })
-        .map((entry: { timestamp: number; playerCount: number }) => {
-          return {
-            timestamp: getCustomDate(entry.timestamp / 1000),
-            playerCount: entry.playerCount,
-          };
-        });
-
-      const filteredDataLast30Days = formattedData
-        .filter((entry: { timestamp: number; playerCount: number }) => {
-          const entryTimestamp = entry.timestamp;
-          return entryTimestamp >= last30DaysDate && entryTimestamp <= currentTimestamp;
-        })
-        .map((entry: { timestamp: number; playerCount: number }) => {
-          return {
-            timestamp: getCustomDate(entry.timestamp / 1000),
-            playerCount: entry.playerCount,
-          };
-        });
-
-      const filteredDataLast3Months = formattedData
-        .filter((entry: { timestamp: number; playerCount: number }) => {
-          const entryTimestamp = entry.timestamp;
-          return entryTimestamp >= last3MonthsDate && entryTimestamp <= currentTimestamp;
-        })
-        .map((entry: { timestamp: number; playerCount: number }) => {
-          return {
-            timestamp: getCustomDate(entry.timestamp / 1000),
-            playerCount: entry.playerCount,
-          };
-        });
-
-      const graphArray = [
-        {
-          function: filteredDataLast3Days,
-          heading: "Player History (Last 3 Days)",
-        },
-        {
-          function: filteredDataLast7Days,
-          heading: "Player History (Last 7 Days)",
-        },
-        {
-          function: filteredDataLast30Days,
-          heading: "Player History (Last 30 Days)",
-        },
-        {
-          function: filteredDataLast3Months,
-          heading: "Player History (Last 3 Months)",
-        },
-      ];
-
-      return (
-        <div className="flex flex-wrap justify-center my-8">
-          {graphArray.map((el) => (
-            <div
-              key={el.heading}
-              className="m-2 text-center border border-black bg-zinc-800 rounded-2xl p-2"
-            >
-              <h3 className="text-xl font-bold text-gray-200 mb-4">{el.heading}</h3>
-              <LineChart width={500} height={300} data={el.function}>
-                <XAxis dataKey="timestamp" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="playerCount"
-                  name="Player Count"
-                  stroke="#8884d8"
-                />
-              </LineChart>
-            </div>
-          ))}
-        </div>
-      );
-    }
-    return null;
-  };
-
   return (
     <BodyWrapper>
       <Head>
-        <title> {data ? data.name : "Rust specific server details"}</title>
+        <title>
+          {data
+            ? data.name.length > 75
+              ? data.name.substring(0, 75) + "..."
+              : data.name
+            : "Server details - Rust"}
+        </title>
         <meta name="description" content="Rust specific server details" key="desc" />
+        <link rel="icon" href="/logo-smallest.png" />
       </Head>
       <div className="m-4 max-w-6xl flex flex-col justify-center items-center ">
         <div>
@@ -198,17 +96,29 @@ const ServerDetailsPage = () => {
                       <p className=" text-gray-400">Query Ip: {data.addr}</p>
                       <p className="text-gray-400">Players: {data.players}</p>
                       <p className="text-gray-400">Max Players: {data.max_players}</p>
-                      <p className="text-gray-400">Modded: {data.modded ? "Yes" : "No"}</p>
-                      <p className="text-gray-400">Vanilla: {data.vanilla ? "Yes" : "No"}</p>
+                      <p className="text-gray-400">
+                        Modded: {data.modded ? "Yes" : "No"}
+                      </p>
+                      <p className="text-gray-400">
+                        Vanilla: {data.vanilla ? "Yes" : "No"}
+                      </p>
                       <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
-                      <p className="text-gray-400">Last Wipe: {getCustomDate(data.born)}</p>
+                      <p className="text-gray-400">
+                        Last Wipe: {getCustomDate(data.born)}
+                      </p>
                       <p className="text-gray-400">
                         Next Wipe: {getCustomDate(data.born_next)}
                       </p>
-                      <p className="text-gray-400">Max Group Size: {data.max_group_size}</p>
+                      <p className="text-gray-400">
+                        Max Group Size: {data.max_group_size}
+                      </p>
                       <p className="text-gray-400">Rate: {data.rate}</p>
-                      <p className="text-gray-400">Gametype: {data.gametype?.join(", ")}</p>
-                      <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
+                      <p className="text-gray-400">
+                        Gametype: {data.gametype?.join(", ")}
+                      </p>
+                      <p className="text-gray-400">
+                        Softcore/Hardcore: {data.difficulty}
+                      </p>
                       {data.rank && <p className="text-gray-400">Score: {data.rank}</p>}
                     </div>
                     {/* LOCATION */}
@@ -220,7 +130,9 @@ const ServerDetailsPage = () => {
                           Country: {data.rules?.location?.country}
                         </p>
                         {serverLocationData?.region && (
-                          <p className="text-gray-400">Region: {serverLocationData.region}</p>
+                          <p className="text-gray-400">
+                            Region: {serverLocationData.region}
+                          </p>
                         )}
                         {serverLocationData?.city && (
                           <p className="text-gray-400">City: {serverLocationData.city}</p>
@@ -256,7 +168,9 @@ const ServerDetailsPage = () => {
                           </p>
                         )}
                         {serverLocationData?.region && (
-                          <p className="text-gray-400">Region: {serverLocationData.region}</p>
+                          <p className="text-gray-400">
+                            Region: {serverLocationData.region}
+                          </p>
                         )}
                         {serverLocationData?.city && (
                           <p className="text-gray-400">City: {serverLocationData.city}</p>
@@ -291,7 +205,9 @@ const ServerDetailsPage = () => {
                   {/* DESCRIPTION */}
                   <div className="mt-4">
                     <h3 className="text-xl font-bold text-gray-200">Description</h3>
-                    <p className="text-gray-400">Description: {data.rules?.description}</p>
+                    <p className="text-gray-400">
+                      Description: {data.rules?.description}
+                    </p>
                     {/* <p className="text-gray-400">FPS Average: {data.rules?.fps_avg}</p> */}
                     <p className="text-gray-400">Seed: {data.rules?.seed}</p>
                     <p className="text-gray-400">Size: {data.rules?.size}</p>
@@ -313,7 +229,9 @@ const ServerDetailsPage = () => {
                     </p>
                   </div>
                 </article>
-                {data.players_history && <article>{renderPlayerHistoryGraph()}</article>}
+                {data.players_history && (
+                  <ServerGraphs players_history={data.players_history} />
+                )}
               </div>
             )}
           </main>
