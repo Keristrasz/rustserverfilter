@@ -58,19 +58,8 @@ export const fetchAllServers = async (
     {
       $match: filter,
     },
-    // {
-    //   $sort: sorter,
-    // },
     {
       $facet: {
-        // rows: [
-        //   {
-        //     $skip: pageParam * pageSize || 0,
-        //   },
-        //   {
-        //     $limit: pageSize,
-        //   },
-        // ],
         totalCount: [
           {
             $count: "totalCount",
@@ -86,13 +75,6 @@ export const fetchAllServers = async (
         ],
       },
     },
-    // {
-    //   $set: {
-    //     totalRows: {
-    //       $arrayElemAt: ["$totalRows.totalDocs", 0],
-    //     },
-    //   },
-    // },
   ];
 
   if (JSON.stringify(sorter) !== "{}") {
@@ -101,12 +83,7 @@ export const fetchAllServers = async (
     });
   }
 
-  console.log(JSON.stringify(sorter) === "{}", pipeline);
+  // console.log(JSON.stringify(sorter) === "{}", pipeline);
   const [result] = await collection.aggregate(pipeline);
-
-  // const documents = result.rows;
-  // const totalCount = result.totalRows;
-
-  // console.log(result);
   return result;
 };
