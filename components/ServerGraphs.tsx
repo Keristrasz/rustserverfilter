@@ -132,5 +132,4 @@ function ServerGraphs({ players_history }: { players_history: PlayersHistory }) 
   }
   return null;
 }
-
 export default ServerGraphs;
