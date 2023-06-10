@@ -1,12 +1,15 @@
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
-const useInfiniteScroll = (hasNextPage: boolean | undefined, fetchNextPage: () => void) => {
+const useInfiniteScroll = (
+  hasNextPage: boolean | undefined,
+  fetchNextPage: () => void
+) => {
   const { ref, inView } = useInView();
   useEffect(() => {
-    console.log(inView);
+    inView;
     if (inView && hasNextPage) {
-      console.log("fetching next page");
+      ("fetching next page");
       fetchNextPage();
     }
   }, [inView, hasNextPage]);

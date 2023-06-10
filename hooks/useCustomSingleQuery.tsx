@@ -19,7 +19,7 @@ const useCustomSingleQuery = (ip: string) => {
     const query = {
       addr: ip,
     };
-    console.log("fetching data" + app);
+    "fetching data" + app;
 
     const mongodb = app.currentUser?.mongoClient("mongodb-atlas");
     if (!mongodb) return;
@@ -33,10 +33,10 @@ const useCustomSingleQuery = (ip: string) => {
 
   const queryKey = ["searchSingleResult", ip];
 
-  console.log("custom SINGLE query run");
+  ("custom SINGLE query run");
 
   const queryFn = async () => {
-    // console.log(pageParam);
+    // (pageParam);
     const result = await fetchSingleServer(app);
     return result;
   };
@@ -52,7 +52,7 @@ const useCustomSingleQuery = (ip: string) => {
   };
 
   const { data, isLoading, error, status } = useQuery(queryKey, queryFn, queryOptions);
-  console.log(data);
+  data;
   return {
     data,
     isLoading,

@@ -13,10 +13,12 @@ let pageSize = 40;
 const useCustomInfiniteQuery = (filter: FilterType, sorter: SorterType, app: any) => {
   const queryKey = ["searchResults", filter, sorter, pageSize];
 
-  // console.log("custom infinity query run");
+  // ("custom infinity query run");
 
-  const queryFn = async ({ pageParam }: QueryFunctionContext): Promise<QueryResponseType> => {
-    // console.log(pageParam);
+  const queryFn = async ({
+    pageParam,
+  }: QueryFunctionContext): Promise<QueryResponseType> => {
+    // (pageParam);
     const result = await fetchAllServers(filter, sorter, pageParam, pageSize, app);
     return result;
   };
@@ -35,7 +37,7 @@ const useCustomInfiniteQuery = (filter: FilterType, sorter: SorterType, app: any
         (count, page) => count + page.result.length,
         0
       );
-      // console.log(lastPage, allPages);
+      // (lastPage, allPages);
       if (totalDocumentsShown < totalCount) {
         return allPages.length; // Return the next page number
       }
@@ -84,8 +86,8 @@ export default useCustomInfiniteQuery;
 //         (count, page) => count + page.result.length,
 //         0
 //       );
-//       console.log(lastPage, allPages);
-//       console.log(totalCount, totalDocumentsShown);
+//       (lastPage, allPages);
+//       (totalCount, totalDocumentsShown);
 //       if (totalDocumentsShown < totalCount) {
 //         return allPages.length; // Return the next page number
 //       }

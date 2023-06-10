@@ -24,10 +24,6 @@ function SelectExcludeCountries({
   const optionsRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  console.log("SelectExcludeCountries render");
-  console.log(inputValue, optionsRef, inputRef);
-  console.log(inputValue);
-
   useEffect(() => {
     //@ts-ignore
     document.addEventListener("click", handleOutsideClick);
@@ -145,7 +141,10 @@ function SelectExcludeCountries({
         >
           <div className="max-h-80 overflow-auto">
             {filteredOptions.map((el: String) => (
-              <label key={String(el)} className="block px-4 py-2 cursor-pointer select-none">
+              <label
+                key={String(el)}
+                className="block px-4 py-2 cursor-pointer select-none"
+              >
                 <input
                   type="checkbox"
                   className="form-checkbox text-rustOne"

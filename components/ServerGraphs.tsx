@@ -1,10 +1,10 @@
 import React from "react";
 import { getCustomDate } from "@/utils/inputFunctions";
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend } from "recharts";
 type PlayersHistory = [number, number][];
 function ServerGraphs({ players_history }: { players_history: PlayersHistory }) {
   if (players_history) {
-    console.log(players_history);
+    players_history;
     const formattedData = players_history.map((entry: number[]) => ({
       timestamp: entry[1],
       playerCount: entry[0],
@@ -16,8 +16,6 @@ function ServerGraphs({ players_history }: { players_history: PlayersHistory }) 
     const last7DaysDate = currentTimestamp - 86400 * 7 * 1000;
     const last30DaysDate = currentTimestamp - 86400 * 30 * 1000;
     const last3MonthsDate = currentTimestamp - 86400 * 30 * 3 * 1000;
-
-    console.log(last7DaysDate, currentTimestamp);
 
     const filteredDataLast3Days = formattedData
       .filter((entry: { timestamp: number; playerCount: number }) => {
@@ -93,19 +91,40 @@ function ServerGraphs({ players_history }: { players_history: PlayersHistory }) 
             className="m-2 text-center border border-black bg-zinc-800 rounded-2xl p-2"
           >
             <h3 className="text-xl font-bold text-gray-200 mb-4">{el.heading}</h3>
-            <LineChart width={500} height={300} data={el.function}>
-              <XAxis dataKey="timestamp" />
-              <YAxis />
-              <Tooltip />
+            <AreaChart width={500} height={300} data={el.function}>
+              <XAxis
+                ticks={[
+                  el.function[0]?.timestamp,
+                  el.function[el.function.length - 1]?.timestamp,
+                ]}
+                dataKey="timestamp"
+                tick={{ fill: "#ccc" }}
+                axisLine={{ stroke: "#ccc" }}
+                tickLine={{ stroke: "#ccc" }}
+              />
+              <YAxis
+                tick={{ fill: "#ccc" }}
+                axisLine={{ stroke: "#ccc" }}
+                tickLine={{ stroke: "#ccc" }}
+              />
+              <Tooltip
+                labelStyle={{ color: "#fff" }}
+                contentStyle={{
+                  background: "#363636",
+                  color: "#FFFFFF",
+                  border: "1px solid #000000",
+                }}
+              />
               <Legend />
-              <Line
+              <Area
                 type="monotone"
                 dataKey="playerCount"
                 name="Player Count"
-                stroke="#8884d8"
+                stroke="#d44024"
+                fill="#d44024"
                 isAnimationActive={false}
               />
-            </LineChart>
+            </AreaChart>
           </div>
         ))}
       </div>

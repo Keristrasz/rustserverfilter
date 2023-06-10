@@ -1,7 +1,9 @@
 import { Dispatch, SetStateAction } from "react";
 import { FilterType, UseFilterHookType } from "@/utils/typesTypescript";
 
-const useFilter = (setFilter: Dispatch<SetStateAction<FilterType>>): UseFilterHookType => {
+const useFilter = (
+  setFilter: Dispatch<SetStateAction<FilterType>>
+): UseFilterHookType => {
   const updateFilter: UseFilterHookType = (
     minRank,
     wipeRotation,
@@ -18,7 +20,7 @@ const useFilter = (setFilter: Dispatch<SetStateAction<FilterType>>): UseFilterHo
     userLocation
   ) => {
     let newFilter: FilterType = {
-      $and: [{ rank: { $gte: 50 } }],
+      $and: [{ players: { $gte: 1 } }],
     };
 
     minRank ? newFilter.$and.push({ rank: { $gte: Number(minRank) } }) : null;
@@ -26,7 +28,9 @@ const useFilter = (setFilter: Dispatch<SetStateAction<FilterType>>): UseFilterHo
     maxPlayers ? newFilter.$and.push({ players: { $lte: Number(maxPlayers) } }) : null;
     minSize ? newFilter.$and.push({ "rules.size": { $gte: Number(minSize) } }) : null;
     maxSize ? newFilter.$and.push({ "rules.size": { $lte: Number(maxSize) } }) : null;
-    searchName ? newFilter.$and.push({ name: { $regex: searchName, $options: "i" } }) : null;
+    searchName
+      ? newFilter.$and.push({ name: { $regex: searchName, $options: "i" } })
+      : null;
     maxGroupSize.length !== 0
       ? newFilter.$and.push({ max_group_size: { $in: maxGroupSize } })
       : null;
@@ -59,15 +63,15 @@ const useFilter = (setFilter: Dispatch<SetStateAction<FilterType>>): UseFilterHo
       : null;
 
     setFilter((prevFilter) => {
-      console.log(prevFilter);
+      prevFilter;
       if (prevFilter.$and.some((el) => "born" in el)) {
-        console.log("born exists");
+        ("born exists");
         const bornObject = prevFilter.$and.find((el) => "born" in el);
         if (bornObject) {
           newFilter.$and.push(bornObject);
         }
       } else if (prevFilter.$and.some((el) => "born_next" in el)) {
-        console.log("born_next exists");
+        ("born_next exists");
         const bornObject = prevFilter.$and.find((el) => "born_next" in el);
         if (bornObject) {
           newFilter.$and.push(bornObject);
@@ -75,7 +79,7 @@ const useFilter = (setFilter: Dispatch<SetStateAction<FilterType>>): UseFilterHo
       }
       return newFilter;
     });
-    console.log(newFilter);
+    newFilter;
   };
   return updateFilter;
 };

@@ -66,7 +66,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
   initialData,
   isSSG,
 }) => {
-  // console.log("resulttablerender");
+  // ("resulttablerender");
   const { queryData, isFetching, isLoading, error, status, fetchNextPage, hasNextPage } =
     useCustomInfiniteQuery(filter, sorter, app);
 
@@ -219,7 +219,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
   //for getStaticProps
 
   if (initialData && !isResultsRendered) {
-    console.log("initialData && !isResultsRendered");
+    ("initialData && !isResultsRendered");
     isResultsRendered = (
       <div className="overflow-x-clip m-4 mb-8 max-w-6xl ">
         <table className=" table-fixed border w-full border-black">

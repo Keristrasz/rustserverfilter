@@ -21,10 +21,10 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG }) =>
 
           if (isSSG && sorter[column.value] === 1) {
             sortColorClass = "bg-red-900";
-            console.log("Arrow up");
+            ("Arrow up");
           } else if (isSSG && sorter[column.value] === -1) {
             sortColorClass = "bg-green-900";
-            console.log("Arrow down");
+            ("Arrow down");
           }
 
           return column.isClickable ? (

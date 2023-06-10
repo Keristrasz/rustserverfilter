@@ -1,7 +1,12 @@
 import axios from "axios";
 import { LocationData } from "./typesTypescript";
 
-export function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+export function calculateDistance(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+) {
   const earthRadius = 6371; // Radius of the Earth in kilometers
 
   const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
@@ -80,7 +85,7 @@ export async function getLocation(ip: string): Promise<LocationData> {
     };
     return returnData;
   } catch (error) {
-    console.log(error);
+    error;
     throw error;
   }
 }

@@ -26,15 +26,15 @@ const ServerDetailsPage = () => {
   const [userLocation, setUserLocation] = useState<userLocationType | null>(null);
   useGeolocation(userLocation, setUserLocation);
 
-  const [serverLocationData, setServerLocationData] = useState<LocationData | undefined>();
-  console.log(serverLocationData);
+  const [serverLocationData, setServerLocationData] = useState<
+    LocationData | undefined
+  >();
   useEffect(() => {
     const fetchServerLocation = async () => {
       try {
         const { latitude, longitude, country, city, region } = await getLocation(
-          data.addr.split(":").slice(0, 1)
+          data?.addr.split(":").slice(0, 1)
         );
-        // Do something with the location data, such as updating the state
         setServerLocationData({ latitude, longitude, country, city, region });
       } catch (error) {
         console.log(error);
@@ -109,7 +109,7 @@ const ServerDetailsPage = () => {
                   <div className="flex">
                     <div className="mr-4">
                       <h4 className="text-lg font-bold text-gray-200">Server info</h4>
-                      <p className="font-bold text-gray-400">
+                      <p className="font-bold text-gray-300">
                         Game Ip:{" "}
                         <span
                           className="font-bold text-rustOne hover:cursor-pointer"
@@ -118,38 +118,52 @@ const ServerDetailsPage = () => {
                           {data.addr.split(":").slice(0, 1) + ":" + data.gameport}
                         </span>
                       </p>
-                      <p className=" text-gray-400">Query Ip: {data.addr}</p>
-                      <p className="text-gray-400">Players: {data.players}</p>
-                      <p className="text-gray-400">Max Players: {data.max_players}</p>
-                      <p className="text-gray-400">Modded: {data.modded ? "Yes" : "No"}</p>
-                      <p className="text-gray-400">Vanilla: {data.vanilla ? "Yes" : "No"}</p>
-                      <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
-                      <p className="text-gray-400">Last Wipe: {getCustomDate(data.born)}</p>
-                      <p className="text-gray-400">
+                      <p className=" text-gray-300">Query Ip: {data.addr}</p>
+                      <p className="text-gray-300">Players: {data.players}</p>
+                      <p className="text-gray-300">Max Players: {data.max_players}</p>
+                      <p className="text-gray-300">
+                        Modded: {data.modded ? "Yes" : "No"}
+                      </p>
+                      <p className="text-gray-300">
+                        Vanilla: {data.vanilla ? "Yes" : "No"}
+                      </p>
+                      <p className="text-gray-300">Wipe Rotation: {data.wipe_rotation}</p>
+                      <p className="text-gray-300">
+                        Last Wipe: {getCustomDate(data.born)}
+                      </p>
+                      <p className="text-gray-300">
                         Next Wipe: {getCustomDate(data.born_next)}
                       </p>
-                      <p className="text-gray-400">Max Group Size: {data.max_group_size}</p>
-                      <p className="text-gray-400">Rate: {data.rate}</p>
-                      <p className="text-gray-400">Gametype: {data.gametype?.join(", ")}</p>
-                      <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
-                      {data.rank && <p className="text-gray-400">Score: {data.rank}</p>}
+                      <p className="text-gray-300">
+                        Max Group Size: {data.max_group_size}
+                      </p>
+                      <p className="text-gray-300">Rate: {data.rate}</p>
+                      <p className="text-gray-300">
+                        Gametype: {data.gametype?.join(", ")}
+                      </p>
+                      <p className="text-gray-300">
+                        Softcore/Hardcore: {data.difficulty}
+                      </p>
+                      {data.rank && <p className="text-gray-300">Score: {data.rank}</p>}
                     </div>
                     {/* LOCATION */}
 
                     {data.rules?.location ? (
                       <div className="ml-4">
                         <h4 className="text-lg font-bold text-gray-200">Location</h4>
-                        <p className="text-gray-400">
+                        <p className="text-gray-300">
                           Country: {data.rules?.location?.country}
                         </p>
                         {serverLocationData?.region && (
-                          <p className="text-gray-400">Region: {serverLocationData.region}</p>
+                          <p className="text-gray-300">
+                            Region: {serverLocationData.region}
+                          </p>
                         )}
                         {serverLocationData?.city && (
-                          <p className="text-gray-400">City: {serverLocationData.city}</p>
+                          <p className="text-gray-300">City: {serverLocationData.city}</p>
                         )}
 
-                        <p className="text-gray-400">
+                        <p className="text-gray-300">
                           Distance:{" "}
                           {userLocation &&
                           data.rules?.location?.latitude &&
@@ -163,10 +177,10 @@ const ServerDetailsPage = () => {
                             : null}{" "}
                           km
                         </p>
-                        <p className="text-gray-400">
+                        <p className="text-gray-300">
                           Latitude: {data.rules.location.latitude}
                         </p>
-                        <p className="text-gray-400">
+                        <p className="text-gray-300">
                           Longitude: {data.rules.location.longitude}
                         </p>
                       </div>
@@ -174,20 +188,22 @@ const ServerDetailsPage = () => {
                       <div>
                         <h4 className="text-lg font-bold text-gray-200">Location</h4>
                         {serverLocationData?.country && (
-                          <p className="text-gray-400">
+                          <p className="text-gray-300">
                             Country: {serverLocationData.country}
                           </p>
                         )}
                         {serverLocationData?.region && (
-                          <p className="text-gray-400">Region: {serverLocationData.region}</p>
+                          <p className="text-gray-300">
+                            Region: {serverLocationData.region}
+                          </p>
                         )}
                         {serverLocationData?.city && (
-                          <p className="text-gray-400">City: {serverLocationData.city}</p>
+                          <p className="text-gray-300">City: {serverLocationData.city}</p>
                         )}
                         {serverLocationData?.latitude &&
                           serverLocationData?.longitude &&
                           userLocation && (
-                            <p className="text-gray-400">
+                            <p className="text-gray-300">
                               Distance:{" "}
                               {calculateDistance(
                                 serverLocationData.latitude,
@@ -199,12 +215,12 @@ const ServerDetailsPage = () => {
                             </p>
                           )}
                         {serverLocationData?.latitude && (
-                          <p className="text-gray-400">
+                          <p className="text-gray-300">
                             Latitude: {serverLocationData.latitude}
                           </p>
                         )}
                         {serverLocationData?.longitude && (
-                          <p className="text-gray-400">
+                          <p className="text-gray-300">
                             Longitude: {serverLocationData.longitude}
                           </p>
                         )}
@@ -214,16 +230,18 @@ const ServerDetailsPage = () => {
                   {/* DESCRIPTION */}
                   <div className="mt-4">
                     <h3 className="text-xl font-bold text-gray-200">Description</h3>
-                    <p className="text-gray-400">Description: {data.rules?.description}</p>
-                    {/* <p className="text-gray-400">FPS Average: {data.rules?.fps_avg}</p> */}
-                    <p className="text-gray-400">Seed: {data.rules?.seed}</p>
-                    <p className="text-gray-400">Size: {data.rules?.size}</p>
+                    <p className="text-gray-300">
+                      Description: {data.rules?.description}
+                    </p>
+                    {/* <p className="text-gray-300">FPS Average: {data.rules?.fps_avg}</p> */}
+                    <p className="text-gray-300">Seed: {data.rules?.seed}</p>
+                    <p className="text-gray-300">Size: {data.rules?.size}</p>
 
                     {data.rules?.url && (
-                      <p className="text-gray-400">
+                      <p className="text-gray-300">
                         URL:{" "}
                         {isUrl(data.rules.url) ? (
-                          <Link className="text-blue-500 underline" href={data.rules.url}>
+                          <Link className="text-blue-400 underline" href={data.rules.url}>
                             {data.rules.url}
                           </Link>
                         ) : (
@@ -231,7 +249,7 @@ const ServerDetailsPage = () => {
                         )}
                       </p>
                     )}
-                    <p className="text-gray-400">
+                    <p className="text-gray-300">
                       Uptime: {getTimeUptime(data.rules?.uptime)}
                     </p>
                   </div>

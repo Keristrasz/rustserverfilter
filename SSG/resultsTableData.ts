@@ -16,7 +16,7 @@ export const resultsTableDataStaticProps: GetStaticProps = async () => {
   };
   const app = await Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
   const data = await fetchAllServers(initialFilter, initialSorter, 0, 30, app);
-  console.log("staticprops" + data);
+  "staticprops" + data;
   return {
     props: {
       data,

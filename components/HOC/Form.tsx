@@ -46,19 +46,27 @@ const Form: React.FC<FormProps> = ({
 
   const [includedCountries, setIncludedCountries] = useState<string[]>([]);
 
-  const [minSize, setMinSize] = useState<number | string>(getFromLocalStorage("minSize", ""));
-  const [maxSize, setMaxSize] = useState<number | string>(getFromLocalStorage("maxSize", ""));
+  const [minSize, setMinSize] = useState<number | string>(
+    getFromLocalStorage("minSize", "")
+  );
+  const [maxSize, setMaxSize] = useState<number | string>(
+    getFromLocalStorage("maxSize", "")
+  );
   const [minPlayers, setMinPlayers] = useState<number | string>(
     getFromLocalStorage("minPlayers", "")
   );
   const [maxPlayers, setMaxPlayers] = useState<number | string>(
     getFromLocalStorage("maxPlayers", "")
   );
-  const [searchName, setSearchName] = useState<string>(getFromLocalStorage("searchName", ""));
+  const [searchName, setSearchName] = useState<string>(
+    getFromLocalStorage("searchName", "")
+  );
   const [maxGroupSize, setMaxGroupSize] = useState<number[]>(
     getFromLocalStorage("maxGroupSize", [])
   );
-  const [minRank, setMinRank] = useState<number | string>(getFromLocalStorage("minRank", ""));
+  const [minRank, setMinRank] = useState<number | string>(
+    getFromLocalStorage("minRank", "")
+  );
   const [maxDistance, setMaxDistance] = useState<number | string>(
     getFromLocalStorage("maxDistance", "")
   );
@@ -164,7 +172,7 @@ const Form: React.FC<FormProps> = ({
     setExcludeCountries([]);
     setIncludedCountries([]);
     setSorter({});
-    setFilter({ $and: [{ rank: { $gte: 50 } }] });
+    setFilter({ $and: [{ players: { $gte: 1 } }] });
 
     setTimeout(() => {
       // Enable buttons after the delay
@@ -188,8 +196,6 @@ const Form: React.FC<FormProps> = ({
     console.log("stored to localstorage");
   }, [filter, sorter]);
 
-  console.log(maxPlayers, minRank, "wiperotation:" + wipeRotation, maxGroupSize);
-
   return (
     <form
       onSubmit={handleSubmit}
@@ -197,7 +203,10 @@ const Form: React.FC<FormProps> = ({
     >
       <div className="flex flex-wrap items-center justify-start">
         <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0">
-          <label htmlFor="search" className="block text-gray-200 font-semibold text-lg my-1">
+          <label
+            htmlFor="search"
+            className="block text-gray-200 font-semibold text-lg my-1"
+          >
             Search by name
           </label>
           <input
@@ -213,7 +222,10 @@ const Form: React.FC<FormProps> = ({
         </div>
 
         <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0">
-          <label htmlFor="minRank" className="block text-gray-200 font-semibold text-lg my-1">
+          <label
+            htmlFor="minRank"
+            className="block text-gray-200 font-semibold text-lg my-1"
+          >
             Server score
           </label>
           <input
@@ -277,7 +289,10 @@ const Form: React.FC<FormProps> = ({
           </div>
         </div>
         <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0">
-          <label htmlFor="minSize" className="block text-gray-200 font-semibold text-lg my-1">
+          <label
+            htmlFor="minSize"
+            className="block text-gray-200 font-semibold text-lg my-1"
+          >
             Map size
           </label>
           <div className="flex items-center">
@@ -307,7 +322,9 @@ const Form: React.FC<FormProps> = ({
       </div>
       <div>
         <fieldset className="mt-4">
-          <legend className="block text-gray-200 font-semibold text-lg mb-2">RATES</legend>
+          <legend className="block text-gray-200 font-semibold text-lg mb-2">
+            RATES
+          </legend>
           <div className="flex flex-wrap">
             {ratesOptions.map((option) => (
               <div
@@ -345,7 +362,9 @@ const Form: React.FC<FormProps> = ({
           </div>
         </fieldset>
         <fieldset className="mt-6">
-          <legend className="block text-gray-200 font-semibold text-lg mb-1">WIPE RATE</legend>
+          <legend className="block text-gray-200 font-semibold text-lg mb-1">
+            WIPE RATE
+          </legend>
           <div className="flex flex-wrap">
             {wipeRatesOptions.map((option) => (
               <div

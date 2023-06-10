@@ -12,7 +12,7 @@ const useSorter = (
     Math.floor((nowMiliseconds / 1000 - 28000000) / roundBySeconds) * roundBySeconds;
 
   const updateSorter = (key: string) => {
-    console.log(key);
+    key;
     setFilter((prevValue) => {
       if (key === "born") {
         if (!prevValue.$and.some((el: any) => el.born)) {

@@ -35,7 +35,7 @@ export const fetchAllServers = async (
   pageSize: number,
   app: any
 ) => {
-  console.log("fetching data" + app);
+  "fetching data" + app;
 
   const mongodb = app.currentUser?.mongoClient("mongodb-atlas");
   if (!mongodb) return;
@@ -83,7 +83,6 @@ export const fetchAllServers = async (
     });
   }
 
-  // console.log(JSON.stringify(sorter) === "{}", pipeline);
-  const [result] = await collection.aggregate(pipeline);
+  const [result] = await collection.aggregate(pipeline, { allowDiskUse: true });
   return result;
 };
