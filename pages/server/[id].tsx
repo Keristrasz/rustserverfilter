@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import useGeolocation from "@/hooks/useGeolocation";
 import { useRouter } from "next/router";
 import useCustomSingleQuery from "@/hooks/useCustomSingleQuery";
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import Spinner from "@/components/Spinner";
 import {
   getCustomDate,
@@ -16,6 +15,8 @@ import { LocationData } from "@/utils/typesTypescript";
 import Head from "next/head";
 import { userLocationType } from "@/utils/typesTypescript";
 import ServerGraphs from "@/components/ServerGraphs";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ServerDetailsPage = () => {
   const router = useRouter();
@@ -25,9 +26,7 @@ const ServerDetailsPage = () => {
   const [userLocation, setUserLocation] = useState<userLocationType | null>(null);
   useGeolocation(userLocation, setUserLocation);
 
-  const [serverLocationData, setServerLocationData] = useState<
-    LocationData | undefined
-  >();
+  const [serverLocationData, setServerLocationData] = useState<LocationData | undefined>();
   console.log(serverLocationData);
   useEffect(() => {
     const fetchServerLocation = async () => {
@@ -43,6 +42,18 @@ const ServerDetailsPage = () => {
     };
     fetchServerLocation();
   }, [data?.addr]);
+
+  const handleCopyClick = () => {
+    const textToCopy = data.addr.split(":").slice(0, 1) + ":" + data.gameport;
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        toast.success("Copied!");
+      })
+      .catch((error) => {
+        console.log("Copy failed:", error);
+      });
+  };
 
   function isUrl(value: string): boolean {
     // Regular expression pattern to validate the URL format
@@ -63,10 +74,15 @@ const ServerDetailsPage = () => {
         <meta name="description" content="Rust specific server details" key="desc" />
         <link rel="icon" href="/logo-smallest.png" />
       </Head>
+      <ToastContainer position="bottom-left" />
       <div className="m-4 max-w-6xl flex flex-col justify-center items-center ">
         <div>
-          <p>Server IP: {id}</p>
-          <button onClick={() => router.push("/", undefined, { shallow: true })}>
+          <p>Query IP: {id}</p>
+          <button
+            className={`bg-rustOne text-white font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all cursor-pointer hover:bg-green-600
+          `}
+            onClick={() => router.push("/", undefined, { shallow: true })}
+          >
             Get Back
           </button>
         </div>
@@ -92,35 +108,30 @@ const ServerDetailsPage = () => {
                   {/* FIRST CONTENT */}
                   <div className="flex">
                     <div className="mr-4">
-                      <h2 className="text-xl font-bold text-gray-200">
-                        Game Ip: {data.addr.split(":").slice(0, 1) + ":" + data.gameport}
-                      </h2>
+                      <h4 className="text-lg font-bold text-gray-200">Server info</h4>
+                      <p className="font-bold text-gray-400">
+                        Game Ip:{" "}
+                        <span
+                          className="font-bold text-rustOne hover:cursor-pointer"
+                          onClick={handleCopyClick}
+                        >
+                          {data.addr.split(":").slice(0, 1) + ":" + data.gameport}
+                        </span>
+                      </p>
                       <p className=" text-gray-400">Query Ip: {data.addr}</p>
                       <p className="text-gray-400">Players: {data.players}</p>
                       <p className="text-gray-400">Max Players: {data.max_players}</p>
-                      <p className="text-gray-400">
-                        Modded: {data.modded ? "Yes" : "No"}
-                      </p>
-                      <p className="text-gray-400">
-                        Vanilla: {data.vanilla ? "Yes" : "No"}
-                      </p>
+                      <p className="text-gray-400">Modded: {data.modded ? "Yes" : "No"}</p>
+                      <p className="text-gray-400">Vanilla: {data.vanilla ? "Yes" : "No"}</p>
                       <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
-                      <p className="text-gray-400">
-                        Last Wipe: {getCustomDate(data.born)}
-                      </p>
+                      <p className="text-gray-400">Last Wipe: {getCustomDate(data.born)}</p>
                       <p className="text-gray-400">
                         Next Wipe: {getCustomDate(data.born_next)}
                       </p>
-                      <p className="text-gray-400">
-                        Max Group Size: {data.max_group_size}
-                      </p>
+                      <p className="text-gray-400">Max Group Size: {data.max_group_size}</p>
                       <p className="text-gray-400">Rate: {data.rate}</p>
-                      <p className="text-gray-400">
-                        Gametype: {data.gametype?.join(", ")}
-                      </p>
-                      <p className="text-gray-400">
-                        Softcore/Hardcore: {data.difficulty}
-                      </p>
+                      <p className="text-gray-400">Gametype: {data.gametype?.join(", ")}</p>
+                      <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
                       {data.rank && <p className="text-gray-400">Score: {data.rank}</p>}
                     </div>
                     {/* LOCATION */}
@@ -132,9 +143,7 @@ const ServerDetailsPage = () => {
                           Country: {data.rules?.location?.country}
                         </p>
                         {serverLocationData?.region && (
-                          <p className="text-gray-400">
-                            Region: {serverLocationData.region}
-                          </p>
+                          <p className="text-gray-400">Region: {serverLocationData.region}</p>
                         )}
                         {serverLocationData?.city && (
                           <p className="text-gray-400">City: {serverLocationData.city}</p>
@@ -170,9 +179,7 @@ const ServerDetailsPage = () => {
                           </p>
                         )}
                         {serverLocationData?.region && (
-                          <p className="text-gray-400">
-                            Region: {serverLocationData.region}
-                          </p>
+                          <p className="text-gray-400">Region: {serverLocationData.region}</p>
                         )}
                         {serverLocationData?.city && (
                           <p className="text-gray-400">City: {serverLocationData.city}</p>
@@ -207,9 +214,7 @@ const ServerDetailsPage = () => {
                   {/* DESCRIPTION */}
                   <div className="mt-4">
                     <h3 className="text-xl font-bold text-gray-200">Description</h3>
-                    <p className="text-gray-400">
-                      Description: {data.rules?.description}
-                    </p>
+                    <p className="text-gray-400">Description: {data.rules?.description}</p>
                     {/* <p className="text-gray-400">FPS Average: {data.rules?.fps_avg}</p> */}
                     <p className="text-gray-400">Seed: {data.rules?.seed}</p>
                     <p className="text-gray-400">Size: {data.rules?.size}</p>

@@ -140,12 +140,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
     isResultsRendered = (
       <div className="overflow-x-clip m-4 mb-8 max-w-6xl ">
         <table className=" table-fixed border w-full border-black  ">
-          <THead
-            setFilter={setFilter}
-            setSorter={setSorter}
-            sorter={sorter}
-            isSSG={isSSG}
-          />
+          <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} isSSG={isSSG} />
           <tbody className="bg-zinc-700 divide-y divide-zinc-950">
             {data?.pages[0]?.totalCount[0]?.totalCount ? (
               <tr>
@@ -153,8 +148,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   className="text-sm relative text-center bg-green-600 text-gray-200"
                   colSpan={11}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
-                  SERVERS
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
                 </td>
               </tr>
             ) : (
@@ -174,7 +168,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   return (
                     <tr
                       key={mappedServer.addr}
-                      className="hover:bg-rustOne clickable-row cursor-pointer"
+                      className="hover:bg-zinc-800 clickable-row cursor-pointer"
                       onClick={() => {
                         router.push(`/server/${mappedServer.addr}`);
                       }}
@@ -223,12 +217,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
     isResultsRendered = (
       <div className="overflow-x-clip m-4 mb-8 max-w-6xl ">
         <table className=" table-fixed border w-full border-black">
-          <THead
-            setFilter={setFilter}
-            setSorter={setSorter}
-            sorter={sorter}
-            isSSG={isSSG}
-          />
+          <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} isSSG={isSSG} />
           <tbody className="bg-zinc-700 divide-y divide-zinc-950">
             {data?.pages[0]?.totalCount[0]?.totalCount ? (
               <tr>
@@ -236,8 +225,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   className="text-sm relative text-center bg-green-600 text-gray-200"
                   colSpan={11}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
-                  SERVERS
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
                 </td>
               </tr>
             ) : (

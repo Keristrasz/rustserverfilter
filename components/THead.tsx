@@ -20,10 +20,10 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG }) =>
           let sortColorClass = "";
 
           if (isSSG && sorter[column.value] === 1) {
-            sortColorClass = "bg-rustThree";
+            sortColorClass = "bg-red-900";
             console.log("Arrow up");
           } else if (isSSG && sorter[column.value] === -1) {
-            sortColorClass = "bg-green-700";
+            sortColorClass = "bg-green-900";
             console.log("Arrow down");
           }
 
@@ -31,14 +31,17 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG }) =>
             <th
               onClick={() => updateSorter(column.value)}
               key={column.value}
-              className={`${column.styles} ${sortColorClass}    px-2 py-2 h-8 text-left text-xs font-semibold text-green-400 uppercase tracking-tight hover:cursor-pointer`}
+              className={`${column.styles} ${sortColorClass} px-2 py-2 h-8 text-left text-xs font-semibold text-green-400 uppercase tracking-tight hover:cursor-pointer`}
             >
-              {column.name}
-              {isSSG && sorter[column.value] === 1 ? (
-                <span className="text-xl text-rustOne">↑</span>
-              ) : isSSG && sorter[column.value] === -1 ? (
-                <span className="text-xl text-green-500">↓</span>
-              ) : null}
+              <span className="flex items-center">
+                {column.name}
+                {isSSG && sorter[column.value] === 1 && (
+                  <span className="text-2xl text-green-400 ml-0 mb-2">↑</span>
+                )}
+                {isSSG && sorter[column.value] === -1 && (
+                  <span className="text-2xl text-green-400 ml-0 mb-2">↓</span>
+                )}
+              </span>
             </th>
           ) : (
             <th

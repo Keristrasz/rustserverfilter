@@ -31,7 +31,14 @@ const saveToLocalStorage = (key: string, value: any): void => {
   }
 };
 
-const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter, filter, sorter, isSSG }) => {
+const Form: React.FC<FormProps> = ({
+  userLocation,
+  setFilter,
+  setSorter,
+  filter,
+  sorter,
+  isSSG,
+}) => {
   const [wipeRotation, setWipeRotation] = useState<string[]>(
     getFromLocalStorage("wipeRotation", [])
   );
@@ -165,22 +172,6 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter, filter,
     }, 1000);
   };
 
-  // const saveAllStatesToLocalStorage = () => {
-  //   saveToLocalStorage("wipeRotation", wipeRotation);
-  //   saveToLocalStorage("excludedCountries", excludedCountries);
-  //   saveToLocalStorage("includedCountries", includedCountries);
-  //   saveToLocalStorage("minSize", minSize);
-  //   saveToLocalStorage("maxSize", maxSize);
-  //   saveToLocalStorage("minPlayers", minPlayers);
-  //   saveToLocalStorage("maxPlayers", maxPlayers);
-  //   saveToLocalStorage("searchName", searchName);
-  //   saveToLocalStorage("maxGroupSize", maxGroupSize);
-  //   saveToLocalStorage("minRank", minRank);
-  //   saveToLocalStorage("maxDistance", maxDistance);
-  //   saveToLocalStorage("rate", rate);
-  //   console.log("stored to localstorage");
-  // };
-
   useEffect(() => {
     // Save data to local storage whenever the state changes
     saveToLocalStorage("wipeRotation", wipeRotation);
@@ -196,8 +187,6 @@ const Form: React.FC<FormProps> = ({ userLocation, setFilter, setSorter, filter,
 
     console.log("stored to localstorage");
   }, [filter, sorter]);
-
-
 
   console.log(maxPlayers, minRank, "wiperotation:" + wipeRotation, maxGroupSize);
 
