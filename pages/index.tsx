@@ -112,7 +112,7 @@ function Home({ initialData }: HomeProps) {
   return (
     <BodyWrapper>
       <Head>
-        <title>Rust server finder</title>
+        <title>Rust server filter</title>
         <meta
           name="description"
           content="Find, search, filter rust servers by wipe, solo, duo, trio and so on"

@@ -44,6 +44,9 @@ export const fetchAllServers = async (
 
   let pipeline: PipelineType = [
     {
+      $match: filter,
+    },
+    {
       $project: {
         gametype: 0,
         _id: 0,
@@ -53,10 +56,11 @@ export const fetchAllServers = async (
         "rules.fpv_avg": 0,
         players_history: 0,
         gameport: 0,
+        modded: 0,
+        vanilla: 0,
+        max_players: 0,
+        difficulty: 0,
       },
-    },
-    {
-      $match: filter,
     },
     {
       $facet: {
@@ -78,7 +82,7 @@ export const fetchAllServers = async (
   ];
 
   if (JSON.stringify(sorter) !== "{}") {
-    pipeline.splice(2, 0, {
+    pipeline.splice(1, 0, {
       $sort: sorter,
     });
   }
