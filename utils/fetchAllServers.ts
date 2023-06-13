@@ -82,7 +82,7 @@ export const fetchAllServers = async (
   ];
 
   if (JSON.stringify(sorter) !== "{}") {
-    pipeline.splice(1, 0, {
+    pipeline.splice(0, 0, {
       $sort: sorter,
     });
   }
