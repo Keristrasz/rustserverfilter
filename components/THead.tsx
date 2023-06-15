@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 import useSorter from "@/hooks/useSorter";
 import { FilterType, SorterType } from "@/utils/typesTypescript";
-import { columnData } from "./HOC/ResultsTable";
+
+interface ColumnData {
+  isClickable: boolean;
+  styles: string;
+  name: string;
+  value: string;
+}
 
 interface THeadProps {
   sorter: SorterType;
   setFilter: React.Dispatch<React.SetStateAction<FilterType>>;
   setSorter: React.Dispatch<React.SetStateAction<SorterType | {}>>;
   isSSG: Boolean;
+  columnData: ColumnData[];
 }
 
-const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG }) => {
+const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, columnData }) => {
   const updateSorter = useSorter(setFilter, setSorter);
 
   return (
