@@ -24,19 +24,15 @@ import Head from "next/head";
 
 export const getStaticProps: GetStaticProps = async () => {
   // Fetch initialSorter and initialFilter from an API or any other initialData source
-  ("staticprops1");
   const initialSorter: SorterType = { players: -1 };
   const initialFilter: FilterType = {
     $and: [{ rank: { $gte: 500 } }, { players: { $gte: 20 } }],
   };
-  ("staticprops2");
   const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
   if (app && !app.currentUser) {
-    ("app && !app.currentUser");
     const anonymousUser = Realm.Credentials.anonymous();
     await app.logIn(anonymousUser);
   }
-  ("staticprops3");
 
   const _initialData: QueryResponseType = await fetchAllServers(
     initialFilter,
@@ -83,9 +79,7 @@ function Home({ initialData }: HomeProps) {
   ("rerender");
   const app = useUserAuth();
 
-  const [sorter, setSorter] = useState<SorterType | {}>(
-    getFromLocalStorage("sorter", {})
-  );
+  const [sorter, setSorter] = useState<SorterType | {}>(getFromLocalStorage("sorter", {}));
   const [filter, setFilter] = useState<FilterType>(
     getFromLocalStorage("filter", {
       $and: [{ players: { $gte: 1 } }],
