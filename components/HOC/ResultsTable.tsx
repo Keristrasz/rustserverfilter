@@ -172,7 +172,8 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   className="text-sm relative text-center bg-green-600 text-gray-200"
                   colSpan={11}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
+                  SERVERS
                 </td>
               </tr>
             ) : (
@@ -203,7 +204,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                         column.value === "name" ? (
                           <td
                             key={column.value}
-                            className={`${column.styles} px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-green-500`}
+                            className={`${column.styles} px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-green-400`}
                           >
                             <Link href={`/server/${mappedServer.addr}`}>
                               {getColumnValue(column, mappedServer)}
