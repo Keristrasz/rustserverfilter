@@ -115,7 +115,7 @@ function SelectExcludeCountries({
   return (
     <div className="relative">
       <div
-        className="border border-black py-0.5 px-1.5 text-left bg-zinc-700 rounded-md shadow-sm cursor-pointer flex flex-wrap "
+        className="border border-black py-0.5 px-1.5 text-left bg-zinc-700 rounded-md shadow-sm cursor-pointer flex flex-wrap"
         onClick={handleToggle}
       >
         {countries.length > 0 &&
@@ -130,7 +130,7 @@ function SelectExcludeCountries({
           ))}
         <input
           type="text"
-          className="flex-grow bg-transparent focus:outline-none border-none focus:ring-0"
+          className="flex-grow bg-transparent focus:outline-none border-none focus:ring-0 w-full"
           placeholder="Type country"
           value={inputValue}
           onChange={handleInputChange}

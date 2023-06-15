@@ -15,7 +15,7 @@ import Spinner from "../Spinner";
 import { InfiniteData } from "@tanstack/react-query";
 import Link from "next/link";
 
-export const columnData = [
+const columnDataForMonitor = [
   { isClickable: true, styles: "w-1/12", name: "Score", value: "rank" },
   { isClickable: false, styles: "w-6/12", name: "Name", value: "name" },
   { isClickable: true, styles: "w-1/12", name: "Players", value: "players" },
@@ -36,6 +36,14 @@ export const columnData = [
     value: "rules.location.longitude",
   },
 ];
+const columnDataForMonitorForMobile = [
+  { isClickable: false, styles: "w-8/12", name: "Name", value: "name" },
+  { isClickable: true, styles: "w-2/12", name: "Players", value: "players" },
+  { isClickable: true, styles: "w-2/12", name: "Next Wipe", value: "born_next" },
+  { isClickable: true, styles: "w-2/12", name: "Last Wipe", value: "born" },
+];
+
+let columnData = columnDataForMonitor;
 
 interface ResultsTableProps {
   app: any;
@@ -48,7 +56,7 @@ interface ResultsTableProps {
   isSSG: Boolean;
 }
 
-interface ColumnDataType {
+interface columnDataForMonitorType {
   isClickable: boolean;
   styles: string;
   name: string;
@@ -78,7 +86,19 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
     data = queryData;
   }
 
-  function getColumnValue(column: ColumnDataType, mappedServer: ServerPrimaryDataType) {
+  //adjust for mobile versions if is not SSG
+
+  if (isSSG) {
+    const MOBILE_WIDTH_THRESHOLD = 800; // Adjust the threshold as needed
+    const isMobile =
+      typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
+    columnData = !isMobile ? columnDataForMonitor : columnDataForMonitorForMobile;
+  }
+
+  function getColumnValue(
+    column: columnDataForMonitorType,
+    mappedServer: ServerPrimaryDataType
+  ) {
     const { value } = column;
 
     if (value === "born_next" || value === "born") {
@@ -134,13 +154,17 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
 
   if (error instanceof Error) {
     isResultsRendered = <div>An error has occurred: {error.message}</div>;
-  }
-
-  if (status === "success") {
+  } else if (status === "success" || initialData) {
     isResultsRendered = (
       <div className="overflow-x-clip m-4 mb-8 max-w-6xl ">
         <table className=" table-fixed border w-full border-black  ">
-          <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} isSSG={isSSG} />
+          <THead
+            setFilter={setFilter}
+            setSorter={setSorter}
+            sorter={sorter}
+            isSSG={isSSG}
+            columnData={columnData}
+          />
           <tbody className="bg-zinc-700 divide-y divide-zinc-950">
             {data?.pages[0]?.totalCount[0]?.totalCount ? (
               <tr>
@@ -212,80 +236,80 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
 
   //for getStaticProps
 
-  if (initialData && !isResultsRendered) {
-    console.log("initialData && !isResultsRendered");
-    isResultsRendered = (
-      <div className="overflow-x-clip m-4 mb-8 max-w-6xl ">
-        <table className=" table-fixed border w-full border-black">
-          <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} isSSG={isSSG} />
-          <tbody className="bg-zinc-700 divide-y divide-zinc-950">
-            {data?.pages[0]?.totalCount[0]?.totalCount ? (
-              <tr>
-                <td
-                  className="text-sm relative text-center bg-green-600 text-gray-200"
-                  colSpan={11}
-                >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
-                </td>
-              </tr>
-            ) : (
-              <tr>
-                <td
-                  className="text-sm relative text-center bg-rustOne text-gray-200"
-                  colSpan={11}
-                >
-                  FOUND <b>0</b> SERVERS!
-                </td>
-              </tr>
-            )}
+  // if (initialData && !isResultsRendered) {
+  //   console.log("initialData && !isResultsRendered");
+  //   isResultsRendered = (
+  //     <div className="overflow-x-clip m-4 mb-8 max-w-6xl ">
+  //       <table className=" table-fixed border w-full border-black">
+  //         <THead setFilter={setFilter} setSorter={setSorter} sorter={sorter} isSSG={isSSG} />
+  //         <tbody className="bg-zinc-700 divide-y divide-zinc-950">
+  //           {data?.pages[0]?.totalCount[0]?.totalCount ? (
+  //             <tr>
+  //               <td
+  //                 className="text-sm relative text-center bg-green-600 text-gray-200"
+  //                 colSpan={11}
+  //               >
+  //                 Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
+  //               </td>
+  //             </tr>
+  //           ) : (
+  //             <tr>
+  //               <td
+  //                 className="text-sm relative text-center bg-rustOne text-gray-200"
+  //                 colSpan={11}
+  //               >
+  //                 FOUND <b>0</b> SERVERS!
+  //               </td>
+  //             </tr>
+  //           )}
 
-            {data?.pages.map((page, pageIndex) => (
-              <React.Fragment key={pageIndex}>
-                {page.result.map((mappedServer: ServerPrimaryDataType) => {
-                  return (
-                    <tr
-                      key={mappedServer.addr}
-                      className="hover:bg-rustOne clickable-row cursor-pointer"
-                      onClick={() => {
-                        router.push(`/server/${mappedServer.addr}`);
-                      }}
-                      role="link"
-                      ref={ref}
-                    >
-                      {columnData.map((column) =>
-                        column.value === "name" ? (
-                          <td
-                            key={column.value}
-                            className={`${column.styles} px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-green-500`}
-                          >
-                            <Link href={`/server/${mappedServer.addr}`}>
-                              {getColumnValue(column, mappedServer)}
-                            </Link>
-                          </td>
-                        ) : (
-                          <td
-                            key={column.value}
-                            className={`${column.styles} px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200`}
-                          >
-                            {getColumnValue(column, mappedServer)}
-                          </td>
-                        )
-                      )}
-                    </tr>
-                  );
-                })}
-                {page.result.length > 0 && (
-                  <tr>
-                    <td className="bg-green-700" colSpan={11}></td>
-                  </tr>
-                )}
-              </React.Fragment>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  }
+  //           {data?.pages.map((page, pageIndex) => (
+  //             <React.Fragment key={pageIndex}>
+  //               {page.result.map((mappedServer: ServerPrimaryDataType) => {
+  //                 return (
+  //                   <tr
+  //                     key={mappedServer.addr}
+  //                     className="hover:bg-rustOne clickable-row cursor-pointer"
+  //                     onClick={() => {
+  //                       router.push(`/server/${mappedServer.addr}`);
+  //                     }}
+  //                     role="link"
+  //                     ref={ref}
+  //                   >
+  //                     {ColumnData.map((column) =>
+  //                       column.value === "name" ? (
+  //                         <td
+  //                           key={column.value}
+  //                           className={`${column.styles} px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-green-500`}
+  //                         >
+  //                           <Link href={`/server/${mappedServer.addr}`}>
+  //                             {getColumnValue(column, mappedServer)}
+  //                           </Link>
+  //                         </td>
+  //                       ) : (
+  //                         <td
+  //                           key={column.value}
+  //                           className={`${column.styles} px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200`}
+  //                         >
+  //                           {getColumnValue(column, mappedServer)}
+  //                         </td>
+  //                       )
+  //                     )}
+  //                   </tr>
+  //                 );
+  //               })}
+  //               {page.result.length > 0 && (
+  //                 <tr>
+  //                   <td className="bg-green-700" colSpan={11}></td>
+  //                 </tr>
+  //               )}
+  //             </React.Fragment>
+  //           ))}
+  //         </tbody>
+  //       </table>
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
