@@ -40,8 +40,8 @@ const useCustomSingleQuery = (ip: string) => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     retry: false,
-    staleTime: 1000 * 60,
-    cacheTime: 1000 * 60,
+    staleTime: 1000 * 300,
+    cacheTime: 1000 * 300,
   };
 
   const { data, isLoading, error, status } = useQuery(queryKey, queryFn, queryOptions);
