@@ -73,7 +73,11 @@ const ServerDetailsPage = () => {
         </title>
         <meta
           name="description"
-          content={data ? data.name + " server details" : "Server details - Rust"}
+          content={
+            data
+              ? "Server details - " + data.name
+              : "Specific information about server - Rust"
+          }
           key="desc"
         />
         <link rel="icon" href="/logo-smallest.png" />

@@ -1,16 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-// import { fetchSingleServer } from "@/utils/fetchAllServers";
 import useUserAuth from "@/hooks/useUserAuth";
 
 const projection = {
   gametype: 0,
   _id: 0,
-  //   "rules.description": 0,
-  //   "rules.url": 0,
-  //   "rules.seed": 0,
-  "rules.fpv_avg": 0,
-  //   players_history: 0,
-  //   gameport: 0,
 };
 const useCustomSingleQuery = (ip: string) => {
   const app = useUserAuth();

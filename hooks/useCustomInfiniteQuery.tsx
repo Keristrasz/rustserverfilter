@@ -70,29 +70,3 @@ const useCustomInfiniteQuery = (filter: FilterType, sorter: SorterType, app: any
 };
 
 export default useCustomInfiniteQuery;
-
-// const queryOptions = useMemo(() => {
-//   return {
-//     enabled: !!app && !!app.currentUser,
-//     keepPreviousData: true,
-//     refetchOnMount: false,
-//     refetchOnWindowFocus: false,
-//     retry: false,
-//     staleTime: 1000 * 60,
-//     cacheTime: 1000 * 300,
-//     getNextPageParam: (lastPage: QueryResponseType, allPages: QueryResponseType[]) => {
-//       const totalCount = lastPage.totalCount[0]?.totalCount || 0;
-//       const totalDocumentsShown = allPages.reduce(
-//         (count, page) => count + page.result.length,
-//         0
-//       );
-//       (lastPage, allPages);
-//       (totalCount, totalDocumentsShown);
-//       if (totalDocumentsShown < totalCount) {
-//         return allPages.length; // Return the next page number
-//       }
-
-//       return null; // No more pages to fetch
-//     },
-//   };
-// }, [app]);

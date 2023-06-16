@@ -108,12 +108,27 @@ function Home({ initialData }: HomeProps) {
   return (
     <BodyWrapper>
       <Head>
-        <title>Rust Server Filter</title>
+        <title>
+          Rust Server Filter | future wipes, filter, sorter for all Rust Servers
+        </title>
         <meta
           name="description"
-          content="RUST SERVER LIST | Search, filter, sort rust servers by wipe, by solo, duo, trio group size and more"
+          content="Search for FUTURE WIPES! Filter by SOLO DUO TRIO QUAD servers. Sort by LAST WIPED server. Browse server RATES. Limit DISTANCE, MAP SIZE, number of PLAYERS. Look at player history and more!"
           key="desc"
         />
+        <meta
+          property="og:title"
+          content="Rust Server Filter | future wipes, filter, sorter for all Rust Servers"
+        />
+        <meta
+          property="og:description"
+          content="Search for FUTURE WIPES! Filter by SOLO DUO TRIO QUAD servers. Sort by LAST WIPED server. Browse server RATES. Limit DISTANCE, MAP SIZE, number of PLAYERS. Look at player history and more!"
+        />
+        <meta
+          property="og:image"
+          content="https://rustserverfilter.vercel.app/_next/image?url=%2Flogo-small.jpg&w=128&q=75"
+        />
+        <meta property="og:url" content="https://rustserverfilter.vercel.app/" />
         <link rel="icon" href="/logo-smallest.png" />
       </Head>
 
