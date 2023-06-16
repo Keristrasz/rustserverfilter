@@ -210,6 +210,14 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                               {getColumnValue(column, mappedServer)}
                             </Link>
                           </td>
+                        ) : column.value === "born" || column.value === "born_next" ? (
+                          <td
+                            suppressHydrationWarning={true}
+                            key={column.value}
+                            className={`${column.styles} px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200`}
+                          >
+                            {getColumnValue(column, mappedServer)}
+                          </td>
                         ) : (
                           <td
                             key={column.value}
