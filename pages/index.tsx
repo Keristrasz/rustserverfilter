@@ -79,7 +79,9 @@ function Home({ initialData }: HomeProps) {
   ("rerender");
   const app = useUserAuth();
 
-  const [sorter, setSorter] = useState<SorterType | {}>(getFromLocalStorage("sorter", {}));
+  const [sorter, setSorter] = useState<SorterType | {}>(
+    getFromLocalStorage("sorter", {})
+  );
   const [filter, setFilter] = useState<FilterType>(
     getFromLocalStorage("filter", {
       $and: [{ players: { $gte: 1 } }],
@@ -106,14 +108,15 @@ function Home({ initialData }: HomeProps) {
   return (
     <BodyWrapper>
       <Head>
-        <title>Rust server filter</title>
+        <title>Rust Server Filter</title>
         <meta
           name="description"
-          content="Find, search, filter rust servers by wipe, solo, duo, trio and so on"
+          content="RUST SERVER LIST | Search, filter, sort rust servers by wipe, by solo, duo, trio group size and more"
           key="desc"
         />
         <link rel="icon" href="/logo-smallest.png" />
       </Head>
+
       <Form
         userLocation={userLocation}
         setFilter={setFilter}

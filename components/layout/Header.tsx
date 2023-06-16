@@ -1,14 +1,24 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 function Header() {
   return (
-    <header className="flex justify-start items-center w-full bg-rustOne px-4">
-      <Image src="/logo-small.jpg" width={100} height={100} alt="heading logo" />
-      <div>
-        <h2 className="font-extrabold text-4xl tracking-tight">RUST SERVER FILTER</h2>
-        <h3>Place where you can find your solo duo trio rust servers</h3>
-      </div>
+    <header className="flex justify-between items-center w-full bg-rustOne px-4">
+      <Link href="/" className="flex justify-between items-center">
+        <Image src="/logo-small.jpg" width={100} height={100} alt="heading logo" />
+        <div>
+          <h2 className="font-extrabold text-4xl tracking-tight">RUST SERVER FILTER</h2>
+          <h3>Search, filter, sort your solo duo trio quad + rust servers</h3>
+        </div>
+      </Link>
+      <Link
+        href="/"
+        className={`text-gray-200 text-center font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all cursor-pointer hover:text-green-300
+          `}
+      >
+        Home
+      </Link>
     </header>
   );
 }

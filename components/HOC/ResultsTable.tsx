@@ -37,10 +37,10 @@ const columnDataForMonitor = [
   },
 ];
 const columnDataForMonitorForMobile = [
-  { isClickable: false, styles: "w-8/12", name: "Name", value: "name" },
-  { isClickable: true, styles: "w-2/12", name: "Players", value: "players" },
-  { isClickable: true, styles: "w-2/12", name: "Next Wipe", value: "born_next" },
-  { isClickable: true, styles: "w-2/12", name: "Last Wipe", value: "born" },
+  { isClickable: false, styles: "w-9/12", name: "Name", value: "name" },
+  { isClickable: true, styles: "w-3/12", name: "Players", value: "players" },
+  // { isClickable: true, styles: "w-2/12", name: "Next Wipe", value: "born_next" },
+  // { isClickable: true, styles: "w-2/12", name: "Last Wipe", value: "born" },
 ];
 
 let columnData = columnDataForMonitor;

@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { getCustomDate } from "@/utils/inputFunctions";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend } from "recharts";
 type PlayersHistory = [number, number][];
 function ServerGraphs({ players_history }: { players_history: PlayersHistory }) {
+  let isMobile = false;
+  let chartWidth = 500;
+  let chartHeight = 300;
+
+  const MOBILE_WIDTH_THRESHOLD = 600; // Adjust the threshold as needed
+  isMobile = typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
+
+  if (isMobile) {
+    chartHeight = 300;
+    chartWidth = 300;
+  }
+  // console.log(isMobile, chartHeight);
+
   if (players_history) {
     players_history;
     const formattedData = players_history.map((entry: number[]) => ({
@@ -91,7 +104,7 @@ function ServerGraphs({ players_history }: { players_history: PlayersHistory }) 
             className="m-2 text-center border border-black bg-zinc-800 rounded-2xl p-2"
           >
             <h3 className="text-xl font-bold text-gray-200 mb-4">{el.heading}</h3>
-            <AreaChart width={500} height={300} data={el.function}>
+            <AreaChart width={chartWidth} height={chartHeight} data={el.function}>
               <XAxis
                 ticks={[
                   el.function[0]?.timestamp,

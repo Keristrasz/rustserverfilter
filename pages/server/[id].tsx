@@ -66,25 +66,29 @@ const ServerDetailsPage = () => {
       <Head>
         <title>
           {data
-            ? data.name.length > 75
-              ? data.name.substring(0, 75) + "..."
+            ? data.name.length > 100
+              ? data.name.substring(0, 100) + "..."
               : data.name
             : "Server details - Rust"}
         </title>
-        <meta name="description" content="Rust specific server details" key="desc" />
+        <meta
+          name="description"
+          content={data ? data.name + " server details" : "Server details - Rust"}
+          key="desc"
+        />
         <link rel="icon" href="/logo-smallest.png" />
       </Head>
       <ToastContainer position="bottom-left" />
       <div className="m-4 max-w-6xl flex flex-col justify-center items-center ">
         <div>
-          <p>Query IP: {id}</p>
-          <button
+          <p className="text-xs text-gray-400">Query IP: {id}</p>
+          {/* <button
             className={`bg-rustOne text-white font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all cursor-pointer hover:bg-green-600
           `}
             onClick={() => router.push("/", undefined, { shallow: true })}
           >
             Get Back
-          </button>
+          </button> */}
         </div>
         {isLoading && (
           <main className="flex flex-wrap mt-4 justify-center items-center m-2">
@@ -100,20 +104,19 @@ const ServerDetailsPage = () => {
         {status === "success" && (
           <main className="">
             {data && (
-              <div className="max-w-6xl flex flex-col items-center ">
-                <h1 className="text-2xl font-bold text-gray-200 text-center my-2 ">
-                  {data.name}
-                </h1>
+              <div className="max-w-6xl flex flex-col items-center mt-4">
                 <article className="max-w-2xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6">
+                  <p className="text-lg font-medium text-rustOne">Server name:</p>
+                  <h1 className="text-2xl font-bold text-gray-200 mb-4">{data.name}</h1>
                   {/* FIRST CONTENT */}
                   <div className="flex flex-wrap mb-4">
                     <div className="mr-4 mb-4">
-                      <h4 className="text-lg font-bold text-gray-200">Server info:</h4>
+                      <h4 className="text-lg font-medium text-rustOne">Server info:</h4>
                       {data.rank && <p className="text-gray-400">Score: {data.rank}</p>}
-                      <p className="font-bold text-gray-300">
+                      <p className="text-gray-300">
                         Game Ip:{" "}
                         <span
-                          className="font-bold text-rustOne hover:cursor-pointer"
+                          className="font-bold text-rustOne hover:cursor-pointer hover:text-green-500"
                           onClick={handleCopyClick}
                         >
                           {data.addr.split(":").slice(0, 1) + ":" + data.gameport}
@@ -123,29 +126,38 @@ const ServerDetailsPage = () => {
                       <p className="text-gray-300">
                         Players: {data.players} / {data.max_players}
                       </p>
-                      <p className="text-gray-300">Last Wipe: {getCustomDate(data.born)}</p>
+                      <p className="text-gray-300">
+                        Last Wipe: {getCustomDate(data.born)}
+                      </p>
                       <p className="text-gray-300">
                         Next Wipe: {getCustomDate(data.born_next)}
                       </p>
                       {data.rate ? (
-                        <p className="text-gray-400">Rate: {data.rate}x</p>
+                        <p className="text-gray-300">Rate: {data.rate}x</p>
                       ) : (
-                        <p className="text-gray-400">Rate: Unknown</p>
+                        <p className="text-gray-300">Rate: Unknown</p>
                       )}
-                      <p className="text-gray-400">Max Group Size: {data.max_group_size}</p>
+                      <p className="text-gray-300">
+                        Max Group Size: {data.max_group_size}
+                      </p>
                       <p className="text-gray-400">Map Size: {data.rules?.size}</p>
                       <p className="text-gray-400">Seed: {data.rules?.seed}</p>
                     </div>
                     {/* ADDITIONAL INFO */}
 
                     <div className="mb-2 mr-4">
-                      <h4 className="text-lg font-bold text-gray-200">Aditional info:</h4>
+                      <h4 className="text-lg font-medium text-rustOne">
+                        Aditional info:
+                      </h4>
 
                       {data.rules?.url && (
                         <p className="text-gray-400">
                           URL:{" "}
                           {isUrl(data.rules.url) ? (
-                            <Link className="text-blue-500 underline" href={data.rules.url}>
+                            <Link
+                              className="text-blue-500 underline"
+                              href={data.rules.url}
+                            >
                               {data.rules.url}
                             </Link>
                           ) : (
@@ -154,11 +166,19 @@ const ServerDetailsPage = () => {
                         </p>
                       )}
                       {/* <p className="text-gray-400">Max Players: {data.max_players}</p> */}
-                      <p className="text-gray-400">Modded: {data.modded ? "Yes" : "No"}</p>
-                      <p className="text-gray-400">Vanilla: {data.vanilla ? "Yes" : "No"}</p>
+                      <p className="text-gray-400">
+                        Modded: {data.modded ? "Yes" : "No"}
+                      </p>
+                      <p className="text-gray-400">
+                        Vanilla: {data.vanilla ? "Yes" : "No"}
+                      </p>
                       <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
-                      <p className="text-gray-400">Gametype: {data.gametype?.join(", ")}</p>
-                      <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
+                      <p className="text-gray-400">
+                        Gametype: {data.gametype?.join(", ")}
+                      </p>
+                      <p className="text-gray-400">
+                        Softcore/Hardcore: {data.difficulty}
+                      </p>
                       <p className="text-gray-400">
                         Server uptime: {getTimeUptime(data.rules?.uptime)}
                       </p>
@@ -169,7 +189,7 @@ const ServerDetailsPage = () => {
 
                     {data.rules?.location ? (
                       <div className="">
-                        <h4 className="text-lg font-bold text-gray-200">Location:</h4>
+                        <h4 className="text-lg font-medium text-rustOne">Location:</h4>
                         <p className="text-gray-300">
                           Country: {data.rules?.location?.country}
                         </p>
@@ -188,7 +208,9 @@ const ServerDetailsPage = () => {
                           km
                         </p>
                         {serverLocationData?.region && (
-                          <p className="text-gray-400">Region: {serverLocationData.region}</p>
+                          <p className="text-gray-400">
+                            Region: {serverLocationData.region}
+                          </p>
                         )}
                         {serverLocationData?.city && (
                           <p className="text-gray-400">City: {serverLocationData.city}</p>
@@ -197,13 +219,13 @@ const ServerDetailsPage = () => {
                         <p className="text-gray-400">
                           Latitude: {data.rules.location.latitude}
                         </p>
-                        <p className="text-gray-300">
+                        <p className="text-gray-400">
                           Longitude: {data.rules.location.longitude}
                         </p>
                       </div>
                     ) : (
                       <div>
-                        <h4 className="text-lg font-bold text-gray-200">Location</h4>
+                        <h4 className="text-lg font-medium text-rustOne">Location</h4>
                         {serverLocationData?.country && (
                           <p className="text-gray-300">
                             Country: {serverLocationData.country}
@@ -224,7 +246,9 @@ const ServerDetailsPage = () => {
                             </p>
                           )}
                         {serverLocationData?.region && (
-                          <p className="text-gray-400">Region: {serverLocationData.region}</p>
+                          <p className="text-gray-400">
+                            Region: {serverLocationData.region}
+                          </p>
                         )}
                         {serverLocationData?.city && (
                           <p className="text-gray-400">City: {serverLocationData.city}</p>
@@ -245,7 +269,7 @@ const ServerDetailsPage = () => {
                   </div>
                   {/* DESCRIPTION */}
                   <div className="">
-                    <h3 className="text-xl font-bold text-gray-200">Description:</h3>
+                    <h3 className="text-xl font-medium text-rustOne">Description:</h3>
                     <p className="text-gray-300"> {data.rules?.description}</p>
                   </div>
                 </article>
