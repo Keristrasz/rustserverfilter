@@ -120,16 +120,27 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
       } else {
         return "";
       }
-    }
-    // else if (value === "uptime") {
-    //   return mappedServer.rules?.uptime ? getTimeUptime(mappedServer.rules?.uptime) : "N/A";
-    // }
-    else if (
+    } else if (value === "rate") {
+      return mappedServer[value] ? mappedServer[value] + "x" : "";
+    } else if (value === "max_group_size") {
+      if (mappedServer[value] === 1) {
+        return "Solo";
+      } else if (mappedServer[value] === 2) {
+        return "Duo";
+      } else if (mappedServer[value] === 3) {
+        return "Trio";
+      } else if (mappedServer[value] === 4) {
+        return "Quad";
+      } else if (mappedServer[value]) {
+        return "Max " + mappedServer[value];
+      } else {
+        return "";
+      }
+    } else if (
       value === "addr" ||
       value === "name" ||
       value === "rank" ||
       value === "players" ||
-      value === "rate" ||
       value === "max_group_size"
     ) {
       return mappedServer[value];
