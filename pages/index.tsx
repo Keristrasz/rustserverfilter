@@ -124,8 +124,8 @@ function Home({ initialData }: HomeProps) {
           property="og:description"
           content="Find FUTURE WIPES! Filter by SOLO DUO TRIO QUAD servers. Sort by LAST WIPED server. Browse server RATES. Limit DISTANCE, MAP SIZE, number of PLAYERS. Look at player history and more!"
         />
-        <meta property="og:image" content="/logo-og.png" />
-        <meta property="og:url" content="https://rustserverfilter.vercel.app/" />
+        <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
+        <meta property="og:url" content="https://rustserverfilter.com/" />
         <link rel="icon" href="/logo-smallest.png" />
       </Head>
 

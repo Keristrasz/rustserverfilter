@@ -8,7 +8,7 @@ function Header() {
       <Link href="/" className="flex justify-between items-center">
         <Image src="/logo-small.jpg" width={100} height={100} alt="heading logo" />
         <div>
-          <h2 className="font-extrabold text-4xl tracking-tight">RUST SERVER FILTER</h2>
+          <h2 className="font-bold text-4xl tracking-normal">RUST SERVER FILTER</h2>
           <h3>Search, filter, sort your solo duo trio quad + rust servers</h3>
         </div>
       </Link>

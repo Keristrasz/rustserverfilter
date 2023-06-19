@@ -80,6 +80,26 @@ const ServerDetailsPage = () => {
           }
           key="desc"
         />
+        <meta
+          property="og:title"
+          content={
+            data
+              ? data.name.length > 100
+                ? data.name.substring(0, 100) + "..."
+                : data.name
+              : "Server details - Rust"
+          }
+        />
+        <meta
+          property="og:description"
+          content={
+            data
+              ? "Server details - " + data.name
+              : "Find FUTURE WIPES! Filter by SOLO DUO TRIO QUAD servers. Sort by LAST WIPED server. Browse server RATES. Limit DISTANCE, MAP SIZE, number of PLAYERS. Look at player history and more!"
+          }
+        />
+        <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
+        <meta property="og:url" content="https://rustserverfilter.com/" />
         <link rel="icon" href="/logo-smallest.png" />
       </Head>
       <ToastContainer position="bottom-left" />
