@@ -17,7 +17,13 @@ interface THeadProps {
   columnData: ColumnData[];
 }
 
-const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, columnData }) => {
+const THead: React.FC<THeadProps> = ({
+  setFilter,
+  setSorter,
+  sorter,
+  isSSG,
+  columnData,
+}) => {
   const updateSorter = useSorter(setFilter, setSorter);
 
   return (
@@ -38,7 +44,7 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, colu
             <th
               onClick={() => updateSorter(column.value)}
               key={column.value}
-              className={`${column.styles} ${sortColorClass} px-2 py-2 h-8 text-left text-xs font-semibold text-green-400 uppercase tracking-tight hover:cursor-pointer`}
+              className={`text-xs px-2 py-2 h-8 text-left font-semibold text-green-400 uppercase tracking-tight hover:cursor-pointer ${column.styles} ${sortColorClass}`}
             >
               <span className="flex items-center">
                 {column.name}
@@ -53,7 +59,7 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, colu
           ) : (
             <th
               key={column.value}
-              className={`${column.styles}  px-2 py-2 h-8 text-left text-xs font-semibold text-gray-200 uppercase tracking-tight`}
+              className={`text-xs px-2 py-2 h-8 text-left font-semibold text-gray-200 uppercase tracking-tight ${column.styles}`}
             >
               {column.name}
             </th>

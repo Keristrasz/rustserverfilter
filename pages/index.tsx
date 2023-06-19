@@ -79,8 +79,8 @@ function Home({ initialData }: HomeProps) {
   ("rerender");
   const app = useUserAuth();
 
-  const [sorter, setSorter] = useState<SorterType | {}>(
-    getFromLocalStorage("sorter", {})
+  const [sorter, setSorter] = useState<SorterType>(
+    getFromLocalStorage("sorter", { players: -1 })
   );
   const [filter, setFilter] = useState<FilterType>(
     getFromLocalStorage("filter", {
