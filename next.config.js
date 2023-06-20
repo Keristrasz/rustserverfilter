@@ -1,10 +1,11 @@
 /\*_ @type {import('next').NextConfig} _/;
 const nextConfig = {
   reactStrictMode: false,
-  i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
-  },
+  // Makes async headers not working
+  // i18n: {
+  //   locales: ["en"],
+  //   defaultLocale: "en",
+  // },
   typescript: {
     ignoreBuildErrors: true,
   },
