@@ -15,8 +15,7 @@ import { LocationData } from "@/utils/typesTypescript";
 import Head from "next/head";
 import { userLocationType } from "@/utils/typesTypescript";
 import ServerGraphs from "@/components/ServerGraphs";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const ServerDetailsPage = () => {
   const router = useRouter();
@@ -279,7 +278,6 @@ const ServerDetailsPage = () => {
           </main>
         )}
       </div>
-      <ToastContainer autoClose={10000} />
     </BodyWrapper>
   );
 };
