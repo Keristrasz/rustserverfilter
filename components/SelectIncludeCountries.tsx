@@ -127,7 +127,7 @@ function SelectIncludeCountries({
         <input
           type="text"
           id="includeCountries"
-          className="flex-grow bg-transparent focus:outline-none border-none focus:ring-0 w-full"
+          className="flex-grow bg-transparent focus:outline-none border-none focus:ring-0"
           placeholder="Type country"
           value={inputValue}
           onChange={handleInputChange}
@@ -142,10 +142,7 @@ function SelectIncludeCountries({
         >
           <div className="max-h-80 overflow-auto">
             {filteredOptions.map((el: String) => (
-              <label
-                key={String(el)}
-                className="block px-4 py-2 cursor-pointer select-none"
-              >
+              <label key={String(el)} className="block px-4 py-2 cursor-pointer select-none">
                 <input
                   type="checkbox"
                   className="form-checkbox text-rustOne"
