@@ -54,7 +54,7 @@ const nextConfig = {
           // Website's resources (such as APIs, images, or fonts) can be accessed by requests originating from any other domain.
           {
             key: "Access-Control-Allow-Origin",
-            value: "<origin>",
+            value: "https://rustserverfilter.com/",
           },
         ],
       },
