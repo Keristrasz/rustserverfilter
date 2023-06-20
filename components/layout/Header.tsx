@@ -7,11 +7,11 @@ function Header() {
     <header className="flex justify-between items-center w-full bg-rustOne px-4">
       <Link href="/" className="flex justify-between items-center">
         <Image
-          src="/logo-small.jpg2"
+          src="/logo-small2.jpg"
           width={100}
           height={100}
           alt="heading logo"
-          unoptimized
+          className="bg-transparent"
         />
         <div>
           <h2 className="font-bold text-4xl tracking-normal">RUST SERVER FILTER</h2>
