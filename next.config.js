@@ -2,11 +2,10 @@
 const nextConfig = {
   reactStrictMode: false,
   // Makes async headers not working
-  i18n: {
-    locales: ["en-US"],
-    defaultLocale: "en-US",
-    localeDetection: false,
-  },
+  // i18n: {
+  //   locales: ["en"],
+  //   defaultLocale: "en",
+  // },
   typescript: {
     ignoreBuildErrors: true,
   },
