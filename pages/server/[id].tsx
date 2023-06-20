@@ -63,7 +63,6 @@ const ServerDetailsPage = () => {
   return (
     <BodyWrapper>
       <Head>
-        <html lang="en" />
         <title>
           {data
             ? data.name.length > 100

@@ -7,14 +7,17 @@ import Layout from "@/components/layout/Layout";
 import { Analytics } from "@vercel/analytics/react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ErrorBoundary from "@/components/HOC/ErrorBoundary";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
   return (
     <QueryClientProvider client={queryClient}>
       <Layout>
-        <Component {...pageProps} />
-        <ToastContainer autoClose={5000} position="top-center" />
+        <ErrorBoundary fallback="Error">
+          <Component {...pageProps} />
+          <ToastContainer autoClose={5000} position="top-center" />
+        </ErrorBoundary>
       </Layout>
       <Analytics />
       <ReactQueryDevtools initialIsOpen={false} />
