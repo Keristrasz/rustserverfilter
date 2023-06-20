@@ -145,7 +145,7 @@ function SelectIncludeCountries({
               <label key={String(el)} className="block px-4 py-2 cursor-pointer select-none">
                 <input
                   type="checkbox"
-                  className="form-checkbox text-rustOne"
+                  className="h-4 w-4 border-rustOne rounded focus:rustOne text-rustOne"
                   value={String(el)}
                   checked={countries.includes(String(el))}
                   onChange={handleCountryChange}
@@ -160,4 +160,4 @@ function SelectIncludeCountries({
   );
 }
 
-export default React.memo(SelectIncludeCountries);
+export default SelectIncludeCountries;
