@@ -20,7 +20,7 @@ const useGeolocation = (
         (error) => {
           console.error("Error retrieving location:", error);
           toast.error(
-            "Error retrieving location. Allow geolocation and refresh too see distance from rust servers."
+            "Error retrieving location. Allow geolocation and refresh the site, if you want to see or filter your distance from rust servers."
           );
         }
       );
