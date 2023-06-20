@@ -37,22 +37,22 @@ const columnDataForMonitor = [
   },
 ];
 const columnDataForMonitorForMobile = [
-  { isClickable: false, styles: "w-7/12 text-[0.65rem] p-0", name: "Name", value: "name" },
+  { isClickable: false, styles: "w-7/12 text-[0.675rem] p-0", name: "Name", value: "name" },
   {
     isClickable: true,
-    styles: "w-2/12 text-[0.6rem]",
+    styles: "w-2/12 text-[0.675rem]",
     name: "Players",
     value: "players",
   },
   {
     isClickable: true,
-    styles: "w-3/12 text-[0.6rem]",
+    styles: "w-3/12 text-[0.675rem]",
     name: "Next Wipe",
     value: "born_next",
   },
   {
     isClickable: true,
-    styles: "w-3/12 text-[0.6rem] p-0",
+    styles: "w-3/12 text-[0.675rem] p-0",
     name: "Last Wipe",
     value: "born",
   },
@@ -198,8 +198,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   className="text-sm relative text-center bg-green-600 text-gray-200"
                   colSpan={11}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
-                  SERVERS
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
                 </td>
               </tr>
             ) : (
