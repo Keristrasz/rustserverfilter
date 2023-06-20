@@ -38,7 +38,7 @@ const nextConfig = {
           {
             key: "Content-Security-Policy",
             value:
-              "default-src 'self'; font-src 'self' 'https://fonts.googleapis.com'; img-src 'self'; script-src 'self'",
+              "default-src 'self'; font-src 'self' https://fonts.googleapis.com; img-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live; connect-src 'self' https://realm.mongodb.com",
           },
           // Site cannot be loaded as iframe (like yb videos) in any other website
           {

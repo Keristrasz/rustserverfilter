@@ -127,7 +127,7 @@ function Home({ initialData }: HomeProps) {
         <meta property="og:url" content="https://rustserverfilter.com/" />
         <link rel="icon" href="/logo-smallest.png" />
       </Head>
-      <ToastContainer position="bottom-left" />
+      <ToastContainer position="bottom-left" autoClose={10000} />
       <Form
         userLocation={userLocation}
         setFilter={setFilter}
