@@ -6,7 +6,13 @@ function Header() {
   return (
     <header className="flex justify-between items-center w-full bg-rustOne px-4">
       <Link href="/" className="flex justify-between items-center">
-        <Image src="/logo-small.png" width={100} height={100} alt="heading logo" />
+        <Image
+          src="/logo-small.jpg2"
+          width={100}
+          height={100}
+          alt="heading logo"
+          unoptimized
+        />
         <div>
           <h2 className="font-bold text-4xl tracking-normal">RUST SERVER FILTER</h2>
           <h3>Search, filter, sort your solo duo trio quad + rust servers</h3>
