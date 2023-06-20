@@ -20,8 +20,8 @@ import * as Realm from "realm-web";
 import { GetStaticProps } from "next";
 import Head from "next/head";
 
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const getStaticProps: GetStaticProps = async () => {
   // Fetch initialSorter and initialFilter from an API or any other initialData source
@@ -127,7 +127,7 @@ function Home({ initialData }: HomeProps) {
         <meta property="og:url" content="https://rustserverfilter.com/" />
         <link rel="icon" href="/logo-smallest.png" />
       </Head>
-      {/* <ToastContainer position="bottom-left" autoClose={10000} /> */}
+      <ToastContainer position="bottom-left" autoClose={10000} />
       <Form
         userLocation={userLocation}
         setFilter={setFilter}

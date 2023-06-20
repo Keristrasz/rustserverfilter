@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { userLocationType } from "../utils/typesTypescript";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 type SetUserLocation = React.Dispatch<React.SetStateAction<userLocationType | null>>;
 
@@ -19,9 +19,9 @@ const useGeolocation = (
         },
         (error) => {
           console.error("Error retrieving location:", error);
-          // toast.error(
-          //   "Error retrieving your location. Allow geolocation too see distance from rust servers."
-          // );
+          toast.error(
+            "Error retrieving your location. Allow geolocation too see distance from rust servers."
+          );
         }
       );
     }
