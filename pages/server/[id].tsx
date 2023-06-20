@@ -94,9 +94,9 @@ const ServerDetailsPage = () => {
               : "Find FUTURE WIPES! Filter by SOLO DUO TRIO QUAD servers. Sort by LAST WIPED server. Browse server RATES. Limit DISTANCE, MAP SIZE, number of PLAYERS. Look at player history and more!"
           }
         />
-        {/* <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" /> */}
+        <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content="https://rustserverfilter.com/" />
-        {/* <link rel="icon" href="/logo-smallest.png" /> */}
+        <link rel="icon" href="/logo-smallest.png" />
       </Head>
       {/* <ToastContainer position="bottom-left" autoClose={10000} /> */}
       <div className="m-4 max-w-6xl flex flex-col justify-center items-center ">
