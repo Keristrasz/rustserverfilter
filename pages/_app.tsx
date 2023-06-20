@@ -5,7 +5,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Analytics } from "@vercel/analytics/react";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Layout>
         <Component {...pageProps} />
-        <ToastContainer autoClose={10000} />
+        <ToastContainer autoClose={8500} />
       </Layout>
       <Analytics />
       <ReactQueryDevtools initialIsOpen={false} />
