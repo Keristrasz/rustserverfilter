@@ -1,10 +1,10 @@
 /\*_ @type {import('next').NextConfig} _/;
 const nextConfig = {
   reactStrictMode: false,
-  // i18n: {
-  //   locales: ["en"],
-  //   defaultLocale: "en",
-  // },
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
+  },
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -53,7 +53,7 @@ const nextConfig = {
           // Website's resources (such as APIs, images, or fonts) can be accessed by requests originating from any other domain.
           {
             key: "Access-Control-Allow-Origin",
-            value: "<origin>",
+            value: "https://rustserverfilter.com/",
           },
         ],
       },
