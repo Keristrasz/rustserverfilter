@@ -1,33 +1,5 @@
 /\*_ @type {import('next').NextConfig} _/;
 const nextConfig = {
-  reactStrictMode: false,
-  i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
-  },
-  typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
-    ignoreBuildErrors: true,
-  },
-
-  //for caching the pages correctly, but doesnt look like its working?
-  // async headers() {
-  // return [
-  // {
-  // source: "/path/to/static/page",
-  // headers: [
-  // {
-  // key: "Cache-Control",
-  // value: "s-maxage=600, stale-while-revalidate",
-  // },
-  // ],
-  // },
-  // ];
-  // },
-
   async headers() {
     return [
       {
@@ -79,6 +51,29 @@ const nextConfig = {
       },
     ];
   },
+  reactStrictMode: false,
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 module.exports = nextConfig;
+
+//for caching the pages correctly, but doesnt look like its working?
+// async headers() {
+// return [
+// {
+// source: "/path/to/static/page",
+// headers: [
+// {
+// key: "Cache-Control",
+// value: "s-maxage=600, stale-while-revalidate",
+// },
+// ],
+// },
+// ];
+// },
