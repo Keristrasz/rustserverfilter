@@ -25,7 +25,9 @@ const ServerDetailsPage = () => {
   const [userLocation, setUserLocation] = useState<userLocationType | null>(null);
   useGeolocation(userLocation, setUserLocation);
 
-  const [serverLocationData, setServerLocationData] = useState<LocationData | undefined>();
+  const [serverLocationData, setServerLocationData] = useState<
+    LocationData | undefined
+  >();
   useEffect(() => {
     const fetchServerLocation = async () => {
       try {
@@ -61,6 +63,7 @@ const ServerDetailsPage = () => {
   return (
     <BodyWrapper>
       <Head>
+        <html lang="en" />
         <title>
           {data
             ? data.name.length > 100
@@ -71,7 +74,9 @@ const ServerDetailsPage = () => {
         <meta
           name="description"
           content={
-            data ? "Server details - " + data.name : "Specific information about server - Rust"
+            data
+              ? "Server details - " + data.name
+              : "Specific information about server - Rust"
           }
           key="desc"
         />
@@ -144,7 +149,9 @@ const ServerDetailsPage = () => {
                       <p className="text-gray-300">
                         Players: {data.players} / {data.max_players}
                       </p>
-                      <p className="text-gray-300">Last Wipe: {getCustomDate(data.born)}</p>
+                      <p className="text-gray-300">
+                        Last Wipe: {getCustomDate(data.born)}
+                      </p>
                       <p className="text-gray-300">
                         Next Wipe: {getCustomDate(data.born_next)}
                       </p>
@@ -153,20 +160,27 @@ const ServerDetailsPage = () => {
                       ) : (
                         <p className="text-gray-300">Rate: Unknown</p>
                       )}
-                      <p className="text-gray-300">Max Group Size: {data.max_group_size}</p>
+                      <p className="text-gray-300">
+                        Max Group Size: {data.max_group_size}
+                      </p>
                       <p className="text-gray-400">Map Size: {data.rules?.size}</p>
                       <p className="text-gray-400">Seed: {data.rules?.seed}</p>
                     </div>
                     {/* ADDITIONAL INFO */}
 
                     <div className="mb-2 mr-4">
-                      <h4 className="text-lg font-medium text-rustOne">Aditional info:</h4>
+                      <h4 className="text-lg font-medium text-rustOne">
+                        Aditional info:
+                      </h4>
 
                       {data.rules?.url && (
                         <p className="text-gray-400">
                           URL:{" "}
                           {isUrl(data.rules.url) ? (
-                            <Link className="text-blue-500 underline" href={data.rules.url}>
+                            <Link
+                              className="text-blue-500 underline"
+                              href={data.rules.url}
+                            >
                               {data.rules.url}
                             </Link>
                           ) : (
@@ -175,11 +189,19 @@ const ServerDetailsPage = () => {
                         </p>
                       )}
                       {/* <p className="text-gray-400">Max Players: {data.max_players}</p> */}
-                      <p className="text-gray-400">Modded: {data.modded ? "Yes" : "No"}</p>
-                      <p className="text-gray-400">Vanilla: {data.vanilla ? "Yes" : "No"}</p>
+                      <p className="text-gray-400">
+                        Modded: {data.modded ? "Yes" : "No"}
+                      </p>
+                      <p className="text-gray-400">
+                        Vanilla: {data.vanilla ? "Yes" : "No"}
+                      </p>
                       <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
-                      <p className="text-gray-400">Gametype: {data.gametype?.join(", ")}</p>
-                      <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
+                      <p className="text-gray-400">
+                        Gametype: {data.gametype?.join(", ")}
+                      </p>
+                      <p className="text-gray-400">
+                        Softcore/Hardcore: {data.difficulty}
+                      </p>
                       <p className="text-gray-400">
                         Server uptime: {getTimeUptime(data.rules?.uptime)}
                       </p>
@@ -209,7 +231,9 @@ const ServerDetailsPage = () => {
                           km
                         </p>
                         {serverLocationData?.region && (
-                          <p className="text-gray-400">Region: {serverLocationData.region}</p>
+                          <p className="text-gray-400">
+                            Region: {serverLocationData.region}
+                          </p>
                         )}
                         {serverLocationData?.city && (
                           <p className="text-gray-400">City: {serverLocationData.city}</p>
@@ -245,7 +269,9 @@ const ServerDetailsPage = () => {
                             </p>
                           )}
                         {serverLocationData?.region && (
-                          <p className="text-gray-400">Region: {serverLocationData.region}</p>
+                          <p className="text-gray-400">
+                            Region: {serverLocationData.region}
+                          </p>
                         )}
                         {serverLocationData?.city && (
                           <p className="text-gray-400">City: {serverLocationData.city}</p>
