@@ -1,5 +1,13 @@
 /\*_ @type {import('next').NextConfig} _/;
 const nextConfig = {
+  reactStrictMode: false,
+  // i18n: {
+  //   locales: ["en"],
+  //   defaultLocale: "en",
+  // },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   async headers() {
     return [
       {
@@ -50,14 +58,6 @@ const nextConfig = {
         ],
       },
     ];
-  },
-  reactStrictMode: false,
-  i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
-  },
-  typescript: {
-    ignoreBuildErrors: true,
   },
 };
 
