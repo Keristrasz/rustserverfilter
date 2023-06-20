@@ -43,9 +43,9 @@ const ServerDetailsPage = () => {
   const handleCopyClick = () => {
     const textToCopy = data.addr.split(":").slice(0, 1) + ":" + data.gameport;
     navigator.clipboard
-      .writeText(textToCopy)
+      .writeText("client.connect " + textToCopy)
       .then(() => {
-        toast.success("Copied!");
+        toast.success("Copied! Now you can join through rust game console.");
       })
       .catch((error) => {
         console.log("Copy failed:", error);
