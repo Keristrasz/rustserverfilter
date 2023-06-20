@@ -145,7 +145,7 @@ function SelectExcludeCountries({
               <label key={String(el)} className="block px-4 py-2 cursor-pointer select-none">
                 <input
                   type="checkbox"
-                  className="h-4 w-4 border-rustOne rounded focus:ring-2 focus:ring-black text-rustOne"
+                  className="h-4 w-4 border-rustOne rounded focus:ring-2 focus:ring-black text-rustOne bg-none"
                   value={String(el)}
                   checked={countries.includes(String(el))}
                   onChange={handleCountryChange}
