@@ -37,7 +37,7 @@ const columnDataForMonitor = [
   },
 ];
 const columnDataForMonitorForMobile = [
-  { isClickable: false, styles: "w-7/12 text-[0.6rem] p-0", name: "Name", value: "name" },
+  { isClickable: false, styles: "w-7/12 text-[0.65rem] p-0", name: "Name", value: "name" },
   {
     isClickable: true,
     styles: "w-2/12 text-[0.6rem]",
