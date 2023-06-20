@@ -3,7 +3,6 @@ import {
   userLocationType,
   SorterType,
   FilterType,
-  ServerPrimaryDataType,
   QueryResponseType,
 } from "../utils/typesTypescript";
 import useUserAuth from "../hooks/useUserAuth";
@@ -12,7 +11,6 @@ import useGeolocation from "@/hooks/useGeolocation";
 import ResultsTable from "@/components/HOC/ResultsTable";
 import Form from "@/components/HOC/Form";
 import BodyWrapper from "@/components/layout/BodyWrapper";
-import Heading from "@/components/UI/Heading";
 import { InfiniteData } from "@tanstack/react-query";
 
 //TODO Distance sort by loaded initialData
@@ -21,6 +19,9 @@ import { fetchAllServers } from "@/utils/fetchAllServers";
 import * as Realm from "realm-web";
 import { GetStaticProps } from "next";
 import Head from "next/head";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const getStaticProps: GetStaticProps = async () => {
   // Fetch initialSorter and initialFilter from an API or any other initialData source
@@ -108,9 +109,7 @@ function Home({ initialData }: HomeProps) {
   return (
     <BodyWrapper>
       <Head>
-        <title>
-          Rust Server Filter | Future Wipes, Search, Sort, Find all Rust Servers
-        </title>
+        <title>Rust Server Filter | Future Wipes, Search, Sort, Find all Rust Servers</title>
         <meta
           name="description"
           content="Find FUTURE WIPES! Filter by SOLO DUO TRIO QUAD servers. Sort by LAST WIPED server. Browse server RATES. Limit DISTANCE, MAP SIZE, number of PLAYERS. Look at player history and more!"
@@ -128,7 +127,7 @@ function Home({ initialData }: HomeProps) {
         <meta property="og:url" content="https://rustserverfilter.com/" />
         <link rel="icon" href="/logo-smallest.png" />
       </Head>
-
+      <ToastContainer position="bottom-left" />
       <Form
         userLocation={userLocation}
         setFilter={setFilter}
