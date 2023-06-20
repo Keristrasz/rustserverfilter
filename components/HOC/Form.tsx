@@ -384,7 +384,7 @@ const Form: React.FC<FormProps> = ({
         </div>
         <div className="flex flex-wrap w-full justify-between">
           <div className="m-0 w-1/2 xl:max-w-[32.5em]">
-            <label className="block text-gray-200 font-semibold text-lg my-1">
+            <label htmlFor="includeCountries" className="block text-gray-200 font-semibold text-lg my-1">
               Include Countries
             </label>
             <SelectIncludeCountries
@@ -393,7 +393,7 @@ const Form: React.FC<FormProps> = ({
             />
           </div>
           <div className="m-0 w-1/2 xl:max-w-[32.5em] xl:ml-4">
-            <label className="block text-gray-200 font-semibold text-lg my-1">
+            <label htmlFor="excludeCountries" className="block text-gray-200 font-semibold text-lg my-1">
               Exclude Countries
             </label>
             <SelectExcludeCountries

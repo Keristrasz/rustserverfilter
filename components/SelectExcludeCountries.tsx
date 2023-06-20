@@ -126,6 +126,7 @@ function SelectExcludeCountries({
           ))}
         <input
           type="text"
+          id="excludeCountries"
           className="flex-grow bg-transparent focus:outline-none border-none focus:ring-0 w-full"
           placeholder="Type country"
           value={inputValue}

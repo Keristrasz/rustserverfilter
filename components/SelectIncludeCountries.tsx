@@ -126,6 +126,7 @@ function SelectIncludeCountries({
           ))}
         <input
           type="text"
+          id="includeCountries"
           className="flex-grow bg-transparent focus:outline-none border-none focus:ring-0 w-full"
           placeholder="Type country"
           value={inputValue}
