@@ -98,7 +98,7 @@ const ServerDetailsPage = () => {
         <meta property="og:url" content="https://rustserverfilter.com/" />
         <link rel="icon" href="/logo-smallest.png" />
       </Head>
-      <ToastContainer position="bottom-left" autoClose={10000} />
+
       <div className="m-4 max-w-6xl flex flex-col justify-center items-center ">
         <div>
           <p className="text-xs text-gray-400">Query IP: {id}</p>
@@ -120,7 +120,6 @@ const ServerDetailsPage = () => {
           </main>
         )}
         {error instanceof Error && <div>An error has occurred: {error.message}</div>}
-
         {status === "success" && (
           <main className="">
             {data && (
@@ -280,6 +279,7 @@ const ServerDetailsPage = () => {
           </main>
         )}
       </div>
+      <ToastContainer autoClose={10000} />
     </BodyWrapper>
   );
 };
