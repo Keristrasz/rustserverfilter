@@ -38,7 +38,7 @@ const nextConfig = {
           {
             key: "Content-Security-Policy",
             value:
-              "default-src 'self'; style-src https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self'; script-src 'self' https://vercel.live; connect-src 'self' https://realm.mongodb.com https://vitals.vercel-insights.com/;",
+              "default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self'; script-src 'self' https://vercel.live; connect-src 'self' https://realm.mongodb.com https://vitals.vercel-insights.com/;",
           },
           // Site cannot be loaded as iframe (like yb videos) in any other website
           {
