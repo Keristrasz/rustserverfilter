@@ -15,8 +15,8 @@ import { LocationData } from "@/utils/typesTypescript";
 import Head from "next/head";
 import { userLocationType } from "@/utils/typesTypescript";
 import ServerGraphs from "@/components/ServerGraphs";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 const ServerDetailsPage = () => {
   const router = useRouter();
@@ -46,7 +46,7 @@ const ServerDetailsPage = () => {
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
-        toast.success("Copied!");
+        // toast.success("Copied!");
       })
       .catch((error) => {
         console.log("Copy failed:", error);
@@ -98,7 +98,7 @@ const ServerDetailsPage = () => {
         <meta property="og:url" content="https://rustserverfilter.com/" />
         <link rel="icon" href="/logo-smallest.png" />
       </Head>
-      <ToastContainer position="bottom-left" autoClose={10000} />
+      {/* <ToastContainer position="bottom-left" autoClose={10000} /> */}
       <div className="m-4 max-w-6xl flex flex-col justify-center items-center ">
         <div>
           <p className="text-xs text-gray-400">Query IP: {id}</p>

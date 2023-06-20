@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { userLocationType } from "../utils/typesTypescript";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 type SetUserLocation = React.Dispatch<React.SetStateAction<userLocationType | null>>;
 
