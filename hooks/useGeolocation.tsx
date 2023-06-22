@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { userLocationType } from "../utils/typesTypescript";
-import { FilterType } from "../utils/typesTypescript";
 
 type SetUserLocation = React.Dispatch<React.SetStateAction<userLocationType | null>>;
 
@@ -10,7 +9,7 @@ const useGeolocation = (
   didPromptForUserLocationShow?: Boolean
 ) => {
   useEffect(() => {
-    if (navigator.geolocation && !userLocation) {
+    if (didPromptForUserLocationShow && navigator.geolocation && !userLocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           let { latitude, longitude } = position.coords;
