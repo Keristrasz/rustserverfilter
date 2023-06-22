@@ -18,23 +18,22 @@ import { toast } from "react-toastify";
 import useQueryLocation from "@/hooks/useQueryLocation";
 
 const ServerDetailsPage = () => {
-  // let isMobile = false;
-  // let chartWidth = 518;
-  // let chartHeight = 362;
+  // // let isMobile = false;
+  // // let chartWidth = 518;
+  // // let chartHeight = 362;
 
-  const MOBILE_WIDTH_THRESHOLD = 600; // Adjust the threshold as needed
-  let isMobile =
-    typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
-  console.log(isMobile);
-  // if (isMobile) {
-  //   // chartHeight = 362;
-  //   // chartWidth = 318;
-  //   chartHeight = 100;
-  //   chartWidth = 100;
-  // }
+  // const MOBILE_WIDTH_THRESHOLD = 600; // Adjust the threshold as needed
+  // let isMobile =
+  //   typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
+  // // if (isMobile) {
+  // //   // chartHeight = 362;
+  // //   // chartWidth = 318;
+  // //   chartHeight = 100;
+  // //   chartWidth = 100;
+  // // }
 
-  let chartWidth = isMobile ? 318 : 518;
-  let chartHeight = isMobile ? 362 : 362;
+  // let chartWidth = isMobile ? 318 : 518;
+  // let chartHeight = isMobile ? 362 : 362;
 
   const router = useRouter();
   const { id } = router.query;
@@ -157,7 +156,7 @@ const ServerDetailsPage = () => {
               {Array.from({ length: 4 }).map((_, index) => (
                 <div
                   key={index}
-                  className={`flex justify-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 h-[${chartHeight}px] w-[${chartWidth}px] `}
+                  className={`flex justify-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 h-[${362}px] w-[${518}px] `}
                 >
                   <div className="bg-zinc-600 animate-pulse rounded-md w-[85%] h-[85%]"></div>
                 </div>
