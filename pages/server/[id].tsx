@@ -156,7 +156,9 @@ const ServerDetailsPage = () => {
               {Array.from({ length: 4 }).map((_, index) => (
                 <div
                   key={index}
-                  className={`flex justify-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 h-[${362}px] w-[${518}px] `}
+                  className={
+                    "flex justify-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 h-[362px] w-[518px]"
+                  }
                 >
                   <div className="bg-zinc-600 animate-pulse rounded-md w-[85%] h-[85%]"></div>
                 </div>
