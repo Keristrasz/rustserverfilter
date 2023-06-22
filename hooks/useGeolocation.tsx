@@ -9,6 +9,7 @@ const useGeolocation = (
   didPromptForUserLocationShow?: Boolean
 ) => {
   useEffect(() => {
+    console.log(didPromptForUserLocationShow);
     if (didPromptForUserLocationShow && navigator.geolocation && !userLocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
