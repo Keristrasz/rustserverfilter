@@ -74,7 +74,7 @@ interface HomeProps {
 }
 
 function Home({ initialData }: HomeProps) {
-  let didPromptForUserLocationShow = false;
+  const [didPromptForUserLocationShow, setDidPromptForUserLocationShow] = useState(false);
   console.log(didPromptForUserLocationShow);
 
   const app = useUserAuth();
@@ -133,7 +133,7 @@ function Home({ initialData }: HomeProps) {
         filter={filter}
         sorter={sorter}
         isSSG={isSSG}
-        didPromptForUserLocationShow={didPromptForUserLocationShow}
+        setDidPromptForUserLocationShow={setDidPromptForUserLocationShow}
       />
       <ResultsTable
         app={app}

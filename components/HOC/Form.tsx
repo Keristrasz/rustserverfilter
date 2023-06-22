@@ -15,7 +15,7 @@ type FormProps = {
   filter: FilterType;
   sorter: SorterType;
   isSSG: Boolean;
-  didPromptForUserLocationShow: Boolean;
+  setDidPromptForUserLocationShow: (value: boolean) => void;
 };
 
 // Helper function to get data from local storage
@@ -42,7 +42,7 @@ const Form: React.FC<FormProps> = ({
   filter,
   sorter,
   isSSG,
-  didPromptForUserLocationShow,
+  setDidPromptForUserLocationShow,
 }) => {
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
@@ -131,7 +131,7 @@ const Form: React.FC<FormProps> = ({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    didPromptForUserLocationShow = true;
+    setDidPromptForUserLocationShow(true);
     setButtonsDisabled(true);
     if (!userLocation && !didLocationToastRun) {
       toast.info(
