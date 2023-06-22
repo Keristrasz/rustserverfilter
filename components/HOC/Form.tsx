@@ -15,7 +15,6 @@ type FormProps = {
   filter: FilterType;
   sorter: SorterType;
   isSSG: Boolean;
-  setDidPromptForUserLocationShow: (value: boolean) => void;
 };
 
 // Helper function to get data from local storage
@@ -42,7 +41,6 @@ const Form: React.FC<FormProps> = ({
   filter,
   sorter,
   isSSG,
-  setDidPromptForUserLocationShow,
 }) => {
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
@@ -53,19 +51,27 @@ const Form: React.FC<FormProps> = ({
 
   const [includedCountries, setIncludedCountries] = useState<string[]>([]);
 
-  const [minSize, setMinSize] = useState<number | string>(getFromLocalStorage("minSize", ""));
-  const [maxSize, setMaxSize] = useState<number | string>(getFromLocalStorage("maxSize", ""));
+  const [minSize, setMinSize] = useState<number | string>(
+    getFromLocalStorage("minSize", "")
+  );
+  const [maxSize, setMaxSize] = useState<number | string>(
+    getFromLocalStorage("maxSize", "")
+  );
   const [minPlayers, setMinPlayers] = useState<number | string>(
     getFromLocalStorage("minPlayers", "")
   );
   const [maxPlayers, setMaxPlayers] = useState<number | string>(
     getFromLocalStorage("maxPlayers", "")
   );
-  const [searchName, setSearchName] = useState<string>(getFromLocalStorage("searchName", ""));
+  const [searchName, setSearchName] = useState<string>(
+    getFromLocalStorage("searchName", "")
+  );
   const [maxGroupSize, setMaxGroupSize] = useState<number[]>(
     getFromLocalStorage("maxGroupSize", [])
   );
-  const [minRank, setMinRank] = useState<number | string>(getFromLocalStorage("minRank", ""));
+  const [minRank, setMinRank] = useState<number | string>(
+    getFromLocalStorage("minRank", "")
+  );
   const [maxDistance, setMaxDistance] = useState<number | string>(
     getFromLocalStorage("maxDistance", "")
   );
@@ -131,15 +137,12 @@ const Form: React.FC<FormProps> = ({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setDidPromptForUserLocationShow(true);
     setButtonsDisabled(true);
     if (!userLocation && !didLocationToastRun) {
-      toast.info(
-        "To see Distance from Rust servers, please allow browser to access your location."
-      );
+      toast.info("Can not retrieve your location! Distance will not show correctly");
     } else if (!userLocation && maxDistance) {
       toast.info(
-        "You are trying to search by Server distance, but you did not allow browser to access your location."
+        "You are trying to search by Server distance, but we could not retrieve your location! Distance will not show correctly"
       );
     }
     didLocationToastRun = true;
@@ -209,7 +212,10 @@ const Form: React.FC<FormProps> = ({
       >
         <div className="flex flex-wrap items-center justify-start">
           <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0">
-            <label htmlFor="search" className="block text-gray-200 font-semibold text-lg my-1">
+            <label
+              htmlFor="search"
+              className="block text-gray-200 font-semibold text-lg my-1"
+            >
               Search by name
             </label>
             <input
@@ -325,7 +331,9 @@ const Form: React.FC<FormProps> = ({
         </div>
         <div>
           <fieldset className="mt-4">
-            <legend className="block text-gray-200 font-semibold text-lg mb-2">RATES</legend>
+            <legend className="block text-gray-200 font-semibold text-lg mb-2">
+              RATES
+            </legend>
             <div className="flex flex-wrap">
               {ratesOptions.map((option) => (
                 <div

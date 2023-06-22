@@ -6,8 +6,7 @@ import {
   QueryResponseType,
 } from "../utils/typesTypescript";
 import useUserAuth from "../hooks/useUserAuth";
-import useGeolocation from "@/hooks/useGeolocation";
-
+import useQueryLocation from "@/hooks/useQueryLocation";
 import ResultsTable from "@/components/HOC/ResultsTable";
 import Form from "@/components/HOC/Form";
 import BodyWrapper from "@/components/layout/BodyWrapper";
@@ -74,9 +73,6 @@ interface HomeProps {
 }
 
 function Home({ initialData }: HomeProps) {
-  const [didPromptForUserLocationShow, setDidPromptForUserLocationShow] = useState(false);
-  console.log(didPromptForUserLocationShow);
-
   const app = useUserAuth();
 
   const [sorter, setSorter] = useState<SorterType>(
@@ -96,8 +92,7 @@ function Home({ initialData }: HomeProps) {
     saveToLocalStorage("filter", filter);
   }, [filter]);
 
-  const [userLocation, setUserLocation] = useState<userLocationType | null>(null);
-  useGeolocation(userLocation, setUserLocation, didPromptForUserLocationShow);
+  const userLocation: userLocationType | null = useQueryLocation() || null;
 
   const [isSSG, setIsSSG] = useState(false);
 
@@ -108,7 +103,9 @@ function Home({ initialData }: HomeProps) {
   return (
     <BodyWrapper>
       <Head>
-        <title>Rust Server Filter | Future Wipes, Search, Sort, Find all Rust Servers</title>
+        <title>
+          Rust Server Filter | Future Wipes, Search, Sort, Find all Rust Servers
+        </title>
         <meta
           name="description"
           content="Find FUTURE WIPES! Filter by SOLO DUO TRIO QUAD servers. Sort by LAST WIPED server. Browse server RATES. Limit DISTANCE, MAP SIZE, number of PLAYERS. Look at player history and more!"
@@ -133,7 +130,6 @@ function Home({ initialData }: HomeProps) {
         filter={filter}
         sorter={sorter}
         isSSG={isSSG}
-        setDidPromptForUserLocationShow={setDidPromptForUserLocationShow}
       />
       <ResultsTable
         app={app}

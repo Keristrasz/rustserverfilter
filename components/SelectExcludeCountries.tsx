@@ -118,23 +118,26 @@ function SelectExcludeCountries({
           countries.map((country) => (
             <span
               key={country}
-              className="px-2 py-0 m-2 bg-rustOne text-gray-200  rounded-md flex items-center "
+              className="px-2 py-0 m-2 bg-rustOne text-gray-200 rounded-md flex items-center"
               onClick={() => handleRemoveCountry(country)}
             >
               {country} &#10005;
             </span>
           ))}
-        <input
-          type="text"
-          id="excludeCountries"
-          className="flex-grow bg-transparent focus:outline-none border-none focus:ring-0"
-          placeholder="Type country"
-          value={inputValue}
-          onChange={handleInputChange}
-          onKeyDown={handleInputKeyDown}
-          ref={inputRef}
-        />
+        <div className="flex-grow flex items-center">
+          <input
+            type="text"
+            id="excludeCountries"
+            className="bg-transparent focus:outline-none border-none focus:ring-0 w-full"
+            placeholder="Type country"
+            value={inputValue}
+            onChange={handleInputChange}
+            onKeyDown={handleInputKeyDown}
+            ref={inputRef}
+          />
+        </div>
       </div>
+
       {isOpen && (
         <div
           ref={optionsRef}
@@ -142,7 +145,10 @@ function SelectExcludeCountries({
         >
           <div className="max-h-80 overflow-auto">
             {filteredOptions.map((el: String) => (
-              <label key={String(el)} className="block px-4 py-2 cursor-pointer select-none">
+              <label
+                key={String(el)}
+                className="block px-4 py-2 cursor-pointer select-none"
+              >
                 <input
                   type="checkbox"
                   className="h-4 w-4 border-rustOne rounded focus:ring-2 focus:ring-black text-rustOne !bg-none"

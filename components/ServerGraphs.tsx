@@ -97,7 +97,7 @@ function ServerGraphs({ players_history }: { players_history: PlayersHistory }) 
     ];
 
     return (
-      <div className="flex flex-wrap justify-center my-8">
+      <article className="flex flex-wrap justify-center my-8">
         {graphArray.map((el) => (
           <div
             key={el.heading}
@@ -140,7 +140,7 @@ function ServerGraphs({ players_history }: { players_history: PlayersHistory }) 
             </AreaChart>
           </div>
         ))}
-      </div>
+      </article>
     );
   }
   return null;

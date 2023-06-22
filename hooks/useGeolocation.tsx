@@ -5,12 +5,10 @@ type SetUserLocation = React.Dispatch<React.SetStateAction<userLocationType | nu
 
 const useGeolocation = (
   userLocation: userLocationType | null,
-  setUserLocation: SetUserLocation,
-  didPromptForUserLocationShow?: Boolean
+  setUserLocation: SetUserLocation
 ) => {
   useEffect(() => {
-    console.log(didPromptForUserLocationShow);
-    if (didPromptForUserLocationShow && navigator.geolocation && !userLocation) {
+    if (navigator.geolocation && !userLocation && !navigator.permissions) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           let { latitude, longitude } = position.coords;
@@ -20,13 +18,13 @@ const useGeolocation = (
         },
         (error) => {
           console.info(
-            "To see Distance from Rust servers, please allow browser to access your location. Info: " +
+            "To see Distance from Rust servers, please allow the browser to access your location and refresh. Info: " +
               error
           );
         }
       );
     }
-  }, [didPromptForUserLocationShow]);
+  }, []);
 
   return userLocation;
 };
