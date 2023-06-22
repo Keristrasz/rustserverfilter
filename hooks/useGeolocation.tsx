@@ -7,7 +7,7 @@ type SetUserLocation = React.Dispatch<React.SetStateAction<userLocationType | nu
 const useGeolocation = (
   userLocation: userLocationType | null,
   setUserLocation: SetUserLocation,
-  filter?: FilterType
+  didPromptForUserLocationShow?: Boolean
 ) => {
   useEffect(() => {
     if (navigator.geolocation && !userLocation) {
@@ -26,7 +26,7 @@ const useGeolocation = (
         }
       );
     }
-  }, [filter]);
+  }, [didPromptForUserLocationShow]);
 
   return userLocation;
 };

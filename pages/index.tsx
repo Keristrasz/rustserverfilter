@@ -74,7 +74,9 @@ interface HomeProps {
 }
 
 function Home({ initialData }: HomeProps) {
-  ("rerender");
+
+  let didPromptForUserLocationShow = false;
+
   const app = useUserAuth();
 
   const [sorter, setSorter] = useState<SorterType>(
@@ -95,7 +97,7 @@ function Home({ initialData }: HomeProps) {
   }, [filter]);
 
   const [userLocation, setUserLocation] = useState<userLocationType | null>(null);
-  useGeolocation(userLocation, setUserLocation, filter);
+  useGeolocation(userLocation, setUserLocation, didPromptForUserLocationShow);
 
   const [isSSG, setIsSSG] = useState(false);
 
@@ -131,6 +133,7 @@ function Home({ initialData }: HomeProps) {
         filter={filter}
         sorter={sorter}
         isSSG={isSSG}
+        didPromptForUserLocationShow={didPromptForUserLocationShow}
       />
       <ResultsTable
         app={app}

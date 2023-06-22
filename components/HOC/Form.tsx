@@ -15,6 +15,7 @@ type FormProps = {
   filter: FilterType;
   sorter: SorterType;
   isSSG: Boolean;
+  didPromptForUserLocationShow: Boolean;
 };
 
 // Helper function to get data from local storage
@@ -41,7 +42,10 @@ const Form: React.FC<FormProps> = ({
   filter,
   sorter,
   isSSG,
+  didPromptForUserLocationShow,
 }) => {
+  const [buttonsDisabled, setButtonsDisabled] = useState(false);
+
   const [wipeRotation, setWipeRotation] = useState<string[]>(
     getFromLocalStorage("wipeRotation", [])
   );
@@ -49,33 +53,23 @@ const Form: React.FC<FormProps> = ({
 
   const [includedCountries, setIncludedCountries] = useState<string[]>([]);
 
-  const [minSize, setMinSize] = useState<number | string>(
-    getFromLocalStorage("minSize", "")
-  );
-  const [maxSize, setMaxSize] = useState<number | string>(
-    getFromLocalStorage("maxSize", "")
-  );
+  const [minSize, setMinSize] = useState<number | string>(getFromLocalStorage("minSize", ""));
+  const [maxSize, setMaxSize] = useState<number | string>(getFromLocalStorage("maxSize", ""));
   const [minPlayers, setMinPlayers] = useState<number | string>(
     getFromLocalStorage("minPlayers", "")
   );
   const [maxPlayers, setMaxPlayers] = useState<number | string>(
     getFromLocalStorage("maxPlayers", "")
   );
-  const [searchName, setSearchName] = useState<string>(
-    getFromLocalStorage("searchName", "")
-  );
+  const [searchName, setSearchName] = useState<string>(getFromLocalStorage("searchName", ""));
   const [maxGroupSize, setMaxGroupSize] = useState<number[]>(
     getFromLocalStorage("maxGroupSize", [])
   );
-  const [minRank, setMinRank] = useState<number | string>(
-    getFromLocalStorage("minRank", "")
-  );
+  const [minRank, setMinRank] = useState<number | string>(getFromLocalStorage("minRank", ""));
   const [maxDistance, setMaxDistance] = useState<number | string>(
     getFromLocalStorage("maxDistance", "")
   );
   const [rate, setRate] = useState<number[]>(getFromLocalStorage("rate", []));
-
-  const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
   const updateFilter = useFilter(setFilter);
 
@@ -137,6 +131,7 @@ const Form: React.FC<FormProps> = ({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    didPromptForUserLocationShow = true;
     setButtonsDisabled(true);
     if (!userLocation && !didLocationToastRun) {
       toast.info(
@@ -171,7 +166,6 @@ const Form: React.FC<FormProps> = ({
 
   const handleResetForm = () => {
     setButtonsDisabled(true);
-
     setRate([]);
     setMinRank("");
     setMinPlayers("");
@@ -186,7 +180,6 @@ const Form: React.FC<FormProps> = ({
     setIncludedCountries([]);
     setSorter({});
     setFilter({ $and: [{ players: { $gte: 1 } }] });
-
     setTimeout(() => {
       // Enable buttons after the delay
       setButtonsDisabled(false);
@@ -216,10 +209,7 @@ const Form: React.FC<FormProps> = ({
       >
         <div className="flex flex-wrap items-center justify-start">
           <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:mt-2 sm:ml-0">
-            <label
-              htmlFor="search"
-              className="block text-gray-200 font-semibold text-lg my-1"
-            >
+            <label htmlFor="search" className="block text-gray-200 font-semibold text-lg my-1">
               Search by name
             </label>
             <input
@@ -335,9 +325,7 @@ const Form: React.FC<FormProps> = ({
         </div>
         <div>
           <fieldset className="mt-4">
-            <legend className="block text-gray-200 font-semibold text-lg mb-2">
-              RATES
-            </legend>
+            <legend className="block text-gray-200 font-semibold text-lg mb-2">RATES</legend>
             <div className="flex flex-wrap">
               {ratesOptions.map((option) => (
                 <div
@@ -397,7 +385,10 @@ const Form: React.FC<FormProps> = ({
         </div>
         <div className="flex flex-wrap w-full justify-between">
           <div className="m-0 w-1/2 xl:max-w-[32.5em]">
-            <label htmlFor="includeCountries" className="block text-gray-200 font-semibold text-lg my-1">
+            <label
+              htmlFor="includeCountries"
+              className="block text-gray-200 font-semibold text-lg my-1"
+            >
               Include Countries
             </label>
             <SelectIncludeCountries
@@ -406,7 +397,10 @@ const Form: React.FC<FormProps> = ({
             />
           </div>
           <div className="m-0 w-1/2 xl:max-w-[32.5em] xl:ml-4">
-            <label htmlFor="excludeCountries" className="block text-gray-200 font-semibold text-lg my-1">
+            <label
+              htmlFor="excludeCountries"
+              className="block text-gray-200 font-semibold text-lg my-1"
+            >
               Exclude Countries
             </label>
             <SelectExcludeCountries
