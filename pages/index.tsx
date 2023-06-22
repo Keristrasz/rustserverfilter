@@ -103,7 +103,7 @@ function Home({ initialData }: HomeProps) {
   }, [filter]);
 
   const [userLocation, setUserLocation] = useState<userLocationType | null>(null);
-  useGeolocation(userLocation, setUserLocation);
+  useGeolocation(userLocation, setUserLocation, filter);
 
   const [isSSG, setIsSSG] = useState(false);
 

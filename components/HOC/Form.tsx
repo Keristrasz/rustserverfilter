@@ -4,6 +4,9 @@ import SelectIncludeCountries from "../SelectIncludeCountries";
 import SelectExcludeCountries from "../SelectExcludeCountries";
 import useFilter from "@/hooks/useFilter";
 import { userLocationType, SorterType, FilterType } from "../../utils/typesTypescript";
+import { toast } from "react-toastify";
+
+let didLocationToastRun = false;
 
 type FormProps = {
   userLocation: userLocationType | null;
@@ -127,6 +130,16 @@ const Form: React.FC<FormProps> = ({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setButtonsDisabled(true);
+    if (!userLocation && !didLocationToastRun) {
+      toast.info(
+        "To see Distance from Rust servers, please allow browser to access your location."
+      );
+    } else if (!userLocation && maxDistance) {
+      toast.info(
+        "You are trying to search by Server distance, but you did not allow browser to access your location."
+      );
+    }
+    didLocationToastRun = true;
     updateFilter(
       minRank,
       wipeRotation,

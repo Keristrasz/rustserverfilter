@@ -183,9 +183,8 @@ const ServerDetailsPage = () => {
                                 data.rules?.location?.longitude,
                                 userLocation.latitude,
                                 userLocation.longitude
-                              )
-                            : null}{" "}
-                          km
+                              ) + " km"
+                            : "Allow geolocation"}{" "}
                         </p>
                         {serverLocationData?.region && (
                           <p className="text-gray-400">Region: {serverLocationData.region}</p>

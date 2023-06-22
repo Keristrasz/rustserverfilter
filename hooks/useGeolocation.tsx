@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { userLocationType } from "../utils/typesTypescript";
+import { FilterType } from "../utils/typesTypescript";
 
 type SetUserLocation = React.Dispatch<React.SetStateAction<userLocationType | null>>;
 
 const useGeolocation = (
   userLocation: userLocationType | null,
-  setUserLocation: SetUserLocation
+  setUserLocation: SetUserLocation,
+  filter?: FilterType
 ) => {
   useEffect(() => {
     if (navigator.geolocation && !userLocation) {
@@ -17,11 +19,14 @@ const useGeolocation = (
           setUserLocation({ latitude, longitude });
         },
         (error) => {
-          console.error("Error retrieving location:", error);
+          console.info(
+            "To see Distance from Rust servers, please allow browser to access your location. Info: " +
+              error
+          );
         }
       );
     }
-  }, []);
+  }, [filter]);
 
   return userLocation;
 };
