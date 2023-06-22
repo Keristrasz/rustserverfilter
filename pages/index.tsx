@@ -74,8 +74,8 @@ interface HomeProps {
 }
 
 function Home({ initialData }: HomeProps) {
-
   let didPromptForUserLocationShow = false;
+  console.log(didPromptForUserLocationShow);
 
   const app = useUserAuth();
 
