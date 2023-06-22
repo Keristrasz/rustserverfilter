@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { userLocationType } from "../utils/typesTypescript";
-import { toast } from "react-toastify";
+import { FilterType } from "../utils/typesTypescript";
 
 type SetUserLocation = React.Dispatch<React.SetStateAction<userLocationType | null>>;
 
 const useGeolocation = (
   userLocation: userLocationType | null,
-  setUserLocation: SetUserLocation
+  setUserLocation: SetUserLocation,
+  filter?: FilterType
 ) => {
   useEffect(() => {
     if (navigator.geolocation && !userLocation) {
@@ -18,14 +19,14 @@ const useGeolocation = (
           setUserLocation({ latitude, longitude });
         },
         (error) => {
-          console.error("Error retrieving location:", error);
-          toast.error(
-            "Error retrieving location. Allow geolocation and refresh the site, if you want to see or filter your distance from rust servers."
+          console.info(
+            "To see Distance from Rust servers, please allow browser to access your location. Info: " +
+              error
           );
         }
       );
     }
-  }, []);
+  }, [filter]);
 
   return userLocation;
 };
