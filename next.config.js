@@ -47,11 +47,11 @@ const nextConfig = {
               "camera=(), geolocation=(), microphone=(), payment=(), gyroscope=(), magnetometer=()",
           },
           // Ouudated Permissions Policy but maybe supported by old browsers
-          {
-            key: "Feature-Policy",
-            value:
-              "camera 'none'; geolocation 'none'; microphone 'none'; payment 'none'; gyroscope 'none'; magnetometer 'none'",
-          },
+          // {
+          //   key: "Feature-Policy",
+          //   value:
+          //     "camera 'none'; geolocation 'none'; microphone 'none'; payment 'none'; gyroscope 'none'; magnetometer 'none'",
+          // },
           // Protection for older browsers
           {
             key: "X-XSS-Protection",
