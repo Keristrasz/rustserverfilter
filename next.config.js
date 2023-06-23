@@ -46,6 +46,12 @@ const nextConfig = {
             value:
               "camera=(), geolocation=(), microphone=(), payment=(), gyroscope=(), magnetometer=()",
           },
+          // Allows only geolocation usage
+          {
+            key: "Feature-Policy",
+            value:
+              "camera 'none'; geolocation 'none'; microphone 'none'; payment 'none'; gyroscope 'none'; magnetometer 'none'",
+          },
           // Protection for older browsers
           {
             key: "X-XSS-Protection",
