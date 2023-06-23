@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import useSorter from "@/hooks/useSorter";
 import { FilterType, SorterType } from "@/utils/typesTypescript";
 
@@ -33,7 +33,7 @@ const THead: React.FC<THeadProps> = ({
           let sortColorClass = "";
 
           if (isSSG && sorter[column.value] === 1) {
-            sortColorClass = "bg-red-900";
+            sortColorClass = "bg-green-800";
             ("Arrow up");
           } else if (isSSG && sorter[column.value] === -1) {
             sortColorClass = "bg-green-900";
@@ -44,9 +44,9 @@ const THead: React.FC<THeadProps> = ({
             <th
               onClick={() => updateSorter(column.value)}
               key={column.value}
-              className={`text-xs px-2 py-2 h-8 text-left font-semibold text-green-400 uppercase tracking-tight hover:cursor-pointer ${column.styles} ${sortColorClass}`}
+              className={`text-xs px-2 py-2 h-8 text-left font-semibold text-green-400 uppercase tracking-tight hover:cursor-pointer hover:text-white ${column.styles} ${sortColorClass}`}
             >
-              <span className="flex items-center">
+              <span className="flex items-center ">
                 {column.name}
                 {isSSG && sorter[column.value] === 1 && (
                   <span className="text-2xl text-green-400 ml-0 mb-2">↑</span>
@@ -59,7 +59,7 @@ const THead: React.FC<THeadProps> = ({
           ) : (
             <th
               key={column.value}
-              className={`text-xs px-2 py-2 h-8 text-left font-semibold text-gray-200 uppercase tracking-tight ${column.styles}`}
+              className={`text-xs px-2 py-2 h-8 text-left font-semibold text-gray-200 uppercase tracking-tight  ${column.styles}`}
             >
               {column.name}
             </th>

@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "rust";
+  src: url("../public/fonts/rustfont.ttf");
+}
+
 :root {
   /* height: 100%; */
   background-color: #363636;
