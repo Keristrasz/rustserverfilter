@@ -40,13 +40,13 @@ const nextConfig = {
             key: "Referrer-Policy",
             value: "strict-origin-when-cross-origin",
           },
-          // Allows only geolocation usage
+          // Disallow permissons
           {
             key: "Permissions-Policy",
             value:
               "camera=(), geolocation=(), microphone=(), payment=(), gyroscope=(), magnetometer=()",
           },
-          // Allows only geolocation usage
+          // Ouudated Permissions Policy but maybe supported by old browsers
           {
             key: "Feature-Policy",
             value:
