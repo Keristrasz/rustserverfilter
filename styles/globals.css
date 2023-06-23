@@ -6,7 +6,7 @@
 
 @font-face {
   font-family: "rust";
-  src: url("../public/fonts/rustfont.ttf");
+  src: url("/fonts/rustfont.ttf") format("truetype");
 }
 
 :root {

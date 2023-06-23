@@ -1,4 +1,5 @@
 /\*_ @type {import('next').NextConfig} _/;
+const path = require("path");
 const nextConfig = {
   reactStrictMode: false,
   // Makes async headers not working
@@ -9,6 +10,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+
   async headers() {
     return [
       {
@@ -65,6 +67,19 @@ const nextConfig = {
         ],
       },
     ];
+  },
+  webpack: (config, { isServer }) => {
+    // Add the file-loader rule
+    config.module.rules.push({
+      test: /\.(woff|woff2|eot|ttf|otf)$/i,
+      type: "asset/resource",
+      include: path.resolve(__dirname, "public/fonts"),
+      generator: {
+        filename: "fonts/[name].[hash][ext]",
+      },
+    });
+
+    return config;
   },
 };
 
