@@ -121,7 +121,7 @@ function Home({ initialData }: HomeProps) {
         />
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content="https://rustserverfilter.com/" />
-        <link rel="icon" href="/logo-smallest.png" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Form
         userLocation={userLocation}
