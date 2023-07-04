@@ -115,7 +115,15 @@ const ServerDetailsPage = () => {
         />
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content="https://rustserverfilter.com/" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome.png" />
+        <link
+          rel="apple-touch-icon"
+          type="image/png"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link rel="manifest" href="/manifest.json" />
       </Head>
 
       <div className="m-4 max-w-6xl flex flex-col justify-center items-center ">

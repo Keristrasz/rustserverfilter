@@ -103,25 +103,31 @@ function Home({ initialData }: HomeProps) {
   return (
     <BodyWrapper>
       <Head>
-        <title>
-          Rust Server Filter | Future Wipes, Search, Sort, Find all Rust Servers
-        </title>
+        <title>Best Rust Servers | Future Wipes, Solo, Duo, Trio filter list</title>
         <meta
           name="description"
-          content="Find FUTURE WIPES! Filter by SOLO DUO TRIO QUAD servers. Sort by LAST WIPED server. Browse server RATES. Limit DISTANCE, MAP SIZE, number of PLAYERS. Look at player history and more!"
+          content="Discover FUTURE WIPES! Filter SOLO DUO TRIO QUAD servers. Search rates 2x, 3x, 5x. Find Rustoria, Rusty Moose, Rustafied, Rusticated, Stevious, Survivors, RustReborn, Reddit, Repulsion, Facepunch, Werewolf and more!"
           key="desc"
         />
         <meta
           property="og:title"
-          content="Rust Server Filter | Future Wipes, Search, Sort, Find all Rust Servers"
+          content="Best Rust Servers | Future Wipes, Solo, Duo, Trio filter list"
         />
         <meta
           property="og:description"
-          content="Find FUTURE WIPES! Filter by SOLO DUO TRIO QUAD servers. Sort by LAST WIPED server. Browse server RATES. Limit DISTANCE, MAP SIZE, number of PLAYERS. Look at player history and more!"
+          content="Discover FUTURE WIPES! Filter SOLO DUO TRIO QUAD servers. Search rates 2x, 3x, 5x. Find Rustoria, Rusty Moose, Rustafied, Rusticated, Stevious, Survivors, RustReborn, Reddit, Repulsion, Facepunch, Werewolf and more!"
         />
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content="https://rustserverfilter.com/" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome.png" />
+        <link
+          rel="apple-touch-icon"
+          type="image/png"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link rel="manifest" href="/manifest.json" />
       </Head>
       <Form
         userLocation={userLocation}
