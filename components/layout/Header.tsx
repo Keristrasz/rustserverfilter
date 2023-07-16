@@ -13,13 +13,31 @@ function Header() {
           </h3>
         </div>
       </Link>
-      <Link
-        href="/"
-        className="hidden text-gray-200 text-center font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all cursor-pointer hover:text-white
+      <div>
+        <Link
+          href="/"
+          className="hidden text-gray-200 font-rust tracking-[0.100rem] text-center px-1 mx-4 rounded sm:w-30 text-lg transition-all cursor-pointer hover:text-white
           md:block"
-      >
-        Home
-      </Link>
+        >
+          HOME
+        </Link>
+        <Link
+          href="/FAQ"
+          className="hidden text-gray-200 font-rust tracking-[0.100rem] text-center px-1 mx-4 rounded sm:w-30 text-lg transition-all cursor-pointer hover:text-white
+          md:block"
+        >
+          FAQ
+        </Link>
+        <Link
+          href="https://discord.gg/D6hF8hhBFj"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden text-gray-200 font-rust tracking-[0.100rem] text-center px-1 mx-4 rounded sm:w-30 text-lg transition-all cursor-pointer hover:text-white
+          md:block"
+        >
+          DISCORD
+        </Link>
+      </div>
     </header>
   );
 }

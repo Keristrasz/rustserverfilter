@@ -16,49 +16,93 @@ import { InfiniteData } from "@tanstack/react-query";
 import Link from "next/link";
 
 const columnDataForMonitor = [
-  { isClickable: true, styles: "w-1/12", name: "Score", value: "rank" },
-  { isClickable: false, styles: "w-6/12", name: "Name", value: "name" },
-  { isClickable: true, styles: "w-1/12", name: "Players", value: "players" },
-  { isClickable: true, styles: "w-2/12", name: "Next Wipe", value: "born_next" },
-  { isClickable: true, styles: "w-2/12", name: "Last Wipe", value: "born" },
-  { isClickable: true, styles: "w-1/12", name: "Rate", value: "rate" },
-  { isClickable: true, styles: "w-1/12", name: "Group size", value: "max_group_size" },
   {
+    tooltip: "If server has at least one player online, one point is added every update",
+    isClickable: true,
+    styles: "w-1/12",
+    name: "SCORE",
+    value: "rank",
+  },
+  { isClickable: false, styles: "w-6/12", name: "NAME", value: "name" },
+  {
+    tooltip: "Current players online",
+    isClickable: true,
+    styles: "w-1/12",
+    name: "PLAYERS",
+    value: "players",
+  },
+  {
+    tooltip:
+      "Estimate of next wipe if needed data are provided. You can find more in FAQ",
+    isClickable: true,
+    styles: "w-2/12",
+    name: "NEXT WIPE",
+    value: "born_next",
+  },
+  {
+    tooltip: "Last wipe. Click for sorting in ascending or descending order",
+    isClickable: true,
+    styles: "w-2/12",
+    name: "LAST WIPE",
+    value: "born",
+  },
+  {
+    tooltip: "Rate of server according to its title",
+    isClickable: true,
+    styles: "w-1/12",
+    name: "RATE",
+    value: "rate",
+  },
+  {
+    tooltip: "Group size of server according to its title",
+    isClickable: true,
+    styles: "w-1/12",
+    name: "GROUP SIZE",
+    value: "max_group_size",
+  },
+  {
+    tooltip: "",
     isClickable: false,
     styles: "w-2/12",
-    name: "Country",
+    name: "COUNTRY",
     value: "rules.location.country",
   },
   {
+    tooltip: "Distance of server from your location in km",
     isClickable: false,
     styles: "w-1/12",
-    name: "Distance",
+    name: "DISTANCE",
     value: "rules.location.longitude",
   },
 ];
 const columnDataForMonitorForMobile = [
   {
+    tooltip: "",
     isClickable: false,
     styles: "w-7/12 text-[0.675rem] p-0",
-    name: "Name",
+    name: "NAME",
     value: "name",
   },
   {
+    tooltip: "Current players online",
     isClickable: true,
     styles: "w-2/12 text-[0.675rem]",
-    name: "Plrs",
+    name: "PLRS",
     value: "players",
   },
   {
+    tooltip:
+      "Estimate of next wipe if needed data are provided. You can find more in FAQ",
     isClickable: true,
     styles: "w-3/12 text-[0.675rem]",
-    name: "Next Wipe",
+    name: "NEXT WIPE",
     value: "born_next",
   },
   {
+    tooltip: "Last wipe. Click for sorting in ascending or descending order",
     isClickable: true,
     styles: "w-3/12 text-[0.675rem] p-0",
-    name: "Last Wipe",
+    name: "LAST WIPE",
     value: "born",
   },
 ];
@@ -81,6 +125,7 @@ interface columnDataForMonitorType {
   styles: string;
   name: string;
   value: string;
+  tooltip?: string;
 }
 
 //@ts-ignore

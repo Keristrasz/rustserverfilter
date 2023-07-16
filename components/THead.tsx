@@ -7,6 +7,7 @@ interface ColumnData {
   styles: string;
   name: string;
   value: string;
+  tooltip?: string;
 }
 
 interface THeadProps {
@@ -44,24 +45,36 @@ const THead: React.FC<THeadProps> = ({
             <th
               onClick={() => updateSorter(column.value)}
               key={column.value}
-              className={`text-xs px-2 py-2 h-8 text-left font-semibold text-green-400 uppercase tracking-tight hover:cursor-pointer hover:text-white ${column.styles} ${sortColorClass}`}
+              className={`group relative text-xs px-2 py-2 h-8 text-left font-semibold text-green-400 tracking-tight hover:cursor-pointer transition hover:text-white ${column.styles} ${sortColorClass}`}
             >
-              <span className="flex items-center ">
+              <span className="flex items-center   hover-trigger group-hover:opacity-100 relative z-10">
+                {/* Value */}
                 {column.name}
+                {/* Arrow */}
                 {isSSG && sorter[column.value] === 1 && (
                   <span className="text-2xl text-green-400 ml-0 mb-2">↑</span>
                 )}
                 {isSSG && sorter[column.value] === -1 && (
                   <span className="text-2xl text-green-400 ml-0 mb-2">↓</span>
                 )}
+                {column.tooltip && (
+                  <div className="text-gray-800 w-32 target-element invisible group-hover:visible transition-opacity absolute bg-white border border-gray-300 rounded p-2 mb-32 z-20">
+                    {column.tooltip}
+                  </div>
+                )}
               </span>
             </th>
           ) : (
             <th
               key={column.value}
-              className={`text-xs px-2 py-2 h-8 text-left font-semibold text-gray-200 uppercase tracking-tight  ${column.styles}`}
+              className={`group text-xs px-2 py-2 h-8 text-left font-semibold text-gray-200 tracking-tight  ${column.styles}`}
             >
               {column.name}
+              {column.tooltip && (
+                <div className="text-gray-800 target-element invisible group-hover:visible transition-opacity absolute bg-white border border-gray-300 rounded p-2 mb-32 z-20">
+                  {column.tooltip}
+                </div>
+              )}
             </th>
           );
         })}
