@@ -16,7 +16,7 @@ const FAQ = () => {
     {
       question: "How is SCORE determined?",
       answer:
-        "Every time server response to a call for information update, 0.01 point is added, if it does not response 0.01 point is subtracted. Servers are updated hundreds times per week",
+        "Every time server response to a call for information update, 1 point is added, if it does not response 1 point is subtracted. Servers are updated hundreds times per week",
     },
     {
       question: "How often are server data updated?",
@@ -40,7 +40,7 @@ const FAQ = () => {
             <p className="text-gray-200">{faq.answer}</p>
           </div>
         ))}
-        <h3 className="text-gray-400 text-center font-semibold text-xl">
+        <h3 className="text-gray-400 text-center font-semibold text-xl mb-4">
           Do you have specific question? Join discord and ask!
         </h3>
       </div>
