@@ -128,6 +128,7 @@ function Home({ initialData }: HomeProps) {
           href="/apple-touch-icon.png"
         />
         <link rel="manifest" href="/manifest.json" />
+        <link rel="canonical" href="https://rustserverfilter.com" />
       </Head>
       <Form
         userLocation={userLocation}

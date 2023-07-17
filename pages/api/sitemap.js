@@ -1,8 +1,6 @@
 import { getApp, Credentials } from "realm-web";
 import { fetchAllServers } from "../../utils/fetchAllServers"
 
-
-
 export default async function handler(req, res) {
   res.statusCode = 200
   res.setHeader('Content-Type', 'text/xml')
