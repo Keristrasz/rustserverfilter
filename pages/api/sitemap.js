@@ -1,7 +1,14 @@
 import { getApp, Credentials } from "realm-web";
 import { fetchAllServers } from "../../utils/fetchAllServers"
 
+
+
 export default async function handler(req, res) {
+  res.statusCode = 200
+  res.setHeader('Content-Type', 'text/xml')
+    
+  // Instructing the Vercel edge to cache the file
+  res.setHeader('Cache-control', 'stale-while-revalidate, s-maxage=3600')
   // Fetch initialSorter and initialFilter from an API or any other initialData source
   const initialSorter = { players: -1 };
   const initialFilter = {
