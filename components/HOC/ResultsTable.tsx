@@ -218,12 +218,12 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
     isLoadingStatus = (
       <div className="flex flex-wrap mt-4 items-center">
         <Spinner />
-        <h2 className="text-2xl font-bold mx-1 text-gray-200"> Loading results...</h2>
+        <p className="text-2xl font-bold mx-1 text-gray-200"> Loading results...</p>
       </div>
     );
   } else {
     isLoadingStatus = (
-      <h2 className="text-2xl font-bold mx-2 mt-4 text-gray-200"> Results loaded</h2>
+      <p className="text-2xl font-bold mx-2 mt-4 text-gray-200"> Results loaded</p>
     );
   }
 

@@ -107,7 +107,7 @@ function Home({ initialData }: HomeProps) {
         <meta property="og:locale" content="en_US" />
         <meta
           name="description"
-          content="Discover FUTURE WIPES! Filter SOLO DUO TRIO QUAD servers. Search rates 2x, 3x, 5x. Find Rustoria, Rusty Moose, Rustafied, Rusticated, Stevious, Survivors, RustReborn, Reddit, Repulsion, Facepunch, Werewolf and more!"
+          content="Discover FUTURE WIPES! Filter SOLO DUO TRIO QUAD servers. Search rates 2x, 3x, 5x. Find best rust servers by advanced filtering, last wipe, distance and more!"
           key="desc"
         />
         <meta
@@ -116,7 +116,7 @@ function Home({ initialData }: HomeProps) {
         />
         <meta
           property="og:description"
-          content="Discover FUTURE WIPES! Filter SOLO DUO TRIO QUAD servers. Search rates 2x, 3x, 5x. Find Rustoria, Rusty Moose, Rustafied, Rusticated, Stevious, Survivors, RustReborn, Reddit, Repulsion, Facepunch, Werewolf and more!"
+          content="Discover FUTURE WIPES! Filter SOLO DUO TRIO QUAD servers. Search rates 2x, 3x, 5x. Find best rust servers by advanced filtering, last wipe, distance and more!"
         />
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content="https://rustserverfilter.com/" />
