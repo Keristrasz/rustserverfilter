@@ -80,7 +80,7 @@ function Home({ initialData }: HomeProps) {
   );
   const [filter, setFilter] = useState<FilterType>(
     getFromLocalStorage("filter", {
-      // $and: [{ players: { $gte: 1 } }],
+      $and: [{ players: { $gte: 0 } }],
     })
   );
 

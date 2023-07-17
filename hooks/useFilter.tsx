@@ -20,7 +20,7 @@ const useFilter = (setFilter: Dispatch<SetStateAction<FilterType>>): UseFilterHo
     let newFilter: FilterType = {
       $and: [
         {
-          // players: { $gte: 1 }
+          players: { $gte: 0 },
         },
       ],
     };

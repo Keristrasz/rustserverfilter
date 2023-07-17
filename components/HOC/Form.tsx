@@ -177,7 +177,7 @@ const Form: React.FC<FormProps> = ({
     setFilter({
       $and: [
         {
-          // players: { $gte: 1 }
+          players: { $gte: 0 },
         },
       ],
     });

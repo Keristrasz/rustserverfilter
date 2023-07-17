@@ -32,15 +32,15 @@ const FAQ = () => {
   return (
     <BodyWrapper>
       <h1 className="text-xs mt-4 text-gray-400">Frequently asked questions</h1>
-      <div className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 m-4 mt-4 max-w-5xl border border-black">
+      <div className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 m-4 max-w-4xl border border-black">
         <h3 className="text-gray-300 text-center font-semibold text-2xl mb-2">FAQ</h3>
         {faqData.map((faq, index) => (
           <div key={index} className="mb-6">
-            <h2 className="text-gray-300 text-lg mb-2">{faq.question}</h2>
+            <h2 className="text-gray-400 font-semibold text-lg mb-2">{faq.question}</h2>
             <p className="text-gray-200">{faq.answer}</p>
           </div>
         ))}
-        <h3 className="text-gray-300 text-center font-semibold text-xl">
+        <h3 className="text-gray-400 text-center font-semibold text-xl">
           Do you have specific question? Join discord and ask!
         </h3>
       </div>
