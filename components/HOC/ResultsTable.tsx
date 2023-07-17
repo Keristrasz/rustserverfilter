@@ -18,7 +18,7 @@ import Link from "next/link";
 const columnDataForMonitor = [
   {
     tooltip:
-      "If server answers to update call, 1 point added, or 1 point is substracted if it does not",
+      "If server answers to update call, 1 point added, or 1 point is subtracted if it does not",
     isClickable: true,
     styles: "w-1/12",
     name: "SCORE",

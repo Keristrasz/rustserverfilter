@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   };
 
   const appId = "application-0-pcbqz";
-  const app = getApp(appId);
+  const app = getApp(appId);  
 
   if (app && !app.currentUser) {
     const anonymousUser = Credentials.anonymous();
