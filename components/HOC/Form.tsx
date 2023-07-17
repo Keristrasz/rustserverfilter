@@ -598,7 +598,9 @@ const Form: React.FC<FormProps> = ({
           type="button"
           disabled={buttonsDisabled}
           onClick={toggleExpansion}
-          className={`bg-green-600 border border-black text-gray-200 font-semibold py-2 px-2 m-2 rounded text-sm transition-all cursor-pointer hover:bg-zinc-900 sm:absolute sm:mb-0 sm:right-[-7px]`}
+          className={
+            "bg-green-600 border border-black text-gray-200 font-semibold py-2 px-2 m-2 rounded text-sm transition-all cursor-pointer hover:bg-zinc-900 sm:absolute sm:mb-0 sm:right-[-7px] animate-bounce"
+          }
         >
           Expand
         </button>

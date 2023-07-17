@@ -16,11 +16,16 @@ const FAQ = () => {
     {
       question: "How is SCORE determined?",
       answer:
-        "Every time server response to a call for information update, 1 point is added, if it does not response 1 point is subtracted. Servers are updated hundreds times per week",
+        "Every time server answers to a call for information update, 1 point is added, if it does not answer 1 point is subtracted. Servers are updated hundreds times per week",
     },
     {
       question: "How often are server data updated?",
       answer: "Server data are updated several times per hour, depending on server popularity",
+    },
+    {
+      question: "What is the recommended way to search for servers?",
+      answer:
+        "Use score to filter not stable servers (at least 500+). Always look at player history to see how many people were playing on the server, be careful these information can be faked and there is a lot of fake servers. You can filter some of them by exluding countries with a lot of fake servers (for some reason a lot of fake servers are in Russia).",
     },
     {
       question: "How do you sort or use advanced filter?",
@@ -40,7 +45,7 @@ const FAQ = () => {
             <p className="text-gray-200">{faq.answer}</p>
           </div>
         ))}
-        <h3 className="text-gray-400 text-center font-semibold text-xl mb-4">
+        <h3 className="text-gray-400 text-center font-semibold text-xl mb-2">
           Do you have specific question? Join discord and ask!
         </h3>
       </div>

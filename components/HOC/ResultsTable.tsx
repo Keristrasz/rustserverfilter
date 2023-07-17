@@ -17,7 +17,8 @@ import Link from "next/link";
 
 const columnDataForMonitor = [
   {
-    tooltip: "If server has at least one player online, one point is added every update",
+    tooltip:
+      "If server answers to update call, 1 point added, or 1 point is substracted if it does not",
     isClickable: true,
     styles: "w-1/12",
     name: "SCORE",
@@ -25,7 +26,7 @@ const columnDataForMonitor = [
   },
   { isClickable: false, styles: "w-6/12", name: "NAME", value: "name" },
   {
-    tooltip: "Current players online",
+    tooltip: "Current players online. Be careful this is often faked by server admins!",
     isClickable: true,
     styles: "w-1/12",
     name: "PLAYERS",
