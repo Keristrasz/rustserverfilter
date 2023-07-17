@@ -78,7 +78,11 @@ function Home({ initialData }: HomeProps) {
   const [sorter, setSorter] = useState<SorterType>(
     getFromLocalStorage("sorter", { players: -1 })
   );
-  const [filter, setFilter] = useState<FilterType>(getFromLocalStorage("filter", {}));
+  const [filter, setFilter] = useState<FilterType>(
+    getFromLocalStorage("filter", {
+      // $and: [{ players: { $gte: 1 } }],
+    })
+  );
 
   useEffect(() => {
     saveToLocalStorage("sorter", sorter);
