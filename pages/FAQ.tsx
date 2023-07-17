@@ -1,5 +1,6 @@
 import React from "react";
 import BodyWrapper from "@/components/layout/BodyWrapper";
+import Head from "next/head";
 
 const FAQ = () => {
   const faqData = [
@@ -23,19 +24,48 @@ const FAQ = () => {
       answer: "Server data are updated several times per hour, depending on server popularity",
     },
     {
-      question: "What is the recommended way to search for servers?",
+      question: "How do you sort or use advanced filter?",
+      answer:
+        "For sorting click on the head of table column title. For advanced filter you need to expand search form.",
+    },
+    {
+      question: "What is the recommended way to search for rust servers?",
       answer:
         "Use score to filter not stable servers (at least 500+). Always look at player history to see how many people were playing on the server, be careful these information can be faked and there is a lot of fake servers. You can filter some of them by exluding countries with a lot of fake servers (for some reason a lot of fake servers are in Russia).",
     },
     {
-      question: "How do you sort or use advanced filter?",
+      question: "How to connect to a rust server?",
       answer:
-        "For sorting click on the head of table column title. For advanced filter you need to expand search form.",
+        "Click on the server in the home page, then copy or click the Game IP, which is going to automatically copy the command to connect to the server. Now you can simple open Rust, press F1 to open console, paste - ctrl + v, and press enter. Command should look like: client.connect XX.XX.X.XXX:XXXXX",
     },
   ];
 
   return (
     <BodyWrapper>
+      <Head>
+        <title>Rust Server Filter | FAQ</title>
+        <meta
+          name="FAQ"
+          content="Frequently asked questions. How to connect to a rust server? What is the recommended way to search for rust servers?  How often are server data updated? How do you sort or use advanced filter?"
+          key="desc"
+        />
+        <meta property="og:title" content="Rust Server Filter | FAQ" />
+        <meta
+          property="og:FAQ"
+          content="Frequently asked questions. How to connect to a rust server? What is the recommended way to search for rust servers? How often are server data updated? How do you sort or use advanced filter?"
+        />
+        <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
+        <meta property="og:url" content="https://rustserverfilter.com/" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome.png" />
+        <link
+          rel="apple-touch-icon"
+          type="image/png"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link rel="manifest" href="/manifest.json" />
+      </Head>
       <h1 className="text-xs mt-4 text-gray-400">Frequently asked questions</h1>
       <div className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 m-4 max-w-4xl border border-black">
         <h3 className="text-gray-300 text-center font-semibold text-2xl mb-2">FAQ</h3>

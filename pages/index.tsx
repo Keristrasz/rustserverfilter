@@ -103,7 +103,7 @@ function Home({ initialData }: HomeProps) {
   return (
     <BodyWrapper>
       <Head>
-        <title>Best Rust Servers | Future Wipes, Solo, Duo, Trio filter list</title>
+        <title>Rust Server Filter | Future Wipes, Solo, Duo, Trio - Best Servers</title>
         <meta
           name="description"
           content="Discover FUTURE WIPES! Filter SOLO DUO TRIO QUAD servers. Search rates 2x, 3x, 5x. Find Rustoria, Rusty Moose, Rustafied, Rusticated, Stevious, Survivors, RustReborn, Reddit, Repulsion, Facepunch, Werewolf and more!"
@@ -111,7 +111,7 @@ function Home({ initialData }: HomeProps) {
         />
         <meta
           property="og:title"
-          content="Best Rust Servers | Future Wipes, Solo, Duo, Trio filter list"
+          content="Rust Server Filter | Future Wipes, Solo, Duo, Trio - Best Servers"
         />
         <meta
           property="og:description"
