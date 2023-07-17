@@ -1,24 +1,27 @@
-import { writeFileSync } from "fs";
-import { globby } from "globby";
+// import { getSortedPostsData } from '../../lib/posts'; // Import your function to fetch dynamic data
 
-function addPage(page) {
-  const path = page.replace("pages", "").replace(".js", "").replace(".mdx", "");
-  const route = path === "/index" ? "" : path;
+// export default function handler(req, res) {
+//   res.statusCode = 200;
+//   res.setHeader('Content-Type', 'text/xml');
+//   res.setHeader('Cache-control', 'stale-while-revalidate, s-maxage=3600');
 
-  return `  <url>
-    <loc>${`https://rustserverfilter.com${route}`}</loc>
-    <changefreq>hourly</changefreq>
-  </url>`;
-}
+//   // Fetch the dynamic data for generating URLs
+//   const posts = getSortedPostsData(); // Replace this with your own function to fetch the dynamic data
 
-async function generateSitemap() {
-  // Ignore Next.js specific files (e.g., _app.js) and API routes.
-  const pages = await globby(["pages/**/*{.js,.mdx}", "!pages/_*.js", "!pages/api"]);
-  const sitemap = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${pages.map(addPage).join("\n")}
-</urlset>`;
+//   // Generate the XML for each dynamic post
+//   const xml = `<?xml version="1.0" encoding="UTF-8"?>
+//     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"> 
+//       ${posts
+//         .map((post) => {
+//           return `
+//           <url>
+//             <loc>https://your-vercel-app-url/posts/${post.slug}</loc>
+//             <lastmod>${post.date}</lastmod>
+//           </url>
+//           `;
+//         })
+//         .join('')}
+//     </urlset>`;
 
-  writeFileSync("public/sitemap.xml", sitemap);
-}
-
-generateSitemap();
+//   res.end(xml);
+// }
