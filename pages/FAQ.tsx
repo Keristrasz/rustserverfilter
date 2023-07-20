@@ -10,7 +10,8 @@ const FAQ = () => {
         "Future wipes are calculcated based on previous wipe, and wipe rotation (weekly, bi-weekly, monthly). If these information are provided, NEXT WIPE date is calculated and assigned to the server information. If server has no information about previous wipe or wipe rotation, there is nothing assigned to it. Also if admin decides to wipe the server earlier or later, data can not be ever accurate. I provide just the estimate of next (future) wipe.",
     },
     {
-      question: "How is GROUP SIZE (solo, duo, trio) or RATE (2x, 3x) of server determined?",
+      question:
+        "How is GROUP SIZE (solo, duo, trio) or RATE (2x, 3x) of server determined?",
       answer:
         "Server name is analyzed by an algorithm and if certain key words are present, information like 2x or trio is assigned to the server. If they are not present, nothing is assigned and you cannot sort or filter by it.",
     },
@@ -21,7 +22,8 @@ const FAQ = () => {
     },
     {
       question: "How often are server data updated?",
-      answer: "Server data are updated several times per hour, depending on server popularity",
+      answer:
+        "Server data are updated several times per hour, depending on server popularity",
     },
     {
       question: "How do you sort or use advanced filter?",
@@ -66,8 +68,8 @@ const FAQ = () => {
         />
         <link rel="manifest" href="/manifest.json" />
       </Head>
-      <h1 className="text-xs mt-4 text-gray-400">Frequently asked questions</h1>
-      <div className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 m-4 max-w-4xl border border-black">
+      <h1 className="text-xs mt-4 text-gray-300">Frequently asked questions</h1>
+      <div className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 m-4 mb-8 max-w-4xl border border-black">
         <h3 className="text-gray-300 text-center font-semibold text-2xl mb-2">FAQ</h3>
         {faqData.map((faq, index) => (
           <div key={index} className="mb-6">

@@ -11,7 +11,10 @@
 
 :root {
   /* height: 100%; */
-  background-color: #363636;
+  /* background-color: #363636; */
+  background: rgb(25, 25, 25);
+  background: linear-gradient(90deg, rgba(21, 21, 21, 1) 0%, rgba(27, 27, 27, 1) 78%);
+
   color: rgb(224, 224, 224);
 }
 

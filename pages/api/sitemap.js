@@ -1,20 +1,20 @@
 import { getApp, Credentials } from "realm-web";
-import { fetchAllServers } from "../../utils/fetchAllServers"
+import { fetchAllServers } from "../../utils/fetchAllServers";
 
 export default async function handler(req, res) {
-  res.statusCode = 200
-  res.setHeader('Content-Type', 'text/xml')
-    
+  res.statusCode = 200;
+  res.setHeader("Content-Type", "text/xml");
+
   // Instructing the Vercel edge to cache the file
-  res.setHeader('Cache-control', 'stale-while-revalidate, s-maxage=3600')
+  res.setHeader("Cache-control", "stale-while-revalidate, s-maxage=3600");
   // Fetch initialSorter and initialFilter from an API or any other initialData source
   const initialSorter = { players: -1 };
   const initialFilter = {
-    $and: [{ rank: { $gte: 500 } }, { players: { $gte: 1 } }],
+    $and: [{ rank: { $gte: 4000 } }, { players: { $gte: 1 } }],
   };
 
   const appId = "application-0-pcbqz";
-  const app = getApp(appId);  
+  const app = getApp(appId);
 
   if (app && !app.currentUser) {
     const anonymousUser = Credentials.anonymous();
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     console.log(app);
   }
 
-  const initialData = await fetchAllServers(initialFilter, initialSorter, 0, 500, app);
+  const initialData = await fetchAllServers(initialFilter, initialSorter, 0, 100, app);
   console.log(initialData);
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"> 
