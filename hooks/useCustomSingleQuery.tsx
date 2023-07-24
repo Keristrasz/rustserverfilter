@@ -26,7 +26,6 @@ const useCustomSingleQuery = (ip: string) => {
 
   const queryKey = ["searchSingleResult", ip];
 
-  ("custom SINGLE query run");
 
   const queryFn = async () => {
     // (pageParam);

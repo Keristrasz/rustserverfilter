@@ -28,42 +28,6 @@ export function calculateDistance(
   return distance;
 }
 
-// export function getCustomDate(timestamp: number) {
-//   if (timestamp == null) {
-//     return "";
-//   }
-//   if (timestamp < 1652630662) {
-//     return "Too soon / too long ago";
-//   }
-
-//   const now = new Date();
-//   const currentTimestamp = Math.floor(now.getTime() / 1000);
-
-//   if (currentTimestamp - timestamp < 3600 && currentTimestamp - timestamp > 0) {
-//     const minutes = Math.floor((currentTimestamp - timestamp) / 60);
-//     return `${minutes} minutes ago`;
-//   }
-
-//   if (Math.abs(currentTimestamp - timestamp) < 3600) {
-//     const minutes = Math.floor(Math.abs(currentTimestamp - timestamp) / 60);
-//     return `In ${minutes} minutes`;
-//   }
-
-//   const date = new Date(timestamp * 1000);
-//   const formattedDate = date.toLocaleString("en-US", {
-//     hour: "2-digit",
-//     minute: "2-digit",
-//     hour12: false,
-//   });
-
-//   const dayMonth = date.toLocaleString("en-US", {
-//     day: "2-digit",
-//     month: "short",
-//   });
-
-//   return `${formattedDate}, ${dayMonth}`;
-// }
-
 export function getCustomDate(timestamp: number) {
   if (timestamp == null) {
     return "";
