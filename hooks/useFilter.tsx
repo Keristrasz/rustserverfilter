@@ -25,7 +25,7 @@ const useFilter = (setFilter: Dispatch<SetStateAction<FilterType>>): UseFilterHo
       ],
     };
 
-    minRank ? newFilter.$and.push({ rank: { $gte: Number(minRank) } }) : null;
+    minRank ? newFilter.$and.push({ rank: { $gte: Number(minRank) * 100 } }) : null;
     minPlayers ? newFilter.$and.push({ players: { $gte: Number(minPlayers) } }) : null;
     maxPlayers ? newFilter.$and.push({ players: { $lte: Number(maxPlayers) } }) : null;
     minSize ? newFilter.$and.push({ "rules.size": { $gte: Number(minSize) } }) : null;

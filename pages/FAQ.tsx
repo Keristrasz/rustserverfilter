@@ -10,20 +10,18 @@ const FAQ = () => {
         "Future wipes are calculcated based on previous wipe, and wipe rotation (weekly, bi-weekly, monthly). If these information are provided, NEXT WIPE date is calculated and assigned to the server information. If server has no information about previous wipe or wipe rotation, there is nothing assigned to it. Also if admin decides to wipe the server earlier or later, data can not be ever accurate. I provide just the estimate of next (future) wipe.",
     },
     {
-      question:
-        "How is GROUP SIZE (solo, duo, trio) or RATE (2x, 3x) of server determined?",
+      question: "How is GROUP SIZE (solo, duo, trio) or RATE (2x, 3x) of server determined?",
       answer:
         "Server name is analyzed by an algorithm and if certain key words are present, information like 2x or trio is assigned to the server. If they are not present, nothing is assigned and you cannot sort or filter by it.",
     },
     {
       question: "How is SCORE determined?",
       answer:
-        "Every time server answers to a call for information update, 1 point is added, if it does not answer 1 point is subtracted. Servers are updated hundreds times per week",
+        "Every time server answers to a call for information update, 0.01 point is added, if it does not answer 0.01 point is subtracted. Servers are updated hundreds times per week",
     },
     {
       question: "How often are server data updated?",
-      answer:
-        "Server data are updated several times per hour, depending on server popularity",
+      answer: "Server data are updated several times per hour, depending on server popularity",
     },
     {
       question: "How do you sort or use advanced filter?",
@@ -33,7 +31,7 @@ const FAQ = () => {
     {
       question: "What is the recommended way to search for rust servers?",
       answer:
-        "Use score to filter not stable servers (at least 500+). Always look at player history to see how many people were playing on the server, be careful these information can be faked and there is a lot of fake servers. You can filter some of them by exluding countries with a lot of fake servers (for some reason a lot of fake servers are in Russia).",
+        "Use score to filter not stable servers (at least 50+). Always look at player history to see how many people were playing on the server, be careful these information can be faked and there is a lot of fake servers. You can filter some of them by exluding countries with a lot of fake servers (for some reason a lot of fake servers are in Russia).",
     },
     {
       question: "How to connect to a rust server?",
