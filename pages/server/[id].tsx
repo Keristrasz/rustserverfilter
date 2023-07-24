@@ -130,7 +130,7 @@ const ServerDetailsPage = () => {
         <div>
           <p className="text-xs text-gray-300">Query IP: {id}</p>
           {/* <button
-            className={`bg-rustOne text-white font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all cursor-pointer hover:bg-green-600
+            className={`bg-rustFour text-white font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all cursor-pointer hover:bg-green-600
           `}
             onClick={() => router.push("/", undefined, { shallow: true })}
           >
@@ -180,17 +180,19 @@ const ServerDetailsPage = () => {
             <p className="text-xl m-1 mb-4 text-gray-200"> Server details loaded</p>
             {data && (
               <article className="min-w-800px max-w-2xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
-                <p className="text-lg font-medium text-rustOne">Server name:</p>
+                <p className="text-lg font-medium text-rustFour">Server name:</p>
                 <h1 className="text-2xl font-bold text-gray-300 mb-4">{data.name}</h1>
                 {/* FIRST CONTENT */}
                 <div className="flex flex-wrap mb-4">
                   <div className="mr-4 mb-4">
-                    <h4 className="text-lg font-medium text-rustOne">Server info:</h4>
-                    {data.rank && <p className="text-gray-400">Score: {data.rank / 100}</p>}
+                    <h4 className="text-lg font-medium text-rustFour">Server info:</h4>
+                    {data.rank && (
+                      <p className="text-gray-400">Score: {data.rank / 100}</p>
+                    )}
                     <p className="text-gray-300">
                       Game Ip:{" "}
                       <span
-                        className="font-bold text-rustOne hover:cursor-pointer hover:text-green-500"
+                        className="font-bold text-rustFour hover:cursor-pointer hover:text-green-500"
                         onClick={handleCopyClick}
                       >
                         {data.addr.split(":").slice(0, 1) + ":" + data.gameport}
@@ -216,13 +218,16 @@ const ServerDetailsPage = () => {
                   {/* ADDITIONAL INFO */}
 
                   <div className="mb-2 mr-4">
-                    <h4 className="text-lg font-medium text-rustOne">Aditional info:</h4>
+                    <h4 className="text-lg font-medium text-rustFour">Aditional info:</h4>
 
                     {data.rules?.url && (
                       <p className="text-gray-400">
                         URL:{" "}
                         {isUrl(data.rules.url) ? (
-                          <Link className="text-blue-500 underline" href={data.rules.url}>
+                          <Link
+                            className="text-blue-400 underline hover:text-blue-500"
+                            href={data.rules.url}
+                          >
                             {data.rules.url}
                           </Link>
                         ) : (
@@ -248,7 +253,7 @@ const ServerDetailsPage = () => {
 
                   {data.rules?.location ? (
                     <div className="">
-                      <h4 className="text-lg font-medium text-rustOne">Location:</h4>
+                      <h4 className="text-lg font-medium text-rustFour">Location:</h4>
                       <p className="text-gray-300">
                         Country: {data.rules?.location?.country}
                       </p>
@@ -283,7 +288,7 @@ const ServerDetailsPage = () => {
                     </div>
                   ) : (
                     <div>
-                      <h4 className="text-lg font-medium text-rustOne">Location</h4>
+                      <h4 className="text-lg font-medium text-rustFour">Location</h4>
                       {serverLocationData?.country && (
                         <p className="text-gray-300">
                           Country: {serverLocationData.country}
@@ -327,7 +332,7 @@ const ServerDetailsPage = () => {
                 </div>
                 {/* DESCRIPTION */}
                 <div className="">
-                  <h3 className="text-xl font-medium text-rustOne">Description:</h3>
+                  <h3 className="text-xl font-medium text-rustFour">Description:</h3>
                   <p className="text-gray-300"> {data.rules?.description}</p>
                 </div>
               </article>

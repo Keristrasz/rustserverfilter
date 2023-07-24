@@ -133,8 +133,8 @@ function ServerGraphs({ players_history }: { players_history: PlayersHistory }) 
                 type="monotone"
                 dataKey="playerCount"
                 name="Player Count"
-                stroke="#d44024"
-                fill="#d44024"
+                stroke="#e07965"
+                fill="#e07965"
                 isAnimationActive={false}
               />
             </AreaChart>

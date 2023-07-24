@@ -19,7 +19,7 @@ module.exports = {
         rustOne: "#d44024",
         rustTwo: "#c75640",
         rustThree: "#bb6958",
-        rustFour: "#ae776c",
+        rustFour: "#e07965",
         rustFive: "#d42444",
       },
     },
