@@ -10,7 +10,7 @@ function Header() {
           <h2 className="font-rust text-4xl tracking-[0.065rem] [text-shadow:_3px_3px_0_rgb(0_0_0_/_40%)]">
             RUST SERVER FILTER
           </h2>
-          <h3 className="hidden md:block [text-shadow:_2px_2px_0_rgb(0_0_0_/_50%)]">
+          <h3 className="hidden md:block [text-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]">
             Search, find, filter, sort your solo duo trio quad rust servers
           </h3>
         </div>
