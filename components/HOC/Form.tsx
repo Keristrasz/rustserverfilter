@@ -101,7 +101,7 @@ const Form: React.FC<FormProps> = ({
   };
   const handleMinRankChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setMinRank(value === "" ? "" : Number(value) * 100);
+    setMinRank(value === "" ? "" : Number(value));
   };
 
   const handleRateChange = (option: number) => {
