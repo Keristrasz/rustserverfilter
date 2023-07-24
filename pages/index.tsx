@@ -23,7 +23,7 @@ export const getStaticProps: GetStaticProps = async () => {
   // Fetch initialSorter and initialFilter from an API or any other initialData source
   const initialSorter: SorterType = { players: -1 };
   const initialFilter: FilterType = {
-    $and: [{ rank: { $gte: 500 } }, { players: { $gte: 20 } }],
+    $and: [{ rank: { $gte: 5 } }, { players: { $gte: 20 } }],
   };
   const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
   if (app && !app.currentUser) {

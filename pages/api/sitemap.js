@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   // Fetch initialSorter and initialFilter from an API or any other initialData source
   const initialSorter = { players: -1 };
   const initialFilter = {
-    $and: [{ rank: { $gte: 4000 } }, { players: { $gte: 1 } }],
+    $and: [{ rank: { $gte: 40 } }, { players: { $gte: 1 } }],
   };
 
   const appId = "application-0-pcbqz";

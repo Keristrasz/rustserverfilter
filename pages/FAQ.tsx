@@ -18,7 +18,7 @@ const FAQ = () => {
     {
       question: "How is SCORE determined?",
       answer:
-        "Every time server answers to a call for information update, 1 point is added, if it does not answer 1 point is subtracted. Servers are updated hundreds times per week",
+        "Every time server answers to a call for information update, 0.011 point is added, if it does not answer 0.01 point is subtracted. Servers are updated hundreds times per week",
     },
     {
       question: "How often are server data updated?",

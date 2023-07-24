@@ -186,7 +186,7 @@ const ServerDetailsPage = () => {
                 <div className="flex flex-wrap mb-4">
                   <div className="mr-4 mb-4">
                     <h4 className="text-lg font-medium text-rustOne">Server info:</h4>
-                    {data.rank && <p className="text-gray-400">Score: {data.rank}</p>}
+                    {data.rank && <p className="text-gray-400">Score: {data.rank / 100}</p>}
                     <p className="text-gray-300">
                       Game Ip:{" "}
                       <span
