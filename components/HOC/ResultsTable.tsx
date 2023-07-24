@@ -206,7 +206,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
         mappedServer[value] !== null &&
         typeof mappedServer[value] === "number"
       ) {
-        return mappedServer[value] / 100;
+        return Math.round(mappedServer[value] / 100);
       }
     } else if (
       value === "addr" ||

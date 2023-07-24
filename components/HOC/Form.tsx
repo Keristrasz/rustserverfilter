@@ -51,27 +51,19 @@ const Form: React.FC<FormProps> = ({
 
   const [includedCountries, setIncludedCountries] = useState<string[]>([]);
 
-  const [minSize, setMinSize] = useState<number | string>(
-    getFromLocalStorage("minSize", "")
-  );
-  const [maxSize, setMaxSize] = useState<number | string>(
-    getFromLocalStorage("maxSize", "")
-  );
+  const [minSize, setMinSize] = useState<number | string>(getFromLocalStorage("minSize", ""));
+  const [maxSize, setMaxSize] = useState<number | string>(getFromLocalStorage("maxSize", ""));
   const [minPlayers, setMinPlayers] = useState<number | string>(
     getFromLocalStorage("minPlayers", "")
   );
   const [maxPlayers, setMaxPlayers] = useState<number | string>(
     getFromLocalStorage("maxPlayers", "")
   );
-  const [searchName, setSearchName] = useState<string>(
-    getFromLocalStorage("searchName", "")
-  );
+  const [searchName, setSearchName] = useState<string>(getFromLocalStorage("searchName", ""));
   const [maxGroupSize, setMaxGroupSize] = useState<number[]>(
     getFromLocalStorage("maxGroupSize", [])
   );
-  const [minRank, setMinRank] = useState<number | string>(
-    getFromLocalStorage("minRank", "")
-  );
+  const [minRank, setMinRank] = useState<number | string>(getFromLocalStorage("minRank", ""));
   const [maxDistance, setMaxDistance] = useState<number | string>(
     getFromLocalStorage("maxDistance", "")
   );
@@ -109,7 +101,7 @@ const Form: React.FC<FormProps> = ({
   };
   const handleMinRankChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setMinRank(value === "" ? "" : Number(value));
+    setMinRank(value === "" ? "" : Number(value) * 100);
   };
 
   const handleRateChange = (option: number) => {
@@ -341,9 +333,7 @@ const Form: React.FC<FormProps> = ({
       </div>
       <div className="">
         <fieldset className="">
-          <legend className="block text-gray-200 font-semibold text-lg mb-1">
-            Rates
-          </legend>
+          <legend className="block text-gray-200 font-semibold text-lg mb-1">Rates</legend>
           <div className="flex flex-wrap">
             {ratesOptions.map((option) => (
               <div
@@ -381,9 +371,7 @@ const Form: React.FC<FormProps> = ({
           </div>
         </fieldset>
         <fieldset className="mt-3">
-          <legend className="block text-gray-200 font-semibold text-lg mb-1">
-            Wipe Rate
-          </legend>
+          <legend className="block text-gray-200 font-semibold text-lg mb-1">Wipe Rate</legend>
           <div className="flex flex-wrap">
             {wipeRatesOptions.map((option) => (
               <div
@@ -541,9 +529,7 @@ const Form: React.FC<FormProps> = ({
       </div>
       <div className="">
         <fieldset className="">
-          <legend className="block text-gray-200 font-semibold text-lg mb-1">
-            Rates
-          </legend>
+          <legend className="block text-gray-200 font-semibold text-lg mb-1">Rates</legend>
           <div className="flex flex-wrap">
             {ratesOptions.map((option) => (
               <div
