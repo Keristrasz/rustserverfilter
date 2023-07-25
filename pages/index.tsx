@@ -153,4 +153,6 @@ function Home({ initialData }: HomeProps) {
   );
 }
 
+// Are you looking for the best Rust servers to play on? With the Rust Servers Filter Finder, you can easily search for servers based on various criteria such as wipe frequency, player limit, and server rates. Whether you prefer playing solo, duo, trio, or quad, this tool allows you to filter servers that cater to your preferred playstyle. Additionally, you can search for servers with specific rates, such as 2x, 3x, or 5x, to enhance your gaming experience. With advanced filtering options and the ability to sort by last wipe and distance, finding the perfect Rust server has never been easier.
+
 export default Home;
