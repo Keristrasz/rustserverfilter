@@ -31,22 +31,12 @@ const FAQ = () => {
     {
       question: "What is the recommended way to search for rust servers?",
       answer:
-        "Use server score (at least 50+) to filter stable server. Always look at player history to see how many people were playing on the server, be careful these information can be faked and there is a lot of fake servers. You can filter some of them by exluding countries with a lot of fake servers (for some reason a lot of fake servers are in Russia).",
+        "Use score to filter not stable servers (at least 50+). Always look at player history to see how many people were playing on the server, be careful these information can be faked and there is a lot of fake servers. You can filter some of them by exluding countries with a lot of fake servers (for some reason a lot of fake servers are in Russia).",
     },
     {
-      question: "How to join rust server with ip?",
+      question: "How to connect to a rust server?",
       answer:
         "Click on the server in the home page, then copy or click the Game IP, which is going to automatically copy the command to connect to the server. Now you can simple open Rust, press F1 to open console, paste - ctrl + v, and press enter. Command should look like: client.connect XX.XX.X.XXX:XXXXX",
-    },
-    {
-      question: "How to get rust server ip?",
-      answer:
-        "You can find server IP in server details. You can follow the previous question for that.",
-    },
-    {
-      question: "When do rust servers wipe? What time does rust wipe? When does rust wipe?",
-      answer:
-        "On our website we provide estimate of next wipe based on previous wipe and wipe rotation. You can check it out at home page.",
     },
   ];
 
@@ -56,13 +46,13 @@ const FAQ = () => {
         <title>Rust Server Filter | FAQ</title>
         <meta
           name="FAQ"
-          content="FAQ. How to join rust server with ip? How to get rust server ip? How to find rust server ip? When do rust servers wipe? What time does rust wipe? When does rust wipe?"
+          content="Frequently asked questions. How to connect to a rust server? What is the recommended way to search for rust servers?  How often are server data updated? How do you sort or use advanced filter?"
           key="desc"
         />
         <meta property="og:title" content="Rust Server Filter | FAQ" />
         <meta
-          property="og:FAQ. How to join rust server with ip?"
-          content="FAQ. How to join rust server with ip? How to get rust server ip? How to find rust server ip? When do rust servers wipe? What time does rust wipe? When does rust wipe?"
+          property="og:FAQ"
+          content="Frequently asked questions. How to connect to a rust server? What is the recommended way to search for rust servers? How often are server data updated? How do you sort or use advanced filter?"
         />
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content="https://rustserverfilter.com/FAQ" />

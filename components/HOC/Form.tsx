@@ -510,20 +510,20 @@ const Form: React.FC<FormProps> = ({
         </div>
         <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4  sm:ml-0">
           <label
-            htmlFor="maxDistance"
+            htmlFor="minRank"
             className="block text-gray-200 font-semibold text-lg my-1 hover:text-white hover:cursor-pointer"
           >
-            Server distance
+            Server score
           </label>
           <input
-            id="maxDistance"
+            id="minRank"
             type="number"
             className={`form-input rounded-md shadow-sm mt-1 block w-full sm:w-48 bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 border  ${
-              isSSG && maxDistance ? "border-rustOne" : "border-black"
+              isSSG && minRank ? "border-rustOne" : "border-black"
             }`}
-            value={maxDistance}
-            placeholder="Max"
-            onChange={handleMaxDistanceChange}
+            value={minRank}
+            placeholder="Min"
+            onChange={handleMinRankChange}
           />
         </div>
       </div>
