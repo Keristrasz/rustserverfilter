@@ -25,8 +25,9 @@ const initialFilter: FilterType = {
   ],
 };
 
-const title = "Best Trio Servers | Rust Server Filter";
-const desc = "so";
+const title = "Best Trio Servers | Rust Server Filter - Find Top Rust Trio Servers";
+const desc =
+  "Looking for the best Rust trio servers? Explore our advanced server filter with wipe, player count, distance options and more. Find your Rust trio servers now!";
 const h1 = "BEST TRIO SERVERS";
 const addr = "https://rustserverfilter.com/best-trio-servers";
 

@@ -21,14 +21,15 @@ const initialFilter: FilterType = {
   $and: [
     { rank: { $gte: 4000 } },
     { players: { $gte: 20 } },
-    { max_group_size: { $in: [3] } },
+    { max_group_size: { $in: [2] } },
   ],
 };
 
-const title = "Best Trio Servers | Rust Server Filter";
-const desc = "so";
-const h1 = "BEST TRIO SERVERS";
-const addr = "https://rustserverfilter.com/best-trio-servers";
+const title = "Best Duo Servers | Rust Server Filter - Find Top Rust Duo Adventures";
+const desc =
+  "Embark on epic Rust duo adventures with our advanced server filter. Explore top duo servers filtered by player count, rates, and distance. Find your server for an unforgettable duo gaming experience!";
+const h1 = "BEST DUO SERVERS";
+const addr = "https://rustserverfilter.com/best-duo-servers";
 
 function Home({ initialData }: HomeProps) {
   const app = useUserAuth();
@@ -61,7 +62,7 @@ function Home({ initialData }: HomeProps) {
         <link rel="manifest" href="/manifest.json" />
         <link rel="canonical" href={addr} />
       </Head>
-      <h1 className="font-rust mt-8 text-8xl text-center tracking-[0.065rem] [text-shadow:_3px_3px_0_rgb(0_0_0_/_40%)]">
+      <h1 className="font-rust mt-8 mb-4 text-6xl text-center tracking-[0.065rem] [text-shadow:_6px_6px_0_rgb(0_0_0_/_60%)]">
         {h1}
       </h1>
       <ResultsTable

@@ -20,15 +20,16 @@ const initialSorter: SorterType = { players: -1 };
 const initialFilter: FilterType = {
   $and: [
     { rank: { $gte: 4000 } },
-    { players: { $gte: 20 } },
-    { max_group_size: { $in: [3] } },
+    { players: { $gte: 1 } },
+    { name: { $regex: "survivors.gg", $options: "i" } },
   ],
 };
 
-const title = "Best Trio Servers | Rust Server Filter";
-const desc = "so";
-const h1 = "BEST TRIO SERVERS";
-const addr = "https://rustserverfilter.com/best-trio-servers";
+const title = "Survivors.gg Servers | Filter for Survivors.gg Rust Community";
+const desc =
+  "Be a part of the Survivors.gg Rust community on their servers. Filter servers by wipe frequency, player activity, and distance to join the Survivors.gg journey. Find your server now for an engaging Rust experience!";
+const h1 = "SURVIVORS.GG SERVERS";
+const addr = "https://rustserverfilter.com/survivors";
 
 function Home({ initialData }: HomeProps) {
   const app = useUserAuth();
@@ -61,7 +62,7 @@ function Home({ initialData }: HomeProps) {
         <link rel="manifest" href="/manifest.json" />
         <link rel="canonical" href={addr} />
       </Head>
-      <h1 className="font-rust mt-8 text-8xl text-center tracking-[0.065rem] [text-shadow:_3px_3px_0_rgb(0_0_0_/_40%)]">
+      <h1 className="font-rust mt-8 mb-4 text-6xl text-center tracking-[0.065rem] [text-shadow:_6px_6px_0_rgb(0_0_0_/_60%)]">
         {h1}
       </h1>
       <ResultsTable
