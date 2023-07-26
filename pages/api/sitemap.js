@@ -1,6 +1,27 @@
 import { getApp, Credentials } from "realm-web";
 import { fetchAllServers } from "../../utils/fetchAllServers";
-import serverLinks from "../FAQ";
+
+export const serverLinks = [
+  { href: "/best-trio-servers", text: "Best trio servers" },
+  { href: "/best-duo-servers", text: "Best duo servers" },
+  { href: "/best-solo-servers", text: "Best solo servers" },
+  { href: "/best-beginner-servers", text: "Best beginner servers" },
+  { href: "/best-pvp-servers", text: "Best pvp servers" },
+  { href: "/best-pve-servers", text: "Best pve servers" },
+  { href: "/best-rust-servers", text: "Best rust servers" },
+  { href: "/servers-wipe-soon", text: "Servers about to wipe" },
+  { href: "/best-wiped-servers", text: "Best wiped just now servers" },
+  { href: "/facepunch", text: "Facepunch rust servers" },
+  { href: "/reddit", text: "Reddit rust servers" },
+  { href: "/rustafied", text: "Rustafied rust servers" },
+  { href: "/rusticated", text: "Rusticated rust servers" },
+  { href: "/rustoria", text: "Rustoria rust servers" },
+  { href: "/rusty-moose", text: "Rusty Moose rust servers" },
+  { href: "/survivors", text: "Survivors.gg rust servers" },
+  { href: "/vital-rust", text: "Vital Rust servers" },
+  { href: "/warbandits", text: "Warbandits Rust servers" },
+  { href: "/zombie-servers", text: "Zombie Rust servers" },
+];
 
 export default async function handler(req, res) {
   res.statusCode = 200;
