@@ -55,14 +55,14 @@ const FAQ = () => {
       <Head>
         <title>Rust Server Filter | FAQ</title>
         <meta
-          name="FAQ"
-          content="FAQ. How to join rust server with ip? How to get rust server ip? How to find rust server ip? When do rust servers wipe? What time does rust wipe? When does rust wipe?"
+          name="Rust Server Filter | FAQ"
+          content="How to join rust server with ip? How to get rust server ip? How to find rust server ip? When do rust servers wipe? What time does rust wipe? When does rust wipe?"
           key="desc"
         />
         <meta property="og:title" content="Rust Server Filter | FAQ" />
         <meta
-          property="og:FAQ. How to join rust server with ip?"
-          content="FAQ. How to join rust server with ip? How to get rust server ip? How to find rust server ip? When do rust servers wipe? What time does rust wipe? When does rust wipe?"
+          property="og:How to join rust server with ip?"
+          content="How to join rust server with ip? How to get rust server ip? How to find rust server ip? When do rust servers wipe? What time does rust wipe? When does rust wipe?"
         />
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content="https://rustserverfilter.com/FAQ" />
@@ -78,14 +78,14 @@ const FAQ = () => {
       </Head>
       <h1 className="text-xs mt-4 text-gray-300">Frequently asked questions</h1>
       <div className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 m-4 mb-8 max-w-4xl border border-black">
-        <h3 className="text-gray-300 text-center font-semibold text-2xl mb-2">FAQ</h3>
+        <h3 className="text-gray-200 text-center font-semibold text-2xl mb-2">FAQ</h3>
         {faqData.map((faq, index) => (
           <div key={index} className="mb-6">
-            <h2 className="text-gray-400 font-semibold text-lg mb-2">{faq.question}</h2>
+            <h2 className="text-rustFour text-lg mb-2">{faq.question}</h2>
             <p className="text-gray-200">{faq.answer}</p>
           </div>
         ))}
-        <h3 className="text-gray-400 text-center font-semibold text-xl mb-2">
+        <h3 className="text-rustFour text-center font-semibold text-xl mb-2">
           Do you have specific question? Join discord and ask!
         </h3>
       </div>

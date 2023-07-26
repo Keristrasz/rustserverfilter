@@ -13,7 +13,6 @@ let pageSize = 40;
 const useCustomInfiniteQuery = (filter: FilterType, sorter: SorterType, app: any) => {
   const queryKey = ["searchResults", filter, sorter, pageSize];
 
-  // ("custom infinity query run");
 
   const queryFn = async ({
     pageParam,
