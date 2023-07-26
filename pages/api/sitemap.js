@@ -53,7 +53,7 @@ export default async function handler(req, res) {
     console.log(app);
   }
 
-  const initialData = await fetchAllServers(initialFilter, initialSorter, 0, 100, app);
+  const initialData = await fetchAllServers(initialFilter, initialSorter, 0, 75, app);
   console.log(initialData);
 
   const dynamicUrls = initialData.result
