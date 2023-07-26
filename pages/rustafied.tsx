@@ -28,7 +28,7 @@ const initialFilter: FilterType = {
 const title = "Rustafied Servers | Rust Server Filter for Rustafied Gaming";
 const desc =
   "Experience Rustafied gaming on their official servers. Customize your gameplay with the server filter, sorting by wipe schedules, player populations, and geographical proximity. Join today for Rustafied-approved Rust gameplay!";
-const h1 = "REDDIT SERVERS";
+const h1 = "RUSTAFIED SERVERS";
 const addr = "https://rustserverfilter.com/rustafied";
 
 function Home({ initialData }: HomeProps) {
