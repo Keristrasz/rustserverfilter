@@ -23,7 +23,7 @@ const initialFilter: FilterType = {
 
 const title = "Best Recently Wiped Servers | Rust Server Filter - Start Fresh in Rust";
 const desc =
-  "Begin anew on the best recently wiped servers with our advanced server filter. Find fresh Rust servers, filtered by wipe cycles, player counts, and distance. Find freshly wiped server for a thrilling Rust gameplay!";
+  "Begin anew on the best recently wiped servers with our advanced server filter. Find fresh Rust servers, filtered by wipe cycles, player counts, and distance. Find freshly just wiped server for a thrilling Rust gameplay!";
 const h1 = "BEST RECENTLY WIPED SERVERS";
 const addr = "https://rustserverfilter.com/best-wiped-servers";
 

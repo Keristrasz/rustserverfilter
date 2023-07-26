@@ -19,7 +19,7 @@ interface HomeProps {
 const initialSorter: SorterType = { players: -1 };
 const initialFilter: FilterType = {
   $and: [
-    { rank: { $gte: 4000 } },
+    { rank: { $gte: 2000 } },
     { players: { $gte: 1 } },
     { name: { $regex: "beginner", $options: "i" } },
   ],

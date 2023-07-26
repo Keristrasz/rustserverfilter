@@ -12,28 +12,24 @@ import BodyWrapper from "@/components/layout/BodyWrapper";
 import { InfiniteData } from "@tanstack/react-query";
 import Head from "next/head";
 
-const roundBySeconds = 100;
-const nowMiliseconds = new Date().getTime();
-const nowSeconds = Math.floor(nowMiliseconds / 1000 / roundBySeconds) * roundBySeconds - 100;
-
 interface HomeProps {
   initialData: InfiniteData<QueryResponseType>;
 }
 
-const initialSorter: SorterType = { born_next: 1 };
+const initialSorter: SorterType = { players: -1 };
 const initialFilter: FilterType = {
   $and: [
-    { rank: { $gte: 4000 } },
+    { rank: { $gte: 2000 } },
     { players: { $gte: 1 } },
-    { born_next: { $gte: nowSeconds } },
+    { name: { $regex: "zombie", $options: "i" } },
   ],
 };
 
-const title = "Upcoming Wipe Servers | Prepare for Fresh Starts - Wiping soon servers";
+const title = "Rust Zombie Servers | Server Filter for Apocalyptic Gaming";
 const desc =
-  "Get ready for fresh start wiping soon servers with our advanced server filter. Find rust server about to wipe, rust servers that wipe today, rust servers wiping soon. Find server now and prepare for a wipe-reset thrill!";
-const h1 = "BEST SERVERS WIPING SOON";
-const addr = "https://rustserverfilter.com/servers-wipe-soon";
+  "Dive into apocalyptic gaming on Rust zombie servers. Customize your gameplay with the server filter, sorting by zombie-themed servers, wipe schedules, player populations, and geographical proximity. Join today and survive the zombie-infested Rust world!";
+const h1 = "ZOMBIE SERVERS";
+const addr = "https://rustserverfilter.com/zombie-servers";
 
 function Home({ initialData }: HomeProps) {
   const app = useUserAuth();
