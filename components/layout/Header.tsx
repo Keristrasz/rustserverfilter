@@ -25,14 +25,14 @@ function Header() {
         </Link>
         <Link
           href="/about"
-          className="hidden text-gray-200 font-rust tracking-[0.100rem] text-center px-1 mx-4 rounded sm:w-30 text-lg transition-all cursor-pointer hover:text-white
+          className="hidden text-gray-200 [text-shadow:_3px_3px_0_rgb(0_0_0_/_40%)] font-rust tracking-[0.100rem] text-center px-1 mx-4 rounded sm:w-30 text-lg transition-all cursor-pointer hover:text-white
           md:block"
         >
           ABOUT
         </Link>
         <Link
           href="/FAQ"
-          className="hidden text-gray-200 font-rust tracking-[0.100rem] text-center px-1 mx-4 rounded sm:w-30 text-lg transition-all cursor-pointer hover:text-white
+          className="hidden text-gray-200 [text-shadow:_3px_3px_0_rgb(0_0_0_/_40%)] font-rust tracking-[0.100rem] text-center px-1 mx-4 rounded sm:w-30 text-lg transition-all cursor-pointer hover:text-white
           md:block"
         >
           FAQ

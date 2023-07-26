@@ -1,6 +1,7 @@
 import React from "react";
 import BodyWrapper from "@/components/layout/BodyWrapper";
 import Head from "next/head";
+import Link from "next/link";
 
 const FAQ = () => {
   const faqData = [
@@ -85,9 +86,11 @@ const FAQ = () => {
             <p className="text-gray-200">{faq.answer}</p>
           </div>
         ))}
-        <h3 className="text-rustFour text-center font-semibold text-xl mb-2">
-          Do you have specific question? Join discord and ask!
-        </h3>
+        <Link href="https://discord.gg/D6hF8hhBFj" target="_blank" rel="noopener noreferrer">
+          <h3 className="text-rustFour text-center font-semibold text-xl mb-2 hover:text-rustOne">
+            Do you have specific question? Join discord and ask!
+          </h3>
+        </Link>
       </div>
     </BodyWrapper>
   );
