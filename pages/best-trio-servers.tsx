@@ -61,7 +61,7 @@ function Home({ initialData }: HomeProps) {
         <link rel="manifest" href="/manifest.json" />
         <link rel="canonical" href={addr} />
       </Head>
-      <h1 className="font-rust mt-8 text-8xl text-center tracking-[0.065rem] [text-shadow:_3px_3px_0_rgb(0_0_0_/_40%)]">
+      <h1 className="font-rust mt-8 mb-4 text-6xl text-center tracking-[0.065rem] [text-shadow:_6px_6px_0_rgb(0_0_0_/_60%)]">
         {h1}
       </h1>
       <ResultsTable

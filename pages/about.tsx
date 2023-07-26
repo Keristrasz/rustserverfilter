@@ -95,14 +95,14 @@ const FAQ = () => {
             <Link
               key={index}
               href={link.href}
-              className="cursor-pointer rounded-md p-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border bg-zinc-700 border-black hover:bg-rustOne"
+              className="cursor-pointer rounded-md p-2 pt-1 pb-0.5 mr-2 mb-1 text-center border bg-zinc-700 border-black hover:bg-rustOne"
             >
               {link.text}
             </Link>
           ))}
         </div>
         <Link href="https://discord.gg/D6hF8hhBFj" target="_blank" rel="noopener noreferrer">
-          <h3 className="text-rustFour text-center font-semibold text-xl mb-2 hover:text-rustOne">
+          <h3 className="text-rustFour text-center font-semibold text-xl my-2 hover:text-rustOne">
             Do you have specific question? Join discord and ask!
           </h3>
         </Link>
