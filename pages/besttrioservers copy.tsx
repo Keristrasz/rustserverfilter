@@ -8,30 +8,12 @@ import {
 import useUserAuth from "../hooks/useUserAuth";
 import useQueryLocation from "@/hooks/useQueryLocation";
 import ResultsTable from "@/components/HOC/ResultsTable";
-import Form from "@/components/HOC/Form";
 import BodyWrapper from "@/components/layout/BodyWrapper";
 import { InfiniteData } from "@tanstack/react-query";
 
 //TODO Distance sort by loaded initialData
 
 import Head from "next/head";
-
-// Helper function to get initialData from local storage
-const getFromLocalStorage = (key: string, defaultValue: any): any => {
-  if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
-    const storedValue = localStorage.getItem(key);
-    return storedValue !== null ? JSON.parse(storedValue) : defaultValue;
-  } else {
-    return defaultValue;
-  }
-};
-
-// Helper function to save initialData to local storage
-const saveToLocalStorage = (key: string, value: any): void => {
-  if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
-    localStorage.setItem(key, JSON.stringify(value));
-  }
-};
 
 interface HomeProps {
   initialData: InfiniteData<QueryResponseType>;
@@ -40,22 +22,17 @@ interface HomeProps {
 function Home({ initialData }: HomeProps) {
   const app = useUserAuth();
 
-  const [sorter, setSorter] = useState<SorterType>(
-    getFromLocalStorage("sorter", { players: -1 })
-  );
-  const [filter, setFilter] = useState<FilterType>(
-    getFromLocalStorage("filter", {
-      $and: [{ players: { $gte: 0 } }],
-    })
-  );
+  const initialSorter: SorterType = { players: -1 };
+  const initialFilter: FilterType = {
+    $and: [
+      { rank: { $gte: 4000 } },
+      { players: { $gte: 20 } },
+      { max_group_size: { $in: [3] } },
+    ],
+  };
 
-  useEffect(() => {
-    saveToLocalStorage("sorter", sorter);
-  }, [sorter]);
-
-  useEffect(() => {
-    saveToLocalStorage("filter", filter);
-  }, [filter]);
+  const [sorter, setSorter] = useState<SorterType>(initialSorter);
+  const [filter, setFilter] = useState<FilterType>(initialFilter);
 
   const userLocation: userLocationType | null = useQueryLocation() || null;
 
@@ -96,14 +73,6 @@ function Home({ initialData }: HomeProps) {
         <link rel="manifest" href="/manifest.json" />
         <link rel="canonical" href="https://rustserverfilter.com" />
       </Head>
-      <Form
-        userLocation={userLocation}
-        setFilter={setFilter}
-        setSorter={setSorter}
-        filter={filter}
-        sorter={sorter}
-        isSSG={isSSG}
-      />
       <ResultsTable
         app={app}
         filter={filter}
