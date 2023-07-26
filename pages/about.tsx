@@ -21,7 +21,8 @@ export const serverLinks = [
   { href: "/rusty-moose", text: "Rusty Moose rust servers" },
   { href: "/survivors", text: "Survivors.gg rust servers" },
   { href: "/vital-rust", text: "Vital Rust servers" },
-  { href: "/warbandits", text: "Warbandits rust servers" },
+  { href: "/warbandits", text: "Warbandits Rust servers" },
+  { href: "/zombie-servers", text: "Zombie Rust servers" },
 ];
 
 const FAQ = () => {
