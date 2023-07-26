@@ -3,6 +3,27 @@ import BodyWrapper from "@/components/layout/BodyWrapper";
 import Head from "next/head";
 import Link from "next/link";
 
+export const serverLinks = [
+  { href: "/best-trio-servers", text: "Best trio servers" },
+  { href: "/best-duo-servers", text: "Best duo servers" },
+  { href: "/best-solo-servers", text: "Best solo servers" },
+  { href: "/best-beginner-servers", text: "Best beginner servers" },
+  { href: "/best-pvp-servers", text: "Best pvp servers" },
+  { href: "/best-pve-servers", text: "Best pve servers" },
+  { href: "/best-rust-servers", text: "Best rust servers" },
+  { href: "/servers-wipe-soon", text: "Servers about to wipe" },
+  { href: "/best-wiped-servers", text: "Best wiped just now servers" },
+  { href: "/facepunch", text: "Facepunch rust servers" },
+  { href: "/reddit", text: "Reddit rust servers" },
+  { href: "/rustafied", text: "Rustafied rust servers" },
+  { href: "/rusticated", text: "Rusticated rust servers" },
+  { href: "/rustoria", text: "Rustoria rust servers" },
+  { href: "/rusty-moose", text: "Rusty Moose rust servers" },
+  { href: "/survivors", text: "Survivors.gg rust servers" },
+  { href: "/vital-rust", text: "Vital Rust servers" },
+  { href: "/warbandits", text: "Warbandits rust servers" },
+];
+
 const FAQ = () => {
   return (
     <BodyWrapper>
@@ -32,7 +53,7 @@ const FAQ = () => {
       </Head>
       <h1 className="text-xs mt-4 text-gray-300">About</h1>
       <div className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 m-4 mb-8 max-w-4xl border border-black">
-        <h3 className="text-gray-200 text-center font-semibold text-2xl mb-2">
+        <h3 className="text-gray-200 text-center font-semibold text-2xl mb-3">
           About Rust Server Filter
         </h3>
         <div className="mb-6">
@@ -68,23 +89,23 @@ const FAQ = () => {
             the wipe. Server list rust filtered by exactly what I want and sorted by wipes!
           </p>
         </div>
+        <h2 className="text-rustFour text-lg mb-2">Find servers by below specifications:</h2>
+        <div className="flex flex-wrap">
+          {serverLinks.map((link, index) => (
+            <Link
+              key={index}
+              href={link.href}
+              className="cursor-pointer rounded-md p-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border bg-zinc-700 border-black hover:bg-rustOne"
+            >
+              {link.text}
+            </Link>
+          ))}
+        </div>
         <Link href="https://discord.gg/D6hF8hhBFj" target="_blank" rel="noopener noreferrer">
           <h3 className="text-rustFour text-center font-semibold text-xl mb-2 hover:text-rustOne">
             Do you have specific question? Join discord and ask!
           </h3>
         </Link>
-        <div className="flex flex-wrap">
-          <Link href="/best-trio-servers">
-            <div className="cursor-pointer rounded-md px-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border border-black hover:text-white">
-              Best trio servers
-            </div>
-          </Link>
-          <Link href="/best-duo-servers">
-            <div className="cursor-pointer rounded-md px-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border border-black hover:text-white">
-              Best duo servers
-            </div>
-          </Link>
-        </div>
       </div>
     </BodyWrapper>
   );

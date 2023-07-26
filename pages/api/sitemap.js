@@ -1,5 +1,6 @@
 import { getApp, Credentials } from "realm-web";
 import { fetchAllServers } from "../../utils/fetchAllServers";
+import serverLinks from "../FAQ";
 
 export default async function handler(req, res) {
   res.statusCode = 200;
@@ -15,21 +16,28 @@ export default async function handler(req, res) {
   lastModDate.setHours(lastModDate.getHours() - 1); // Subtract an hour from the current time
   const lastModDateTime = lastModDate.toISOString();
 
-  // Adding the static URLs
+  // Adding the server URLs to staticUrls
   const staticUrls = `
-    <url>
-      <loc>https://rustserverfilter.com/about</loc>
-      <!-- Replace the date below with the last modification date of the "about" page -->
-      <lastmod>2023-07-26T00:00:00Z</lastmod>
-    </url>
+  <url>
+    <loc>https://rustserverfilter.com/about</loc>
+    <lastmod>2023-07-26T00:00:00Z</lastmod>
+  </url>
 
-    <url>
-      <loc>https://rustserverfilter.com/FAQ</loc>
-      <!-- Replace the date below with the last modification date of the "FAQ" page -->
-      <lastmod>2023-07-26T00:00:00Z</lastmod>
-    </url>
-  `;
-
+  <url>
+    <loc>https://rustserverfilter.com/FAQ</loc>
+    <lastmod>2023-07-26T00:00:00Z</lastmod>
+  </url>
+  ${serverLinks
+    .map(
+      (link) => `
+  <url>
+    <loc>https://rustserverfilter.com${link.href}</loc>
+    <lastmod>${lastModDateTime}</lastmod>
+  </url>
+  `
+    )
+    .join("")}
+`;
   // Fetch initialSorter and initialFilter from an API or any other initialData source
   const initialSorter = { players: -1 };
   const initialFilter = {
