@@ -41,9 +41,7 @@ const ServerDetailsPage = () => {
 
   const userLocation: userLocationType | null = useQueryLocation() || null;
 
-  const [serverLocationData, setServerLocationData] = useState<
-    LocationData | undefined
-  >();
+  const [serverLocationData, setServerLocationData] = useState<LocationData | undefined>();
   useEffect(() => {
     const fetchServerLocation = async () => {
       try {
@@ -78,7 +76,7 @@ const ServerDetailsPage = () => {
 
   return (
     <BodyWrapper>
-      <Head>
+      {/* <Head>
         <title>
           {data
             ? data.name.length > 60
@@ -114,7 +112,43 @@ const ServerDetailsPage = () => {
           }
         />
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
-        <meta property="og:url" content="https://rustserverfilter.com/" />
+        <meta property="og:url" content={`https://rustserverfilter.com/${id}`} />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome.png" />
+        <link
+          rel="apple-touch-icon"
+          type="image/png"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link rel="manifest" href="/manifest.json" />
+      </Head> */}
+      <Head>
+        <title>
+          {data
+            ? data.name.length > 60
+              ? data.name.substring(0, 60) + "..."
+              : data.name
+            : null}
+        </title>
+        <meta
+          name="description"
+          content={data.rules.desc ? data.rules.desc : null}
+          key="desc"
+        />
+        <meta
+          property="og:title"
+          content={
+            data
+              ? data.name.length > 60
+                ? data.name.substring(0, 60) + "..."
+                : data.name
+              : null
+          }
+        />
+        <meta property="og:description" content={data.rules.desc ? data.rules.desc : null} />
+        <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
+        <meta property="og:url" content={`https://rustserverfilter.com/${id}`} />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome.png" />
         <link
@@ -129,22 +163,12 @@ const ServerDetailsPage = () => {
       <div className="m-4 max-w-6xl flex flex-col justify-center items-center ">
         <div>
           <p className="text-xs text-gray-300">Query IP: {id}</p>
-          {/* <button
-            className={`bg-rustFour text-white font-semibold py-2 px-4 mx-4 rounded sm:w-48 text-lg transition-all cursor-pointer hover:bg-green-600
-          `}
-            onClick={() => router.push("/", undefined, { shallow: true })}
-          >
-            Get Back
-          </button> */}
         </div>
         {isLoading && (
           <main className="max-w-6xl flex flex-col items-center mt-1">
             <div className="flex m-1 mb-4">
               <Spinner />
-              <p className="text-xl font-bold m-1 text-gray-200">
-                {" "}
-                Loading server details...
-              </p>
+              <p className="text-xl font-bold m-1 text-gray-200"> Loading server details...</p>
             </div>
             <article className="flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
               {/* FIRST CONTENT */}
@@ -186,9 +210,7 @@ const ServerDetailsPage = () => {
                 <div className="flex flex-wrap mb-4">
                   <div className="mr-4 mb-4">
                     <h4 className="text-lg font-medium text-rustFour">Server info:</h4>
-                    {data.rank && (
-                      <p className="text-gray-400">Score: {data.rank / 100}</p>
-                    )}
+                    {data.rank && <p className="text-gray-400">Score: {data.rank / 100}</p>}
                     <p className="text-gray-300">
                       Game Ip:{" "}
                       <span
@@ -203,9 +225,7 @@ const ServerDetailsPage = () => {
                       Players: {data.players} / {data.max_players}
                     </p>
                     <p className="text-gray-300">Last Wipe: {getCustomDate(data.born)}</p>
-                    <p className="text-gray-300">
-                      Next Wipe: {getCustomDate(data.born_next)}
-                    </p>
+                    <p className="text-gray-300">Next Wipe: {getCustomDate(data.born_next)}</p>
                     {data.rate ? (
                       <p className="text-gray-300">Rate: {data.rate}x</p>
                     ) : (
@@ -237,9 +257,7 @@ const ServerDetailsPage = () => {
                     )}
                     {/* <p className="text-gray-400">Max Players: {data.max_players}</p> */}
                     <p className="text-gray-400">Modded: {data.modded ? "Yes" : "No"}</p>
-                    <p className="text-gray-400">
-                      Vanilla: {data.vanilla ? "Yes" : "No"}
-                    </p>
+                    <p className="text-gray-400">Vanilla: {data.vanilla ? "Yes" : "No"}</p>
                     <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
                     <p className="text-gray-400">Gametype: {data.gametype?.join(", ")}</p>
                     <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
@@ -254,9 +272,7 @@ const ServerDetailsPage = () => {
                   {data.rules?.location ? (
                     <div className="">
                       <h4 className="text-lg font-medium text-rustFour">Location:</h4>
-                      <p className="text-gray-300">
-                        Country: {data.rules?.location?.country}
-                      </p>
+                      <p className="text-gray-300">Country: {data.rules?.location?.country}</p>
                       <p className="text-gray-300">
                         Distance:{" "}
                         {userLocation &&
@@ -271,17 +287,13 @@ const ServerDetailsPage = () => {
                           : "Cannot retrieve location"}{" "}
                       </p>
                       {serverLocationData?.region && (
-                        <p className="text-gray-400">
-                          Region: {serverLocationData.region}
-                        </p>
+                        <p className="text-gray-400">Region: {serverLocationData.region}</p>
                       )}
                       {serverLocationData?.city && (
                         <p className="text-gray-400">City: {serverLocationData.city}</p>
                       )}
 
-                      <p className="text-gray-400">
-                        Latitude: {data.rules.location.latitude}
-                      </p>
+                      <p className="text-gray-400">Latitude: {data.rules.location.latitude}</p>
                       <p className="text-gray-400">
                         Longitude: {data.rules.location.longitude}
                       </p>
@@ -290,9 +302,7 @@ const ServerDetailsPage = () => {
                     <div>
                       <h4 className="text-lg font-medium text-rustFour">Location</h4>
                       {serverLocationData?.country && (
-                        <p className="text-gray-300">
-                          Country: {serverLocationData.country}
-                        </p>
+                        <p className="text-gray-300">Country: {serverLocationData.country}</p>
                       )}
                       {serverLocationData?.latitude &&
                         serverLocationData?.longitude &&
@@ -309,9 +319,7 @@ const ServerDetailsPage = () => {
                           </p>
                         )}
                       {serverLocationData?.region && (
-                        <p className="text-gray-400">
-                          Region: {serverLocationData.region}
-                        </p>
+                        <p className="text-gray-400">Region: {serverLocationData.region}</p>
                       )}
                       {serverLocationData?.city && (
                         <p className="text-gray-400">City: {serverLocationData.city}</p>
@@ -337,9 +345,7 @@ const ServerDetailsPage = () => {
                 </div>
               </article>
             )}
-            {data.players_history && (
-              <ServerGraphs players_history={data.players_history} />
-            )}
+            {data.players_history && <ServerGraphs players_history={data.players_history} />}
           </main>
         )}
       </div>

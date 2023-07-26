@@ -67,12 +67,12 @@ const FAQ = () => {
             Yes, finally I can find my favorite rust servers in advance for the first day of
             the wipe. Server list rust filtered by exactly what I want and sorted by wipes!
           </p>
-          <Link href="https://discord.gg/D6hF8hhBFj" target="_blank" rel="noopener noreferrer">
-            <h3 className="text-rustFour text-center font-semibold text-xl mb-2 hover:text-rustOne">
-              Do you have specific question? Join discord and ask!
-            </h3>
-          </Link>
         </div>
+        <Link href="https://discord.gg/D6hF8hhBFj" target="_blank" rel="noopener noreferrer">
+          <h3 className="text-rustFour text-center font-semibold text-xl mb-2 hover:text-rustOne">
+            Do you have specific question? Join discord and ask!
+          </h3>
+        </Link>
       </div>
     </BodyWrapper>
   );
