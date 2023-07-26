@@ -133,7 +133,7 @@ const ServerDetailsPage = () => {
         </title>
         <meta
           name="description"
-          content={data?.rules?.desc ? data.rules.desc : data.name}
+          content={data?.rules?.desc ? data.rules.desc : null}
           key="desc"
         />
         <meta
@@ -146,10 +146,7 @@ const ServerDetailsPage = () => {
               : null
           }
         />
-        <meta
-          property="og:description"
-          content={data?.rules?.desc ? data.rules.desc : data.name}
-        />
+        <meta property="og:description" content={data?.rules?.desc ? data.rules.desc : null} />
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content={`https://rustserverfilter.com/${id}`} />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
