@@ -8,6 +8,13 @@ export default async function handler(req, res) {
   // Instructing the Vercel edge to cache the file
   res.setHeader("Cache-control", "stale-while-revalidate, s-maxage=3600");
 
+  const lastModDate = new Date();
+  lastModDate.setMinutes(0); // Reset minutes to zero
+  lastModDate.setSeconds(0); // Reset seconds to zero
+  lastModDate.setMilliseconds(0); // Reset milliseconds to zero
+  lastModDate.setHours(lastModDate.getHours() - 1); // Subtract an hour from the current time
+  const lastModDateTime = lastModDate.toISOString();
+
   // Adding the static URLs
   const staticUrls = `
     <url>
@@ -44,12 +51,6 @@ export default async function handler(req, res) {
   const dynamicUrls = initialData.result
     .map((server) => {
       const url = `https://rustserverfilter.com/server/${server.addr}`;
-      const lastModDate = new Date();
-      lastModDate.setMinutes(0); // Reset minutes to zero
-      lastModDate.setSeconds(0); // Reset seconds to zero
-      lastModDate.setMilliseconds(0); // Reset milliseconds to zero
-      lastModDate.setHours(lastModDate.getHours() - 1); // Subtract an hour from the current time
-      const lastModDateTime = lastModDate.toISOString();
       return `
       <url>
         <loc>${url}</loc>

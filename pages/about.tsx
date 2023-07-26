@@ -73,6 +73,18 @@ const FAQ = () => {
             Do you have specific question? Join discord and ask!
           </h3>
         </Link>
+        <div className="flex flex-wrap">
+          <Link href="/best-trio-servers">
+            <div className="cursor-pointer rounded-md px-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border border-black hover:text-white">
+              Best trio servers
+            </div>
+          </Link>
+          <Link href="/best-duo-servers">
+            <div className="cursor-pointer rounded-md px-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border border-black hover:text-white">
+              Best duo servers
+            </div>
+          </Link>
+        </div>
       </div>
     </BodyWrapper>
   );
