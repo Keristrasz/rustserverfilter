@@ -74,8 +74,8 @@ export default async function handler(req, res) {
     console.log(app);
   }
 
-  const initialData = await fetchAllServers(initialFilter, initialSorter, 0, 75, app);
-  console.log(initialData);
+  const initialData = await fetchAllServers(initialFilter, initialSorter, 0, 20, app);
+  // console.log(initialData);
 
   const dynamicUrls = initialData.result
     .map((server) => {
@@ -95,6 +95,6 @@ export default async function handler(req, res) {
     ${dynamicUrls}
   </urlset>`;
 
-  console.log(xml);
+  // console.log(xml);
   res.end(xml);
 }

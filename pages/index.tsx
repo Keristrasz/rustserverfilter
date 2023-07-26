@@ -121,6 +121,7 @@ function Home({ initialData }: HomeProps) {
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content="https://rustserverfilter.com/" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"></link>
         <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome.png" />
         <link
           rel="apple-touch-icon"
@@ -152,7 +153,5 @@ function Home({ initialData }: HomeProps) {
     </BodyWrapper>
   );
 }
-
-
 
 export default Home;
