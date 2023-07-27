@@ -11,7 +11,7 @@ export const serverLinks = [
   { href: "/types/best-pvp-servers", text: "Best pvp servers" },
   { href: "/types/best-pve-servers", text: "Best pve servers" },
   { href: "/types/best-rust-servers", text: "Best rust servers" },
-  { href: "/types/2x-servers", text: "Best rust 2x servers" },
+  { href: "/types/best-2x-servers", text: "Best rust 2x servers" },
   { href: "/types/servers-wipe-soon", text: "Servers about to wipe" },
   { href: "/types/best-wiped-servers", text: "Best wiped just now servers" },
   { href: "/types/facepunch", text: "Facepunch rust servers" },

@@ -4,8 +4,8 @@ import {
   SorterType,
   FilterType,
   QueryResponseType,
-} from "../utils/typesTypescript";
-import useUserAuth from "../hooks/useUserAuth";
+} from "../../utils/typesTypescript";
+import useUserAuth from "../../hooks/useUserAuth";
 import useQueryLocation from "@/hooks/useQueryLocation";
 import ResultsTable from "@/components/HOC/ResultsTable";
 import BodyWrapper from "@/components/layout/BodyWrapper";
@@ -25,7 +25,7 @@ const title = "Best Recently Wiped Servers | Rust Server Filter - Start Fresh in
 const desc =
   "Begin anew on the best recently wiped servers with our advanced server filter. Find fresh Rust servers, filtered by wipe cycles, player counts, and distance. Find freshly just wiped server for a thrilling Rust gameplay!";
 const h1 = "BEST RECENTLY WIPED SERVERS";
-const addr = "https://rustserverfilter.com/best-wiped-servers";
+const addr = "https://rustserverfilter.com/types/best-wiped-servers";
 
 function Home({ initialData }: HomeProps) {
   const app = useUserAuth();
@@ -79,6 +79,14 @@ function Home({ initialData }: HomeProps) {
       <h1 className="font-rust mt-8 mb-4 text-6xl text-center tracking-[0.065rem] [text-shadow:_6px_6px_0_rgb(0_0_0_/_60%)]">
         {h1}
       </h1>
+      <section className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 m-4 mt-4 max-w-6xl border border-black w-full">
+        <h2 className="w-full font-bold text-xl text-center sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:ml-0 ">
+          {title}
+        </h2>
+        <p className="w-full sm:w-auto flex-grow text-center sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:ml-0 ">
+          {desc}
+        </p>
+      </section>
       <ResultsTable
         app={app}
         filter={filter}

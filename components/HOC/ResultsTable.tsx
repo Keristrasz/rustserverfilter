@@ -33,7 +33,8 @@ const columnDataForMonitor = [
     value: "players",
   },
   {
-    tooltip: "Estimate of next wipe if needed data are provided. You can find more in FAQ",
+    tooltip:
+      "Estimate of next wipe if needed data are provided. You can find more in FAQ",
     isClickable: true,
     styles: "w-2/12",
     name: "NEXT WIPE",
@@ -91,7 +92,8 @@ const columnDataForMonitorForMobile = [
     value: "players",
   },
   {
-    tooltip: "Estimate of next wipe if needed data are provided. You can find more in FAQ",
+    tooltip:
+      "Estimate of next wipe if needed data are provided. You can find more in FAQ",
     isClickable: true,
     styles: "w-3/12 text-[0.675rem]",
     name: "NEXT WIPE",
@@ -255,7 +257,8 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   className="text-sm relative text-center bg-green-600 text-gray-200"
                   colSpan={11}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
+                  SERVERS
                 </td>
               </tr>
             ) : (
@@ -277,7 +280,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                       key={mappedServer.addr}
                       className="hover:bg-zinc-800 clickable-row cursor-pointer"
                       onClick={() => {
-                        router.push(`/server/${mappedServer.addr}`);
+                        router.push(`/server-detail/${mappedServer.addr}`);
                       }}
                       role="link"
                       ref={ref}
@@ -288,7 +291,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                             key={column.value}
                             className={`px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-green-400 ${column.styles}`}
                           >
-                            <Link href={`/server/${mappedServer.addr}`}>
+                            <Link href={`/server-detail/${mappedServer.addr}`}>
                               {getColumnValue(column, mappedServer)}
                             </Link>
                           </td>

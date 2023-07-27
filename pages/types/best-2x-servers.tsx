@@ -25,7 +25,7 @@ const title = "Best 2x Rate Servers | Rust Server Filter - Double the Fun in Rus
 const desc =
   "Experience twice the excitement on the best 2x rate servers with our advanced server filter. Find servers with 2x rates for resources, loot, and progression, filtered by wipe cycles, player counts, and distance. Find your 2x server for Rust adventure!";
 const h1 = "BEST 2x RATE SERVERS";
-const addr = "https://rustserverfilter.com/2x-servers";
+const addr = "https://rustserverfilter.com/types/types/best-2x-servers";
 
 function Home({ initialData }: HomeProps) {
   const app = useUserAuth();
@@ -80,13 +80,14 @@ function Home({ initialData }: HomeProps) {
       <h1 className="font-rust mt-8 mb-4 text-6xl text-center tracking-[0.065rem] [text-shadow:_6px_6px_0_rgb(0_0_0_/_60%)]">
         {h1}
       </h1>
-      <div className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 m-4 mt-4 max-w-6xl border border-black w-full">
-        <div className="flex flex-wrap items-center justify-start">
-          <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4  sm:ml-0 ">
-            {title}
-          </div>
-        </div>
-      </div>
+      <section className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 m-4 mt-4 max-w-6xl border border-black w-full">
+        <h2 className="w-full font-semibold text-xl text-center sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:ml-0 ">
+          {title}
+        </h2>
+        <p className="w-full sm:w-auto flex-grow text-center sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:ml-0 ">
+          {desc}
+        </p>
+      </section>
       <ResultsTable
         app={app}
         filter={filter}
