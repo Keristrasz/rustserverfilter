@@ -2,21 +2,19 @@
 const path = require("path");
 const nextConfig = {
   reactStrictMode: false,
-  // Makes async headers not working
-  // i18n: {
-  //   locales: ["en"],
-  //   defaultLocale: "en",
-  // },
   typescript: {
     ignoreBuildErrors: true,
+  },
+  // Makes async headers not working, only one async headers is allowed
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
   },
 
   async headers() {
     return [
       {
-        source: "/(.*)",
-        locales: ["en"],
-        defaultLocale: "en",
+        source: "/:path*", // Match any route, including top-level routes
         headers: [
           // Defaultly set with Vercel for 2 years, only HTTPS is allowed
           {
