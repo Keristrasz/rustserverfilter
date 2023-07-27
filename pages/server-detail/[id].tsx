@@ -172,9 +172,12 @@ const ServerDetailsPage = () => {
           content={data?.rules?.desc ? data.rules.desc : null}
         />
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
-        <meta property="og:url" content={`https://rustserverfilter.com/${id}`} />
+        <meta
+          property="og:url"
+          content={`https://rustserverfilter.com/server-detail/${id}`}
+        />
         <meta property="og:type" content="website" />
-        <link rel="canonical" href={`https://rustserverfilter.com/${id}`} />
+        <link rel="canonical" href={`https://rustserverfilter.com/server-detail/${id}`} />
 
         <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
         <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
