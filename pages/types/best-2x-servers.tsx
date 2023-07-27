@@ -4,8 +4,8 @@ import {
   SorterType,
   FilterType,
   QueryResponseType,
-} from "../utils/typesTypescript";
-import useUserAuth from "../hooks/useUserAuth";
+} from "../../utils/typesTypescript";
+import useUserAuth from "../../hooks/useUserAuth";
 import useQueryLocation from "@/hooks/useQueryLocation";
 import ResultsTable from "@/components/HOC/ResultsTable";
 import BodyWrapper from "@/components/layout/BodyWrapper";
@@ -18,18 +18,14 @@ interface HomeProps {
 
 const initialSorter: SorterType = { players: -1 };
 const initialFilter: FilterType = {
-  $and: [
-    { rank: { $gte: 4000 } },
-    { players: { $gte: 1 } },
-    { name: { $regex: "pve", $options: "i" } },
-  ],
+  $and: [{ rank: { $gte: 4000 } }, { players: { $gte: 20 } }, { rate: { $in: [2] } }],
 };
 
-const title = "Best PVE Servers | Rust Server Filter - Explore Top Rust PVE Realms";
+const title = "Best 2x Rate Servers | Rust Server Filter - Double the Fun in Rust";
 const desc =
-  "Immerse yourself in the best PVE gameplay on Rust servers with our advanced server filter. Filter by wipe cycles, player counts, and distance to find the ultimate PVE realms. Find your server now for a thrilling PVE adventure!";
-const h1 = "BEST PVE SERVERS";
-const addr = "https://rustserverfilter.com/best-pve-servers";
+  "Experience twice the excitement on the best 2x rate servers with our advanced server filter. Find servers with 2x rates for resources, loot, and progression, filtered by wipe cycles, player counts, and distance. Find your 2x server for Rust adventure!";
+const h1 = "BEST 2x RATE SERVERS";
+const addr = "https://rustserverfilter.com/2x-servers";
 
 function Home({ initialData }: HomeProps) {
   const app = useUserAuth();
@@ -51,6 +47,7 @@ function Home({ initialData }: HomeProps) {
         <meta property="og:description" content={desc} />
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content="https://rustserverfilter.com/" />
+        <meta property="og:type" content="website" />
         <meta property="og:type" content="website" />
         <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
         <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
@@ -83,6 +80,13 @@ function Home({ initialData }: HomeProps) {
       <h1 className="font-rust mt-8 mb-4 text-6xl text-center tracking-[0.065rem] [text-shadow:_6px_6px_0_rgb(0_0_0_/_60%)]">
         {h1}
       </h1>
+      <div className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 m-4 mt-4 max-w-6xl border border-black w-full">
+        <div className="flex flex-wrap items-center justify-start">
+          <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4  sm:ml-0 ">
+            {title}
+          </div>
+        </div>
+      </div>
       <ResultsTable
         app={app}
         filter={filter}

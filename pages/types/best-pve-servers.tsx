@@ -4,8 +4,8 @@ import {
   SorterType,
   FilterType,
   QueryResponseType,
-} from "../utils/typesTypescript";
-import useUserAuth from "../hooks/useUserAuth";
+} from "../../utils/typesTypescript";
+import useUserAuth from "../../hooks/useUserAuth";
 import useQueryLocation from "@/hooks/useQueryLocation";
 import ResultsTable from "@/components/HOC/ResultsTable";
 import BodyWrapper from "@/components/layout/BodyWrapper";
@@ -21,15 +21,15 @@ const initialFilter: FilterType = {
   $and: [
     { rank: { $gte: 4000 } },
     { players: { $gte: 1 } },
-    { name: { $regex: "pvp", $options: "i" } },
+    { name: { $regex: "pve", $options: "i" } },
   ],
 };
 
-const title = "Best PVP Servers | Rust Server Filter - Discover Top Rust PVP Servers";
+const title = "Best PVE Servers | Rust Server Filter - Explore Top Rust PVE Realms";
 const desc =
-  "Engage in intense PVP battles on the best Rust servers with our advanced server filter. Filter by wipe cycles, player counts, and distance to find the ultimate PVP arenas. Find your server now for adrenaline-pumping action!";
-const h1 = "BEST PVP SERVERS";
-const addr = "https://rustserverfilter.com/best-pvp-servers";
+  "Immerse yourself in the best PVE gameplay on Rust servers with our advanced server filter. Filter by wipe cycles, player counts, and distance to find the ultimate PVE realms. Find your server now for a thrilling PVE adventure!";
+const h1 = "BEST PVE SERVERS";
+const addr = "https://rustserverfilter.com/best-pve-servers";
 
 function Home({ initialData }: HomeProps) {
   const app = useUserAuth();

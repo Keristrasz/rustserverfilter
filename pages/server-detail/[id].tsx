@@ -216,7 +216,7 @@ const ServerDetailsPage = () => {
                 Loading server details...
               </p>
             </div>
-            <article className="flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
+            <section className="flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
               {/* FIRST CONTENT */}
               <div className="mb-8 bg-zinc-600 animate-pulse rounded-md h-12 w-auto"></div>
               {Array.from({ length: 5 }).map((_, index) => (
@@ -229,8 +229,8 @@ const ServerDetailsPage = () => {
 
               {/* DESCRIPTION */}
               <div className="bg-zinc-600 animate-pulse rounded-md h-48 w-auto"></div>
-            </article>
-            <article className="flex flex-wrap justify-center my-8">
+            </section>
+            <section className="flex flex-wrap justify-center my-8">
               {Array.from({ length: 4 }).map((_, index) => (
                 <div
                   key={index}
@@ -241,7 +241,7 @@ const ServerDetailsPage = () => {
                   <div className="bg-zinc-600 animate-pulse rounded-md w-[85%] h-[85%]"></div>
                 </div>
               ))}
-            </article>
+            </section>
           </main>
         )}
         {error instanceof Error && <div>An error has occurred: {error.message}</div>}
@@ -249,7 +249,7 @@ const ServerDetailsPage = () => {
           <main className="max-w-[1400px] flex flex-col items-center mt-1">
             <p className="text-xl m-1 mb-4 text-gray-200"> Server details loaded</p>
             {data && (
-              <article className="min-w-800px max-w-2xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
+              <section className="min-w-800px max-w-2xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
                 <p className="text-lg font-medium text-rustFour">Server name:</p>
                 <h1 className="text-2xl font-bold text-gray-300 mb-4">{data.name}</h1>
                 {/* FIRST CONTENT */}
@@ -405,7 +405,7 @@ const ServerDetailsPage = () => {
                   <h3 className="text-xl font-medium text-rustFour">Description:</h3>
                   <p className="text-gray-300"> {data.rules?.description}</p>
                 </div>
-              </article>
+              </section>
             )}
             {data.players_history && (
               <ServerGraphs players_history={data.players_history} />

@@ -4,28 +4,31 @@ import {
   SorterType,
   FilterType,
   QueryResponseType,
-} from "../utils/typesTypescript";
-import useUserAuth from "../hooks/useUserAuth";
+} from "../../utils/typesTypescript";
+import useUserAuth from "../../hooks/useUserAuth";
 import useQueryLocation from "@/hooks/useQueryLocation";
 import ResultsTable from "@/components/HOC/ResultsTable";
 import BodyWrapper from "@/components/layout/BodyWrapper";
 import { InfiniteData } from "@tanstack/react-query";
 import Head from "next/head";
-
 interface HomeProps {
   initialData: InfiniteData<QueryResponseType>;
 }
 
 const initialSorter: SorterType = { players: -1 };
 const initialFilter: FilterType = {
-  $and: [{ rank: { $gte: 4000 } }, { players: { $gte: 20 } }, { rate: { $in: [2] } }],
+  $and: [
+    { rank: { $gte: 4000 } },
+    { players: { $gte: 1 } },
+    { name: { $regex: "pvp", $options: "i" } },
+  ],
 };
 
-const title = "Best 2x Rate Servers | Rust Server Filter - Double the Fun in Rust";
+const title = "Best PVP Servers | Rust Server Filter - Discover Top Rust PVP Servers";
 const desc =
-  "Experience twice the excitement on the best 2x rate servers with our advanced server filter. Find servers with 2x rates for resources, loot, and progression, filtered by wipe cycles, player counts, and distance. Find your 2x server for Rust adventure!";
-const h1 = "BEST 2x RATE SERVERS";
-const addr = "https://rustserverfilter.com/2x-servers";
+  "Engage in intense PVP battles on the best Rust servers with our advanced server filter. Filter by wipe cycles, player counts, and distance to find the ultimate PVP arenas. Find your server now for adrenaline-pumping action!";
+const h1 = "BEST PVP SERVERS";
+const addr = "https://rustserverfilter.com/best-pvp-servers";
 
 function Home({ initialData }: HomeProps) {
   const app = useUserAuth();
@@ -47,7 +50,6 @@ function Home({ initialData }: HomeProps) {
         <meta property="og:description" content={desc} />
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content="https://rustserverfilter.com/" />
-        <meta property="og:type" content="website" />
         <meta property="og:type" content="website" />
         <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
         <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
