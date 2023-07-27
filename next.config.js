@@ -3,12 +3,19 @@ const path = require("path");
 const nextConfig = {
   reactStrictMode: false,
   // Makes async headers not working
+  // i18n: {
+  //   locales: ["en"],
+  //   defaultLocale: "en",
+  // },
   typescript: {
     ignoreBuildErrors: true,
   },
+
   async headers() {
     return [
       {
+        locales: ["en"],
+        defaultLocale: "en",
         source: "/(.*)",
         headers: [
           // Defaultly set with Vercel for 2 years, only HTTPS is allowed
@@ -83,10 +90,6 @@ const nextConfig = {
         destination: "/api/sitemap",
       },
     ];
-  },
-  i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
   },
 };
 
