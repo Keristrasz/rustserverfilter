@@ -14,9 +14,9 @@ const nextConfig = {
   async headers() {
     return [
       {
+        source: "/(.*)",
         locales: ["en"],
         defaultLocale: "en",
-        source: "/(.*)",
         headers: [
           // Defaultly set with Vercel for 2 years, only HTTPS is allowed
           {
