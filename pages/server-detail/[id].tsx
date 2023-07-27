@@ -36,7 +36,7 @@ const ServerDetailsPage = () => {
   // let chartHeight = isMobile ? 362 : 362;
 
   const router = useRouter();
-  const { id } = router.query;
+  const { id, serverName, serverDescription } = router.query;
   const { data, isLoading, error, status } = useCustomSingleQuery(id as string);
 
   const userLocation: userLocationType | null = useQueryLocation() || null;
@@ -150,26 +150,32 @@ const ServerDetailsPage = () => {
             ? data.name.length > 60
               ? data.name.substring(0, 60) + "..."
               : data.name
-            : null}
+            : serverName}
         </title>
         <meta
           name="description"
-          content={data?.rules?.desc ? data.rules.desc : null}
+          content={
+            data?.rules?.desc
+              ? data.rules.desc
+              : serverDescription
+              ? serverDescription
+              : serverName
+          }
           key="desc"
         />
         <meta
           property="og:title"
           content={
-            data
-              ? data.name.length > 60
-                ? data.name.substring(0, 60) + "..."
-                : data.name
-              : null
+            data?.rules?.desc
+              ? data.rules.desc
+              : serverDescription
+              ? serverDescription
+              : serverName
           }
         />
         <meta
           property="og:description"
-          content={data?.rules?.desc ? data.rules.desc : null}
+          content={data?.rules?.desc ? data.rules.desc : serverDescription}
         />
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta
@@ -210,6 +216,9 @@ const ServerDetailsPage = () => {
         <div>
           <p className="text-xs text-gray-300">Query IP: {id}</p>
         </div>
+        <h1 className=" mt-4 mb-4 text-6xl text-center tracking-[0.065rem] [text-shadow:_4px_4px_0_rgb(0_0_0_/_60%)]">
+          {serverName}
+        </h1>
         {isLoading && (
           <main className="max-w-6xl flex flex-col items-center mt-1">
             <div className="flex m-1 mb-4">
@@ -254,7 +263,7 @@ const ServerDetailsPage = () => {
             {data && (
               <section className="min-w-800px max-w-2xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
                 <p className="text-lg font-medium text-rustFour">Server name:</p>
-                <h1 className="text-2xl font-bold text-gray-300 mb-4">{data.name}</h1>
+                <h2 className="text-2xl font-bold text-gray-300 mb-4">{data.name}</h2>
                 {/* FIRST CONTENT */}
                 <div className="flex flex-wrap mb-4">
                   <div className="mr-4 mb-4">
