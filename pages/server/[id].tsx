@@ -41,7 +41,9 @@ const ServerDetailsPage = () => {
 
   const userLocation: userLocationType | null = useQueryLocation() || null;
 
-  const [serverLocationData, setServerLocationData] = useState<LocationData | undefined>();
+  const [serverLocationData, setServerLocationData] = useState<
+    LocationData | undefined
+  >();
   useEffect(() => {
     const fetchServerLocation = async () => {
       try {
@@ -113,15 +115,34 @@ const ServerDetailsPage = () => {
         />
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content={`https://rustserverfilter.com/${id}`} />
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome.png" />
+ <meta property="og:type" content="website" />
+              <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
         <link
-          rel="apple-touch-icon"
+          rel="icon"
           type="image/png"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
+          sizes="192x192"
+          href="/android-icon-192x192.png"
         />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
         <link rel="manifest" href="/manifest.json" />
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+        <meta name="theme-color" content="#ffffff" />
+
+
       </Head> */}
       <Head>
         <title>
@@ -146,18 +167,40 @@ const ServerDetailsPage = () => {
               : null
           }
         />
-        <meta property="og:description" content={data?.rules?.desc ? data.rules.desc : null} />
+        <meta
+          property="og:description"
+          content={data?.rules?.desc ? data.rules.desc : null}
+        />
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content={`https://rustserverfilter.com/${id}`} />
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome.png" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href={`https://rustserverfilter.com/${id}`} />
+
+        <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
         <link
-          rel="apple-touch-icon"
+          rel="icon"
           type="image/png"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
+          sizes="192x192"
+          href="/android-icon-192x192.png"
         />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
         <link rel="manifest" href="/manifest.json" />
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+        <meta name="theme-color" content="#ffffff" />
       </Head>
 
       <div className="m-4 max-w-6xl flex flex-col justify-center items-center ">
@@ -168,7 +211,10 @@ const ServerDetailsPage = () => {
           <main className="max-w-6xl flex flex-col items-center mt-1">
             <div className="flex m-1 mb-4">
               <Spinner />
-              <p className="text-xl font-bold m-1 text-gray-200"> Loading server details...</p>
+              <p className="text-xl font-bold m-1 text-gray-200">
+                {" "}
+                Loading server details...
+              </p>
             </div>
             <article className="flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
               {/* FIRST CONTENT */}
@@ -210,7 +256,9 @@ const ServerDetailsPage = () => {
                 <div className="flex flex-wrap mb-4">
                   <div className="mr-4 mb-4">
                     <h4 className="text-lg font-medium text-rustFour">Server info:</h4>
-                    {data.rank && <p className="text-gray-400">Score: {data.rank / 100}</p>}
+                    {data.rank && (
+                      <p className="text-gray-400">Score: {data.rank / 100}</p>
+                    )}
                     <p className="text-gray-300">
                       Game Ip:{" "}
                       <span
@@ -225,7 +273,9 @@ const ServerDetailsPage = () => {
                       Players: {data.players} / {data.max_players}
                     </p>
                     <p className="text-gray-300">Last Wipe: {getCustomDate(data.born)}</p>
-                    <p className="text-gray-300">Next Wipe: {getCustomDate(data.born_next)}</p>
+                    <p className="text-gray-300">
+                      Next Wipe: {getCustomDate(data.born_next)}
+                    </p>
                     {data.rate ? (
                       <p className="text-gray-300">Rate: {data.rate}x</p>
                     ) : (
@@ -257,7 +307,9 @@ const ServerDetailsPage = () => {
                     )}
                     {/* <p className="text-gray-400">Max Players: {data.max_players}</p> */}
                     <p className="text-gray-400">Modded: {data.modded ? "Yes" : "No"}</p>
-                    <p className="text-gray-400">Vanilla: {data.vanilla ? "Yes" : "No"}</p>
+                    <p className="text-gray-400">
+                      Vanilla: {data.vanilla ? "Yes" : "No"}
+                    </p>
                     <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
                     <p className="text-gray-400">Gametype: {data.gametype?.join(", ")}</p>
                     <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
@@ -272,7 +324,9 @@ const ServerDetailsPage = () => {
                   {data.rules?.location ? (
                     <div className="">
                       <h4 className="text-lg font-medium text-rustFour">Location:</h4>
-                      <p className="text-gray-300">Country: {data.rules?.location?.country}</p>
+                      <p className="text-gray-300">
+                        Country: {data.rules?.location?.country}
+                      </p>
                       <p className="text-gray-300">
                         Distance:{" "}
                         {userLocation &&
@@ -287,13 +341,17 @@ const ServerDetailsPage = () => {
                           : "Cannot retrieve location"}{" "}
                       </p>
                       {serverLocationData?.region && (
-                        <p className="text-gray-400">Region: {serverLocationData.region}</p>
+                        <p className="text-gray-400">
+                          Region: {serverLocationData.region}
+                        </p>
                       )}
                       {serverLocationData?.city && (
                         <p className="text-gray-400">City: {serverLocationData.city}</p>
                       )}
 
-                      <p className="text-gray-400">Latitude: {data.rules.location.latitude}</p>
+                      <p className="text-gray-400">
+                        Latitude: {data.rules.location.latitude}
+                      </p>
                       <p className="text-gray-400">
                         Longitude: {data.rules.location.longitude}
                       </p>
@@ -302,7 +360,9 @@ const ServerDetailsPage = () => {
                     <div>
                       <h4 className="text-lg font-medium text-rustFour">Location</h4>
                       {serverLocationData?.country && (
-                        <p className="text-gray-300">Country: {serverLocationData.country}</p>
+                        <p className="text-gray-300">
+                          Country: {serverLocationData.country}
+                        </p>
                       )}
                       {serverLocationData?.latitude &&
                         serverLocationData?.longitude &&
@@ -319,7 +379,9 @@ const ServerDetailsPage = () => {
                           </p>
                         )}
                       {serverLocationData?.region && (
-                        <p className="text-gray-400">Region: {serverLocationData.region}</p>
+                        <p className="text-gray-400">
+                          Region: {serverLocationData.region}
+                        </p>
                       )}
                       {serverLocationData?.city && (
                         <p className="text-gray-400">City: {serverLocationData.city}</p>
@@ -345,7 +407,9 @@ const ServerDetailsPage = () => {
                 </div>
               </article>
             )}
-            {data.players_history && <ServerGraphs players_history={data.players_history} />}
+            {data.players_history && (
+              <ServerGraphs players_history={data.players_history} />
+            )}
           </main>
         )}
       </div>
