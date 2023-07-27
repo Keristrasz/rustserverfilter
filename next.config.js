@@ -3,10 +3,10 @@ const path = require("path");
 const nextConfig = {
   reactStrictMode: false,
   // Makes async headers not working
-  // i18n: {
-  //   locales: ["en"],
-  //   defaultLocale: "en",
-  // },
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
+  },
   typescript: {
     ignoreBuildErrors: true,
   },
