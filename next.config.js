@@ -6,10 +6,6 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
-  },
   async headers() {
     return [
       {
@@ -87,6 +83,10 @@ const nextConfig = {
         destination: "/api/sitemap",
       },
     ];
+  },
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
   },
 };
 
