@@ -35,8 +35,6 @@ export const fetchAllServers = async (
   pageSize: number,
   app: any
 ) => {
-  "fetching data" + app;
-
   const mongodb = app.currentUser?.mongoClient("mongodb-atlas");
   if (!mongodb) return;
 
@@ -48,18 +46,18 @@ export const fetchAllServers = async (
     },
     {
       $project: {
+        difficulty: 0,
+        gameport: 0,
         gametype: 0,
-        _id: 0,
-        "rules.description": 0,
+        max_players: 0,
+        modded: 0,
+        players_history: 0,
         "rules.url": 0,
         "rules.seed": 0,
         "rules.fpv_avg": 0,
-        players_history: 0,
-        gameport: 0,
-        modded: 0,
+        "rules.uptime": 0,
         vanilla: 0,
-        max_players: 0,
-        difficulty: 0,
+        _id: 0,
       },
     },
     {
