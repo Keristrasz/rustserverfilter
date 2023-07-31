@@ -206,7 +206,7 @@ const ServerDetailsPage = () => {
         <div>
           <p className="text-xs text-gray-300">Query IP: {id}</p>
         </div>
-        <h1 className="mt-4 mb-4 text-5xl text-center [text-shadow:_4px_4px_0_rgb(0_0_0_/_60%)] sm:text-2xl md:text-3xl lg:text-4xl xl:text-4xl sm:text-2xl">
+        <h1 className="mt-4 mb-4 text-3xl md:text-6xl text-center [text-shadow:_4px_4px_0_rgb(0_0_0_/_60%)]">
           {serverName}
         </h1>
         {isLoading && (
