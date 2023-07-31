@@ -6,7 +6,7 @@ import AnimatedBackground from "./AnimatedBackground";
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   let isMobile = false;
 
-  const MOBILE_WIDTH_THRESHOLD = 800;
+  const MOBILE_WIDTH_THRESHOLD = 1100;
   isMobile = typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
 
   return (

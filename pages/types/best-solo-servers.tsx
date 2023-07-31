@@ -18,11 +18,7 @@ interface HomeProps {
 
 const initialSorter: SorterType = { players: -1 };
 const initialFilter: FilterType = {
-  $and: [
-    { rank: { $gte: 4000 } },
-    { players: { $gte: 5 } },
-    { max_group_size: { $in: [1] } },
-  ],
+  $and: [{ rank: { $gte: 4000 } }, { players: { $gte: 5 } }, { max_group_size: { $in: [1] } }],
 };
 
 const title = "Best Solo Servers | Rust Server Filter - Find Top Rust Solo Servers";
@@ -61,12 +57,7 @@ function Home({ initialData }: HomeProps) {
         <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
         <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="192x192"
-          href="/android-icon-192x192.png"
-        />
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -80,7 +71,7 @@ function Home({ initialData }: HomeProps) {
 
         <link rel="canonical" href={addr} />
       </Head>
-      <h1 className="font-rust mt-8 mb-4 text-6xl text-center tracking-[0.065rem] [text-shadow:_6px_6px_0_rgb(0_0_0_/_60%)]">
+      <h1 className="font-rust mt-8 mb-4 text-5xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-4xl text-center [text-shadow:_6px_6px_0_rgb(0_0_0_/_60%)]">
         {h1}
       </h1>
       <section className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 m-4 mt-4 max-w-6xl border border-black w-full">
