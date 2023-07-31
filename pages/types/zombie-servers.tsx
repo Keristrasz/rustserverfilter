@@ -80,7 +80,7 @@ function Home({ initialData }: HomeProps) {
 
         <link rel="canonical" href={addr} />
       </Head>
-            <h1 className="font-rust mt-8 mb-4 text-5xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-4xl text-center [text-shadow:_6px_6px_0_rgb(0_0_0_/_60%)]">
+      <h1 className="font-rust mt-8 mb-4 text-6xl text-center tracking-[0.065rem] [text-shadow:_6px_6px_0_rgb(0_0_0_/_60%)]">
         {h1}
       </h1>
       <section className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 m-4 mt-4 max-w-6xl border border-black w-full">
