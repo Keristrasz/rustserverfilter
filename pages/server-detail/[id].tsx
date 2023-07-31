@@ -41,9 +41,7 @@ const ServerDetailsPage = () => {
 
   const userLocation: userLocationType | null = useQueryLocation() || null;
 
-  const [serverLocationData, setServerLocationData] = useState<
-    LocationData | undefined
-  >();
+  const [serverLocationData, setServerLocationData] = useState<LocationData | undefined>();
   useEffect(() => {
     const fetchServerLocation = async () => {
       try {
@@ -178,10 +176,7 @@ const ServerDetailsPage = () => {
           content={data?.rules?.desc ? data.rules.desc : serverDescription}
         />
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
-        <meta
-          property="og:url"
-          content={`https://rustserverfilter.com/server-detail/${id}`}
-        />
+        <meta property="og:url" content={`https://rustserverfilter.com/server-detail/${id}`} />
         <meta property="og:type" content="website" />
         <link rel="canonical" href={`https://rustserverfilter.com/server-detail/${id}`} />
 
@@ -194,12 +189,7 @@ const ServerDetailsPage = () => {
         <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
         <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="192x192"
-          href="/android-icon-192x192.png"
-        />
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -216,17 +206,14 @@ const ServerDetailsPage = () => {
         <div>
           <p className="text-xs text-gray-300">Query IP: {id}</p>
         </div>
-        <h1 className=" mt-4 mb-4 text-6xl text-center tracking-[0.065rem] [text-shadow:_4px_4px_0_rgb(0_0_0_/_60%)]">
+        <h1 className="mt-4 mb-4 text-5xl text-center [text-shadow:_4px_4px_0_rgb(0_0_0_/_60%)] sm:text-2xl md:text-3xl lg:text-4xl xl:text-4xl sm:text-2xl">
           {serverName}
         </h1>
         {isLoading && (
           <main className="max-w-6xl flex flex-col items-center mt-1">
             <div className="flex m-1 mb-4">
               <Spinner />
-              <p className="text-xl font-bold m-1 text-gray-200">
-                {" "}
-                Loading server details...
-              </p>
+              <p className="text-xl font-bold m-1 text-gray-200"> Loading server details...</p>
             </div>
             <section className="flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
               {/* FIRST CONTENT */}
@@ -268,9 +255,7 @@ const ServerDetailsPage = () => {
                 <div className="flex flex-wrap mb-4">
                   <div className="mr-4 mb-4">
                     <h4 className="text-lg font-medium text-rustFour">Server info:</h4>
-                    {data.rank && (
-                      <p className="text-gray-400">Score: {data.rank / 100}</p>
-                    )}
+                    {data.rank && <p className="text-gray-400">Score: {data.rank / 100}</p>}
                     <p className="text-gray-300">
                       Game Ip:{" "}
                       <span
@@ -285,9 +270,7 @@ const ServerDetailsPage = () => {
                       Players: {data.players} / {data.max_players}
                     </p>
                     <p className="text-gray-300">Last Wipe: {getCustomDate(data.born)}</p>
-                    <p className="text-gray-300">
-                      Next Wipe: {getCustomDate(data.born_next)}
-                    </p>
+                    <p className="text-gray-300">Next Wipe: {getCustomDate(data.born_next)}</p>
                     {data.rate ? (
                       <p className="text-gray-300">Rate: {data.rate}x</p>
                     ) : (
@@ -319,9 +302,7 @@ const ServerDetailsPage = () => {
                     )}
                     {/* <p className="text-gray-400">Max Players: {data.max_players}</p> */}
                     <p className="text-gray-400">Modded: {data.modded ? "Yes" : "No"}</p>
-                    <p className="text-gray-400">
-                      Vanilla: {data.vanilla ? "Yes" : "No"}
-                    </p>
+                    <p className="text-gray-400">Vanilla: {data.vanilla ? "Yes" : "No"}</p>
                     <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
                     <p className="text-gray-400">Gametype: {data.gametype?.join(", ")}</p>
                     <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
@@ -336,9 +317,7 @@ const ServerDetailsPage = () => {
                   {data.rules?.location ? (
                     <div className="">
                       <h4 className="text-lg font-medium text-rustFour">Location:</h4>
-                      <p className="text-gray-300">
-                        Country: {data.rules?.location?.country}
-                      </p>
+                      <p className="text-gray-300">Country: {data.rules?.location?.country}</p>
                       <p className="text-gray-300">
                         Distance:{" "}
                         {userLocation &&
@@ -353,17 +332,13 @@ const ServerDetailsPage = () => {
                           : "Cannot retrieve location"}{" "}
                       </p>
                       {serverLocationData?.region && (
-                        <p className="text-gray-400">
-                          Region: {serverLocationData.region}
-                        </p>
+                        <p className="text-gray-400">Region: {serverLocationData.region}</p>
                       )}
                       {serverLocationData?.city && (
                         <p className="text-gray-400">City: {serverLocationData.city}</p>
                       )}
 
-                      <p className="text-gray-400">
-                        Latitude: {data.rules.location.latitude}
-                      </p>
+                      <p className="text-gray-400">Latitude: {data.rules.location.latitude}</p>
                       <p className="text-gray-400">
                         Longitude: {data.rules.location.longitude}
                       </p>
@@ -372,9 +347,7 @@ const ServerDetailsPage = () => {
                     <div>
                       <h4 className="text-lg font-medium text-rustFour">Location</h4>
                       {serverLocationData?.country && (
-                        <p className="text-gray-300">
-                          Country: {serverLocationData.country}
-                        </p>
+                        <p className="text-gray-300">Country: {serverLocationData.country}</p>
                       )}
                       {serverLocationData?.latitude &&
                         serverLocationData?.longitude &&
@@ -391,9 +364,7 @@ const ServerDetailsPage = () => {
                           </p>
                         )}
                       {serverLocationData?.region && (
-                        <p className="text-gray-400">
-                          Region: {serverLocationData.region}
-                        </p>
+                        <p className="text-gray-400">Region: {serverLocationData.region}</p>
                       )}
                       {serverLocationData?.city && (
                         <p className="text-gray-400">City: {serverLocationData.city}</p>
@@ -419,9 +390,7 @@ const ServerDetailsPage = () => {
                 </div>
               </section>
             )}
-            {data.players_history && (
-              <ServerGraphs players_history={data.players_history} />
-            )}
+            {data.players_history && <ServerGraphs players_history={data.players_history} />}
           </main>
         )}
       </div>
