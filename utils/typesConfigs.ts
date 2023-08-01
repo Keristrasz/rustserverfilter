@@ -1,6 +1,8 @@
 const roundBySeconds = 100;
 const nowMiliseconds = new Date().getTime();
 const nowSeconds = Math.floor(nowMiliseconds / 1000 / roundBySeconds) * roundBySeconds - 100;
+const timestampTenMonthsAgo =
+  Math.floor((nowMiliseconds / 1000 - 28000000) / roundBySeconds) * roundBySeconds;
 import { SorterType, FilterType } from "../utils/typesTypescript";
 
 interface TypesConfig {
@@ -142,7 +144,11 @@ export const typesConfigs: TypesConfig[] = [
     addr: "https://rustserverfilter.com/types/best-wiped-servers",
     initialSorterSSG: { born: -1 },
     initialFilterSSG: {
-      $and: [{ rank: { $gte: 4000 } }, { players: { $gte: 1 } }],
+      $and: [
+        { rank: { $gte: 4000 } },
+        { players: { $gte: 1 } },
+        { born: { $lte: nowSeconds, $gte: timestampTenMonthsAgo } },
+      ],
     },
     href: "best-wiped-servers",
     text: "Best wiped just now servers",
