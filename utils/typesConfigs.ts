@@ -24,7 +24,7 @@ export const typesConfigs: TypesConfig[] = [
     initialFilterSSG: {
       $and: [{ rank: { $gte: 4000 } }, { players: { $gte: 20 } }, { rate: { $in: [2] } }],
     },
-    href: "/types/best-2x-servers",
+    href: "best-2x-servers",
     text: "Best rust 2x servers",
   },
   {
@@ -40,7 +40,7 @@ export const typesConfigs: TypesConfig[] = [
         { max_group_size: { $in: [3] } },
       ],
     },
-    href: "/types/best-trio-servers",
+    href: "best-trio-servers",
     text: "Best trio servers",
   },
   {
@@ -56,7 +56,7 @@ export const typesConfigs: TypesConfig[] = [
         { max_group_size: { $in: [2] } },
       ],
     },
-    href: "/types/best-duo-servers",
+    href: "best-duo-servers",
     text: "Best duo servers",
   },
   {
@@ -72,7 +72,7 @@ export const typesConfigs: TypesConfig[] = [
         { max_group_size: { $in: [1] } },
       ],
     },
-    href: "/types/best-solo-servers",
+    href: "best-solo-servers",
     text: "Best solo servers",
   },
   {
@@ -88,7 +88,7 @@ export const typesConfigs: TypesConfig[] = [
         { name: { $regex: "beginner", $options: "i" } },
       ],
     },
-    href: "/types/best-beginner-servers",
+    href: "best-beginner-servers",
     text: "Best beginner servers",
   },
   {
@@ -104,7 +104,7 @@ export const typesConfigs: TypesConfig[] = [
         { name: { $regex: "pvp", $options: "i" } },
       ],
     },
-    href: "/types/best-pvp-servers",
+    href: "best-pvp-servers",
     text: "Best pvp servers",
   },
   {
@@ -120,7 +120,7 @@ export const typesConfigs: TypesConfig[] = [
         { name: { $regex: "pve", $options: "i" } },
       ],
     },
-    href: "/types/best-pve-servers",
+    href: "best-pve-servers",
     text: "Best pve servers",
   },
   {
@@ -132,7 +132,7 @@ export const typesConfigs: TypesConfig[] = [
     initialFilterSSG: {
       $and: [{ rank: { $gte: 4000 } }, { players: { $gte: 100 } }],
     },
-    href: "/types/best-rust-servers",
+    href: "best-rust-servers",
     text: "Best rust servers",
   },
   {
@@ -144,7 +144,7 @@ export const typesConfigs: TypesConfig[] = [
     initialFilterSSG: {
       $and: [{ rank: { $gte: 4000 } }, { players: { $gte: 1 } }],
     },
-    href: "/types/best-wiped-servers",
+    href: "best-wiped-servers",
     text: "Best wiped just now servers",
   },
   {
@@ -160,7 +160,7 @@ export const typesConfigs: TypesConfig[] = [
         { born_next: { $gte: nowSeconds } },
       ],
     },
-    href: "/types/servers-wipe-soon",
+    href: "servers-wipe-soon",
     text: "Servers about to wipe",
   },
   {
@@ -176,7 +176,7 @@ export const typesConfigs: TypesConfig[] = [
         { name: { $regex: "facepunch", $options: "i" } },
       ],
     },
-    href: "/types/facepunch",
+    href: "facepunch",
     text: "Facepunch rust servers",
   },
   {
@@ -192,7 +192,7 @@ export const typesConfigs: TypesConfig[] = [
         { name: { $regex: "reddit", $options: "i" } },
       ],
     },
-    href: "/types/reddit",
+    href: "reddit",
     text: "Reddit rust servers",
   },
   {
@@ -208,7 +208,7 @@ export const typesConfigs: TypesConfig[] = [
         { name: { $regex: "rustafied", $options: "i" } },
       ],
     },
-    href: "/types/rustafied",
+    href: "rustafied",
     text: "Rustafied rust servers",
   },
   {
@@ -224,7 +224,7 @@ export const typesConfigs: TypesConfig[] = [
         { name: { $regex: "rusticated", $options: "i" } },
       ],
     },
-    href: "/types/rusticated",
+    href: "rusticated",
     text: "Rusticated rust servers",
   },
   {
@@ -240,7 +240,7 @@ export const typesConfigs: TypesConfig[] = [
         { name: { $regex: "rustoria", $options: "i" } },
       ],
     },
-    href: "/types/rustoria",
+    href: "rustoria",
     text: "Rustoria rust servers",
   },
   {
@@ -256,7 +256,7 @@ export const typesConfigs: TypesConfig[] = [
         { name: { $regex: "rusty moose", $options: "i" } },
       ],
     },
-    href: "/types/rusty-moose",
+    href: "rusty-moose",
     text: "Rusty Moose rust servers",
   },
   {
@@ -272,7 +272,7 @@ export const typesConfigs: TypesConfig[] = [
         { name: { $regex: "survivors.gg", $options: "i" } },
       ],
     },
-    href: "/types/survivors",
+    href: "survivors",
     text: "Survivors.gg rust servers",
   },
   {
@@ -288,7 +288,7 @@ export const typesConfigs: TypesConfig[] = [
         { name: { $regex: "vital rust", $options: "i" } },
       ],
     },
-    href: "/types/vital-rust",
+    href: "vital-rust",
     text: "Vital Rust servers",
   },
   {
@@ -304,7 +304,7 @@ export const typesConfigs: TypesConfig[] = [
         { name: { $regex: "warbandits", $options: "i" } },
       ],
     },
-    href: "/types/warbandits",
+    href: "warbandits",
     text: "Warbandits Rust servers",
   },
   {
@@ -320,7 +320,7 @@ export const typesConfigs: TypesConfig[] = [
         { name: { $regex: "zombie", $options: "i" } },
       ],
     },
-    href: "/types/zombie-servers",
+    href: "zombie-servers",
     text: "Zombie Rust servers",
   },
 ];

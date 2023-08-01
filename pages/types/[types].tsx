@@ -24,14 +24,14 @@ import { typesConfigs } from "@/utils/typesConfigs";
 
 export async function getStaticPaths() {
   const paths = typesConfigs.map((config) => ({
-    params: { serverType: config.href.replace("/types/", "") },
+    params: { serverType: config.href },
   }));
   return { paths, fallback: false };
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const serverType = params?.serverType as string;
-  const typeConfig = typesConfigs.find((config) => config.href === `types/${serverType}`);
+  const typeConfig = typesConfigs.find((config) => config.href === `${serverType}`);
 
   if (!typeConfig) {
     return { notFound: true };
