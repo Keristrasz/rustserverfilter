@@ -12,7 +12,7 @@ import Form from "@/components/HOC/Form";
 import BodyWrapper from "@/components/layout/BodyWrapper";
 import { InfiniteData } from "@tanstack/react-query";
 
-//TODO Distance sort by loaded initialData
+//TODO Distance sort by loaded initialDataSSG
 
 import { fetchAllServers } from "@/utils/fetchAllServers";
 import * as Realm from "realm-web";
@@ -20,9 +20,9 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 
 export const getStaticProps: GetStaticProps = async () => {
-  // Fetch initialSorter and initialFilter from an API or any other initialData source
-  const initialSorter: SorterType = { players: -1 };
-  const initialFilter: FilterType = {
+  // Fetch initialSorter and initialFilter from an API or any other initialDataSSG source
+  const initialSorterSSG: SorterType = { players: -1 };
+  const initialFilterSSG: FilterType = {
     $and: [{ rank: { $gte: 500 } }, { players: { $gte: 20 } }],
   };
   const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
@@ -31,27 +31,27 @@ export const getStaticProps: GetStaticProps = async () => {
     await app.logIn(anonymousUser);
   }
 
-  const _initialData: QueryResponseType = await fetchAllServers(
-    initialFilter,
-    initialSorter,
+  const _initialDataSSG: QueryResponseType = await fetchAllServers(
+    initialFilterSSG,
+    initialSorterSSG,
     0,
     40,
     app
   );
 
-  const initialData = {
-    pages: [_initialData],
+  const initialDataSSG = {
+    pages: [_initialDataSSG],
   };
 
   return {
     props: {
-      initialData,
+      initialDataSSG,
     },
     // revalidate: 60, // Re-generate the page every 60 seconds (optional)
   };
 };
 
-// Helper function to get initialData from local storage
+// Helper function to get initialDataSSG from local storage
 const getFromLocalStorage = (key: string, defaultValue: any): any => {
   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
     const storedValue = localStorage.getItem(key);
@@ -61,7 +61,7 @@ const getFromLocalStorage = (key: string, defaultValue: any): any => {
   }
 };
 
-// Helper function to save initialData to local storage
+// Helper function to save initialDataSSG to local storage
 const saveToLocalStorage = (key: string, value: any): void => {
   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
     localStorage.setItem(key, JSON.stringify(value));
@@ -69,10 +69,10 @@ const saveToLocalStorage = (key: string, value: any): void => {
 };
 
 interface HomeProps {
-  initialData: InfiniteData<QueryResponseType>;
+  initialDataSSG: InfiniteData<QueryResponseType>;
 }
 
-function Home({ initialData }: HomeProps) {
+function Home({ initialDataSSG }: HomeProps) {
   const app = useUserAuth();
 
   const [sorter, setSorter] = useState<SorterType>(
@@ -174,7 +174,7 @@ function Home({ initialData }: HomeProps) {
         setFilter={setFilter}
         setSorter={setSorter}
         userLocation={userLocation}
-        initialData={initialData}
+        initialDataSSG={initialDataSSG}
         isSSG={isSSG}
       />
     </BodyWrapper>

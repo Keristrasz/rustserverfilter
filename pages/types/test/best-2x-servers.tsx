@@ -4,8 +4,8 @@ import {
   SorterType,
   FilterType,
   QueryResponseType,
-} from "../../utils/typesTypescript";
-import useUserAuth from "../../hooks/useUserAuth";
+} from "../../../utils/typesTypescript";
+import useUserAuth from "../../../hooks/useUserAuth";
 import useQueryLocation from "@/hooks/useQueryLocation";
 import ResultsTable from "@/components/HOC/ResultsTable";
 import BodyWrapper from "@/components/layout/BodyWrapper";

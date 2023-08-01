@@ -33,8 +33,7 @@ const columnDataForMonitor = [
     value: "players",
   },
   {
-    tooltip:
-      "Estimate of next wipe if needed data are provided. You can find more in FAQ",
+    tooltip: "Estimate of next wipe if needed data are provided. You can find more in FAQ",
     isClickable: true,
     styles: "w-2/12",
     name: "NEXT WIPE",
@@ -92,8 +91,7 @@ const columnDataForMonitorForMobile = [
     value: "players",
   },
   {
-    tooltip:
-      "Estimate of next wipe if needed data are provided. You can find more in FAQ",
+    tooltip: "Estimate of next wipe if needed data are provided. You can find more in FAQ",
     isClickable: true,
     styles: "w-3/12 text-[0.675rem]",
     name: "NEXT WIPE",
@@ -117,7 +115,7 @@ interface ResultsTableProps {
   userLocation: { latitude: number; longitude: number } | null;
   setFilter: React.Dispatch<React.SetStateAction<FilterType>>;
   setSorter: React.Dispatch<React.SetStateAction<SorterType | {}>>;
-  initialData?: InfiniteData<QueryResponseType>;
+  initialDataSSG?: InfiniteData<QueryResponseType>;
   isSSG: Boolean;
 }
 
@@ -137,7 +135,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
   setFilter,
   setSorter,
   userLocation,
-  initialData,
+  initialDataSSG,
   isSSG,
 }) => {
   // ("resulttablerender");
@@ -147,7 +145,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
   const ref = useInfiniteScroll(hasNextPage, fetchNextPage);
 
   const router = useRouter();
-  let data = initialData;
+  let data = initialDataSSG;
   if (queryData) {
     data = queryData;
   }
@@ -236,7 +234,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
 
   if (error instanceof Error) {
     isResultsRendered = <div>An error has occurred: {error.message}</div>;
-  } else if (status === "success" || initialData) {
+  } else if (status === "success" || initialDataSSG) {
     isResultsRendered = (
       <div className="overflow-x-clip m-4 mb-8 max-w-6xl ">
         <table className=" table-fixed border w-full border-black  ">
@@ -254,8 +252,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   className="text-sm relative text-center bg-green-600 text-gray-200"
                   colSpan={11}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
-                  SERVERS
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
                 </td>
               </tr>
             ) : (
