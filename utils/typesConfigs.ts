@@ -3,7 +3,7 @@ const nowMiliseconds = new Date().getTime();
 const nowSeconds = Math.floor(nowMiliseconds / 1000 / roundBySeconds) * roundBySeconds - 100;
 import { SorterType, FilterType } from "../utils/typesTypescript";
 
-export interface TypesConfig {
+interface TypesConfig {
   title: string;
   desc: string;
   h1: string;
