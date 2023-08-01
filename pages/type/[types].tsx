@@ -11,7 +11,7 @@ import ResultsTable from "@/components/HOC/ResultsTable";
 import BodyWrapper from "@/components/layout/BodyWrapper";
 import { InfiniteData } from "@tanstack/react-query";
 import Head from "next/head";
-import { GetStaticProps } from "next";
+import { GetStaticProps, GetStaticPaths } from "next";
 import * as Realm from "realm-web";
 import { fetchAllServers } from "@/utils/fetchAllServers";
 
@@ -22,16 +22,16 @@ import { typesConfigs } from "@/utils/typesConfigs";
 //   $and: [{ rank: { $gte: 4000 } }, { players: { $gte: 20 } }, { rate: { $in: [2] } }],
 // };
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const paths = typesConfigs.map((config) => ({
-    params: { serverType: config.href },
+    params: { types: config.href },
   }));
   return { paths, fallback: false };
-}
+};
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const serverType = params?.serverType as string;
-  const typeConfig = typesConfigs.find((config) => config.href === `${serverType}`);
+  const serverType = params?.types as string;
+  const typeConfig = typesConfigs.find((config) => config.href === serverType);
 
   if (!typeConfig) {
     return { notFound: true };
