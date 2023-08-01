@@ -49,7 +49,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     initialFilterSSG,
     initialSorterSSG,
     0,
-    50,
+    40,
     app
   );
 

@@ -32,7 +32,7 @@ export const typesConfigs: TypesConfig[] = [
     desc: "Looking for the best Rust trio servers? Explore our advanced server filter with wipe, player count, distance options and more. Find your Rust trio servers now!",
     h1: "BEST TRIO SERVERS",
     addr: "https://rustserverfilter.com/types/best-trio-servers",
-    initialSorterSSG: { born: -1 },
+    initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
         { rank: { $gte: 4000 } },
@@ -152,7 +152,7 @@ export const typesConfigs: TypesConfig[] = [
     desc: "Get ready for fresh start wiping soon servers with our advanced server filter. Find rust server about to wipe, rust servers that wipe today, rust servers wiping soon. Find server now and prepare for a wipe-reset thrill!",
     h1: "BEST SERVERS WIPING SOON",
     addr: "https://rustserverfilter.com/types/servers-wipe-soon",
-    initialSorterSSG: { born_next: -1 },
+    initialSorterSSG: { born_next: 1 },
     initialFilterSSG: {
       $and: [
         { rank: { $gte: 4000 } },
