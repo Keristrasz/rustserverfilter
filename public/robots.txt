@@ -1,3 +1,2 @@
 User-agent: *
 Sitemap: https://rustserverfilter.com/sitemap.xml
-Disallow: https://rustserverfilter.com/rust-dome.mp4
