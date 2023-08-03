@@ -206,11 +206,11 @@ const ServerDetailsPage = () => {
         <div>
           <p className="text-xs text-gray-300">Query IP: {id}</p>
         </div>
-        <h1 className="mt-4 mb-4 text-3xl md:text-5xl text-center [text-shadow:_4px_4px_0_rgb(0_0_0_/_60%)]">
+        <h1 className="mt-4 mb-4 text-3xl whitespace-normal max-w-sm sm:max-w-2xl break-words md:text-5xl text-center [text-shadow:_4px_4px_0_rgb(0_0_0_/_60%)]">
           {serverName}
         </h1>
         {isLoading && (
-          <main className="max-w-6xl flex flex-col items-center mt-1">
+          <main className="max-w-full xl:max-w-6xl flex flex-col items-center mt-1">
             <div className="flex m-1 mb-4">
               <Spinner />
               <p className="text-xl font-bold m-1 text-gray-200"> Loading server details...</p>
@@ -250,7 +250,9 @@ const ServerDetailsPage = () => {
             {data && (
               <section className="min-w-800px max-w-2xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
                 <p className="text-lg font-medium text-rustFour">Server name:</p>
-                <h2 className="text-2xl font-bold text-gray-300 mb-4">{data.name}</h2>
+                <h2 className="text-2xl font-bold break-words text-gray-300 mb-4">
+                  {data.name}
+                </h2>
                 {/* FIRST CONTENT */}
                 <div className="flex flex-wrap mb-4">
                   <div className="mr-4 mb-4">
