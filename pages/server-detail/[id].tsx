@@ -248,13 +248,13 @@ const ServerDetailsPage = () => {
           <main className="max-w-sm sm:max-w-xl xl:max-w-6xl 2xl:max-w-[1400px] flex flex-col items-center mt-1">
             <p className="text-xl m-1 mb-4 text-gray-200"> Server details loaded</p>
             {data && (
-              <section className="max-w-2xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
+              <section className="flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
                 <p className="text-lg font-medium text-rustFour">Server name:</p>
                 <h2 className="text-2xl font-bold break-words text-gray-300 mb-4">
                   {data.name}
                 </h2>
                 {/* FIRST CONTENT */}
-                <div className="flex flex-wrap mb-4">
+                <div className="md:flex md:flex-wrap mb-4">
                   <div className="mr-4 mb-4">
                     <h4 className="text-lg font-medium text-rustFour">Server info:</h4>
                     {data.rank && <p className="text-gray-400">Score: {data.rank / 100}</p>}
