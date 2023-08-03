@@ -79,28 +79,28 @@ const columnDataForMonitorForMobile = [
   {
     tooltip: "",
     isClickable: false,
-    styles: "w-7/12 text-[0.675rem] p-0",
+    styles: "w-7/12 text-xs p-0",
     name: "NAME",
     value: "name",
   },
   {
     tooltip: "Current players online",
     isClickable: true,
-    styles: "w-2/12 text-[0.675rem]",
+    styles: "w-2/12 text-xs",
     name: "PLRS",
     value: "players",
   },
   {
     tooltip: "Estimate of next wipe if needed data are provided. You can find more in FAQ",
     isClickable: true,
-    styles: "w-3/12 text-[0.675rem]",
+    styles: "w-3/12 text-xs",
     name: "NEXT WIPE",
     value: "born_next",
   },
   {
     tooltip: "Last wipe. Click for sorting in ascending or descending order",
     isClickable: true,
-    styles: "w-3/12 text-[0.675rem] p-0",
+    styles: "w-3/12 text-xs p-0",
     name: "LAST WIPE",
     value: "born",
   },
@@ -249,7 +249,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
             {data?.pages[0]?.totalCount[0]?.totalCount ? (
               <tr>
                 <td
-                  className="text-sm relative text-center bg-green-600 text-gray-200"
+                  className="text-sm relative text-center bg-green-600 text-gray-200 [text-shadow:_1px_1px_1px_black]"
                   colSpan={11}
                 >
                   Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
