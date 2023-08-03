@@ -202,7 +202,7 @@ const ServerDetailsPage = () => {
         <meta name="theme-color" content="#ffffff" />
       </Head>
 
-      <div className="m-4 max-w-6xl flex flex-col justify-center items-center ">
+      <div className="m-4 max-w-sm sm:max-w-xl xl:max-w-6xl 2xl:max-w-[1400px] flex flex-col justify-center items-center ">
         <div>
           <p className="text-xs text-gray-300">Query IP: {id}</p>
         </div>
