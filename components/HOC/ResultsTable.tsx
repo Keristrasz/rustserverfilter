@@ -276,10 +276,10 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                       onClick={() => {
                         router.push({
                           pathname: `/server-detail/${mappedServer.addr}`,
-                          query: {
-                            serverName: mappedServer.name,
-                            serverDescription: mappedServer.rules?.description,
-                          },
+                          // query: {
+                          //   serverName: mappedServer.name,
+                          //   serverDescription: mappedServer.rules?.description,
+                          // },
                         });
                       }}
                       role="link"
@@ -294,10 +294,10 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                             <Link
                               href={{
                                 pathname: `/server-detail/${mappedServer.addr}`,
-                                query: {
-                                  serverName: mappedServer.name,
-                                  serverDescription: mappedServer.rules?.description,
-                                },
+                                // query: {
+                                //   serverName: mappedServer.name,
+                                //   serverDescription: mappedServer.rules?.description,
+                                // },
                               }}
                             >
                               {getColumnValue(column, mappedServer)}

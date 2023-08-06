@@ -86,7 +86,7 @@ const ServerDetailsPage = () => {
 
   return (
     <BodyWrapper>
-      {/* <Head>
+      <Head>
         <title>
           {data
             ? data.name.length > 60
@@ -97,9 +97,7 @@ const ServerDetailsPage = () => {
         <meta
           name="description"
           content={
-            data
-              ? "Server details - " + data.name
-              : "Specific information about server - Rust"
+            data ? "Server details - " + data.name : "Specific information about server - Rust"
           }
           key="desc"
         />
@@ -123,8 +121,8 @@ const ServerDetailsPage = () => {
         />
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content={`https://rustserverfilter.com/${id}`} />
- <meta property="og:type" content="website" />
-              <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+        <meta property="og:type" content="website" />
+        <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
         <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
         <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
@@ -133,12 +131,7 @@ const ServerDetailsPage = () => {
         <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
         <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="192x192"
-          href="/android-icon-192x192.png"
-        />
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -149,10 +142,8 @@ const ServerDetailsPage = () => {
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
         <meta name="theme-color" content="#ffffff" />
-
-
-      </Head> */}
-      <Head>
+      </Head>
+      {/* <Head>
         <title>
           {data
             ? data.name.length > 60
@@ -210,15 +201,15 @@ const ServerDetailsPage = () => {
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
         <meta name="theme-color" content="#ffffff" />
-      </Head>
+      </Head> */}
 
       <div className="m-4 max-w-sm sm:max-w-xl xl:max-w-6xl 2xl:max-w-[1400px] flex flex-col justify-center items-center ">
         <div>
           <p className="text-xs text-gray-300">Query IP: {id}</p>
         </div>
-        <h1 className="mt-4 mb-4 text-3xl whitespace-normal max-w-sm sm:max-w-2xl break-words md:text-5xl text-center [text-shadow:_4px_4px_0_rgb(0_0_0_/_60%)]">
+        {/* <h1 className="mt-4 mb-4 text-3xl whitespace-normal max-w-sm sm:max-w-2xl break-words md:text-5xl text-center [text-shadow:_4px_4px_0_rgb(0_0_0_/_60%)]">
           {serverName}
-        </h1>
+        </h1> */}
         {isLoading && (
           <main className="max-w-sm sm:max-w-xl xl:max-w-6xl 2xl:max-w-[1400px] flex flex-col items-center mt-1">
             <div className="flex m-1 mb-4">
