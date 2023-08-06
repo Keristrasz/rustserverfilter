@@ -1,7 +1,9 @@
 const roundBySeconds = 100;
 const nowMiliseconds = new Date().getTime();
-const nowSeconds = Math.floor(nowMiliseconds / 1000 / roundBySeconds) * roundBySeconds - 100;
-const timestampTenMonthsAgo =
+// if not in function, value is saved on BE and sent with the building date
+const nowSeconds = () =>
+  Math.floor(nowMiliseconds / 1000 / roundBySeconds) * roundBySeconds - 100;
+const timestampTenMonthsAgo = () =>
   Math.floor((nowMiliseconds / 1000 - 28000000) / roundBySeconds) * roundBySeconds;
 import { SorterType, FilterType } from "../utils/typesTypescript";
 
@@ -147,7 +149,7 @@ export const typesConfigs: TypesConfig[] = [
       $and: [
         { rank: { $gte: 4000 } },
         { players: { $gte: 1 } },
-        { born: { $lte: nowSeconds, $gte: timestampTenMonthsAgo } },
+        { born: { $lte: nowSeconds(), $gte: timestampTenMonthsAgo() } },
       ],
     },
     href: "best-wiped-servers",
@@ -163,7 +165,7 @@ export const typesConfigs: TypesConfig[] = [
       $and: [
         { rank: { $gte: 4000 } },
         { players: { $gte: 1 } },
-        { born_next: { $gte: nowSeconds } },
+        { born_next: { $gte: nowSeconds() } },
       ],
     },
     href: "servers-wipe-soon",
