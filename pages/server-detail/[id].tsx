@@ -12,10 +12,20 @@ import BodyWrapper from "@/components/layout/BodyWrapper";
 import Link from "next/link";
 import { LocationData } from "@/utils/typesTypescript";
 import Head from "next/head";
-import { userLocationType } from "@/utils/typesTypescript";
+import {
+  userLocationType,
+  SorterType,
+  FilterType,
+  ServerPrimaryDataType,
+  QueryResponseType,
+} from "@/utils/typesTypescript";
 import ServerGraphs from "@/components/ServerGraphs";
 import { toast } from "react-toastify";
 import useQueryLocation from "@/hooks/useQueryLocation";
+import { fetchAllServers } from "@/utils/fetchAllServers";
+import fetchSingleServer from "@/utils/fetchSingleServer";
+import * as Realm from "realm-web";
+import { GetStaticProps, GetStaticPaths } from "next";
 
 const ServerDetailsPage = () => {
   // // let isMobile = false;
@@ -401,3 +411,63 @@ const ServerDetailsPage = () => {
 };
 
 export default ServerDetailsPage;
+
+//   //should dedupe the fetch requests
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const initialSorter: SorterType = { players: -1 };
+  const initialFilter: FilterType = {
+    $and: [{ rank: { $gte: 500 } }, { players: { $gte: 20 } }],
+  };
+  const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
+  if (app && !app.currentUser) {
+    console.log("app && !app.currentUser");
+    const anonymousUser = Realm.Credentials.anonymous();
+    await app.logIn(anonymousUser);
+  }
+  //should dedupe the fetch requests
+  const _initialData: QueryResponseType = await fetchAllServers(
+    initialFilter,
+    initialSorter,
+    0,
+    40,
+    app
+  );
+  //40 must be equal to pagesize
+
+  const initialData = {
+    pages: [_initialData],
+  };
+
+  const paths = initialData.pages[0].result.map((page: ServerPrimaryDataType) => ({
+    params: { id: page.addr.toString().split(":").join(".") },
+  }));
+
+  console.log("paths: " + JSON.stringify(paths));
+
+  return {
+    paths,
+    fallback: false, // Enable fallback for uncached paths
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  console.log("params:" + JSON.stringify(params));
+  const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
+  if (app && !app.currentUser) {
+    console.log("app && !app.currentUser");
+    const anonymousUser = Realm.Credentials.anonymous();
+    await app.logIn(anonymousUser);
+  }
+
+  const { id } = params;
+
+  const serverData: ServerPrimaryDataType = await fetchSingleServer(app, id);
+  console.log("serverDataa: " + serverData);
+  return {
+    props: {
+      serverData,
+    },
+    // revalidate: 60, // Re-generate the page every 60 seconds (optional)
+  };
+};
