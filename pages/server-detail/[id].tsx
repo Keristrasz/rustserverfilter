@@ -403,7 +403,7 @@ const ServerDetailsPage = () => {
 
 export default ServerDetailsPage;
 
-//   //should dedupe the fetch requests
+// should dedupe the fetch requests
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const initialSorter: SorterType = { players: -1 };
