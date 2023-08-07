@@ -350,7 +350,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                 Loading server details...
               </p>
             </div>
-            <section className="max-w-4xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
+            <section className="max-w-3xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
               {/* FIRST CONTENT */}
               <div className="mb-8 bg-zinc-600 animate-pulse rounded-md h-12 w-auto"></div>
               {Array.from({ length: 5 }).map((_, index) => (
@@ -383,7 +383,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
           <main className="flex flex-col items-center mt-1">
             <p className="text-xl m-1 mb-4 text-gray-200"> Server details loaded</p>
             {data && (
-              <section className="max-w-4xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
+              <section className="max-w-3xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
                 <p className="text-lg font-medium text-rustFour">Server name:</p>
                 <h2 className="text-2xl font-bold break-words text-gray-300 mb-4">
                   {data.name}
