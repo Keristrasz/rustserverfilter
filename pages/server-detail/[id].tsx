@@ -122,15 +122,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       $project: { _id: 0 },
     }
   );
-  console.log("serverDataa: " + initialData);
+  console.log("initialData: " + initialData);
+  console.log("initialData: " + initialData.result);
   const { id } = params;
-
+  console.log("id" + id);
   // const serverData: ServerPrimaryDataType = await fetchSingleServer(appAuthInstance, id);
   const initialDataSSG = initialData.result.find((page: ServerPrimaryDataType) => {
     id === page.addr;
   });
 
-  console.log("serverDataa: " + initialDataSSG);
+  console.log("serverDataSSG: " + initialDataSSG);
   return {
     props: {
       initialDataSSG,

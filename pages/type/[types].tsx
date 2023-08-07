@@ -16,11 +16,6 @@ import { fetchAllServers } from "@/utils/fetchAllServers";
 import getAppAuth from "@/utils/getAppAuth";
 import { typesConfigs } from "@/utils/typesConfigs";
 
-// const initialSorterSSG: SorterType = { players: -1 };
-// const initialFilterSSG: FilterType = {
-//   $and: [{ rank: { $gte: 4000 } }, { players: { $gte: 20 } }, { rate: { $in: [2] } }],
-// };
-
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = typesConfigs.map((config) => ({
     params: { types: config.href },
@@ -43,7 +38,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     initialSorterSSG,
     0,
     40,
-    getAppAuth()
+    await getAppAuth()
   );
 
   const initialDataSSG = {
