@@ -30,7 +30,6 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import getAppAuth from "@/utils/getAppAuth";
 
 let initialData: any = null; // Define a module-level variable to store the fetched data
-let appAuthInstance: any = null; // Define a module-level variable to store the app instance
 
 // should dedupe the fetch requests
 
@@ -39,16 +38,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const initialFilter: FilterType = {
     $and: [{ rank: { $gte: 5000 } }, { players: { $gte: 20 } }],
   };
-  if (appAuthInstance && !appAuthInstance.currentUser) {
-    appAuthInstance = getAppAuth();
-  }
+
   //should dedupe the fetch requests
   const _initialData: QueryResponseType = await fetchAllServers(
     initialFilter,
     initialSorter,
     0,
     100,
-    appAuthInstance,
+    getAppAuth,
     {
       $project: {},
     }
@@ -74,10 +71,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   console.log("params:" + JSON.stringify(params));
-
-  if (appAuthInstance && !appAuthInstance.currentUser) {
-    appAuthInstance = getAppAuth();
-  }
 
   const { id } = params;
 
