@@ -42,56 +42,61 @@ export const fetchAllServers = async (
   app: any,
   projection?: Projection
 ) => {
-  const mongodb = app.currentUser?.mongoClient("mongodb-atlas");
-  if (!mongodb) return;
+  try {
+    const mongodb = app.currentUser?.mongoClient("mongodb-atlas");
+    if (!mongodb) return;
 
-  const collection = mongodb.db("cluster6").collection("serverprimarycollections");
+    const collection = mongodb.db("cluster6").collection("serverprimarycollections");
 
-  let pipeline: PipelineType = [
-    {
-      $match: filter,
-    },
-    projection || {
-      $project: {
-        difficulty: 0,
-        gameport: 0,
-        gametype: 0,
-        max_players: 0,
-        modded: 0,
-        players_history: 0,
-        "rules.url": 0,
-        "rules.seed": 0,
-        "rules.fpv_avg": 0,
-        "rules.uptime": 0,
-        vanilla: 0,
-        _id: 0,
+    let pipeline: PipelineType = [
+      {
+        $match: filter,
       },
-    },
-    {
-      $facet: {
-        totalCount: [
-          {
-            $count: "totalCount",
-          },
-        ],
-        result: [
-          {
-            $skip: pageParam * pageSize || 0,
-          },
-          {
-            $limit: pageSize,
-          },
-        ],
+      projection || {
+        $project: {
+          difficulty: 0,
+          gameport: 0,
+          gametype: 0,
+          max_players: 0,
+          modded: 0,
+          players_history: 0,
+          "rules.url": 0,
+          "rules.seed": 0,
+          "rules.fpv_avg": 0,
+          "rules.uptime": 0,
+          vanilla: 0,
+          _id: 0,
+        },
       },
-    },
-  ];
+      {
+        $facet: {
+          totalCount: [
+            {
+              $count: "totalCount",
+            },
+          ],
+          result: [
+            {
+              $skip: pageParam * pageSize || 0,
+            },
+            {
+              $limit: pageSize,
+            },
+          ],
+        },
+      },
+    ];
 
-  if (JSON.stringify(sorter) !== "{}") {
-    pipeline.splice(0, 0, {
-      $sort: sorter,
-    });
+    if (JSON.stringify(sorter) !== "{}") {
+      pipeline.splice(0, 0, {
+        $sort: sorter,
+      });
+    }
+
+    const [result] = await collection.aggregate(pipeline, { allowDiskUse: true });
+    return result;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error; // Re-throw the error to be handled by the caller of fetchAllServers
   }
-
-  const [result] = await collection.aggregate(pipeline, { allowDiskUse: true });
-  return result;
 };
