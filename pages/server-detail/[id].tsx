@@ -38,15 +38,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const initialFilter: FilterType = {
     $and: [{ rank: { $gte: 5000 } }, { players: { $gte: 20 } }],
   };
-
-  //should dedupe the fetch requests
-  const _initialData: QueryResponseType = await fetchAllServers(
-    initialFilter,
-    initialSorter,
-    0,
-    100,
-    getAppAuth,
-    {
+  let initialData: QueryResponseType | null = null;
+  try {
+    initialData = await fetchAllServers(initialFilter, initialSorter, 0, 100, getAppAuth, {
       $project: {
         name: 0,
         players: 0,
@@ -68,17 +62,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
         players_history: 0,
         gameport: 0,
       },
-    }
-  );
+    });
+    console.log(initialData);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+
   //40 must be equal to pagesize
-  console.log(_initialData);
-  
-  const initialData = {
-    pages: [_initialData],
-  };
+
   console.log(initialData);
-  console.log(initialData.pages[0]);
-  const paths = initialData.pages[0].result.map((page: ServerPrimaryDataType) => ({
+  const paths = initialData.result.map((page: ServerPrimaryDataType) => ({
     params: { id: page.addr.toString() },
     // params: { id: page.addr.toString().split(":").join(".") },
   }));
