@@ -122,8 +122,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       $project: { _id: 0 },
     }
   );
-  console.log("initialData: " + initialData);
-  console.log("initialData: " + initialData.result);
+  console.log("initialData: " + JSON.stringify(initialData, null, 2));
+  console.log("initialData: " + JSON.stringify(initialData.result, null, 2));
   const { id } = params;
   console.log("id" + id);
   // const serverData: ServerPrimaryDataType = await fetchSingleServer(appAuthInstance, id);
