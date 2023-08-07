@@ -34,110 +34,110 @@ import * as Realm from "realm-web";
 
 // should dedupe the fetch requests
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const projection: {
-    $project: {
-      [key: string]: 0 | 1;
-    };
-  } = {
-    $project: {
-      name: 0,
-      players: 0,
-      max_players: 0,
-      modded: 0,
-      vanilla: 0,
-      wipe_rotation: 0,
-      born: 0,
-      born_next: 0,
-      max_group_size: 0,
-      rate: 0,
-      gametype: 0,
-      difficulty: 0,
-      rank: 0,
-      "rules.url": 0,
-      "rules.seed": 0,
-      "rules.fpv_avg": 0,
-      "rules.uptime": 0,
-      players_history: 0,
-      gameport: 0,
-    },
-  };
-  const initialSorter: SorterType = { players: -1 };
-  const initialFilter: FilterType = {
-    $and: [{ rank: { $gte: 5000 } }, { players: { $gte: 20 } }],
-  };
-  let initialData: QueryResponseType | null = null;
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const projection: {
+//     $project: {
+//       [key: string]: 0 | 1;
+//     };
+//   } = {
+//     $project: {
+//       name: 0,
+//       players: 0,
+//       max_players: 0,
+//       modded: 0,
+//       vanilla: 0,
+//       wipe_rotation: 0,
+//       born: 0,
+//       born_next: 0,
+//       max_group_size: 0,
+//       rate: 0,
+//       gametype: 0,
+//       difficulty: 0,
+//       rank: 0,
+//       "rules.url": 0,
+//       "rules.seed": 0,
+//       "rules.fpv_avg": 0,
+//       "rules.uptime": 0,
+//       players_history: 0,
+//       gameport: 0,
+//     },
+//   };
+//   const initialSorter: SorterType = { players: -1 };
+//   const initialFilter: FilterType = {
+//     $and: [{ rank: { $gte: 5000 } }, { players: { $gte: 20 } }],
+//   };
+//   let initialData: QueryResponseType | null = null;
 
-  // const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
-  // if (app && !app.currentUser) {
-  //   const anonymousUser = Realm.Credentials.anonymous();
-  //   await app.logIn(anonymousUser);
-  // }
+//   // const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
+//   // if (app && !app.currentUser) {
+//   //   const anonymousUser = Realm.Credentials.anonymous();
+//   //   await app.logIn(anonymousUser);
+//   // }
 
-  try {
-    // const app = await getAppAuth();
-    initialData = await fetchAllServers(
-      initialFilter,
-      initialSorter,
-      0,
-      10,
-      await getAppAuth(),
-      projection
-    );
-    console.log("initialData: " + initialData);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
+//   try {
+//     // const app = await getAppAuth();
+//     initialData = await fetchAllServers(
+//       initialFilter,
+//       initialSorter,
+//       0,
+//       10,
+//       await getAppAuth(),
+//       projection
+//     );
+//     console.log("initialData: " + initialData);
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//   }
 
-  //40 must be equal to pagesize
+//   //40 must be equal to pagesize
 
-  const paths = initialData.result.map((page: ServerPrimaryDataType) => ({
-    params: { id: page.addr.toString() },
-    // params: { id: page.addr.toString().split(":").join(".") },
-  }));
+//   const paths = initialData.result.map((page: ServerPrimaryDataType) => ({
+//     params: { id: page.addr.toString() },
+//     // params: { id: page.addr.toString().split(":").join(".") },
+//   }));
 
-  console.log("paths: " + JSON.stringify(paths));
+//   console.log("paths: " + JSON.stringify(paths));
 
-  return {
-    paths,
-    fallback: "blocking", // Generates page on request
-  };
-};
+//   return {
+//     paths,
+//     fallback: "blocking", // Generates page on request
+//   };
+// };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  console.log("params:" + JSON.stringify(params));
+// export const getStaticProps: GetStaticProps = async ({ params }) => {
+//   console.log("params:" + JSON.stringify(params));
 
-  const initialSorter: SorterType = { players: -1 };
-  const initialFilter: FilterType = {
-    $and: [{ rank: { $gte: 5000 } }, { players: { $gte: 20 } }],
-  };
+//   const initialSorter: SorterType = { players: -1 };
+//   const initialFilter: FilterType = {
+//     $and: [{ rank: { $gte: 5000 } }, { players: { $gte: 20 } }],
+//   };
 
-  const initialData: QueryResponseType = await fetchAllServers(
-    initialFilter,
-    initialSorter,
-    0,
-    10,
-    await getAppAuth(),
-    {
-      $project: { _id: 0 },
-    }
-  );
-  console.log("initialData: " + JSON.stringify(initialData));
-  const { id } = params;
-  console.log("id" + id);
-  // const serverData: ServerPrimaryDataType = await fetchSingleServer(appAuthInstance, id);
-  const initialDataSSG = initialData.result.find((page: ServerPrimaryDataType) => {
-    id === page.addr;
-  });
+//   const initialData: QueryResponseType = await fetchAllServers(
+//     initialFilter,
+//     initialSorter,
+//     0,
+//     10,
+//     await getAppAuth(),
+//     {
+//       $project: { _id: 0 },
+//     }
+//   );
+//   console.log("initialData: " + JSON.stringify(initialData));
+//   const { id } = params;
+//   console.log("id" + id);
+//   // const serverData: ServerPrimaryDataType = await fetchSingleServer(appAuthInstance, id);
+//   const initialDataSSG = initialData.result.find((page: ServerPrimaryDataType) => {
+//     id === page.addr;
+//   });
 
-  console.log("serverDataSSG: " + initialDataSSG);
-  return {
-    props: {
-      initialDataSSG,
-    },
-    // revalidate: 60, // Re-generate the page every 60 seconds (optional) when user comes to the site
-  };
-};
+//   console.log("serverDataSSG: " + initialDataSSG);
+//   return {
+//     props: {
+//       initialDataSSG,
+//     },
+//     // revalidate: 60, // Re-generate the page every 60 seconds (optional) when user comes to the site
+//   };
+// };
 
 interface ServerDetailsPageTypes {
   initialDataSSG?: ServerPrimaryDataType;
