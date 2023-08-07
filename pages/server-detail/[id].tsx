@@ -55,7 +55,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
   initialData = {
     pages: [_initialData],
   };
-
+  console.log(initialData);
+  console.log(initialData.pages[0]);
   const paths = initialData.pages[0].result.map((page: ServerPrimaryDataType) => ({
     params: { id: page.addr.toString() },
     // params: { id: page.addr.toString().split(":").join(".") },
