@@ -29,7 +29,7 @@ import { GetStaticProps, GetStaticPaths } from "next";
 
 import getAppAuth from "@/utils/getAppAuth";
 
-let initialData: any = null; // Define a module-level variable to store the fetched data
+// let initialData: any = null; // Define a module-level variable to store the fetched data
 
 // should dedupe the fetch requests
 
@@ -47,12 +47,32 @@ export const getStaticPaths: GetStaticPaths = async () => {
     100,
     getAppAuth,
     {
-      $project: {},
+      $project: {
+        name: 0,
+        players: 0,
+        max_players: 0,
+        modded: 0,
+        vanilla: 0,
+        wipe_rotation: 0,
+        born: 0,
+        born_next: 0,
+        max_group_size: 0,
+        rate: 0,
+        gametype: 0,
+        difficulty: 0,
+        rank: 0,
+        "rules.url": 0,
+        "rules.seed": 0,
+        "rules.fpv_avg": 0,
+        "rules.uptime": 0,
+        players_history: 0,
+        gameport: 0,
+      },
     }
   );
   //40 must be equal to pagesize
 
-  initialData = {
+  const initialData = {
     pages: [_initialData],
   };
   console.log(initialData);
@@ -72,6 +92,26 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   console.log("params:" + JSON.stringify(params));
+
+  const initialSorter: SorterType = { players: -1 };
+  const initialFilter: FilterType = {
+    $and: [{ rank: { $gte: 5000 } }, { players: { $gte: 20 } }],
+  };
+
+  const _initialData: QueryResponseType = await fetchAllServers(
+    initialFilter,
+    initialSorter,
+    0,
+    100,
+    getAppAuth,
+    {
+      $project: {},
+    }
+  );
+
+  const initialData = {
+    pages: [_initialData],
+  };
 
   const { id } = params;
 
