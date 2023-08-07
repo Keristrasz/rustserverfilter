@@ -119,7 +119,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     10,
     await getAppAuth(),
     {
-      $project: {},
+      $project: { _id: 0 },
     }
   );
   console.log("serverDataa: " + initialData);
