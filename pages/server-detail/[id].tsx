@@ -334,7 +334,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
         <meta name="theme-color" content="#ffffff" />
       </Head> */}
 
-      <div className="m-4 max-w-sm sm:max-w-xl xl:max-w-6xl 2xl:max-w-[1400px] flex flex-col justify-center items-center ">
+      <div className="m-4 flex flex-col justify-center items-center ">
         <div>
           <p className="text-xs text-gray-300">Query IP: {id}</p>
         </div>
@@ -342,7 +342,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
           {serverName}
         </h1> */}
         {isLoading && (
-          <main className="max-w-sm sm:max-w-xl xl:max-w-6xl 2xl:max-w-[1400px] flex flex-col items-center mt-1">
+          <main className="max-w-5xl flex flex-col items-center mt-1">
             <div className="flex m-1 mb-4">
               <Spinner />
               <p className="text-xl font-bold m-1 text-gray-200">
@@ -380,7 +380,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
         )}
         {error instanceof Error && <div>An error has occurred: {error.message}</div>}
         {status === "success" && (
-          <main className="max-w-sm sm:max-w-xl xl:max-w-6xl 2xl:max-w-[1400px] flex flex-col items-center mt-1">
+          <main className="max-w-5xl flex flex-col items-center mt-1">
             <p className="text-xl m-1 mb-4 text-gray-200"> Server details loaded</p>
             {data && (
               <section className="flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
