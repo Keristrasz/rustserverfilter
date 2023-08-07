@@ -23,11 +23,84 @@ import ServerGraphs from "@/components/ServerGraphs";
 import { toast } from "react-toastify";
 import useQueryLocation from "@/hooks/useQueryLocation";
 import { fetchAllServers } from "@/utils/fetchAllServers";
-import fetchSingleServer from "@/utils/fetchSingleServer";
-import * as Realm from "realm-web";
+// import fetchSingleServer from "@/utils/fetchSingleServer";
+// import * as Realm from "realm-web";
 import { GetStaticProps, GetStaticPaths } from "next";
 
-const ServerDetailsPage = () => {
+import getAppAuth from "@/utils/getAppAuth";
+
+let initialData: any = null; // Define a module-level variable to store the fetched data
+let appAuthInstance: any = null; // Define a module-level variable to store the app instance
+
+// should dedupe the fetch requests
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const initialSorter: SorterType = { players: -1 };
+  const initialFilter: FilterType = {
+    $and: [{ rank: { $gte: 5000 } }, { players: { $gte: 20 } }],
+  };
+  if (appAuthInstance && !appAuthInstance.currentUser) {
+    appAuthInstance = getAppAuth();
+  }
+  //should dedupe the fetch requests
+  const _initialData: QueryResponseType = await fetchAllServers(
+    initialFilter,
+    initialSorter,
+    0,
+    100,
+    appAuthInstance,
+    {
+      $project: {},
+    }
+  );
+  //40 must be equal to pagesize
+
+  initialData = {
+    pages: [_initialData],
+  };
+
+  const paths = initialData.pages[0].result.map((page: ServerPrimaryDataType) => ({
+    params: { id: page.addr.toString() },
+    // params: { id: page.addr.toString().split(":").join(".") },
+  }));
+
+  console.log("paths: " + JSON.stringify(paths));
+
+  return {
+    paths,
+    fallback: "blocking", // Generates page on request
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  console.log("params:" + JSON.stringify(params));
+
+  if (appAuthInstance && !appAuthInstance.currentUser) {
+    appAuthInstance = getAppAuth();
+  }
+
+  const { id } = params;
+
+  // const serverData: ServerPrimaryDataType = await fetchSingleServer(appAuthInstance, id);
+  const initialDataSSG = initialData.pages[0].result.find((page: ServerPrimaryDataType) => {
+    id === page.addr;
+  });
+
+  console.log("serverDataa: " + initialDataSSG);
+  return {
+    props: {
+      initialDataSSG,
+    },
+    // revalidate: 60, // Re-generate the page every 60 seconds (optional) when user comes to the site
+  };
+};
+
+interface ServerDetailsPageTypes {
+  initialDataSSG?: ServerPrimaryDataType;
+  // isSSG: Boolean;
+}
+
+const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG }) => {
   // // let isMobile = false;
   // // let chartWidth = 518;
   // // let chartHeight = 362;
@@ -46,8 +119,13 @@ const ServerDetailsPage = () => {
   // let chartHeight = isMobile ? 362 : 362;
 
   const router = useRouter();
-  const { id, serverName, serverDescription } = router.query;
-  const { data, isLoading, error, status } = useCustomSingleQuery(id as string);
+  const { id } = router.query;
+  const { queryData, isLoading, error, status } = useCustomSingleQuery(id as string);
+
+  let data = initialDataSSG;
+  if (queryData) {
+    data = queryData;
+  }
 
   const userLocation: userLocationType | null = useQueryLocation() || null;
 
@@ -310,7 +388,7 @@ const ServerDetailsPage = () => {
                     <p className="text-gray-400">Gametype: {data.gametype?.join(", ")}</p>
                     <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
                     <p className="text-gray-400">
-                      Server uptime: {getTimeUptime(data.rules?.uptime)}
+                      Server uptime: {getTimeUptime(data.rules?.uptime) || ""}
                     </p>
                     <p className=" text-gray-400">Query Ip: {data.addr}</p>
                     <p className="text-gray-400">FPS Average: {data.rules?.fps_avg}</p>
@@ -393,7 +471,9 @@ const ServerDetailsPage = () => {
                 </div>
               </section>
             )}
-            {data.players_history && <ServerGraphs players_history={data.players_history} />}
+            {data.players_history ? (
+              <ServerGraphs players_history={data.players_history} />
+            ) : null}
           </main>
         )}
       </div>
@@ -402,63 +482,3 @@ const ServerDetailsPage = () => {
 };
 
 export default ServerDetailsPage;
-
-// should dedupe the fetch requests
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const initialSorter: SorterType = { players: -1 };
-  const initialFilter: FilterType = {
-    $and: [{ rank: { $gte: 500 } }, { players: { $gte: 20 } }],
-  };
-  const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
-  if (app && !app.currentUser) {
-    console.log("app && !app.currentUser");
-    const anonymousUser = Realm.Credentials.anonymous();
-    await app.logIn(anonymousUser);
-  }
-  //should dedupe the fetch requests
-  const _initialData: QueryResponseType = await fetchAllServers(
-    initialFilter,
-    initialSorter,
-    0,
-    40,
-    app
-  );
-  //40 must be equal to pagesize
-
-  const initialData = {
-    pages: [_initialData],
-  };
-
-  const paths = initialData.pages[0].result.map((page: ServerPrimaryDataType) => ({
-    params: { id: page.addr.toString().split(":").join(".") },
-  }));
-
-  console.log("paths: " + JSON.stringify(paths));
-
-  return {
-    paths,
-    fallback: false, // Enable fallback for uncached paths
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  console.log("params:" + JSON.stringify(params));
-  const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
-  if (app && !app.currentUser) {
-    console.log("app && !app.currentUser");
-    const anonymousUser = Realm.Credentials.anonymous();
-    await app.logIn(anonymousUser);
-  }
-
-  const { id } = params;
-
-  const serverData: ServerPrimaryDataType = await fetchSingleServer(app, id);
-  console.log("serverDataa: " + serverData);
-  return {
-    props: {
-      serverData,
-    },
-    // revalidate: 60, // Re-generate the page every 60 seconds (optional)
-  };
-};

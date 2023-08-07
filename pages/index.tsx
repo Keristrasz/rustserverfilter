@@ -11,11 +11,11 @@ import ResultsTable from "@/components/HOC/ResultsTable";
 import Form from "@/components/HOC/Form";
 import BodyWrapper from "@/components/layout/BodyWrapper";
 import { InfiniteData } from "@tanstack/react-query";
+import getAppAuth from "@/utils/getAppAuth";
 
 //TODO Distance sort by loaded initialDataSSG
 
 import { fetchAllServers } from "@/utils/fetchAllServers";
-import * as Realm from "realm-web";
 import { GetStaticProps } from "next";
 import Head from "next/head";
 
@@ -25,18 +25,13 @@ export const getStaticProps: GetStaticProps = async () => {
   const initialFilterSSG: FilterType = {
     $and: [{ rank: { $gte: 500 } }, { players: { $gte: 20 } }],
   };
-  const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
-  if (app && !app.currentUser) {
-    const anonymousUser = Realm.Credentials.anonymous();
-    await app.logIn(anonymousUser);
-  }
 
   const _initialDataSSG: QueryResponseType = await fetchAllServers(
     initialFilterSSG,
     initialSorterSSG,
     0,
     40,
-    app
+    getAppAuth
   );
 
   const initialDataSSG = {
@@ -132,12 +127,7 @@ function Home({ initialDataSSG }: HomeProps) {
         <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
         <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="192x192"
-          href="/android-icon-192x192.png"
-        />
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />

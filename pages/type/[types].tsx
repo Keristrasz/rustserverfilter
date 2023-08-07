@@ -12,9 +12,8 @@ import BodyWrapper from "@/components/layout/BodyWrapper";
 import { InfiniteData } from "@tanstack/react-query";
 import Head from "next/head";
 import { GetStaticProps, GetStaticPaths } from "next";
-import * as Realm from "realm-web";
 import { fetchAllServers } from "@/utils/fetchAllServers";
-
+import getAppAuth from "@/utils/getAppAuth";
 import { typesConfigs } from "@/utils/typesConfigs";
 
 // const initialSorterSSG: SorterType = { players: -1 };
@@ -39,18 +38,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const { title, desc, h1, addr, initialSorterSSG, initialFilterSSG } = typeConfig;
 
-  const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
-  if (app && !app.currentUser) {
-    const anonymousUser = Realm.Credentials.anonymous();
-    await app.logIn(anonymousUser);
-  }
-
   const _initialDataSSG: QueryResponseType = await fetchAllServers(
     initialFilterSSG,
     initialSorterSSG,
     0,
     40,
-    app
+    getAppAuth
   );
 
   const initialDataSSG = {

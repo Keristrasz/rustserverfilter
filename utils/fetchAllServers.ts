@@ -2,7 +2,7 @@ import { SorterType, FilterType } from "./typesTypescript";
 
 type PipelineType = {
   $project?: {
-    [field: string]: 0;
+    [field: string]: 0 | 1;
   };
   $match?: any;
   $facet?: {
@@ -28,12 +28,19 @@ type PipelineType = {
   $sort?: any;
 }[];
 
+type Projection = {
+  $project: {
+    [key: string]: 0 | 1;
+  };
+};
+
 export const fetchAllServers = async (
   filter: FilterType,
   sorter: SorterType,
   pageParam: number,
   pageSize: number,
-  app: any
+  app: any,
+  projection?: Projection
 ) => {
   const mongodb = app.currentUser?.mongoClient("mongodb-atlas");
   if (!mongodb) return;
@@ -44,7 +51,7 @@ export const fetchAllServers = async (
     {
       $match: filter,
     },
-    {
+    projection || {
       $project: {
         difficulty: 0,
         gameport: 0,

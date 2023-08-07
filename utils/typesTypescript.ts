@@ -32,6 +32,7 @@ export interface ServerPrimaryDataType {
   rank?: number;
   rules?: RulesType;
   players_history?: number[][];
+  gameport?: string;
 }
 
 export interface userLocationType {

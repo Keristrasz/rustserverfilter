@@ -26,7 +26,6 @@ const useCustomSingleQuery = (ip: string) => {
 
   const queryKey = ["searchSingleResult", ip];
 
-
   const queryFn = async () => {
     // (pageParam);
     const result = await fetchSingleServer(app);
@@ -46,7 +45,7 @@ const useCustomSingleQuery = (ip: string) => {
   const { data, isLoading, error, status } = useQuery(queryKey, queryFn, queryOptions);
   data;
   return {
-    data,
+    queryData: data,
     isLoading,
     error,
     status,
