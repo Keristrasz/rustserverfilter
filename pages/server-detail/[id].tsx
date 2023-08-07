@@ -70,7 +70,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   //40 must be equal to pagesize
 
-  console.log(initialData);
   const paths = initialData.result.map((page: ServerPrimaryDataType) => ({
     params: { id: page.addr.toString() },
     // params: { id: page.addr.toString().split(":").join(".") },
