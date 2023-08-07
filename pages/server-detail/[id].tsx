@@ -71,7 +71,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
   );
   //40 must be equal to pagesize
-
+  console.log(_initialData);
+  
   const initialData = {
     pages: [_initialData],
   };
