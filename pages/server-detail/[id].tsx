@@ -68,22 +68,21 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
   let initialData: QueryResponseType | null = null;
 
-  const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
-  if (app && !app.currentUser) {
-    const anonymousUser = Realm.Credentials.anonymous();
-    await app.logIn(anonymousUser);
-  }
+  // const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
+  // if (app && !app.currentUser) {
+  //   const anonymousUser = Realm.Credentials.anonymous();
+  //   await app.logIn(anonymousUser);
+  // }
 
   try {
     // const app = await getAppAuth();
-    console.log("app: " + app);
     initialData = await fetchAllServers(
       initialFilter,
       initialSorter,
       0,
-      100,
-      app
-      // projection
+      10,
+      await getAppAuth(),
+      projection
     );
     console.log("initialData: " + initialData);
   } catch (error) {
@@ -117,13 +116,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     initialFilter,
     initialSorter,
     0,
-    100,
-    getAppAuth,
+    10,
+    await getAppAuth(),
     {
       $project: {},
     }
   );
-
+  console.log("serverDataa: " + initialData);
   const { id } = params;
 
   // const serverData: ServerPrimaryDataType = await fetchSingleServer(appAuthInstance, id);
