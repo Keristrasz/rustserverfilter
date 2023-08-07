@@ -334,7 +334,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
         <meta name="theme-color" content="#ffffff" />
       </Head> */}
 
-      <div className="m-4 flex flex-col justify-center items-center ">
+      <div className="max-w-[1400px] m-4 flex flex-col justify-center items-center ">
         <div>
           <p className="text-xs text-gray-300">Query IP: {id}</p>
         </div>
