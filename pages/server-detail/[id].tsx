@@ -43,27 +43,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       [key: string]: 0 | 1;
     };
   } = {
-    $project: {
-      name: 0,
-      players: 0,
-      max_players: 0,
-      modded: 0,
-      vanilla: 0,
-      wipe_rotation: 0,
-      born: 0,
-      born_next: 0,
-      max_group_size: 0,
-      rate: 0,
-      gametype: 0,
-      difficulty: 0,
-      rank: 0,
-      "rules.url": 0,
-      "rules.seed": 0,
-      "rules.fpv_avg": 0,
-      "rules.uptime": 0,
-      players_history: 0,
-      gameport: 0,
-    },
+    $project: { _id: 0 },
   };
   const initialSorter: SorterType = { players: -1 };
   const initialFilter: FilterType = {
@@ -83,7 +63,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       initialFilter,
       initialSorter,
       0,
-      5,
+      100,
       await getAppAuth(),
       projection
     );
@@ -146,6 +126,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   let initialDataSSG = dataFromGetStaticPaths.result.find(
     (page: ServerPrimaryDataType) => {
       console.log(id, page.addr);
+      console.log(id, page.addr.length);
+      console.log(id, page.name);
+      console.log(id, page.name.length);
       return id === page.addr;
     }
   );
@@ -165,7 +148,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 interface ServerDetailsPageTypes {
-  initialDataSSG?: ServerPrimaryDataType;
+  initialDataSSG: ServerPrimaryDataType;
   // isSSG: Boolean;
 }
 
@@ -198,7 +181,8 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
   // // console.log("queryData" + queryData);
   // console.log("initialDataSSG" + JSON.stringify(initialDataSSG));
   // console.log("data" + data);
-  // // console.log("initialDataSSG NAME" + initialDataSSG.name);
+  console.log("initialDataSSG NAME" + initialDataSSG.name);
+  console.log("initialDataSSG NAME LENGTH" + initialDataSSG.name.length);
   // console.log("DATA NAME" + data.name);
 
   console.log("Length of the string:", data.name.length);
