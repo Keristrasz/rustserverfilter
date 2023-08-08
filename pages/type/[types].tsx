@@ -91,10 +91,10 @@ function Types({
     (config) => config.href === id
   )?.initialFilterSSG;
 
-  initialFilterOnFrontEnd ? console.log("FE" + initialFilterOnFrontEnd) : null;
-  console.log("initialFilterSSG" + initialFilterSSG);
+  initialFilterOnFrontEnd ? console.log("FE" + JSON.stringify(initialFilterOnFrontEnd)) : null;
+  console.log("initialFilterSSG" + JSON.stringify(initialFilterSSG));
   const initialFilter = initialFilterOnFrontEnd ? initialFilterOnFrontEnd : initialFilterSSG;
-  console.log("END FILTER" + initialFilter);
+  console.log("END FILTER" + JSON.stringify(initialFilter));
 
   const app = useUserAuth();
   const [sorter, setSorter] = useState<SorterType>(initialSorterSSG);
