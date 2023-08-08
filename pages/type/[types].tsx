@@ -15,6 +15,7 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import { fetchAllServers } from "@/utils/fetchAllServers";
 import getAppAuth from "@/utils/getAppAuth";
 import { typesConfigs } from "@/utils/typesConfigs";
+import { useRouter } from "next/router";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = typesConfigs.map((config) => ({
@@ -84,9 +85,17 @@ function Types({
   initialSorterSSG,
   initialFilterSSG,
 }: TypesProps) {
+  const router = useRouter();
+  const { id } = router.query;
+  const initialFilterOnFrontEnd = typesConfigs.find(
+    (config) => config.href === id
+  )?.initialFilterSSG;
+
+  const initialFilter = initialFilterOnFrontEnd || initialFilterSSG;
+
   const app = useUserAuth();
   const [sorter, setSorter] = useState<SorterType>(initialSorterSSG);
-  const [filter, setFilter] = useState<FilterType>(initialFilterSSG);
+  const [filter, setFilter] = useState<FilterType>(initialFilter);
   const userLocation: userLocationType | null = useQueryLocation() || null;
   const [isSSG, setIsSSG] = useState(false);
   useEffect(() => {
@@ -113,12 +122,7 @@ function Types({
         <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
         <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="192x192"
-          href="/android-icon-192x192.png"
-        />
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
