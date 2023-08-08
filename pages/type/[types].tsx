@@ -91,7 +91,7 @@ function Types({
     (config) => config.href === id
   )?.initialFilterSSG;
 
-  console.log("FE" + initialFilterOnFrontEnd.$and[0].born);
+  initialFilterOnFrontEnd ? console.log("FE" + initialFilterOnFrontEnd.$and[0].born) : null;
   console.log("initialFilterSSG" + initialFilterSSG.$and[0].born);
   const initialFilter = initialFilterOnFrontEnd || initialFilterSSG;
   console.log("END FILTER" + initialFilter.$and[0].born);
