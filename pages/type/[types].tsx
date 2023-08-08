@@ -87,11 +87,11 @@ function Types({
 }: TypesProps) {
   const router = useRouter();
   const { id } = router.query;
-  const initialFilterOnFrontEnd = typesConfigs.find(
-    (config) => config.href === id
-  )?.initialFilterSSG;
+  const configType = typesConfigs.find((config) => config.href === id);
+  console.log(JSON.stringify(configType));
+  const initialFilterOnFrontEnd = configType.initialFilterSSG;
 
-  initialFilterOnFrontEnd ? console.log("FE" + JSON.stringify(initialFilterOnFrontEnd)) : null;
+  console.log(JSON.stringify(initialFilterOnFrontEnd));
   console.log("initialFilterSSG" + JSON.stringify(initialFilterSSG));
   const initialFilter = initialFilterOnFrontEnd ? initialFilterOnFrontEnd : initialFilterSSG;
   console.log("END FILTER" + JSON.stringify(initialFilter));
