@@ -86,9 +86,10 @@ function Types({
   initialFilterSSG,
 }: TypesProps) {
   const router = useRouter();
-  const { id } = router.query;
-  console.log("id" + id);
-  const configType = typesConfigs.find((config) => config.href === id);
+  const { types } = router.query;
+
+  console.log("types" + types);
+  const configType = typesConfigs.find((config) => config.href === types);
   console.log(JSON.stringify(configType));
   const initialFilterOnFrontEnd = configType?.initialFilterSSG;
 
