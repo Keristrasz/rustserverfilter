@@ -343,9 +343,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
               <div className="mb-8 bg-zinc-600 animate-pulse rounded-md h-12 w-auto"></div>
               {Array.from({ length: 5 }).map((_, index) => (
                 <div key={index} className="flex flex-wrap sm:gap-8">
-                  <div className="mb-8 bg-zinc-600 animate-pulse rounded-md sm:w-48 w-68 h-4"></div>
-                  <div className="mb-8 bg-zinc-600 animate-pulse rounded-md sm:w-48 w-68 h-4"></div>
-                  <div className="mb-8 bg-zinc-600 animate-pulse rounded-md sm:w-48 w-68 h-4"></div>
+                  <div className="mb-8 bg-zinc-600 animate-pulse rounded-md w-68 sm:w-48 h-4"></div>
+                  <div className="mb-8 bg-zinc-600 animate-pulse rounded-md w-68 sm:w-48 h-4"></div>
+                  <div className="mb-8 bg-zinc-600 animate-pulse rounded-md w-68 sm:w-48 h-4"></div>
                 </div>
               ))}
 
