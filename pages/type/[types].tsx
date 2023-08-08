@@ -88,15 +88,9 @@ function Types({
   const router = useRouter();
   const { types } = router.query;
 
-  console.log("types" + types);
   const configType = typesConfigs.find((config) => config.href === types);
-  console.log(JSON.stringify(configType));
   const initialFilterOnFrontEnd = configType?.initialFilterSSG;
-
-  console.log(JSON.stringify(initialFilterOnFrontEnd));
-  console.log("initialFilterSSG" + JSON.stringify(initialFilterSSG));
   const initialFilter = initialFilterOnFrontEnd ? initialFilterOnFrontEnd : initialFilterSSG;
-  console.log("END FILTER" + JSON.stringify(initialFilter));
 
   const app = useUserAuth();
   const [sorter, setSorter] = useState<SorterType>(initialSorterSSG);
