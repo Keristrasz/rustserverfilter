@@ -12,7 +12,6 @@ const useCustomSingleQuery = (ip: string) => {
     const query = {
       addr: ip,
     };
-    "fetching data" + app;
 
     const mongodb = app.currentUser?.mongoClient("mongodb-atlas");
     if (!mongodb) return;
@@ -42,11 +41,16 @@ const useCustomSingleQuery = (ip: string) => {
     cacheTime: 1000 * 300,
   };
 
-  const { data, isLoading, error, status } = useQuery(queryKey, queryFn, queryOptions);
+  const { data, isLoading, isFetching, error, status } = useQuery(
+    queryKey,
+    queryFn,
+    queryOptions
+  );
   data;
   return {
     queryData: data,
     isLoading,
+    isFetching,
     error,
     status,
   };

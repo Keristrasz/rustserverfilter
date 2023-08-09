@@ -125,10 +125,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   // const serverData: ServerPrimaryDataType = await fetchSingleServer(appAuthInstance, id);
   let initialDataSSG = dataFromGetStaticPaths.result.find(
     (page: ServerPrimaryDataType) => {
-      console.log(id, page.addr);
-      console.log(id, page.addr.length);
-      console.log(id, page.name);
-      console.log(id, page.name.length);
       return id === page.addr;
     }
   );
@@ -172,7 +168,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 
   const router = useRouter();
   const { id } = router.query;
-  const { queryData, isLoading, error, status } = useCustomSingleQuery(id as string);
+  const { queryData, isLoading, isFetching, error, status } = useCustomSingleQuery(
+    id as string
+  );
 
   let data = initialDataSSG;
   if (queryData) {
@@ -352,235 +350,212 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
       </Head> */}
 
       <div className="max-w-[1400px] m-4 flex flex-col justify-center items-center ">
-        <div>
-          <p className="text-xs text-gray-300">Query IP: {id}</p>
-        </div>
-        {/* <h1 className="mt-4 mb-4 text-3xl whitespace-normal max-w-sm sm:max-w-2xl break-words md:text-5xl text-center [text-shadow:_4px_4px_0_rgb(0_0_0_/_60%)]">
-          {serverName}
-        </h1> */}
-        {isLoading && (
-          <main className="flex flex-col items-center mt-1">
-            <div className="flex m-1 mb-4">
-              <Spinner />
-              <p className="text-xl font-bold m-1 text-gray-200">
-                {" "}
-                Loading server details...
-              </p>
-            </div>
-            <section className="max-w-3xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
-              {/* FIRST CONTENT */}
-              <div className="mb-8 bg-zinc-600 animate-pulse rounded-md h-12 w-auto"></div>
-              {Array.from({ length: 5 }).map((_, index) => (
-                <div key={index} className="flex flex-wrap justify-center sm:gap-8">
-                  <div className="mb-8 bg-zinc-600 animate-pulse rounded-md w-64 sm:w-48 h-4"></div>
-                  <div className="mb-8 bg-zinc-600 animate-pulse rounded-md w-64 sm:w-48 h-4"></div>
-                  <div className="mb-8 bg-zinc-600 animate-pulse rounded-md w-64 sm:w-48 h-4"></div>
-                </div>
-              ))}
-
-              {/* DESCRIPTION */}
-              <div className="bg-zinc-600 animate-pulse rounded-md h-48 w-auto"></div>
-            </section>
-            <section className="flex flex-wrap justify-center my-8">
-              {Array.from({ length: 4 }).map((_, index) => (
-                <div
-                  key={index}
-                  className={
-                    "flex justify-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 h-[362px] w-[318px] sm:h-[362px] sm-w-[518px]"
-                  }
-                >
-                  <div className="bg-zinc-600 animate-pulse rounded-md w-[85%] h-[85%]"></div>
-                </div>
-              ))}
-            </section>
-          </main>
+        <p className="text-xs text-gray-300">Query IP: {id}</p>
+        {isFetching ? (
+          <div className="flex m-1 my-2">
+            <Spinner size={8} />
+            <p className="text-2xl text-gray-200">Loading server details...</p>
+          </div>
+        ) : (
+          <p className="text-2xl m-1 my-2 text-gray-200"> Server details loaded</p>
         )}
         {error instanceof Error && <div>An error has occurred: {error.message}</div>}
-        {status === "success" ||
-          (initialDataSSG && (
-            <main className="flex flex-col items-center mt-1">
-              <p className="text-xl m-1 mb-4 text-gray-200"> Server details loaded</p>
-              {data && (
-                <section className="max-w-3xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
-                  <p className="text-lg font-medium text-rustFour">Server name:</p>
-                  <h2 className="text-2xl font-bold break-words text-gray-300 mb-4">
-                    {data.name}
-                  </h2>
-                  {/* FIRST CONTENT */}
-                  <div className="md:flex md:flex-wrap mb-4">
-                    <div className="mr-4 mb-4">
-                      <h4 className="text-lg font-medium text-rustFour">Server info:</h4>
-                      {data.rank && (
-                        <p className="text-gray-400">Score: {data.rank / 100}</p>
-                      )}
-                      <p className="text-gray-300">
-                        Game Ip:{" "}
-                        <span
-                          className="font-bold text-rustFour hover:cursor-pointer hover:text-green-500"
-                          onClick={handleCopyClick}
-                        >
-                          {data.addr.split(":").slice(0, 1) + ":" + data.gameport}
-                        </span>
-                      </p>
-
-                      <p className="text-gray-300">
-                        Players: {data.players} / {data.max_players}
-                      </p>
-                      <p className="text-gray-300">
-                        Last Wipe: {getCustomDate(data.born)}
-                      </p>
-                      <p className="text-gray-300">
-                        Next Wipe: {getCustomDate(data.born_next)}
-                      </p>
-                      {data.rate ? (
-                        <p className="text-gray-300">Rate: {data.rate}x</p>
-                      ) : (
-                        <p className="text-gray-300">Rate: Unknown</p>
-                      )}
-                      <p className="text-gray-300">
-                        Max Group Size: {data.max_group_size}
-                      </p>
-                      <p className="text-gray-400">Map Size: {data.rules?.size}</p>
-                      <p className="text-gray-400">Seed: {data.rules?.seed}</p>
-                    </div>
-                    {/* ADDITIONAL INFO */}
-
-                    <div className="mb-2 mr-4">
-                      <h4 className="text-lg font-medium text-rustFour">
-                        Aditional info:
-                      </h4>
-
-                      {data.rules?.url && (
-                        <p className="text-gray-400">
-                          URL:{" "}
-                          {isUrl(data.rules.url) ? (
-                            <Link
-                              className="text-blue-400 underline hover:text-blue-500"
-                              href={data.rules.url}
-                            >
-                              {data.rules.url}
-                            </Link>
-                          ) : (
-                            <span>{data.rules.url}</span>
-                          )}
-                        </p>
-                      )}
-                      {/* <p className="text-gray-400">Max Players: {data.max_players}</p> */}
-                      <p className="text-gray-400">
-                        Modded: {data.modded ? "Yes" : "No"}
-                      </p>
-                      <p className="text-gray-400">
-                        Vanilla: {data.vanilla ? "Yes" : "No"}
-                      </p>
-                      <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
-                      <p className="text-gray-400">
-                        Gametype: {data.gametype?.join(", ")}
-                      </p>
-                      <p className="text-gray-400">
-                        Softcore/Hardcore: {data.difficulty}
-                      </p>
-                      <p className="text-gray-400">
-                        Server uptime: {getTimeUptime(data.rules?.uptime) || ""}
-                      </p>
-                      <p className=" text-gray-400">Query Ip: {data.addr}</p>
-                      <p className="text-gray-400">FPS Average: {data.rules?.fps_avg}</p>
-                    </div>
-                    {/* LOCATION */}
-
-                    {data.rules?.location ? (
-                      <div className="">
-                        <h4 className="text-lg font-medium text-rustFour">Location:</h4>
-                        <p className="text-gray-300">
-                          Country: {data.rules?.location?.country}
-                        </p>
-                        <p className="text-gray-300">
-                          Distance:{" "}
-                          {userLocation &&
-                          data.rules?.location?.latitude &&
-                          data.rules?.location?.longitude
-                            ? calculateDistance(
-                                data.rules?.location?.latitude,
-                                data.rules?.location?.longitude,
-                                userLocation.latitude,
-                                userLocation.longitude
-                              ) + " km"
-                            : "Cannot retrieve location"}{" "}
-                        </p>
-                        {serverLocationData?.region && (
-                          <p className="text-gray-400">
-                            Region: {serverLocationData.region}
-                          </p>
-                        )}
-                        {serverLocationData?.city && (
-                          <p className="text-gray-400">City: {serverLocationData.city}</p>
-                        )}
-
-                        <p className="text-gray-400">
-                          Latitude: {data.rules.location.latitude}
-                        </p>
-                        <p className="text-gray-400">
-                          Longitude: {data.rules.location.longitude}
-                        </p>
-                      </div>
-                    ) : (
-                      <div>
-                        <h4 className="text-lg font-medium text-rustFour">Location</h4>
-                        {serverLocationData?.country && (
-                          <p className="text-gray-300">
-                            Country: {serverLocationData.country}
-                          </p>
-                        )}
-                        {serverLocationData?.latitude &&
-                          serverLocationData?.longitude &&
-                          userLocation && (
-                            <p className="text-gray-300">
-                              Distance:{" "}
-                              {calculateDistance(
-                                serverLocationData.latitude,
-                                serverLocationData.longitude,
-                                userLocation.latitude,
-                                userLocation.longitude
-                              )}{" "}
-                              km
-                            </p>
-                          )}
-                        {serverLocationData?.region && (
-                          <p className="text-gray-400">
-                            Region: {serverLocationData.region}
-                          </p>
-                        )}
-                        {serverLocationData?.city && (
-                          <p className="text-gray-400">City: {serverLocationData.city}</p>
-                        )}
-
-                        {serverLocationData?.latitude && (
-                          <p className="text-gray-300">
-                            Latitude: {serverLocationData.latitude}
-                          </p>
-                        )}
-                        {serverLocationData?.longitude && (
-                          <p className="text-gray-300">
-                            Longitude: {serverLocationData.longitude}
-                          </p>
-                        )}
-                      </div>
+        {(status === "success" || initialDataSSG) && (
+          <main className="flex flex-col items-center mt-1">
+            {data && (
+              <section className="max-w-3xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
+                <p className="text-lg font-medium text-rustFour">Server name:</p>
+                <h1 className="text-2xl font-bold break-words text-gray-300 mb-4">
+                  {data.name}
+                </h1>
+                {/* FIRST CONTENT */}
+                <div className="md:flex md:flex-wrap mb-4">
+                  <div className="mr-4 mb-4">
+                    <h4 className="text-lg font-medium text-rustFour">Server info:</h4>
+                    {data.rank && (
+                      <p className="text-gray-400">Score: {data.rank / 100}</p>
                     )}
+                    <p className="text-gray-300">
+                      Game Ip:{" "}
+                      <span
+                        className="font-bold text-rustFour hover:cursor-pointer hover:text-green-500"
+                        onClick={handleCopyClick}
+                      >
+                        {data.addr.split(":").slice(0, 1) + ":" + data.gameport}
+                      </span>
+                    </p>
+
+                    <p className="text-gray-300">
+                      Players: {data.players} / {data.max_players}
+                    </p>
+                    <p className="text-gray-300">Last Wipe: {getCustomDate(data.born)}</p>
+                    <p className="text-gray-300">
+                      Next Wipe: {getCustomDate(data.born_next)}
+                    </p>
+                    {data.rate ? (
+                      <p className="text-gray-300">Rate: {data.rate}x</p>
+                    ) : (
+                      <p className="text-gray-300">Rate: Unknown</p>
+                    )}
+                    <p className="text-gray-300">Max Group Size: {data.max_group_size}</p>
+                    <p className="text-gray-400">Map Size: {data.rules?.size}</p>
+                    <p className="text-gray-400">Seed: {data.rules?.seed}</p>
                   </div>
-                  {/* DESCRIPTION */}
-                  <div className="">
-                    <h3 className="text-xl font-medium text-rustFour">Description:</h3>
-                    <p className="text-gray-300"> {data.rules?.description}</p>
+                  {/* ADDITIONAL INFO */}
+
+                  <div className="mb-2 mr-4">
+                    <h4 className="text-lg font-medium text-rustFour">Aditional info:</h4>
+
+                    {data.rules?.url && (
+                      <p className="text-gray-400">
+                        URL:{" "}
+                        {isUrl(data.rules.url) ? (
+                          <Link
+                            className="text-blue-400 underline hover:text-blue-500"
+                            href={data.rules.url}
+                          >
+                            {data.rules.url}
+                          </Link>
+                        ) : (
+                          <span>{data.rules.url}</span>
+                        )}
+                      </p>
+                    )}
+                    {/* <p className="text-gray-400">Max Players: {data.max_players}</p> */}
+                    <p className="text-gray-400">Modded: {data.modded ? "Yes" : "No"}</p>
+                    <p className="text-gray-400">
+                      Vanilla: {data.vanilla ? "Yes" : "No"}
+                    </p>
+                    <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
+                    {/* <p className="text-gray-400">Gametype: {data.gametype?.join(", ")}</p> */}
+                    <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
+                    <p className="text-gray-400">
+                      Server uptime: {getTimeUptime(data.rules?.uptime) || ""}
+                    </p>
+                    <p className=" text-gray-400">Query Ip: {data.addr}</p>
+                    <p className="text-gray-400">FPS Average: {data.rules?.fps_avg}</p>
                   </div>
-                </section>
-              )}
-              {data.players_history ? (
-                <ServerGraphs players_history={data.players_history} />
-              ) : null}
-            </main>
-          ))}
+                  {/* LOCATION */}
+
+                  {data.rules?.location ? (
+                    <div className="">
+                      <h4 className="text-lg font-medium text-rustFour">Location:</h4>
+                      <p className="text-gray-300">
+                        Country: {data.rules?.location?.country}
+                      </p>
+                      <p className="text-gray-300">
+                        Distance:{" "}
+                        {userLocation &&
+                        data.rules?.location?.latitude &&
+                        data.rules?.location?.longitude
+                          ? calculateDistance(
+                              data.rules?.location?.latitude,
+                              data.rules?.location?.longitude,
+                              userLocation.latitude,
+                              userLocation.longitude
+                            ) + " km"
+                          : "Loc. Unavailable"}
+                      </p>
+                      {serverLocationData?.region && (
+                        <p className="text-gray-400">
+                          Region: {serverLocationData.region}
+                        </p>
+                      )}
+                      {serverLocationData?.city && (
+                        <p className="text-gray-400">City: {serverLocationData.city}</p>
+                      )}
+
+                      <p className="text-gray-400">
+                        Latitude: {data.rules.location.latitude}
+                      </p>
+                      <p className="text-gray-400">
+                        Longitude: {data.rules.location.longitude}
+                      </p>
+                    </div>
+                  ) : (
+                    <div>
+                      <h4 className="text-lg font-medium text-rustFour">Location</h4>
+                      {serverLocationData?.country && (
+                        <p className="text-gray-300">
+                          Country: {serverLocationData.country}
+                        </p>
+                      )}
+                      {serverLocationData?.latitude &&
+                        serverLocationData?.longitude &&
+                        userLocation && (
+                          <p className="text-gray-300">
+                            Distance:{" "}
+                            {calculateDistance(
+                              serverLocationData.latitude,
+                              serverLocationData.longitude,
+                              userLocation.latitude,
+                              userLocation.longitude
+                            )}{" "}
+                            km
+                          </p>
+                        )}
+                      {serverLocationData?.region && (
+                        <p className="text-gray-400">
+                          Region: {serverLocationData.region}
+                        </p>
+                      )}
+                      {serverLocationData?.city && (
+                        <p className="text-gray-400">City: {serverLocationData.city}</p>
+                      )}
+
+                      {serverLocationData?.latitude && (
+                        <p className="text-gray-300">
+                          Latitude: {serverLocationData.latitude}
+                        </p>
+                      )}
+                      {serverLocationData?.longitude && (
+                        <p className="text-gray-300">
+                          Longitude: {serverLocationData.longitude}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+                {/* DESCRIPTION */}
+                <div className="">
+                  <h3 className="text-xl font-medium text-rustFour">Description:</h3>
+                  <p className="text-gray-300"> {data.rules?.description}</p>
+                </div>
+              </section>
+            )}
+            {data.players_history ? (
+              <ServerGraphs players_history={data.players_history} />
+            ) : null}
+          </main>
+        )}
       </div>
     </BodyWrapper>
   );
 };
 
 export default ServerDetailsPage;
+
+// {isFetching && (
+//   <main className="flex flex-col items-center mt-1">
+//     <div className="flex m-1 mb-4">
+//       <Spinner />
+//       <p className="text-xl font-bold m-1 text-gray-200">
+//         Loading server details...
+//       </p>
+//     </div>
+//     <section className="max-w-3xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
+//       {/* FIRST CONTENT */}
+//       <div className="mb-8 bg-zinc-600 animate-pulse rounded-md h-12 w-auto"></div>
+//       {Array.from({ length: 5 }).map((_, index) => (
+//         <div key={index} className="flex flex-wrap justify-center sm:gap-8">
+//           <div className="mb-8 bg-zinc-600 animate-pulse rounded-md w-64 sm:w-48 h-4"></div>
+//           <div className="mb-8 bg-zinc-600 animate-pulse rounded-md w-64 sm:w-48 h-4"></div>
+//           <div className="mb-8 bg-zinc-600 animate-pulse rounded-md w-64 sm:w-48 h-4"></div>
+//         </div>
+//       ))}
+
+//       {/* DESCRIPTION */}
+//       <div className="bg-zinc-600 animate-pulse rounded-md h-48 w-auto"></div>
+//     </section>
+//   </main>
+// )}

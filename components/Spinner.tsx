@@ -1,11 +1,35 @@
+// import React from "react";
+
+// const Spinner = () => {
+//   return (
+//     <div role="status">
+//       <svg
+//         aria-hidden="true"
+//         className="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
+//         viewBox="0 0 100 101"
+//         fill="none"
+//         xmlns="http://www.w3.org/2000/svg"
+//       ></svg>
+//     </div>
+//   );
+// };
+
+// export default Spinner;
+
 import React from "react";
 
-const Spinner = () => {
+interface SpinnerProps {
+  size?: number;
+}
+
+const Spinner: React.FC<SpinnerProps> = ({ size = 8 }) => {
+  const spinnerClasses = `inline w-${size} h-${size} mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-green-500`;
+
   return (
     <div role="status">
       <svg
         aria-hidden="true"
-        className="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
+        className={spinnerClasses}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

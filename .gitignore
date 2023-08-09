@@ -35,3 +35,6 @@ yarn-error.log*
 next-env.d.ts
 
 .env
+
+# build data from staticPaths to staticProps
+mainSlugBuildData.json
