@@ -1,7 +1,9 @@
 import { Dispatch, SetStateAction } from "react";
 import { FilterType, UseFilterHookType } from "@/utils/typesTypescript";
 
-const useFilter = (setFilter: Dispatch<SetStateAction<FilterType>>): UseFilterHookType => {
+const useFilter = (
+  setFilter: Dispatch<SetStateAction<FilterType>>
+): UseFilterHookType => {
   const updateFilter: UseFilterHookType = (
     minRank,
     wipeRotation,
@@ -20,7 +22,7 @@ const useFilter = (setFilter: Dispatch<SetStateAction<FilterType>>): UseFilterHo
     let newFilter: FilterType = {
       $and: [
         {
-          players: { $gte: 0 },
+          rank: { $gte: 500 },
         },
       ],
     };
@@ -30,7 +32,9 @@ const useFilter = (setFilter: Dispatch<SetStateAction<FilterType>>): UseFilterHo
     maxPlayers ? newFilter.$and.push({ players: { $lte: Number(maxPlayers) } }) : null;
     minSize ? newFilter.$and.push({ "rules.size": { $gte: Number(minSize) } }) : null;
     maxSize ? newFilter.$and.push({ "rules.size": { $lte: Number(maxSize) } }) : null;
-    searchName ? newFilter.$and.push({ name: { $regex: searchName, $options: "i" } }) : null;
+    searchName
+      ? newFilter.$and.push({ name: { $regex: searchName, $options: "i" } })
+      : null;
     maxGroupSize.length !== 0
       ? newFilter.$and.push({ max_group_size: { $in: maxGroupSize } })
       : null;

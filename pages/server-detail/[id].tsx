@@ -9,7 +9,6 @@ import {
   getLocation,
 } from "@/utils/inputFunctions";
 import BodyWrapper from "@/components/layout/BodyWrapper";
-import Link from "next/link";
 import { LocationData } from "@/utils/typesTypescript";
 import Head from "next/head";
 import {
@@ -24,7 +23,6 @@ import { toast } from "react-toastify";
 import useQueryLocation from "@/hooks/useQueryLocation";
 import { fetchAllServers } from "@/utils/fetchAllServers";
 import fetchSingleServer from "@/utils/fetchSingleServer";
-// import * as Realm from "realm-web";
 import { GetStaticProps, GetStaticPaths } from "next";
 
 import getAppAuth from "@/utils/getAppAuth";
@@ -63,7 +61,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       initialFilter,
       initialSorter,
       0,
-      100,
+      5000,
       await getAppAuth(),
       projection
     );
@@ -94,22 +92,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const app = await getAppAuth();
-  // console.log("params:" + JSON.stringify(params));
-
-  // const initialSorter: SorterType = { players: -1 };
-  // const initialFilter: FilterType = {
-  //   $and: [{ rank: { $gte: 5000 } }, { players: { $gte: 20 } }],
-  // };
-  // const initialData: QueryResponseType = await fetchAllServers(
-  //   initialFilter,
-  //   initialSorter,
-  //   0,
-  //   5,
-  //   app,
-  //   {
-  //     $project: { _id: 0 },
-  //   }
-  // );
 
   // get data stored from getStaticPaths
   const fileToReadJSONFrom = path.join(process.cwd(), "public/mainSlugBuildData.json");
@@ -410,12 +392,12 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                       <p className="text-gray-400">
                         URL:{" "}
                         {isUrl(data.rules.url) ? (
-                          <Link
+                          <a
                             className="text-blue-400 underline hover:text-blue-500"
                             href={data.rules.url}
                           >
                             {data.rules.url}
-                          </Link>
+                          </a>
                         ) : (
                           <span>{data.rules.url}</span>
                         )}
