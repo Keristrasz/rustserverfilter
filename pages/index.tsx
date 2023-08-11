@@ -23,7 +23,7 @@ export const getStaticProps: GetStaticProps = async () => {
   // Fetch initialSorter and initialFilter from an API or any other initialDataSSG source
   const initialSorterSSG: SorterType = { players: -1 };
   const initialFilterSSG: FilterType = {
-    $and: [{ rank: { $gte: 500 } }, { players: { $gte: 20 } }],
+    $and: [{ rank: { $gte: 500 } }, { players: { $gte: 0 } }],
   };
 
   // const app = await getAppAuth();
@@ -82,7 +82,7 @@ function Home({ initialDataSSG }: HomeProps) {
   );
   const [filter, setFilter] = useState<FilterType>(
     getFromLocalStorage("filter", {
-      $and: [{ players: { $gte: 0 } }],
+      $and: [{ rank: { $gte: 500 } }],
     })
   );
 
