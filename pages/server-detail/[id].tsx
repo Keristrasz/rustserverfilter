@@ -31,6 +31,14 @@ import getAppAuth from "@/utils/getAppAuth";
 import fs from "fs";
 import path from "path";
 
+function replaceLastDotWithColon(input: string) {
+  const lastIndex = input.lastIndexOf(".");
+  if (lastIndex !== -1) {
+    return input.substring(0, lastIndex) + ":" + input.substring(lastIndex + 1);
+  }
+  return input;
+}
+
 // let initialData: any = null; // Define a module-level variable to store the fetched data
 
 // should dedupe the fetch requests
@@ -41,31 +49,25 @@ export const getStaticPaths: GetStaticPaths = async () => {
       [key: string]: 0 | 1;
     };
   } = {
-    $project: { _id: 0 },
+    $project: { id: 0, players_history: 0 },
   };
   const initialSorter: SorterType = { players: -1 };
   const initialFilter: FilterType = {
-    $and: [{ rank: { $gte: 5000 } }, { players: { $gte: 20 } }],
+    $and: [{ rank: { $gte: 500 } }, { players: { $gte: 20 } }],
   };
   let initialData: QueryResponseType | null = null;
 
-  // const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
-  // if (app && !app.currentUser) {
-  //   const anonymousUser = Realm.Credentials.anonymous();
-  //   await app.logIn(anonymousUser);
-  // }
-
   try {
-    // const app = await getAppAuth();
+    const app = await getAppAuth();
+
     initialData = await fetchAllServers(
       initialFilter,
       initialSorter,
       0,
-      5000,
-      await getAppAuth(),
+      100,
+      app,
       projection
     );
-    // console.log("initialData: " + initialData);
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -73,16 +75,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
   // create a json file to store information for getStaticProps == SSG
   const file = path.join(process.cwd(), "public/mainSlugBuildData.json");
   fs.writeFileSync(file, JSON.stringify(initialData), "utf-8");
-  // console.log(file);
 
   //40 must be equal to pagesize
 
   const paths = initialData.result.map((page: ServerPrimaryDataType) => ({
-    params: { id: page.addr.toString() },
-    // params: { id: page.addr.toString().split(":").join(".") },
+    // params: { id: page.addr.replace(/:/g, ".").toString() },
+    params: { id: page.addr.toString().split(":").join(".") },
   }));
-
-  // console.log("paths: " + JSON.stringify(paths));
 
   return {
     paths,
@@ -92,31 +91,23 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const app = await getAppAuth();
-
   // get data stored from getStaticPaths
   const fileToReadJSONFrom = path.join(process.cwd(), "public/mainSlugBuildData.json");
   const dataFromGetStaticPaths = JSON.parse(
     fs.readFileSync(fileToReadJSONFrom, "utf-8")
   ) as Array<{ params: { slug: Array<string>; routeId: string } }>;
-  // console.log(dataFromGetStaticPaths);
 
-  // console.log("initialData: " + JSON.stringify(initialData));
   const { id } = params;
-  console.log("id" + id);
-  // console.log("initialDataSSG" + initialData.result[0].addr);
-  // const serverData: ServerPrimaryDataType = await fetchSingleServer(appAuthInstance, id);
+  const fetchIP = id ? replaceLastDotWithColon(id.toString()) : null;
   let initialDataSSG = dataFromGetStaticPaths.result.find(
     (page: ServerPrimaryDataType) => {
       return id === page.addr;
     }
   );
-  // console.log("serverDataSSG: " + JSON.stringify(initialDataSSG));
   if (!initialDataSSG) {
-    console.log("NEW SITE GENERATED");
-    initialDataSSG = await fetchSingleServer(app, id);
+    initialDataSSG = await fetchSingleServer(app, fetchIP);
   }
 
-  // console.log("serverDataSSG: " + JSON.stringify(initialDataSSG));
   return {
     props: {
       initialDataSSG,
@@ -150,23 +141,15 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 
   const router = useRouter();
   const { id } = router.query;
+  const fetchIP = id ? replaceLastDotWithColon(id.toString()) : null;
   const { queryData, isLoading, isFetching, error, status } = useCustomSingleQuery(
-    id as string
+    fetchIP as string
   );
 
   let data = initialDataSSG;
   if (queryData) {
     data = queryData;
   }
-  // // console.log("queryData" + queryData);
-  // console.log("initialDataSSG" + JSON.stringify(initialDataSSG));
-  // console.log("data" + data);
-  console.log("initialDataSSG NAME" + initialDataSSG.name);
-  console.log("initialDataSSG NAME LENGTH" + initialDataSSG.name.length);
-  // console.log("DATA NAME" + data.name);
-
-  console.log("Length of the string:", data.name.length);
-  console.log("DATA" + data);
 
   const userLocation: userLocationType | null = useQueryLocation() || null;
 
@@ -414,7 +397,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     <p className="text-gray-400">
                       Server uptime: {getTimeUptime(data.rules?.uptime) || ""}
                     </p>
-                    <p className=" text-gray-400">Query Ip: {data.addr}</p>
+                    <p className=" text-gray-400">
+                      Query Ip: {data.addr.replace(/:/g, ".")}
+                    </p>
                     <p className="text-gray-400">FPS Average: {data.rules?.fps_avg}</p>
                   </div>
                   {/* LOCATION */}
