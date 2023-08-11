@@ -353,8 +353,10 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     <p className="text-gray-300">
                       Players: {data.players} / {data.max_players}
                     </p>
-                    <p className="text-gray-300">Last Wipe: {getCustomDate(data.born)}</p>
-                    <p className="text-gray-300">
+                    <p className="text-gray-300" suppressHydrationWarning={true}>
+                      Last Wipe: {getCustomDate(data.born)}
+                    </p>
+                    <p className="text-gray-300" suppressHydrationWarning={true}>
                       Next Wipe: {getCustomDate(data.born_next)}
                     </p>
                     {data.rate ? (
