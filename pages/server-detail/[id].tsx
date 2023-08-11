@@ -53,7 +53,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
   const initialSorter: SorterType = { players: -1 };
   const initialFilter: FilterType = {
-    $and: [{ rank: { $gte: 500 } }, { players: { $gte: 20 } }],
+    $and: [{ rank: { $gte: 500 } }, { players: { $gte: 1 } }],
   };
   let initialData: QueryResponseType | null = null;
 
@@ -64,7 +64,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       initialFilter,
       initialSorter,
       0,
-      100,
+      1000,
       app,
       projection
     );
