@@ -185,7 +185,7 @@ const Form: React.FC<FormProps> = ({
     setFilter({
       $and: [
         {
-          rank: { $gte: 500 },
+          players: { $gte: 1 },
         },
       ],
     });

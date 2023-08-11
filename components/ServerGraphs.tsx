@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { getCustomDate } from "@/utils/inputFunctions";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend } from "recharts";
+
 type PlayersHistory = [number, number][];
+
 function ServerGraphs({ players_history }: { players_history: PlayersHistory }) {
   let isMobile = false;
   let chartWidth = 500;
@@ -14,7 +16,6 @@ function ServerGraphs({ players_history }: { players_history: PlayersHistory }) 
     chartHeight = 300;
     chartWidth = 300;
   }
-  // console.log(isMobile, chartHeight);
 
   if (players_history) {
     players_history;
@@ -77,7 +78,7 @@ function ServerGraphs({ players_history }: { players_history: PlayersHistory }) 
         };
       });
 
-    const graphArray = [
+    const graphArrayInput = [
       {
         function: filteredDataLast3Days,
         heading: "Player History (Last 3 Days)",
@@ -98,8 +99,8 @@ function ServerGraphs({ players_history }: { players_history: PlayersHistory }) 
 
     return (
       <section className="flex flex-wrap justify-center my-8">
-        {graphArray.map((el) => (
-          <div
+        {graphArrayInput.map((el) => (
+          <article
             key={el.heading}
             className="m-2 text-center border border-black bg-zinc-800 rounded-2xl p-2"
           >
@@ -138,7 +139,7 @@ function ServerGraphs({ players_history }: { players_history: PlayersHistory }) 
                 isAnimationActive={false}
               />
             </AreaChart>
-          </div>
+          </article>
         ))}
       </section>
     );

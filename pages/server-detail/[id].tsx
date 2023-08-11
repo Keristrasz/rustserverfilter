@@ -64,7 +64,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       initialFilter,
       initialSorter,
       0,
-      1000,
+      3000,
       app,
       projection
     );
@@ -101,7 +101,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const fetchIP = id ? replaceLastDotWithColon(id.toString()) : null;
   let initialDataSSG = dataFromGetStaticPaths.result.find(
     (page: ServerPrimaryDataType) => {
-      return id === page.addr;
+      return fetchIP === page.addr;
     }
   );
   if (!initialDataSSG) {
@@ -492,7 +492,19 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
             )}
             {data.players_history ? (
               <ServerGraphs players_history={data.players_history} />
-            ) : null}
+            ) : (
+              <section className="flex flex-wrap justify-center my-8">
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <article
+                    key={index}
+                    className="flex flex-col text-center justify-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 h-[362px] w-[318px] sm:h-[362px] sm:w-[518px]"
+                  >
+                    <h3 className="text-xl font-bold text-gray-200 mb-4">Loading...</h3>
+                    <div className="bg-zinc-600 animate-pulse rounded-md w-[95%] h-[80%]"></div>
+                  </article>
+                ))}
+              </section>
+            )}
           </main>
         )}
       </div>
