@@ -64,7 +64,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       initialFilter,
       initialSorter,
       0,
-      3000,
+      2500,
       app,
       projection
     );

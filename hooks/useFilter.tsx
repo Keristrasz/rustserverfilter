@@ -22,7 +22,7 @@ const useFilter = (
     let newFilter: FilterType = {
       $and: [
         {
-          players: { $gte: 1 },
+          rank: { $gte: 500 },
         },
       ],
     };

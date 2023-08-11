@@ -181,11 +181,11 @@ const Form: React.FC<FormProps> = ({
     setMaxDistance("");
     setExcludeCountries([]);
     setIncludedCountries([]);
-    setSorter({});
+    setSorter({ players: -1 });
     setFilter({
       $and: [
         {
-          players: { $gte: 1 },
+          rank: { $gte: 500 },
         },
       ],
     });
