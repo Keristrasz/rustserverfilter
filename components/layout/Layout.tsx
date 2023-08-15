@@ -4,6 +4,8 @@ import Footer from "./Footer";
 import AnimatedBackground from "./AnimatedBackground";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+
+  // causes hydration errors
   let isMobile = false;
 
   // const MOBILE_WIDTH_THRESHOLD = 800;

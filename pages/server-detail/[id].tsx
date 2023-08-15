@@ -26,7 +26,6 @@ import fetchSingleServer from "@/utils/fetchSingleServer";
 import { GetStaticProps, GetStaticPaths } from "next";
 
 import getAppAuth from "@/utils/getAppAuth";
-// import * as Realm from "realm-web";
 
 import fs from "fs";
 import path from "path";
@@ -38,8 +37,6 @@ function replaceLastDotWithColon(input: string) {
   }
   return input;
 }
-
-// let initialData: any = null; // Define a module-level variable to store the fetched data
 
 // should dedupe the fetch requests
 
@@ -465,7 +462,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                 </div>
               </section>
             )}
-            {data.players_history ? (
+            {/* {data.players_history ? (
               <ServerGraphs players_history={data.players_history} />
             ) : (
               <section className="flex flex-wrap justify-center my-8">
@@ -479,7 +476,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   </article>
                 ))}
               </section>
-            )}
+            )} */}
           </main>
         )}
       </div>
