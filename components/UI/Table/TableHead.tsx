@@ -1,6 +1,6 @@
 import React from "react";
 import useSorter from "@/hooks/useSorter";
-import { FilterType, SorterType } from "@/utils/typesTypescript";
+import { FilterType, SorterType } from "@/constants/TGlobal";
 
 interface ColumnData {
   isClickable: boolean;
@@ -18,13 +18,7 @@ interface THeadProps {
   columnData: ColumnData[];
 }
 
-const THead: React.FC<THeadProps> = ({
-  setFilter,
-  setSorter,
-  sorter,
-  isSSG,
-  columnData,
-}) => {
+const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, columnData }) => {
   const updateSorter = useSorter(setFilter, setSorter);
 
   return (

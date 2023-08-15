@@ -4,7 +4,7 @@ import {
   SorterType,
   FilterType,
   QueryResponseType,
-} from "../../utils/typesTypescript";
+} from "../../constants/TGlobal";
 import useUserAuth from "../../hooks/useUserAuth";
 import useQueryLocation from "@/hooks/useQueryLocation";
 import ResultsTable from "@/components/UI/Table/TableMain";
@@ -14,7 +14,7 @@ import Head from "next/head";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { fetchAllServers } from "@/utils/fetchAllServers";
 import getAppAuth from "@/utils/getAppAuth";
-import { typesConfigs } from "@/utils/serverTypeConfigs";
+import { typesConfigs } from "@/constants/serverTypeConfigs";
 import { useRouter } from "next/router";
 
 export const getStaticPaths: GetStaticPaths = async () => {

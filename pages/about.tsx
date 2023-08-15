@@ -2,7 +2,7 @@ import React from "react";
 import BodyWrapper from "@/components/HOC/BodyWrapper";
 import Head from "next/head";
 import Link from "next/link";
-import { typesConfigs } from "@/utils/serverTypeConfigs";
+import { typesConfigs } from "@/constants/serverTypeConfigs";
 
 const FAQ = () => {
   return (

@@ -9,7 +9,7 @@ import {
   getLocation,
 } from "@/utils/inputFunctions";
 import BodyWrapper from "@/components/HOC/BodyWrapper";
-import { LocationData } from "@/utils/typesTypescript";
+import { LocationData } from "@/constants/TGlobal";
 import Head from "next/head";
 import {
   userLocationType,
@@ -17,7 +17,7 @@ import {
   FilterType,
   ServerPrimaryDataType,
   QueryResponseType,
-} from "@/utils/typesTypescript";
+} from "@/constants/TGlobal";
 import ServerGraphs from "@/components/UI/ServerPlayersGraph";
 import { toast } from "react-toastify";
 import useQueryLocation from "@/hooks/useQueryLocation";

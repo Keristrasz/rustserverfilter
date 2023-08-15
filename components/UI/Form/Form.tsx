@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { groupSizeOptions, ratesOptions, wipeRatesOptions } from "@/utils/inputData";
+import { groupSizeOptions, ratesOptions, wipeRatesOptions } from "@/constants/inputData";
 import SelectIncludeCountries from "./SelectIncludeCountries";
 import SelectExcludeCountries from "./SelectExcludeCountries";
 import useFilter from "@/hooks/useFilter";
-import { userLocationType, SorterType, FilterType } from "../../../utils/typesTypescript";
+import { userLocationType, SorterType, FilterType } from "../../../constants/TGlobal";
 import { toast } from "react-toastify";
 
 let didLocationToastRun = false;

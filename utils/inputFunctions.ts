@@ -1,13 +1,8 @@
 import axios from "axios";
-import { LocationData } from "./typesTypescript";
+import { LocationData } from "../constants/TGlobal";
 import { format, formatDistanceToNow, formatDistance } from "date-fns";
 
-export function calculateDistance(
-  lat1: number,
-  lon1: number,
-  lat2: number,
-  lon2: number
-) {
+export function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
   const earthRadius = 6371; // Radius of the Earth in kilometers
 
   const toRadians = (degrees: number) => (degrees * Math.PI) / 180;

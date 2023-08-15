@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { userLocationType } from "@/utils/typesTypescript";
+import { userLocationType } from "@/constants/TGlobal";
 
 const getLocation = async (): Promise<userLocationType> => {
   try {

@@ -4,7 +4,7 @@ import {
   SorterType,
   FilterType,
   QueryResponseType,
-} from "../../utils/typesTypescript";
+} from "../../constants/TGlobal";
 import useUserAuth from "../../hooks/useUserAuth";
 import useQueryLocation from "@/hooks/useQueryLocation";
 import ResultsTable from "@/components/UI/Table/TableMain";

@@ -7,7 +7,7 @@ import {
   SorterType,
   ServerPrimaryDataType,
   QueryResponseType,
-} from "@/utils/typesTypescript";
+} from "@/constants/TGlobal";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useCustomInfiniteQuery from "@/hooks/useCustomInfiniteQuery";
 

@@ -1,4 +1,4 @@
-import { FilterType, SorterType } from "@/utils/typesTypescript";
+import { FilterType, SorterType } from "@/constants/TGlobal";
 
 const useSorter = (
   setFilter: React.Dispatch<React.SetStateAction<FilterType>>,
@@ -6,8 +6,7 @@ const useSorter = (
 ) => {
   const roundBySeconds = 100;
   const nowMiliseconds = new Date().getTime();
-  const nowSeconds =
-    Math.floor(nowMiliseconds / 1000 / roundBySeconds) * roundBySeconds - 100;
+  const nowSeconds = Math.floor(nowMiliseconds / 1000 / roundBySeconds) * roundBySeconds - 100;
   const timestampTenMonthsAgo =
     Math.floor((nowMiliseconds / 1000 - 28000000) / roundBySeconds) * roundBySeconds;
 
@@ -30,9 +29,7 @@ const useSorter = (
         }
       } else {
         let updatedValue: any = { ...prevValue };
-        updatedValue.$and = updatedValue.$and.filter(
-          (el: any) => !el.born && !el.born_next
-        );
+        updatedValue.$and = updatedValue.$and.filter((el: any) => !el.born && !el.born_next);
         return updatedValue;
       }
 

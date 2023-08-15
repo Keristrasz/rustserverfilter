@@ -1,11 +1,6 @@
 import { useInfiniteQuery, QueryFunctionContext } from "@tanstack/react-query";
 import { fetchAllServers } from "@/utils/fetchAllServers";
-import {
-  ServerPrimaryDataType,
-  SorterType,
-  FilterType,
-  QueryResponseType,
-} from "../utils/typesTypescript";
+import { SorterType, FilterType, QueryResponseType } from "../constants/TGlobal";
 import { useMemo } from "react";
 
 let pageSize = 40;
@@ -13,11 +8,7 @@ let pageSize = 40;
 const useCustomInfiniteQuery = (filter: FilterType, sorter: SorterType, app: any) => {
   const queryKey = ["searchResults", filter, sorter, pageSize];
 
-
-  const queryFn = async ({
-    pageParam,
-  }: QueryFunctionContext): Promise<QueryResponseType> => {
-    // (pageParam);
+  const queryFn = async ({ pageParam }: QueryFunctionContext): Promise<QueryResponseType> => {
     const result = await fetchAllServers(filter, sorter, pageParam, pageSize, app);
     return result;
   };

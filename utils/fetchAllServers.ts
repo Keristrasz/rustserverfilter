@@ -1,4 +1,4 @@
-import { SorterType, FilterType } from "./typesTypescript";
+import { SorterType, FilterType } from "../constants/TGlobal";
 
 type PipelineType = {
   $project?: {
