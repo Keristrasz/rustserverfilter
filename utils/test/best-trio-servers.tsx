@@ -7,8 +7,8 @@ import {
 } from "../../utils/typesTypescript";
 import useUserAuth from "../../hooks/useUserAuth";
 import useQueryLocation from "@/hooks/useQueryLocation";
-import ResultsTable from "@/components/HOC/ResultsTable";
-import BodyWrapper from "@/components/layout/BodyWrapper";
+import ResultsTable from "@/components/UI/Table/TableMain";
+import BodyWrapper from "@/components/HOC/BodyWrapper";
 import { InfiniteData } from "@tanstack/react-query";
 import Head from "next/head";
 
@@ -18,11 +18,7 @@ interface HomeProps {
 
 const initialSorter: SorterType = { players: -1 };
 const initialFilter: FilterType = {
-  $and: [
-    { rank: { $gte: 4000 } },
-    { players: { $gte: 5 } },
-    { max_group_size: { $in: [3] } },
-  ],
+  $and: [{ rank: { $gte: 4000 } }, { players: { $gte: 5 } }, { max_group_size: { $in: [3] } }],
 };
 
 const title = "Best Trio Servers | Rust Server Filter - Find Top Rust Trio Servers";
@@ -61,12 +57,7 @@ function Home({ initialData }: HomeProps) {
         <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
         <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="192x192"
-          href="/android-icon-192x192.png"
-        />
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />

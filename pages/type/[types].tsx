@@ -7,14 +7,14 @@ import {
 } from "../../utils/typesTypescript";
 import useUserAuth from "../../hooks/useUserAuth";
 import useQueryLocation from "@/hooks/useQueryLocation";
-import ResultsTable from "@/components/HOC/ResultsTable";
-import BodyWrapper from "@/components/layout/BodyWrapper";
+import ResultsTable from "@/components/UI/Table/TableMain";
+import BodyWrapper from "@/components/HOC/BodyWrapper";
 import { InfiniteData } from "@tanstack/react-query";
 import Head from "next/head";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { fetchAllServers } from "@/utils/fetchAllServers";
 import getAppAuth from "@/utils/getAppAuth";
-import { typesConfigs } from "@/utils/typesConfigs";
+import { typesConfigs } from "@/utils/serverTypeConfigs";
 import { useRouter } from "next/router";
 
 export const getStaticPaths: GetStaticPaths = async () => {

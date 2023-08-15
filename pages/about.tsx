@@ -1,8 +1,8 @@
 import React from "react";
-import BodyWrapper from "@/components/layout/BodyWrapper";
+import BodyWrapper from "@/components/HOC/BodyWrapper";
 import Head from "next/head";
 import Link from "next/link";
-import { typesConfigs } from "@/utils/typesConfigs";
+import { typesConfigs } from "@/utils/serverTypeConfigs";
 
 const FAQ = () => {
   return (

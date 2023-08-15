@@ -1,4 +1,4 @@
-import THead from "../THead";
+import THead from "./TableHead";
 import React from "react";
 import { useRouter } from "next/router";
 import { calculateDistance, getCustomDate } from "@/utils/inputFunctions";
@@ -33,8 +33,7 @@ const columnDataForMonitor = [
     value: "players",
   },
   {
-    tooltip:
-      "Estimate of next wipe if needed data are provided. You can find more in FAQ",
+    tooltip: "Estimate of next wipe if needed data are provided. You can find more in FAQ",
     isClickable: true,
     styles: "w-2/12",
     name: "NEXT WIPE",
@@ -92,8 +91,7 @@ const columnDataForMonitorForMobile = [
     value: "players",
   },
   {
-    tooltip:
-      "Estimate of next wipe if needed data are provided. You can find more in FAQ",
+    tooltip: "Estimate of next wipe if needed data are provided. You can find more in FAQ",
     isClickable: true,
     styles: "w-3/12 text-xs",
     name: "NEXT WIPE",
@@ -254,8 +252,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   className="text-sm relative text-center bg-green-600 text-gray-200 [text-shadow:_1px_1px_1px_black]"
                   colSpan={11}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
-                  SERVERS
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
                 </td>
               </tr>
             ) : (
@@ -278,10 +275,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                       className="hover:bg-zinc-800 clickable-row cursor-pointer"
                       onClick={() => {
                         router.push({
-                          pathname: `/server-detail/${mappedServer.addr.replace(
-                            /:/g,
-                            "."
-                          )}`,
+                          pathname: `/server-detail/${mappedServer.addr.replace(/:/g, ".")}`,
                         });
                       }}
                       role="link"

@@ -1,4 +1,4 @@
-import { SorterType, FilterType } from "../utils/typesTypescript";
+import { SorterType, FilterType } from "./typesTypescript";
 
 const roundBySeconds = 100;
 const nowMiliseconds = () => new Date().getTime();

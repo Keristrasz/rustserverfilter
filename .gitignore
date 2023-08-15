@@ -38,3 +38,4 @@ next-env.d.ts
 
 # build data from staticPaths to staticProps
 mainSlugBuildData.json
+.vscode/settings.json

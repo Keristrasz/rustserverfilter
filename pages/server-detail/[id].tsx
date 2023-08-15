@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useCustomSingleQuery from "@/hooks/useCustomSingleQuery";
-import Spinner from "@/components/Spinner";
+import Spinner from "@/components/UI/Spinner";
 import {
   getCustomDate,
   calculateDistance,
   getTimeUptime,
   getLocation,
 } from "@/utils/inputFunctions";
-import BodyWrapper from "@/components/layout/BodyWrapper";
+import BodyWrapper from "@/components/HOC/BodyWrapper";
 import { LocationData } from "@/utils/typesTypescript";
 import Head from "next/head";
 import {
@@ -18,7 +18,7 @@ import {
   ServerPrimaryDataType,
   QueryResponseType,
 } from "@/utils/typesTypescript";
-import ServerGraphs from "@/components/ServerGraphs";
+import ServerGraphs from "@/components/UI/ServerPlayersGraph";
 import { toast } from "react-toastify";
 import useQueryLocation from "@/hooks/useQueryLocation";
 import { fetchAllServers } from "@/utils/fetchAllServers";
@@ -99,11 +99,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const { id } = params;
   const fetchIP = id ? replaceLastDotWithColon(id.toString()) : null;
-  let initialDataSSG = dataFromGetStaticPaths.result.find(
-    (page: ServerPrimaryDataType) => {
-      return fetchIP === page.addr;
-    }
-  );
+  let initialDataSSG = dataFromGetStaticPaths.result.find((page: ServerPrimaryDataType) => {
+    return fetchIP === page.addr;
+  });
   if (!initialDataSSG) {
     initialDataSSG = await fetchSingleServer(app, fetchIP);
   }
@@ -153,9 +151,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 
   const userLocation: userLocationType | null = useQueryLocation() || null;
 
-  const [serverLocationData, setServerLocationData] = useState<
-    LocationData | undefined
-  >();
+  const [serverLocationData, setServerLocationData] = useState<LocationData | undefined>();
   useEffect(() => {
     const fetchServerLocation = async () => {
       try {
@@ -201,9 +197,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
         <meta
           name="description"
           content={
-            data
-              ? "Server details - " + data.name
-              : "Specific information about server - Rust"
+            data ? "Server details - " + data.name : "Specific information about server - Rust"
           }
           key="desc"
         />
@@ -237,12 +231,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
         <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
         <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="192x192"
-          href="/android-icon-192x192.png"
-        />
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -337,9 +326,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                 <div className="md:flex md:flex-wrap mb-4">
                   <div className="mr-4 mb-4">
                     <h4 className="text-lg font-medium text-rustFour">Server info:</h4>
-                    {data.rank && (
-                      <p className="text-gray-400">Score: {data.rank / 100}</p>
-                    )}
+                    {data.rank && <p className="text-gray-400">Score: {data.rank / 100}</p>}
                     <p className="text-gray-300">
                       Game Ip:{" "}
                       <span
@@ -390,18 +377,14 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     )}
                     {/* <p className="text-gray-400">Max Players: {data.max_players}</p> */}
                     <p className="text-gray-400">Modded: {data.modded ? "Yes" : "No"}</p>
-                    <p className="text-gray-400">
-                      Vanilla: {data.vanilla ? "Yes" : "No"}
-                    </p>
+                    <p className="text-gray-400">Vanilla: {data.vanilla ? "Yes" : "No"}</p>
                     <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
                     {/* <p className="text-gray-400">Gametype: {data.gametype?.join(", ")}</p> */}
                     <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
                     <p className="text-gray-400">
                       Server uptime: {getTimeUptime(data.rules?.uptime) || ""}
                     </p>
-                    <p className=" text-gray-400">
-                      Query Ip: {data.addr.replace(/:/g, ".")}
-                    </p>
+                    <p className=" text-gray-400">Query Ip: {data.addr.replace(/:/g, ".")}</p>
                     <p className="text-gray-400">FPS Average: {data.rules?.fps_avg}</p>
                   </div>
                   {/* LOCATION */}
@@ -409,9 +392,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   {data.rules?.location ? (
                     <div className="">
                       <h4 className="text-lg font-medium text-rustFour">Location:</h4>
-                      <p className="text-gray-300">
-                        Country: {data.rules?.location?.country}
-                      </p>
+                      <p className="text-gray-300">Country: {data.rules?.location?.country}</p>
                       <p className="text-gray-300">
                         Distance:{" "}
                         {userLocation &&
@@ -426,17 +407,13 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                           : "Loc. Unavailable"}
                       </p>
                       {serverLocationData?.region && (
-                        <p className="text-gray-400">
-                          Region: {serverLocationData.region}
-                        </p>
+                        <p className="text-gray-400">Region: {serverLocationData.region}</p>
                       )}
                       {serverLocationData?.city && (
                         <p className="text-gray-400">City: {serverLocationData.city}</p>
                       )}
 
-                      <p className="text-gray-400">
-                        Latitude: {data.rules.location.latitude}
-                      </p>
+                      <p className="text-gray-400">Latitude: {data.rules.location.latitude}</p>
                       <p className="text-gray-400">
                         Longitude: {data.rules.location.longitude}
                       </p>
@@ -445,9 +422,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     <div>
                       <h4 className="text-lg font-medium text-rustFour">Location</h4>
                       {serverLocationData?.country && (
-                        <p className="text-gray-300">
-                          Country: {serverLocationData.country}
-                        </p>
+                        <p className="text-gray-300">Country: {serverLocationData.country}</p>
                       )}
                       {serverLocationData?.latitude &&
                         serverLocationData?.longitude &&
@@ -464,9 +439,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                           </p>
                         )}
                       {serverLocationData?.region && (
-                        <p className="text-gray-400">
-                          Region: {serverLocationData.region}
-                        </p>
+                        <p className="text-gray-400">Region: {serverLocationData.region}</p>
                       )}
                       {serverLocationData?.city && (
                         <p className="text-gray-400">City: {serverLocationData.city}</p>
@@ -515,28 +488,3 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 };
 
 export default ServerDetailsPage;
-
-// {isFetching && (
-//   <main className="flex flex-col items-center mt-1">
-//     <div className="flex m-1 mb-4">
-//       <Spinner />
-//       <p className="text-xl font-bold m-1 text-gray-200">
-//         Loading server details...
-//       </p>
-//     </div>
-//     <section className="max-w-3xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
-//       {/* FIRST CONTENT */}
-//       <div className="mb-8 bg-zinc-600 animate-pulse rounded-md h-12 w-auto"></div>
-//       {Array.from({ length: 5 }).map((_, index) => (
-//         <div key={index} className="flex flex-wrap justify-center sm:gap-8">
-//           <div className="mb-8 bg-zinc-600 animate-pulse rounded-md w-64 sm:w-48 h-4"></div>
-//           <div className="mb-8 bg-zinc-600 animate-pulse rounded-md w-64 sm:w-48 h-4"></div>
-//           <div className="mb-8 bg-zinc-600 animate-pulse rounded-md w-64 sm:w-48 h-4"></div>
-//         </div>
-//       ))}
-
-//       {/* DESCRIPTION */}
-//       <div className="bg-zinc-600 animate-pulse rounded-md h-48 w-auto"></div>
-//     </section>
-//   </main>
-// )}

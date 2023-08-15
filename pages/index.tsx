@@ -7,9 +7,9 @@ import {
 } from "../utils/typesTypescript";
 import useUserAuth from "../hooks/useUserAuth";
 import useQueryLocation from "@/hooks/useQueryLocation";
-import ResultsTable from "@/components/HOC/ResultsTable";
-import Form from "@/components/HOC/Form";
-import BodyWrapper from "@/components/layout/BodyWrapper";
+import ResultsTable from "@/components/UI/Table/TableMain";
+import Form from "@/components/UI/Form/Form";
+import BodyWrapper from "@/components/HOC/BodyWrapper";
 import { InfiniteData } from "@tanstack/react-query";
 import getAppAuth from "@/utils/getAppAuth";
 
@@ -134,12 +134,7 @@ function Home({ initialDataSSG }: HomeProps) {
         <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
         <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="192x192"
-          href="/android-icon-192x192.png"
-        />
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
