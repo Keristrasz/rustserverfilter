@@ -247,7 +247,10 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
         <meta name="theme-color" content="#ffffff" />
       </Head>
-      <div className="max-w-[1400px] m-4 flex flex-col justify-center items-center ">
+      <div
+        className="max-w-[1400px] m-4 flex flex-col justify-center items-center"
+        suppressHydrationWarning={true}
+      >
         <p className="text-xs text-gray-300">Query IP: {id}</p>
         {isFetching ? (
           <div className="flex m-1 my-2">
@@ -331,6 +334,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     <p className=" text-gray-400">Query Ip: {data.addr.replace(/:/g, ".")}</p>
                     <p className="text-gray-400">FPS Average: {data.rules?.fps_avg}</p>
                   </div>
+
                   {/* LOCATION */}
 
                   {data.rules?.location ? (
@@ -348,13 +352,17 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                               userLocation.latitude,
                               userLocation.longitude
                             ) + " km"
-                          : "Loc. Unavailable"}
+                          : "Dis. unavailable"}
                       </p>
-                      {serverLocationData?.region && (
+                      {serverLocationData?.region ? (
                         <p className="text-gray-400">Region: {serverLocationData.region}</p>
+                      ) : (
+                        <p className="text-gray-400">Region:</p>
                       )}
-                      {serverLocationData?.city && (
+                      {serverLocationData?.city ? (
                         <p className="text-gray-400">City: {serverLocationData.city}</p>
+                      ) : (
+                        <p className="text-gray-400">City:</p>
                       )}
 
                       <p className="text-gray-400">Latitude: {data.rules.location.latitude}</p>
@@ -402,7 +410,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     </div>
                   )}
                 </div>
+
                 {/* DESCRIPTION */}
+
                 <div>
                   <h3 className="text-xl font-medium text-rustFour">Description:</h3>
                   {data.rules?.description ? (
