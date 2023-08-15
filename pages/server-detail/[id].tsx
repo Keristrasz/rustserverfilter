@@ -393,7 +393,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   </div>
                   {/* LOCATION */}
 
-                  {data.rules?.location && isSSG ? (
+                  {data.rules?.location && !isSSG ? (
                     <div className="">
                       <h4 className="text-lg font-medium text-rustFour">Location:</h4>
                       <p className="text-gray-300">Country: {data.rules?.location?.country}</p>
