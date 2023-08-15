@@ -1,7 +1,6 @@
 import { useInfiniteQuery, QueryFunctionContext } from "@tanstack/react-query";
 import { fetchAllServers } from "@/utils/fetchAllServers";
 import { SorterType, FilterType, QueryResponseType } from "../constants/TGlobal";
-import { useMemo } from "react";
 
 let pageSize = 40;
 
