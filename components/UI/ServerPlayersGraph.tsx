@@ -4,21 +4,24 @@ import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend } from "recharts";
 
 type PlayersHistory = [number, number][];
 
-function ServerGraphs({ players_history }: { players_history: PlayersHistory }) {
-  let isMobile = false;
+interface TServerGraphs {
+  players_history: PlayersHistory;
+  isSSG: Boolean;
+}
+
+const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
   let chartWidth = 500;
   let chartHeight = 300;
 
-  const MOBILE_WIDTH_THRESHOLD = 600; // Adjust the threshold as needed
-  isMobile = typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
+  const MOBILE_WIDTH_THRESHOLD = 640;
+  const isMobile = typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
 
-  if (isMobile) {
+  if (isSSG && isMobile) {
     chartHeight = 300;
     chartWidth = 300;
   }
 
   if (players_history) {
-    players_history;
     const formattedData = players_history.map((entry: number[]) => ({
       timestamp: entry[1],
       playerCount: entry[0],
@@ -145,5 +148,5 @@ function ServerGraphs({ players_history }: { players_history: PlayersHistory }) 
     );
   }
   return null;
-}
+};
 export default ServerGraphs;

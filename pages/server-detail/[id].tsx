@@ -149,6 +149,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
   const userLocation: userLocationType | null = useQueryLocation() || null;
 
   const [serverLocationData, setServerLocationData] = useState<LocationData | undefined>();
+
   useEffect(() => {
     const fetchServerLocation = async () => {
       try {
@@ -162,6 +163,12 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
     };
     fetchServerLocation();
   }, [data?.addr]);
+
+  const [isSSG, setIsSSG] = useState(false);
+
+  useEffect(() => {
+    setIsSSG(true);
+  }, []);
 
   const handleCopyClick = () => {
     const textToCopy = data.addr.split(":").slice(0, 1) + ":" + data.gameport;
@@ -386,7 +393,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   </div>
                   {/* LOCATION */}
 
-                  {data.rules?.location ? (
+                  {data.rules?.location && isSSG ? (
                     <div className="">
                       <h4 className="text-lg font-medium text-rustFour">Location:</h4>
                       <p className="text-gray-300">Country: {data.rules?.location?.country}</p>
@@ -456,27 +463,39 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   )}
                 </div>
                 {/* DESCRIPTION */}
-                <div className="">
+                <div>
                   <h3 className="text-xl font-medium text-rustFour">Description:</h3>
-                  <p className="text-gray-300"> {data.rules?.description}</p>
+                  {data.rules?.description ? (
+                    <p className="text-gray-300">
+                      {data.rules.description
+                        .replace(/(\S)[\t\n](?=\S)/g, "$1 ")
+                        .replace(/[\t\n]\s+/g, "")}
+                    </p>
+                  ) : (
+                    <p className="text-gray-300">No description available.</p>
+                  )}
                 </div>
               </section>
             )}
-            {/* {data.players_history ? (
-              <ServerGraphs players_history={data.players_history} />
+            {data.players_history ? (
+              <ServerGraphs players_history={data.players_history} isSSG={isSSG} />
             ) : (
               <section className="flex flex-wrap justify-center my-8">
                 {Array.from({ length: 4 }).map((_, index) => (
                   <article
                     key={index}
-                    className="flex flex-col text-center justify-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 h-[362px] w-[318px] sm:h-[362px] sm:w-[518px]"
+                    className={`flex flex-col text-center justify-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 ${
+                      isSSG
+                        ? "h-[362px] w-[318px] sm:h-[362px] sm:w-[518px]"
+                        : "h-[362px] w-[518px]"
+                    }`}
                   >
                     <h3 className="text-xl font-bold text-gray-200 mb-4">Loading...</h3>
                     <div className="bg-zinc-600 animate-pulse rounded-md w-[95%] h-[80%]"></div>
                   </article>
                 ))}
               </section>
-            )} */}
+            )}
           </main>
         )}
       </div>
