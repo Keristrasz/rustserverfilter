@@ -121,7 +121,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
   // // let chartWidth = 518;
   // // let chartHeight = 362;
 
-  // const MOBILE_WIDTH_THRESHOLD = 600; // Adjust the threshold as needed
+  // const MOBILE_WIDTH_THRESHOLD = 640; // Adjust the threshold as needed
   // let isMobile =
   //   typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
   // // if (isMobile) {
@@ -164,11 +164,11 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
     fetchServerLocation();
   }, [data?.addr]);
 
-  const [isSSG, setIsSSG] = useState(false);
+  // const [isSSG, setIsSSG] = useState(false);
 
-  useEffect(() => {
-    setIsSSG(true);
-  }, []);
+  // useEffect(() => {
+  //   setIsSSG(true);
+  // }, []);
 
   const handleCopyClick = () => {
     const textToCopy = data.addr.split(":").slice(0, 1) + ":" + data.gameport;
@@ -247,66 +247,6 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
         <meta name="theme-color" content="#ffffff" />
       </Head>
-      {/* <Head>
-        <title>
-          {data
-            ? data.name.length > 60
-              ? data.name.substring(0, 60) + "..."
-              : data.name
-            : serverName}
-        </title>
-        <meta
-          name="description"
-          content={
-            data?.rules?.desc
-              ? data.rules.desc
-              : serverDescription
-              ? serverDescription
-              : serverName
-          }
-          key="desc"
-        />
-        <meta
-          property="og:title"
-          content={
-            data?.rules?.desc
-              ? data.rules.desc
-              : serverDescription
-              ? serverDescription
-              : serverName
-          }
-        />
-        <meta
-          property="og:description"
-          content={data?.rules?.desc ? data.rules.desc : serverDescription}
-        />
-        <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
-        <meta property="og:url" content={`https://rustserverfilter.com/server-detail/${id}`} />
-        <meta property="og:type" content="website" />
-        <link rel="canonical" href={`https://rustserverfilter.com/server-detail/${id}`} />
-
-        <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
-        <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
-        <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
-        <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
-        <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
-        <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
-        <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
-        <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png" />
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
-        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="msapplication-TileColor" content="#ffffff" />
-        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
-        <meta name="theme-color" content="#ffffff" />
-      </Head> */}
-
       <div className="max-w-[1400px] m-4 flex flex-col justify-center items-center ">
         <p className="text-xs text-gray-300">Query IP: {id}</p>
         {isFetching ? (
@@ -393,7 +333,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   </div>
                   {/* LOCATION */}
 
-                  {data.rules?.location && !isSSG ? (
+                  {data.rules?.location ? (
                     <div className="">
                       <h4 className="text-lg font-medium text-rustFour">Location:</h4>
                       <p className="text-gray-300">Country: {data.rules?.location?.country}</p>
@@ -468,8 +408,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   {data.rules?.description ? (
                     <p className="text-gray-300">
                       {data.rules.description
-                        .replace(/(\S)[\t\n](?=\S)/g, "$1 ")
-                        .replace(/[\t\n]\s+/g, "")}
+                        .replace(/(\S)\\t(\S)/g, " ")
+                        .replace(/(\S)\\n(\S)/g, " ")
+                        .replace(/\\n|\\t/g, "")}
                     </p>
                   ) : (
                     <p className="text-gray-300">No description available.</p>
@@ -478,17 +419,13 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
               </section>
             )}
             {data.players_history ? (
-              <ServerGraphs players_history={data.players_history} isSSG={isSSG} />
+              <ServerGraphs players_history={data.players_history} />
             ) : (
               <section className="flex flex-wrap justify-center my-8">
                 {Array.from({ length: 4 }).map((_, index) => (
                   <article
                     key={index}
-                    className={`flex flex-col text-center justify-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 ${
-                      isSSG
-                        ? "h-[362px] w-[318px] sm:h-[362px] sm:w-[518px]"
-                        : "h-[362px] w-[518px]"
-                    }`}
+                    className={`flex flex-col text-center justify-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 h-[362px] w-[318px] sm:h-[362px] sm:w-[518px]`}
                   >
                     <h3 className="text-xl font-bold text-gray-200 mb-4">Loading...</h3>
                     <div className="bg-zinc-600 animate-pulse rounded-md w-[95%] h-[80%]"></div>

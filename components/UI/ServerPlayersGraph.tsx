@@ -6,7 +6,7 @@ type PlayersHistory = [number, number][];
 
 interface TServerGraphs {
   players_history: PlayersHistory;
-  isSSG: Boolean;
+  isSSG?: Boolean;
 }
 
 const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
@@ -16,7 +16,7 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
   const MOBILE_WIDTH_THRESHOLD = 640;
   const isMobile = typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
 
-  if (isSSG && isMobile) {
+  if (isMobile) {
     chartHeight = 300;
     chartWidth = 300;
   }
