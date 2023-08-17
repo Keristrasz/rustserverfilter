@@ -348,7 +348,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     )} */}
 
                     <p className=" text-gray-400">Query Ip: {data.addr}</p>
-                    {/* <p className="text-gray-400">FPS Average: {data.rules?.fps_avg}</p> */}
+                    <p className="text-gray-400">FPS Average: {data.rules?.fps_avg}</p>
                   </div>
 
                   {/* LOCATION */}
