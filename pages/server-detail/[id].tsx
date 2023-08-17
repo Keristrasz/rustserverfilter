@@ -279,7 +279,8 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                 </h1>
                 {/* FIRST CONTENT */}
                 <div className="md:flex md:flex-wrap mb-4">
-                  <div className="mr-4 mb-4">
+                  {/* SERVER INFO */}
+                  {/* <div className="mr-4 mb-4">
                     <h4 className="text-lg font-medium text-rustFour">Server info:</h4>
                     {data.rank && (
                       <p className="text-gray-300">Score: {data.rank / 100}</p>
@@ -311,7 +312,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     <p className="text-gray-300">Max Group Size: {data.max_group_size}</p>
                     <p className="text-gray-400">Map Size: {data.rules?.size}</p>
                     <p className="text-gray-400">Seed: {data.rules?.seed}</p>
-                  </div>
+                  </div> */}
                   {/* ADDITIONAL INFO */}
 
                   <div className="mb-2 mr-4">
