@@ -73,10 +73,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const file = path.join(process.cwd(), "public/mainSlugBuildData.json");
   fs.writeFileSync(file, JSON.stringify(initialData), "utf-8");
 
-  //40 must be equal to pagesize
-
   const paths = initialData.result.map((page: ServerPrimaryDataType) => ({
-    // params: { id: page.addr.replace(/:/g, ".").toString() },
     params: { id: page.addr.toString().split(":").join(".") },
   }));
 
@@ -262,7 +259,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
         className="max-w-[1400px] m-4 flex flex-col justify-center items-center"
         suppressHydrationWarning={true}
       >
-        <p className="text-xs text-gray-300">Query IP: {id}</p>
+        <h2 className="text-xs break-words text-gray-300">{data.name}</h2>
         {isFetching ? (
           <div className="flex m-1 my-2">
             <Spinner size={8} />
@@ -446,7 +443,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 
                 {/* DESCRIPTION */}
 
-                <div>
+                {/* <div>
                   <h3 className="text-xl font-medium text-rustFour">Description:</h3>
                   {data.rules?.description ? (
                     <p className="text-gray-300">
@@ -458,7 +455,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   ) : (
                     <p className="text-gray-300">No description available.</p>
                   )}
-                </div>
+                </div> */}
               </section>
             )}
             {data.players_history ? (
