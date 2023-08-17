@@ -339,13 +339,13 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
                     <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
 
-                    {/* {data.rules?.uptime ? (
-                      <p className="text-gray-400">
+                    {data.rules?.uptime ? (
+                      <p className="text-gray-400" suppressHydrationWarning={true}>
                         Server uptime: {getTimeUptime(data.rules?.uptime)}
                       </p>
                     ) : (
                       <p className="text-gray-400">Server uptime:</p>
-                    )} */}
+                    )}
 
                     <p className=" text-gray-400">Query Ip: {data.addr}</p>
                     <p className="text-gray-400">FPS Average: {data.rules?.fps_avg}</p>
@@ -439,7 +439,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 
                 {/* DESCRIPTION */}
 
-                {/* <div>
+                <div>
                   <h3 className="text-xl font-medium text-rustFour">Description:</h3>
                   {data.rules?.description ? (
                     <p className="text-gray-300">
@@ -451,7 +451,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   ) : (
                     <p className="text-gray-300">No description available.</p>
                   )}
-                </div> */}
+                </div>
               </section>
             )}
             {data.players_history ? (
