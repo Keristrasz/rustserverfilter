@@ -255,10 +255,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
         <meta name="theme-color" content="#ffffff" />
       </Head>
-      <div
-        className="max-w-[1400px] m-4 flex flex-col justify-center items-center"
-        suppressHydrationWarning={true}
-      >
+      <div className="max-w-[1400px] m-4 flex flex-col justify-center items-center">
         <h2 className="text-xs break-words text-gray-300">{data.name}</h2>
         {isFetching ? (
           <div className="flex m-1 my-2">
@@ -315,7 +312,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   </div>
                   {/* ADDITIONAL INFO */}
 
-                  {/* <div className="mb-2 mr-4">
+                  <div className="mb-2 mr-4">
                     <h4 className="text-lg font-medium text-rustFour">Aditional info:</h4>
 
                     {data.rules?.url ? (
@@ -342,17 +339,17 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
                     <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
 
-                    {data.rules?.uptime ? (
+                    {/* {data.rules?.uptime ? (
                       <p className="text-gray-400">
                         Server uptime: {getTimeUptime(data.rules?.uptime)}
                       </p>
                     ) : (
                       <p className="text-gray-400">Server uptime:</p>
-                    )}
+                    )} */}
 
                     <p className=" text-gray-400">Query Ip: {data.addr}</p>
-                    <p className="text-gray-400">FPS Average: {data.rules?.fps_avg}</p>
-                  </div> */}
+                    {/* <p className="text-gray-400">FPS Average: {data.rules?.fps_avg}</p> */}
+                  </div>
 
                   {/* LOCATION */}
 
@@ -447,8 +444,8 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   {data.rules?.description ? (
                     <p className="text-gray-300">
                       {data.rules.description
-                        .replace(/(\S)\\t(\S)/g, " ")
-                        .replace(/(\S)\\n(\S)/g, " ")
+                        .replace(/(?<=\S)\\t(?=\S)/g, " ")
+                        .replace(/(?<=\S)\\n(?=\S)/g, " ")
                         .replace(/\\n|\\t/g, "")}
                     </p>
                   ) : (
