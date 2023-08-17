@@ -317,7 +317,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   <div className="mb-2 mr-4">
                     <h4 className="text-lg font-medium text-rustFour">Aditional info:</h4>
 
-                    {data.rules?.url ? (
+                    {/* {data.rules?.url ? (
                       <p className="text-gray-400">
                         URL:{" "}
                         {isUrl(data.rules.url) ? (
@@ -333,7 +333,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                       </p>
                     ) : (
                       <p className="text-gray-400">URL: </p>
-                    )}
+                    )} */}
                     {/* <p className="text-gray-400">Max Players: {data.max_players}</p> */}
                     <p className="text-gray-400">Modded: {data.modded ? "Yes" : "No"}</p>
                     <p className="text-gray-400">
@@ -374,7 +374,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                               userLocation.latitude,
                               userLocation.longitude
                             ) + " km"
-                          : "Dis. unavailable"}
+                          : ""}
                       </p>
                       {serverLocationData?.region ? (
                         <p className="text-gray-400">
