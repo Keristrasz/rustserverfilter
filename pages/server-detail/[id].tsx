@@ -280,7 +280,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                 {/* FIRST CONTENT */}
                 <div className="md:flex md:flex-wrap mb-4">
                   {/* SERVER INFO */}
-                  {/* <div className="mr-4 mb-4">
+                  <div className="mr-4 mb-4">
                     <h4 className="text-lg font-medium text-rustFour">Server info:</h4>
                     {data.rank && (
                       <p className="text-gray-300">Score: {data.rank / 100}</p>
@@ -312,13 +312,13 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     <p className="text-gray-300">Max Group Size: {data.max_group_size}</p>
                     <p className="text-gray-400">Map Size: {data.rules?.size}</p>
                     <p className="text-gray-400">Seed: {data.rules?.seed}</p>
-                  </div> */}
+                  </div>
                   {/* ADDITIONAL INFO */}
 
-                  <div className="mb-2 mr-4">
+                  {/* <div className="mb-2 mr-4">
                     <h4 className="text-lg font-medium text-rustFour">Aditional info:</h4>
 
-                    {/* {data.rules?.url ? (
+                    {data.rules?.url ? (
                       <p className="text-gray-400">
                         URL:{" "}
                         {isUrl(data.rules.url) ? (
@@ -334,14 +334,12 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                       </p>
                     ) : (
                       <p className="text-gray-400">URL: </p>
-                    )} */}
-                    {/* <p className="text-gray-400">Max Players: {data.max_players}</p> */}
+                    )}
                     <p className="text-gray-400">Modded: {data.modded ? "Yes" : "No"}</p>
                     <p className="text-gray-400">
                       Vanilla: {data.vanilla ? "Yes" : "No"}
                     </p>
                     <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
-                    {/* <p className="text-gray-400">Gametype: {data.gametype?.join(", ")}</p> */}
                     <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
 
                     {data.rules?.uptime ? (
@@ -354,7 +352,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 
                     <p className=" text-gray-400">Query Ip: {data.addr}</p>
                     <p className="text-gray-400">FPS Average: {data.rules?.fps_avg}</p>
-                  </div>
+                  </div> */}
 
                   {/* LOCATION */}
 
