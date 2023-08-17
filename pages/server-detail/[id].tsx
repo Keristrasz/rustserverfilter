@@ -165,11 +165,11 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
     fetchServerLocation();
   }, [data?.addr]);
 
-  // const [isSSG, setIsSSG] = useState(false);
+  const [isSSG, setIsSSG] = useState(false);
 
-  // useEffect(() => {
-  //   setIsSSG(true);
-  // }, []);
+  useEffect(() => {
+    setIsSSG(true);
+  }, []);
 
   const handleCopyClick = () => {
     const textToCopy = data.addr.split(":").slice(0, 1) + ":" + data.gameport;
@@ -266,7 +266,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
           <p className="text-2xl m-1 my-2 text-gray-200"> Server details loaded</p>
         )}
         {error instanceof Error && <div>An error has occurred: {error.message}</div>}
-        {(status === "success" || initialDataSSG) && (
+        {((status === "success" && isSSG) || initialDataSSG) && (
           <main className="flex flex-col items-center mt-1">
             {data && (
               <section className="max-w-3xl flex flex-col border border-black bg-zinc-800 rounded-2xl p-6 py-4">
@@ -339,13 +339,13 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
                     <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
 
-                    {/* {data.rules?.uptime ? (
+                    {data.rules?.uptime ? (
                       <p className="text-gray-400">
                         Server uptime: {getTimeUptime(data.rules?.uptime)}
                       </p>
                     ) : (
                       <p className="text-gray-400">Server uptime:</p>
-                    )} */}
+                    )}
 
                     <p className=" text-gray-400">Query Ip: {data.addr}</p>
                     <p className="text-gray-400">FPS Average: {data.rules?.fps_avg}</p>
@@ -439,7 +439,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 
                 {/* DESCRIPTION */}
 
-                {/* <div>
+                <div>
                   <h3 className="text-xl font-medium text-rustFour">Description:</h3>
                   {data.rules?.description ? (
                     <p className="text-gray-300">
@@ -451,7 +451,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   ) : (
                     <p className="text-gray-300">No description available.</p>
                   )}
-                </div> */}
+                </div>
               </section>
             )}
             {data.players_history ? (
