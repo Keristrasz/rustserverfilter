@@ -323,7 +323,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                             className="text-blue-400 underline hover:text-blue-500"
                             href={data.rules.url}
                           >
-                            {data.rules.url}
+                            {data.rules.url.length > 25
+                              ? data.rules.url.slice(0, 25) + "..."
+                              : data.rules.url}
                           </a>
                         ) : (
                           <span>{data.rules.url}</span>
