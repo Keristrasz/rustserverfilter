@@ -139,8 +139,6 @@ function Types({
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
         <meta name="theme-color" content="#ffffff" />
-
-        <link rel="canonical" href={addr} />
       </Head>
       <h1 className="font-rust mt-8 mb-4 text-4xl sm:text-6xl text-center tracking-[0.065rem] [text-shadow:_6px_6px_0_rgb(0_0_0_/_60%)]">
         {h1}

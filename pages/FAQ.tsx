@@ -54,7 +54,7 @@ const FAQ = () => {
   return (
     <BodyWrapper>
       <Head>
-        <title>FAQ | Rust Server Filter</title>
+        <title>FAQ - Rust Server Filter</title>
         <meta property="og:locale" content="en_US" />
 
         <meta
@@ -62,7 +62,7 @@ const FAQ = () => {
           content="How to join rust server with ip? How to get rust server ip? How to find rust server ip? When do rust servers wipe? What time does rust wipe? When does rust wipe?"
           key="desc"
         />
-        <meta property="og:title" content="Rust Server Filter | FAQ" />
+        <meta property="og:title" content="Rust Server Filter - FAQ" />
         <meta
           property="og:description"
           content="How to join rust server with ip? How to get rust server ip? How to find rust server ip? When do rust servers wipe? What time does rust wipe? When does rust wipe?"
