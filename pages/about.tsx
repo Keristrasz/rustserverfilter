@@ -8,20 +8,24 @@ const FAQ = () => {
   return (
     <BodyWrapper>
       <Head>
-        <title>Rust Server Filter | About</title>
+        <title>About - Rust Server Filter</title>
+        <meta property="og:locale" content="en_US" />
+
         <meta
-          name="Rust Server Filter | About - Rust server wipe"
-          content="Rust servers wipe. Rust servers list. Rust servers listing. Ruset servers search. Rust servers list. Rust server list. Server list rust"
+          name="description"
+          content="Rust servers wipe. Best rust servers. Best solo servers. Best duo servers. Best trio servers. Best noob servers. Best beginner servers."
           key="desc"
         />
+        <meta property="og:title" content="Rust Server Filter | About" />
         <meta
-          property="og:title"
-          content="Rust servers wipe. Rust servers list. Rust servers listing. Ruset servers search. Rust servers list. Rust server list. Server list rust"
+          property="og:description"
+          content="Rust servers wipe. Best rust servers. Best solo servers. Best duo servers. Best trio servers. Best noob servers. Best beginner servers."
         />
-        <meta property="og:Rust Server Filter | About" content="" />
+
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content="https://rustserverfilter.com/about" />
         <meta property="og:type" content="website" />
+
         <link rel="canonical" href="https://rustserverfilter.com/about" />
         <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
         <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />

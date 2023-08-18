@@ -6,133 +6,133 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
   <loc>https://rustserverfilter.com/</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>hourly</changefreq>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/about</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>monthly</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/FAQ</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>monthly</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/best-trio-servers</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/best-duo-servers</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/best-solo-servers</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/best-beginner-servers</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/best-pvp-servers</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/best-pve-servers</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/best-rust-servers</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/servers-wipe-soon</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/best-wiped-servers</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/facepunch</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/reddit</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/rustafied</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/rusticated</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/rustoria</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/rusty-moose</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/survivors</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/vital-rust</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/warbandits</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
   <loc>https://rustserverfilter.com/type/zombie-servers</loc>
-  <lastmod>2023-08-01T11:25:57+00:00</lastmod>
+  <lastmod>2023-08-17T11:25:57+00:00</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>

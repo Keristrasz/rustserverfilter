@@ -191,17 +191,25 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
   return (
     <BodyWrapper>
       <Head>
+        <meta property="og:locale" content="en_US" />
         <title>
           {data
-            ? data.name.length > 60
-              ? data.name.substring(0, 60) + "..."
+            ? data.name.length > 100
+              ? data.name.substring(0, 100) + "..."
               : data.name
-            : "Server details - Rust"}
+            : "Server detail - Rust"}
         </title>
+
         <meta
           name="description"
           content={
-            data ? "Server details - " + data.name : "Specific information about server - Rust"
+            data.rules?.description && data.rules?.description.length < 300
+              ? data.rules.description
+              : data.rules?.description && data.rules?.description.length >= 300
+              ? data.rules.description?.substring(0, 300) + "..."
+              : data.name
+              ? data.name
+              : "Specific information about server - Rust"
           }
           key="desc"
         />
@@ -209,23 +217,33 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
           property="og:title"
           content={
             data
-              ? data.name.length > 60
-                ? data.name.substring(0, 60) + "..."
+              ? data.name.length > 100
+                ? data.name.substring(0, 100) + "..."
                 : data.name
-              : "Server details - Rust"
+              : "Server detail - Rust"
           }
         />
         <meta
           property="og:description"
           content={
-            data
-              ? "Server details - " + data.name
-              : "Find FUTURE WIPES! Filter by SOLO DUO TRIO QUAD servers. Sort by LAST WIPED server. Browse server RATES. Limit DISTANCE, MAP SIZE, number of PLAYERS. Look at player history and more!"
+            data.rules?.description && data.rules?.description.length < 300
+              ? data.rules.description
+              : data.rules?.description && data.rules?.description.length >= 300
+              ? data.rules.description?.substring(0, 300) + "..."
+              : data.name
+              ? data.name
+              : "Specific information about server - Rust"
           }
         />
+
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
-        <meta property="og:url" content={`https://rustserverfilter.com/${id}`} />
+        <meta property="og:url" content={`https://rustserverfilter.com/server-detail/${id}`} />
         <meta property="og:type" content="website" />
+
+        <meta
+          property="canonical"
+          content={`https://rustserverfilter.com/server-detail/${id}`}
+        />
         <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
         <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />

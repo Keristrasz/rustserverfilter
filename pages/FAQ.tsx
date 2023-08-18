@@ -54,20 +54,24 @@ const FAQ = () => {
   return (
     <BodyWrapper>
       <Head>
-        <title>Rust Server Filter | FAQ</title>
+        <title>FAQ | Rust Server Filter</title>
+        <meta property="og:locale" content="en_US" />
+
         <meta
-          name="Rust Server Filter | FAQ"
+          name="description"
           content="How to join rust server with ip? How to get rust server ip? How to find rust server ip? When do rust servers wipe? What time does rust wipe? When does rust wipe?"
           key="desc"
         />
         <meta property="og:title" content="Rust Server Filter | FAQ" />
         <meta
-          property="og:How to join rust server with ip?"
+          property="og:description"
           content="How to join rust server with ip? How to get rust server ip? How to find rust server ip? When do rust servers wipe? What time does rust wipe? When does rust wipe?"
         />
+
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content="https://rustserverfilter.com/FAQ" />
         <meta property="og:type" content="website" />
+
         <link rel="canonical" href="https://rustserverfilter.com/FAQ" />
         <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
         <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />

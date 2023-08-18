@@ -107,6 +107,7 @@ function Home({ initialDataSSG }: HomeProps) {
       <Head>
         <title>Rust Server Filter | Solo, Duo, Trio - Best Rust Servers</title>
         <meta property="og:locale" content="en_US" />
+        
         <meta
           name="description"
           content="Discover FUTURE WIPES! Filter SOLO DUO TRIO QUAD servers. Search rates 2x, 3x, 5x. Find best rust servers by advanced filtering, last wipe, distance and more!"
@@ -120,10 +121,12 @@ function Home({ initialDataSSG }: HomeProps) {
           property="og:description"
           content="Discover FUTURE WIPES! Filter SOLO DUO TRIO QUAD servers. Search rates 2x, 3x, 5x. Find best rust servers by advanced filtering, last wipe, distance and more!"
         />
+
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
         <meta property="og:url" content="https://rustserverfilter.com/" />
-        <link rel="canonical" href="https://rustserverfilter.com" />
+        <meta property="og:type" content="website" />
 
+        <link rel="canonical" href="https://rustserverfilter.com" />
         <meta property="og:type" content="website" />
         <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
         <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />

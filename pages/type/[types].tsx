@@ -32,7 +32,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return { notFound: true };
   }
 
-  const { title, desc, h1, addr, initialSorterSSG, initialFilterSSG } = typeConfig;
+  const { title, desc, h1, addr, href, initialSorterSSG, initialFilterSSG } = typeConfig;
 
   const _initialDataSSG: QueryResponseType = await fetchAllServers(
     initialFilterSSG,
@@ -52,6 +52,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       desc,
       h1,
       addr,
+      href,
       initialDataSSG,
       initialSorterSSG,
       initialFilterSSG,
@@ -65,6 +66,7 @@ interface TypesProps {
   desc: string;
   h1: string;
   addr: string;
+  href: string;
   initialDataSSG: InfiniteData<QueryResponseType>;
   initialSorterSSG: SorterType;
   initialFilterSSG: FilterType;
@@ -81,6 +83,7 @@ function Types({
   desc,
   h1,
   addr,
+  href,
   initialDataSSG,
   initialSorterSSG,
   initialFilterSSG,
@@ -106,12 +109,16 @@ function Types({
       <Head>
         <title>{title}</title>
         <meta property="og:locale" content="en_US" />
+
         <meta name="description" content={desc} key="desc" />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={desc} />
+
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
-        <meta property="og:url" content="https://rustserverfilter.com/" />
+        <meta property="og:url" content={`https://rustserverfilter.com/type/${href}`} />
         <meta property="og:type" content="website" />
+
+        <link rel="canonical" href={`https://rustserverfilter.com/type/${href}`} />
         <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
         <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
