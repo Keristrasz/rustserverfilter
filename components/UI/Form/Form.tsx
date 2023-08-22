@@ -51,6 +51,10 @@ const Form: React.FC<FormProps> = ({
 }) => {
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
+  const [isExpanded, setIsExpanded] = useState<boolean>(
+    getFromLocalStorage("isExpanded", false)
+  );
+
   const [isVanilla, setIsVanilla] = useState<boolean | null>(
     getFromLocalStorage("wipeRotation", null)
   );
@@ -68,19 +72,27 @@ const Form: React.FC<FormProps> = ({
 
   const [includedCountries, setIncludedCountries] = useState<string[]>([]);
 
-  const [minSize, setMinSize] = useState<number | string>(getFromLocalStorage("minSize", ""));
-  const [maxSize, setMaxSize] = useState<number | string>(getFromLocalStorage("maxSize", ""));
+  const [minSize, setMinSize] = useState<number | string>(
+    getFromLocalStorage("minSize", "")
+  );
+  const [maxSize, setMaxSize] = useState<number | string>(
+    getFromLocalStorage("maxSize", "")
+  );
   const [minPlayers, setMinPlayers] = useState<number | string>(
     getFromLocalStorage("minPlayers", "")
   );
   const [maxPlayers, setMaxPlayers] = useState<number | string>(
     getFromLocalStorage("maxPlayers", "")
   );
-  const [searchName, setSearchName] = useState<string>(getFromLocalStorage("searchName", ""));
+  const [searchName, setSearchName] = useState<string>(
+    getFromLocalStorage("searchName", "")
+  );
   const [maxGroupSize, setMaxGroupSize] = useState<number[]>(
     getFromLocalStorage("maxGroupSize", [])
   );
-  const [minRank, setMinRank] = useState<number | string>(getFromLocalStorage("minRank", ""));
+  const [minRank, setMinRank] = useState<number | string>(
+    getFromLocalStorage("minRank", "")
+  );
   const [maxDistance, setMaxDistance] = useState<number | string>(
     getFromLocalStorage("maxDistance", "")
   );
@@ -89,24 +101,34 @@ const Form: React.FC<FormProps> = ({
   const updateFilter = useFilter(setFilter);
 
   const handleIsVanillaChange = (option: boolean) => {
-    (isVanilla === true && option === true) || (isVanilla === false && option === false)
-      ? setIsVanilla(null)
-      : (isVanilla === false && option === true) || (isVanilla === true && option === false)
-      ? setIsVanilla(option)
-      : isVanilla === null
-      ? setIsVanilla(option)
-      : null;
-    console.log(isVanilla);
+    if (
+      (isVanilla === true && option === true) ||
+      (isVanilla === false && option === false)
+    ) {
+      setIsVanilla(null);
+    } else if (
+      (isVanilla === false && option === true) ||
+      (isVanilla === true && option === false)
+    ) {
+      setIsVanilla(option);
+    } else {
+      setIsVanilla(option);
+    }
   };
   const handleIsModdedChange = (option: boolean) => {
-    (isModded === true && option === true) || (isModded === false && option === false)
-      ? setIsModded(null)
-      : (isModded === false && option === true) || (isModded === true && option === false)
-      ? setIsModded(option)
-      : isModded === null
-      ? setIsModded(option)
-      : null;
-    console.log(isModded);
+    if (
+      (isModded === true && option === true) ||
+      (isModded === false && option === false)
+    ) {
+      setIsModded(null);
+    } else if (
+      (isModded === false && option === true) ||
+      (isModded === true && option === false)
+    ) {
+      setIsModded(option);
+    } else {
+      setIsModded(option);
+    }
   };
   const handleHardcoreSoftcoreChange = (option: string) => {
     if (hardcoreSoftcore.includes(option)) {
@@ -171,6 +193,7 @@ const Form: React.FC<FormProps> = ({
     } else {
       setWipeRotation([...wipeRotation, option]);
     }
+    console.log(wipeRotation);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -241,6 +264,7 @@ const Form: React.FC<FormProps> = ({
 
   useEffect(() => {
     // Save data to local storage whenever the state changes
+    saveToLocalStorage("isExpanded", isExpanded);
     saveToLocalStorage("wipeRotation", wipeRotation);
     saveToLocalStorage("minSize", minSize);
     saveToLocalStorage("maxSize", maxSize);
@@ -254,12 +278,10 @@ const Form: React.FC<FormProps> = ({
     saveToLocalStorage("isVanilla", isVanilla);
     saveToLocalStorage("isModded", isModded);
     saveToLocalStorage("hardcoreSoftcore", hardcoreSoftcore);
-  }, [filter, sorter]);
-
-  const [expanded, setExpanded] = useState(false);
+  }, [filter, sorter, isExpanded]);
 
   const toggleExpansion = () => {
-    setExpanded(!expanded);
+    setIsExpanded(!isExpanded);
   };
 
   let expandedForm = (
@@ -386,123 +408,135 @@ const Form: React.FC<FormProps> = ({
           </div>
         </div>
       </div>
-      <div className="">
-        <fieldset className="">
-          <legend className="block text-gray-200 font-semibold text-lg mb-1">Rates</legend>
-          <div className="flex flex-wrap">
-            {ratesOptions.map((option) => (
-              <div
-                key={option.value}
-                className={`cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-[3.225em] text-center border border-black hover:text-white ${
-                  isSSG && rate.includes(option.value)
-                    ? "bg-rustOne text-white"
-                    : "bg-zinc-700 text-gray-200"
-                }`}
-                onClick={() => handleRateChange(option.value)}
-              >
-                {option.label}
-              </div>
-            ))}
-          </div>
-        </fieldset>
-        <fieldset className="mt-3">
-          <legend className="block text-gray-200 font-semibold text-lg mb-1 ">
-            Group Size
-          </legend>
-          <div className="flex flex-wrap">
-            {groupSizeOptions.map((option) => (
-              <div
-                key={option.value}
-                className={`cursor-pointer rounded-md px-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border border-black hover:text-white ${
-                  isSSG && maxGroupSize.includes(option.value)
-                    ? "bg-rustOne text-white"
-                    : "bg-zinc-700 text-gray-200"
-                }`}
-                onClick={() => handleGroupSizeChange(option.value)}
-              >
-                {option.label}
-              </div>
-            ))}
-          </div>
-        </fieldset>
-        <fieldset className="mt-3">
-          <legend className="block text-gray-200 font-semibold text-lg mb-1">Wipe Rate</legend>
-          <div className="flex flex-wrap">
-            {wipeRatesOptions.map((option) => (
-              <div
-                key={option.value}
-                className={`cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-24 text-center border border-black  hover:text-white ${
-                  isSSG && wipeRotation.includes(option.value)
-                    ? "bg-rustOne text-white"
-                    : "bg-zinc-700 text-gray-200"
-                }`}
-                onClick={() => handleWipeRotationChange(option.value)}
-              >
-                {option.label}
-              </div>
-            ))}
-          </div>
-        </fieldset>
-        <fieldset className="mt-3">
-          <legend className="block text-gray-200 font-semibold text-lg mb-1">Vanilla</legend>
-          <div className="flex flex-wrap">
-            {vanillaOptions.map((option) => (
-              <div
-                key={option.label}
-                className={`cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-24 text-center border border-black  hover:text-white ${
-                  isSSG &&
-                  ((isVanilla === true && option.value === true) ||
-                    (isVanilla === false && option.value === false))
-                    ? "bg-rustOne text-white"
-                    : "bg-zinc-700 text-gray-200"
-                }`}
-                onClick={() => handleIsVanillaChange(option.value)}
-              >
-                {option.label}
-              </div>
-            ))}
-          </div>
-        </fieldset>
-        <fieldset className="mt-3">
-          <legend className="block text-gray-200 font-semibold text-lg mb-1">Modded</legend>
-          <div className="flex flex-wrap">
-            {moddedOptions.map((option) => (
-              <div
-                key={option.label}
-                className={`cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-24 text-center border border-black  hover:text-white ${
-                  isSSG &&
-                  ((isModded === true && option.value === true) ||
-                    (isModded === false && option.value === false))
-                    ? "bg-rustOne text-white"
-                    : "bg-zinc-700 text-gray-200"
-                }`}
-                onClick={() => handleIsModdedChange(option.value)}
-              >
-                {option.label}
-              </div>
-            ))}
-          </div>
-        </fieldset>
-        <fieldset className="mt-3">
-          <legend className="block text-gray-200 font-semibold text-lg mb-1">
-            Hardcore / Softcore
-          </legend>
-          <div className="flex flex-wrap">
-            {hardcoreSoftcoreOptions.map((option) => (
-              <div
-                key={option.value}
-                className={`cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-24 text-center border border-black  hover:text-white ${
-                  isSSG && wipeRotation.includes(option.value)
-                    ? "bg-rustOne text-white"
-                    : "bg-zinc-700 text-gray-200"
-                }`}
-                onClick={() => handleHardcoreSoftcoreChange(option.value)}
-              >
-                {option.label}
-              </div>
-            ))}
-          </div>
-        </fieldset>
+      <div>
+        <div className="flex flex-col">
+          <fieldset className="mt-3">
+            <legend className="block text-gray-200 font-semibold text-lg mb-1">
+              Rates
+            </legend>
+            <div className="flex flex-wrap">
+              {ratesOptions.map((option) => (
+                <div
+                  key={option.value}
+                  className={`cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-14 text-center border border-black hover:text-white ${
+                    isSSG && rate.includes(option.value)
+                      ? "bg-rustOne text-white"
+                      : "bg-zinc-700 text-gray-200"
+                  }`}
+                  onClick={() => handleRateChange(option.value)}
+                >
+                  {option.label}
+                </div>
+              ))}
+            </div>
+          </fieldset>
+          <fieldset className="mt-3">
+            <legend className="block text-gray-200 font-semibold text-lg mb-1 ">
+              Group Size
+            </legend>
+            <div className="flex flex-wrap">
+              {groupSizeOptions.map((option) => (
+                <div
+                  key={option.value}
+                  className={`cursor-pointer rounded-md px-2 pt-1 pb-0.5 mr-2 mb-1 w-16 text-center border border-black hover:text-white ${
+                    isSSG && maxGroupSize.includes(option.value)
+                      ? "bg-rustOne text-white"
+                      : "bg-zinc-700 text-gray-200"
+                  }`}
+                  onClick={() => handleGroupSizeChange(option.value)}
+                >
+                  {option.label}
+                </div>
+              ))}
+            </div>
+          </fieldset>
+        </div>
+        <div className="flex flex-row flex-wrap justify-between">
+          <fieldset className="mt-3">
+            <legend className="block text-gray-200 font-semibold text-lg mb-1">
+              Wipe Rotation
+            </legend>
+            <div className="flex flex-wrap">
+              {wipeRatesOptions.map((option) => (
+                <div
+                  key={option.value}
+                  className={`cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-24 text-center border border-black  hover:text-white ${
+                    isSSG && wipeRotation.includes(option.value)
+                      ? "bg-rustOne text-white"
+                      : "bg-zinc-700 text-gray-200"
+                  }`}
+                  onClick={() => handleWipeRotationChange(option.value)}
+                >
+                  {option.label}
+                </div>
+              ))}
+            </div>
+          </fieldset>
+          <fieldset className="mt-3">
+            <legend className="block text-gray-200 font-semibold text-lg mb-1">
+              Vanilla
+            </legend>
+            <div className="flex flex-wrap">
+              {vanillaOptions.map((option) => (
+                <div
+                  key={option.label}
+                  className={`cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-28 text-center border border-black  hover:text-white ${
+                    isSSG &&
+                    ((isVanilla === true && option.value === true) ||
+                      (isVanilla === false && option.value === false))
+                      ? "bg-rustOne text-white"
+                      : "bg-zinc-700 text-gray-200"
+                  }`}
+                  onClick={() => handleIsVanillaChange(option.value)}
+                >
+                  {option.label}
+                </div>
+              ))}
+            </div>
+          </fieldset>
+          <fieldset className="mt-3">
+            <legend className="block text-gray-200 font-semibold text-lg mb-1">
+              Modded
+            </legend>
+            <div className="flex flex-wrap">
+              {moddedOptions.map((option) => (
+                <div
+                  key={option.label}
+                  className={`cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-[7.5rem] text-center border border-black  hover:text-white ${
+                    isSSG &&
+                    ((isModded === true && option.value === true) ||
+                      (isModded === false && option.value === false))
+                      ? "bg-rustOne text-white"
+                      : "bg-zinc-700 text-gray-200"
+                  }`}
+                  onClick={() => handleIsModdedChange(option.value)}
+                >
+                  {option.label}
+                </div>
+              ))}
+            </div>
+          </fieldset>
+          <fieldset className="mt-3">
+            <legend className="block text-gray-200 font-semibold text-lg mb-1">
+              Hardcore / Softcore
+            </legend>
+            <div className="flex flex-wrap">
+              {hardcoreSoftcoreOptions.map((option) => (
+                <div
+                  key={option.value}
+                  className={`cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-24 text-center border border-black  hover:text-white ${
+                    isSSG && hardcoreSoftcore.includes(option.value)
+                      ? "bg-rustOne text-white"
+                      : "bg-zinc-700 text-gray-200"
+                  }`}
+                  onClick={() => handleHardcoreSoftcoreChange(option.value)}
+                >
+                  {option.label}
+                </div>
+              ))}
+            </div>
+          </fieldset>
+        </div>
       </div>
       <div className="flex flex-wrap w-full justify-between mt-2">
         <div className="m-0 w-1/2 xl:max-w-[32.5em]">
@@ -644,12 +678,14 @@ const Form: React.FC<FormProps> = ({
       </div>
       <div className="">
         <fieldset className="">
-          <legend className="block text-gray-200 font-semibold text-lg mb-1">Rates</legend>
+          <legend className="block text-gray-200 font-semibold text-lg mb-1">
+            Rates
+          </legend>
           <div className="flex flex-wrap">
             {ratesOptions.map((option) => (
               <div
                 key={option.value}
-                className={`cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-[3.225em] text-center border border-black hover:text-white ${
+                className={`cursor-pointer rounded-md px-1 pt-1 pb-0.5 mr-2 mb-1 w-14 text-center border border-black hover:text-white ${
                   isSSG && rate.includes(option.value)
                     ? "bg-rustOne text-white"
                     : "bg-zinc-700 text-gray-200"
@@ -726,7 +762,7 @@ const Form: React.FC<FormProps> = ({
   return (
     <>
       <h1 className="text-xs mt-4 text-gray-300">Rust server search form</h1>
-      {expanded ? expandedForm : notExpandedForm}
+      {isExpanded ? expandedForm : notExpandedForm}
     </>
   );
 

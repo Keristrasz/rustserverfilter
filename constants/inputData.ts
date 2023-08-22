@@ -43,6 +43,6 @@ export const moddedOptions = [
 ];
 
 export const hardcoreSoftcoreOptions = [
-  { value: "hardcore", label: "hardcore" },
-  { value: "softcore", label: "softcore" },
+  { value: "hardcore", label: "Hardcore" },
+  { value: "softcore", label: "Softcore" },
 ];
