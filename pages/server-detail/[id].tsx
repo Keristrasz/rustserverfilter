@@ -222,14 +222,14 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
             (data.rate ? "Rate: " + data.rate + "x. " : "") +
             (data.born ? "Last wipe: " + getCustomDate(data.born) + ". " : "") +
             (data.born_next ? "Next wipe: " + getCustomDate(data.born_next) + ". " : "") +
-            (data.rules?.description && data.rules?.description.length < 85
+            (data.rules?.description && data.rules?.description.length < 45
               ? data.rules.description
                   .replace(/(?<=\S)\\t(?=\S)/g, " ")
                   .replace(/(?<=\S)\\n(?=\S)/g, " ")
                   .replace(/\\n|\\t/g, "")
-              : data.rules?.description && data.rules?.description.length >= 85
+              : data.rules?.description && data.rules?.description.length >= 45
               ? data.rules.description
-                  ?.substring(0, 85)
+                  ?.substring(0, 45)
                   .replace(/(?<=\S)\\t(?=\S)/g, " ")
                   .replace(/(?<=\S)\\n(?=\S)/g, " ")
                   .replace(/\\n|\\t/g, "") + "..."
@@ -262,14 +262,14 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
             (data.rate ? "Rate: " + data.rate + "x. " : "") +
             (data.born ? "Last wipe: " + getCustomDate(data.born) + ". " : "") +
             (data.born_next ? "Next wipe: " + getCustomDate(data.born_next) + ". " : "") +
-            (data.rules?.description && data.rules?.description.length < 85
+            (data.rules?.description && data.rules?.description.length < 45
               ? data.rules.description
                   .replace(/(?<=\S)\\t(?=\S)/g, " ")
                   .replace(/(?<=\S)\\n(?=\S)/g, " ")
                   .replace(/\\n|\\t/g, "")
-              : data.rules?.description && data.rules?.description.length >= 85
+              : data.rules?.description && data.rules?.description.length >= 45
               ? data.rules.description
-                  ?.substring(0, 85)
+                  ?.substring(0, 45)
                   .replace(/(?<=\S)\\t(?=\S)/g, " ")
                   .replace(/(?<=\S)\\n(?=\S)/g, " ")
                   .replace(/\\n|\\t/g, "") + "..."
