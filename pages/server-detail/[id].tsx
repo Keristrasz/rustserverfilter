@@ -59,7 +59,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
   const initialSorter: SorterType = { players: -1 };
   const initialFilter: FilterType = {
-    $and: [{ rank: { $gte: 500 } }, { players: { $gte: 0 } }],
+    $and: [{ rank: { $gte: 570 } }, { players: { $gte: 0 } }],
   };
   let initialData: QueryResponseType | null = null;
 
@@ -70,7 +70,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       initialFilter,
       initialSorter,
       0,
-      2250,
+      2257,
       app,
       projection
     );
@@ -204,8 +204,8 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
         <meta property="og:locale" content="en_US" />
         <title>
           {data
-            ? data.name.length > 55
-              ? data.name.substring(0, 55) + "..."
+            ? data.name.length > 57
+              ? data.name.substring(0, 57) + "..."
               : data.name
             : "Server detail - Rust"}
         </title>
@@ -222,14 +222,14 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
             (data.rate ? "Rate: " + data.rate + "x. " : "") +
             (data.born ? "Last wipe: " + getCustomDate(data.born) + ". " : "") +
             (data.born_next ? "Next wipe: " + getCustomDate(data.born_next) + ". " : "") +
-            (data.rules?.description && data.rules?.description.length < 50
+            (data.rules?.description && data.rules?.description.length < 57
               ? data.rules.description
                   .replace(/(?<=\S)\\t(?=\S)/g, " ")
                   .replace(/(?<=\S)\\n(?=\S)/g, " ")
                   .replace(/\\n|\\t/g, "")
-              : data.rules?.description && data.rules?.description.length >= 50
+              : data.rules?.description && data.rules?.description.length >= 57
               ? data.rules.description
-                  ?.substring(0, 50)
+                  ?.substring(0, 57)
                   .replace(/(?<=\S)\\t(?=\S)/g, " ")
                   .replace(/(?<=\S)\\n(?=\S)/g, " ")
                   .replace(/\\n|\\t/g, "") + "..."
@@ -244,8 +244,8 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
           property="og:title"
           content={
             data
-              ? data.name.length > 55
-                ? data.name.substring(0, 55) + "..."
+              ? data.name.length > 57
+                ? data.name.substring(0, 57) + "..."
                 : data.name
               : "Server detail - Rust"
           }
@@ -262,14 +262,14 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
             (data.rate ? "Rate: " + data.rate + "x. " : "") +
             (data.born ? "Last wipe: " + getCustomDate(data.born) + ". " : "") +
             (data.born_next ? "Next wipe: " + getCustomDate(data.born_next) + ". " : "") +
-            (data.rules?.description && data.rules?.description.length < 50
+            (data.rules?.description && data.rules?.description.length < 57
               ? data.rules.description
                   .replace(/(?<=\S)\\t(?=\S)/g, " ")
                   .replace(/(?<=\S)\\n(?=\S)/g, " ")
                   .replace(/\\n|\\t/g, "")
-              : data.rules?.description && data.rules?.description.length >= 50
+              : data.rules?.description && data.rules?.description.length >= 57
               ? data.rules.description
-                  ?.substring(0, 50)
+                  ?.substring(0, 57)
                   .replace(/(?<=\S)\\t(?=\S)/g, " ")
                   .replace(/(?<=\S)\\n(?=\S)/g, " ")
                   .replace(/\\n|\\t/g, "") + "..."
@@ -346,7 +346,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     <p className="text-gray-300">
                       Game Ip:{" "}
                       <span
-                        className="font-bold text-rustFour hover:cursor-pointer hover:text-green-500"
+                        className="font-bold text-rustFour hover:cursor-pointer hover:text-green-570"
                         onClick={handleCopyClick}
                       >
                         {data.addr.split(":").slice(0, 1) + ":" + data.gameport}
@@ -381,7 +381,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                         URL:{" "}
                         {isUrl(data.rules.url) ? (
                           <a
-                            className="text-blue-400 underline hover:text-blue-500"
+                            className="text-blue-400 underline hover:text-blue-570"
                             href={data.rules.url}
                           >
                             {data.rules.url.length > 25
