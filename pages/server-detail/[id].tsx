@@ -30,12 +30,21 @@ import getAppAuth from "@/utils/getAppAuth";
 import fs from "fs";
 import path from "path";
 
+import { groupSizeOptions } from "@/constants/inputData";
+
 function replaceLastDotWithColon(input: string) {
   const lastIndex = input.lastIndexOf(".");
   if (lastIndex !== -1) {
     return input.substring(0, lastIndex) + ":" + input.substring(lastIndex + 1);
   }
   return input;
+}
+
+function replaceGroupSizeWithName(input: number) {
+  const foundOption = groupSizeOptions.find((el) => el.value === input);
+  if (foundOption) {
+    return foundOption.label;
+  }
 }
 
 // should dedupe the fetch requests
@@ -61,7 +70,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       initialFilter,
       initialSorter,
       0,
-      2500,
+      2250,
       app,
       projection
     );
@@ -207,18 +216,20 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
             (data.players && data.max_players
               ? "Players: " + data.players + "/" + data.max_players + ". "
               : "") +
-            (data.max_group_size ? "Max group size: " + data.max_group_size + ". " : "") +
-            (data.rate ? "Rate: " + data.rate + ". " : "") +
+            (data.max_group_size
+              ? "Group size: " + replaceGroupSizeWithName(data.max_group_size) + ". "
+              : "") +
+            (data.rate ? "Rate: " + data.rate + "x. " : "") +
             (data.born ? "Last wipe: " + getCustomDate(data.born) + ". " : "") +
             (data.born_next ? "Next wipe: " + getCustomDate(data.born_next) + ". " : "") +
-            (data.rules?.description && data.rules?.description.length < 60
+            (data.rules?.description && data.rules?.description.length < 85
               ? data.rules.description
                   .replace(/(?<=\S)\\t(?=\S)/g, " ")
                   .replace(/(?<=\S)\\n(?=\S)/g, " ")
                   .replace(/\\n|\\t/g, "")
-              : data.rules?.description && data.rules?.description.length >= 60
+              : data.rules?.description && data.rules?.description.length >= 85
               ? data.rules.description
-                  ?.substring(0, 60)
+                  ?.substring(0, 85)
                   .replace(/(?<=\S)\\t(?=\S)/g, " ")
                   .replace(/(?<=\S)\\n(?=\S)/g, " ")
                   .replace(/\\n|\\t/g, "") + "..."
@@ -245,14 +256,23 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
             (data.players && data.max_players
               ? "Players: " + data.players + "/" + data.max_players + ". "
               : "") +
-            (data.max_group_size ? "Max group size: " + data.max_group_size + ". " : "") +
-            (data.rate ? "Rate: " + data.rate + ". " : "") +
+            (data.max_group_size
+              ? "Group size: " + replaceGroupSizeWithName(data.max_group_size) + ". "
+              : "") +
+            (data.rate ? "Rate: " + data.rate + "x. " : "") +
             (data.born ? "Last wipe: " + getCustomDate(data.born) + ". " : "") +
             (data.born_next ? "Next wipe: " + getCustomDate(data.born_next) + ". " : "") +
-            (data.rules?.description && data.rules?.description.length < 60
+            (data.rules?.description && data.rules?.description.length < 85
               ? data.rules.description
-              : data.rules?.description && data.rules?.description.length >= 60
-              ? data.rules.description?.substring(0, 60) + "..."
+                  .replace(/(?<=\S)\\t(?=\S)/g, " ")
+                  .replace(/(?<=\S)\\n(?=\S)/g, " ")
+                  .replace(/\\n|\\t/g, "")
+              : data.rules?.description && data.rules?.description.length >= 85
+              ? data.rules.description
+                  ?.substring(0, 85)
+                  .replace(/(?<=\S)\\t(?=\S)/g, " ")
+                  .replace(/(?<=\S)\\n(?=\S)/g, " ")
+                  .replace(/\\n|\\t/g, "") + "..."
               : data.name
               ? data.name
               : "Specific information about server - Rust")
