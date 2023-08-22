@@ -56,21 +56,25 @@ const Form: React.FC<FormProps> = ({
   );
 
   const [isVanilla, setIsVanilla] = useState<boolean | null>(
-    getFromLocalStorage("wipeRotation", null)
+    getFromLocalStorage("isVanilla", null)
   );
   const [isModded, setIsModded] = useState<boolean | null>(
-    getFromLocalStorage("wipeRotation", null)
+    getFromLocalStorage("isModded", null)
   );
   const [hardcoreSoftcore, setHardcoreSoftcore] = useState<string[]>(
-    getFromLocalStorage("wipeRotation", [])
+    getFromLocalStorage("hardcoreSoftcore", [])
   );
 
   const [wipeRotation, setWipeRotation] = useState<string[]>(
     getFromLocalStorage("wipeRotation", [])
   );
-  const [excludedCountries, setExcludeCountries] = useState<string[]>([]);
+  const [excludedCountries, setExcludedCountries] = useState<string[]>(
+    getFromLocalStorage("excludedCountries", [])
+  );
 
-  const [includedCountries, setIncludedCountries] = useState<string[]>([]);
+  const [includedCountries, setIncludedCountries] = useState<string[]>(
+    getFromLocalStorage("includedCountries", [])
+  );
 
   const [minSize, setMinSize] = useState<number | string>(
     getFromLocalStorage("minSize", "")
@@ -243,7 +247,7 @@ const Form: React.FC<FormProps> = ({
     setWipeRotation([]);
     setMaxGroupSize([]);
     setMaxDistance("");
-    setExcludeCountries([]);
+    setExcludedCountries([]);
     setIncludedCountries([]);
     setIsModded(null);
     setIsVanilla(null);
@@ -275,6 +279,8 @@ const Form: React.FC<FormProps> = ({
     saveToLocalStorage("minRank", minRank);
     saveToLocalStorage("maxDistance", maxDistance);
     saveToLocalStorage("rate", rate);
+    saveToLocalStorage("excludedCountries", excludedCountries);
+    saveToLocalStorage("includedCountries", includedCountries);
     saveToLocalStorage("isVanilla", isVanilla);
     saveToLocalStorage("isModded", isModded);
     saveToLocalStorage("hardcoreSoftcore", hardcoreSoftcore);
@@ -560,7 +566,7 @@ const Form: React.FC<FormProps> = ({
           </label>
           <SelectExcludeCountries
             countries={excludedCountries}
-            setCountries={setExcludeCountries}
+            setCountries={setExcludedCountries}
           />
         </div>
       </div>
@@ -762,7 +768,7 @@ const Form: React.FC<FormProps> = ({
   return (
     <>
       <h1 className="text-xs mt-4 text-gray-300">Rust server search form</h1>
-      {isExpanded ? expandedForm : notExpandedForm}
+      {isExpanded && isSSG ? expandedForm : notExpandedForm}
     </>
   );
 

@@ -1,7 +1,9 @@
 import { Dispatch, SetStateAction } from "react";
 import { FilterType, UseFilterHookType } from "@/constants/TGlobal";
 
-const useFilter = (setFilter: Dispatch<SetStateAction<FilterType>>): UseFilterHookType => {
+const useFilter = (
+  setFilter: Dispatch<SetStateAction<FilterType>>
+): UseFilterHookType => {
   const updateFilter: UseFilterHookType = (
     minRank,
     wipeRotation,
@@ -21,19 +23,29 @@ const useFilter = (setFilter: Dispatch<SetStateAction<FilterType>>): UseFilterHo
     hardcoreSoftcore
   ) => {
     let newFilter: FilterType = {
-      $and: [
-        {
-          rank: { $gte: 500 },
-        },
-      ],
+      $and: minRank
+        ? [
+            {
+              rank: { $gte: Number(minRank) * 100 },
+            },
+          ]
+        : [
+            {
+              rank: { $gte: 500 },
+            },
+          ],
     };
 
-    minRank ? newFilter.$and.push({ rank: { $gte: Number(minRank) * 100 } }) : null;
+    // minRank ? newFilter.$and.push({ rank: { $gte: Number(minRank) * 100 } }) : null;
+    typeof isVanilla === "boolean" ? newFilter.$and.push({ vanilla: isVanilla }) : null;
+    typeof isModded === "boolean" ? newFilter.$and.push({ modded: isModded }) : null;
     minPlayers ? newFilter.$and.push({ players: { $gte: Number(minPlayers) } }) : null;
     maxPlayers ? newFilter.$and.push({ players: { $lte: Number(maxPlayers) } }) : null;
     minSize ? newFilter.$and.push({ "rules.size": { $gte: Number(minSize) } }) : null;
     maxSize ? newFilter.$and.push({ "rules.size": { $lte: Number(maxSize) } }) : null;
-    searchName ? newFilter.$and.push({ name: { $regex: searchName, $options: "i" } }) : null;
+    searchName
+      ? newFilter.$and.push({ name: { $regex: searchName, $options: "i" } })
+      : null;
     maxGroupSize.length !== 0
       ? newFilter.$and.push({ max_group_size: { $in: maxGroupSize } })
       : null;
@@ -41,6 +53,9 @@ const useFilter = (setFilter: Dispatch<SetStateAction<FilterType>>): UseFilterHo
       ? newFilter.$and.push({ wipe_rotation: { $in: wipeRotation } })
       : null;
     rate.length !== 0 ? newFilter.$and.push({ rate: { $in: rate } }) : null;
+    hardcoreSoftcore.length !== 0
+      ? newFilter.$and.push({ difficulty: { $in: hardcoreSoftcore } })
+      : null;
 
     includedCountries.length !== 0 && excludedCountries.length !== 0
       ? alert("There can be only included or excluded countries at once")

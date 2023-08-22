@@ -93,9 +93,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const { id } = params;
   const fetchIP = id ? replaceLastDotWithColon(id.toString()) : null;
-  let initialDataSSG = dataFromGetStaticPaths.result.find((page: ServerPrimaryDataType) => {
-    return fetchIP === page.addr;
-  });
+  let initialDataSSG = dataFromGetStaticPaths.result.find(
+    (page: ServerPrimaryDataType) => {
+      return fetchIP === page.addr;
+    }
+  );
   if (!initialDataSSG) {
     initialDataSSG = await fetchSingleServer(app, fetchIP);
   }
@@ -145,7 +147,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 
   const userLocation: userLocationType | null = useQueryLocation() || null;
 
-  const [serverLocationData, setServerLocationData] = useState<LocationData | undefined>();
+  const [serverLocationData, setServerLocationData] = useState<
+    LocationData | undefined
+  >();
 
   useEffect(() => {
     const fetchServerLocation = async () => {
@@ -207,10 +211,17 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
             (data.rate ? "Rate: " + data.rate + ". " : "") +
             (data.born ? "Last wipe: " + getCustomDate(data.born) + ". " : "") +
             (data.born_next ? "Next wipe: " + getCustomDate(data.born_next) + ". " : "") +
-            (data.rules?.description && data.rules?.description.length < 40
+            (data.rules?.description && data.rules?.description.length < 60
               ? data.rules.description
-              : data.rules?.description && data.rules?.description.length >= 40
-              ? data.rules.description?.substring(0, 40) + "..."
+                  .replace(/(?<=\S)\\t(?=\S)/g, " ")
+                  .replace(/(?<=\S)\\n(?=\S)/g, " ")
+                  .replace(/\\n|\\t/g, "")
+              : data.rules?.description && data.rules?.description.length >= 60
+              ? data.rules.description
+                  ?.substring(0, 60)
+                  .replace(/(?<=\S)\\t(?=\S)/g, " ")
+                  .replace(/(?<=\S)\\n(?=\S)/g, " ")
+                  .replace(/\\n|\\t/g, "") + "..."
               : data.name
               ? data.name
               : "Specific information about server - Rust")
@@ -238,10 +249,10 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
             (data.rate ? "Rate: " + data.rate + ". " : "") +
             (data.born ? "Last wipe: " + getCustomDate(data.born) + ". " : "") +
             (data.born_next ? "Next wipe: " + getCustomDate(data.born_next) + ". " : "") +
-            (data.rules?.description && data.rules?.description.length < 40
+            (data.rules?.description && data.rules?.description.length < 60
               ? data.rules.description
-              : data.rules?.description && data.rules?.description.length >= 40
-              ? data.rules.description?.substring(0, 40) + "..."
+              : data.rules?.description && data.rules?.description.length >= 60
+              ? data.rules.description?.substring(0, 60) + "..."
               : data.name
               ? data.name
               : "Specific information about server - Rust")
@@ -249,7 +260,10 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
         />
 
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
-        <meta property="og:url" content={`https://rustserverfilter.com/server-detail/${id}`} />
+        <meta
+          property="og:url"
+          content={`https://rustserverfilter.com/server-detail/${id}`}
+        />
         <meta property="og:type" content="website" />
 
         <meta
@@ -265,7 +279,12 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
         <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
         <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="192x192"
+          href="/android-icon-192x192.png"
+        />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -301,7 +320,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   {/* SERVER INFO */}
                   <div className="mr-4 mb-4">
                     <h4 className="text-lg font-medium text-rustFour">Server info:</h4>
-                    {data.rank && <p className="text-gray-300">Score: {data.rank / 100}</p>}
+                    {data.rank && (
+                      <p className="text-gray-300">Score: {data.rank / 100}</p>
+                    )}
                     <p className="text-gray-300">
                       Game Ip:{" "}
                       <span
@@ -355,7 +376,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                       <p className="text-gray-400">URL: </p>
                     )}
                     <p className="text-gray-400">Modded: {data.modded ? "Yes" : "No"}</p>
-                    <p className="text-gray-400">Vanilla: {data.vanilla ? "Yes" : "No"}</p>
+                    <p className="text-gray-400">
+                      Vanilla: {data.vanilla ? "Yes" : "No"}
+                    </p>
                     <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
                     <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
 
@@ -376,7 +399,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   {data.rules?.location ? (
                     <div className="">
                       <h4 className="text-lg font-medium text-rustFour">Location:</h4>
-                      <p className="text-gray-300">Country: {data.rules?.location?.country}</p>
+                      <p className="text-gray-300">
+                        Country: {data.rules?.location?.country}
+                      </p>
                       <p className="text-gray-300">
                         Distance:{" "}
                         {userLocation &&
@@ -391,7 +416,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                           : ""}
                       </p>
                       {serverLocationData?.region ? (
-                        <p className="text-gray-400">Region: {serverLocationData.region}</p>
+                        <p className="text-gray-400">
+                          Region: {serverLocationData.region}
+                        </p>
                       ) : (
                         <p className="text-gray-400">Region:</p>
                       )}
@@ -401,7 +428,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                         <p className="text-gray-400">City:</p>
                       )}
 
-                      <p className="text-gray-400">Latitude: {data.rules.location.latitude}</p>
+                      <p className="text-gray-400">
+                        Latitude: {data.rules.location.latitude}
+                      </p>
                       <p className="text-gray-400">
                         Longitude: {data.rules.location.longitude}
                       </p>
@@ -410,7 +439,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     <div>
                       <h4 className="text-lg font-medium text-rustFour">Location</h4>
                       {serverLocationData?.country && (
-                        <p className="text-gray-300">Country: {serverLocationData.country}</p>
+                        <p className="text-gray-300">
+                          Country: {serverLocationData.country}
+                        </p>
                       )}
                       {serverLocationData?.latitude &&
                         serverLocationData?.longitude &&
@@ -427,7 +458,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                           </p>
                         )}
                       {serverLocationData?.region && (
-                        <p className="text-gray-400">Region: {serverLocationData.region}</p>
+                        <p className="text-gray-400">
+                          Region: {serverLocationData.region}
+                        </p>
                       )}
                       {serverLocationData?.city && (
                         <p className="text-gray-400">City: {serverLocationData.city}</p>

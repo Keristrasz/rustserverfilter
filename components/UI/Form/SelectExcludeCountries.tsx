@@ -34,16 +34,16 @@ function SelectExcludeCountries({
     };
   }, []);
 
-  useEffect(() => {
-    const storedCountries = localStorage.getItem("excludedCountries");
-    if (storedCountries) {
-      setCountries(JSON.parse(storedCountries));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedCountries = localStorage.getItem("excludedCountries");
+  //   if (storedCountries) {
+  //     setCountries(JSON.parse(storedCountries));
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    localStorage.setItem("excludedCountries", JSON.stringify(countries));
-  }, [countries]);
+  // useEffect(() => {
+  //   localStorage.setItem("excludedCountries", JSON.stringify(countries));
+  // }, [countries]);
 
   const handleToggle = (): void => {
     setIsOpen(!isOpen);
@@ -145,7 +145,10 @@ function SelectExcludeCountries({
         >
           <div className="max-h-80 overflow-auto">
             {filteredOptions.map((el: String) => (
-              <label key={String(el)} className="block px-4 py-2 cursor-pointer select-none">
+              <label
+                key={String(el)}
+                className="block px-4 py-2 cursor-pointer select-none"
+              >
                 <input
                   type="checkbox"
                   className="h-4 w-4 border-rustOne rounded focus:ring-2 focus:ring-black text-rustOne !bg-none"
@@ -163,4 +166,6 @@ function SelectExcludeCountries({
   );
 }
 
-export default React.memo(SelectExcludeCountries);
+// memo is making local storage not to update properly
+// export default React.memo(SelectExcludeCountries);
+export default SelectExcludeCountries;

@@ -61,6 +61,9 @@ export interface FilterType {
         $centerSphere: [number[], number];
       };
     };
+    vanilla?: boolean;
+    modded?: boolean;
+    difficulty?: { $in: string[] };
   }[];
 }
 
