@@ -77,7 +77,10 @@ export type UseFilterHookType = (
   includedCountries: string[],
   excludedCountries: string[],
   maxDistance: string | number,
-  userLocation: { latitude: number; longitude: number } | null
+  userLocation: { latitude: number; longitude: number } | null,
+  isVanilla: boolean | null,
+  isModded: boolean | null,
+  hardcoreSoftcore: string[]
 ) => void;
 
 export type QueryResponseType = {

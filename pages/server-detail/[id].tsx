@@ -191,8 +191,8 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
         <meta property="og:locale" content="en_US" />
         <title>
           {data
-            ? data.name.length > 100
-              ? data.name.substring(0, 100) + "..."
+            ? data.name.length > 55
+              ? data.name.substring(0, 55) + "..."
               : data.name
             : "Server detail - Rust"}
         </title>
@@ -200,22 +200,30 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
         <meta
           name="description"
           content={
-            data.rules?.description && data.rules?.description.length < 155
+            (data.players && data.max_players
+              ? "Players: " + data.players + "/" + data.max_players + ". "
+              : "") +
+            (data.max_group_size ? "Max group size: " + data.max_group_size + ". " : "") +
+            (data.rate ? "Rate: " + data.rate + ". " : "") +
+            (data.born ? "Last wipe: " + getCustomDate(data.born) + ". " : "") +
+            (data.born_next ? "Next wipe: " + getCustomDate(data.born_next) + ". " : "") +
+            (data.rules?.description && data.rules?.description.length < 40
               ? data.rules.description
-              : data.rules?.description && data.rules?.description.length >= 155
-              ? data.rules.description?.substring(0, 155) + "..."
+              : data.rules?.description && data.rules?.description.length >= 40
+              ? data.rules.description?.substring(0, 40) + "..."
               : data.name
               ? data.name
-              : "Specific information about server - Rust"
+              : "Specific information about server - Rust")
           }
           key="desc"
         />
+
         <meta
           property="og:title"
           content={
             data
-              ? data.name.length > 100
-                ? data.name.substring(0, 100) + "..."
+              ? data.name.length > 55
+                ? data.name.substring(0, 55) + "..."
                 : data.name
               : "Server detail - Rust"
           }
@@ -223,13 +231,20 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
         <meta
           property="og:description"
           content={
-            data.rules?.description && data.rules?.description.length < 155
+            (data.players && data.max_players
+              ? "Players: " + data.players + "/" + data.max_players + ". "
+              : "") +
+            (data.max_group_size ? "Max group size: " + data.max_group_size + ". " : "") +
+            (data.rate ? "Rate: " + data.rate + ". " : "") +
+            (data.born ? "Last wipe: " + getCustomDate(data.born) + ". " : "") +
+            (data.born_next ? "Next wipe: " + getCustomDate(data.born_next) + ". " : "") +
+            (data.rules?.description && data.rules?.description.length < 40
               ? data.rules.description
-              : data.rules?.description && data.rules?.description.length >= 155
-              ? data.rules.description?.substring(0, 155) + "..."
+              : data.rules?.description && data.rules?.description.length >= 40
+              ? data.rules.description?.substring(0, 40) + "..."
               : data.name
               ? data.name
-              : "Specific information about server - Rust"
+              : "Specific information about server - Rust")
           }
         />
 

@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { groupSizeOptions, ratesOptions, wipeRatesOptions } from "@/constants/inputData";
+import {
+  groupSizeOptions,
+  ratesOptions,
+  wipeRatesOptions,
+  vanillaOptions,
+  moddedOptions,
+  hardcoreSoftcoreOptions,
+} from "@/constants/inputData";
 import SelectIncludeCountries from "./SelectIncludeCountries";
 import SelectExcludeCountries from "./SelectExcludeCountries";
 import useFilter from "@/hooks/useFilter";
@@ -44,6 +51,16 @@ const Form: React.FC<FormProps> = ({
 }) => {
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
+  const [isVanilla, setIsVanilla] = useState<boolean | null>(
+    getFromLocalStorage("wipeRotation", null)
+  );
+  const [isModded, setIsModded] = useState<boolean | null>(
+    getFromLocalStorage("wipeRotation", null)
+  );
+  const [hardcoreSoftcore, setHardcoreSoftcore] = useState<string[]>(
+    getFromLocalStorage("wipeRotation", [])
+  );
+
   const [wipeRotation, setWipeRotation] = useState<string[]>(
     getFromLocalStorage("wipeRotation", [])
   );
@@ -70,6 +87,35 @@ const Form: React.FC<FormProps> = ({
   const [rate, setRate] = useState<number[]>(getFromLocalStorage("rate", []));
 
   const updateFilter = useFilter(setFilter);
+
+  const handleIsVanillaChange = (option: boolean) => {
+    (isVanilla === true && option === true) || (isVanilla === false && option === false)
+      ? setIsVanilla(null)
+      : (isVanilla === false && option === true) || (isVanilla === true && option === false)
+      ? setIsVanilla(option)
+      : isVanilla === null
+      ? setIsVanilla(option)
+      : null;
+    console.log(isVanilla);
+  };
+  const handleIsModdedChange = (option: boolean) => {
+    (isModded === true && option === true) || (isModded === false && option === false)
+      ? setIsModded(null)
+      : (isModded === false && option === true) || (isModded === true && option === false)
+      ? setIsModded(option)
+      : isModded === null
+      ? setIsModded(option)
+      : null;
+    console.log(isModded);
+  };
+  const handleHardcoreSoftcoreChange = (option: string) => {
+    if (hardcoreSoftcore.includes(option)) {
+      setHardcoreSoftcore(hardcoreSoftcore.filter((el) => el !== option));
+    } else {
+      setHardcoreSoftcore([...hardcoreSoftcore, option]);
+    }
+    console.log(hardcoreSoftcore);
+  };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchName(event.target.value);
@@ -151,7 +197,10 @@ const Form: React.FC<FormProps> = ({
       includedCountries,
       excludedCountries,
       maxDistance,
-      userLocation
+      userLocation,
+      isVanilla,
+      isModded,
+      hardcoreSoftcore
     );
     setTimeout(() => {
       // Enable buttons after the delay
@@ -173,6 +222,9 @@ const Form: React.FC<FormProps> = ({
     setMaxDistance("");
     setExcludeCountries([]);
     setIncludedCountries([]);
+    setIsModded(null);
+    setIsVanilla(null);
+    setHardcoreSoftcore([]);
     setSorter({ players: -1 });
     setFilter({
       $and: [
@@ -199,6 +251,9 @@ const Form: React.FC<FormProps> = ({
     saveToLocalStorage("minRank", minRank);
     saveToLocalStorage("maxDistance", maxDistance);
     saveToLocalStorage("rate", rate);
+    saveToLocalStorage("isVanilla", isVanilla);
+    saveToLocalStorage("isModded", isModded);
+    saveToLocalStorage("hardcoreSoftcore", hardcoreSoftcore);
   }, [filter, sorter]);
 
   const [expanded, setExpanded] = useState(false);
@@ -382,6 +437,66 @@ const Form: React.FC<FormProps> = ({
                     : "bg-zinc-700 text-gray-200"
                 }`}
                 onClick={() => handleWipeRotationChange(option.value)}
+              >
+                {option.label}
+              </div>
+            ))}
+          </div>
+        </fieldset>
+        <fieldset className="mt-3">
+          <legend className="block text-gray-200 font-semibold text-lg mb-1">Vanilla</legend>
+          <div className="flex flex-wrap">
+            {vanillaOptions.map((option) => (
+              <div
+                key={option.label}
+                className={`cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-24 text-center border border-black  hover:text-white ${
+                  isSSG &&
+                  ((isVanilla === true && option.value === true) ||
+                    (isVanilla === false && option.value === false))
+                    ? "bg-rustOne text-white"
+                    : "bg-zinc-700 text-gray-200"
+                }`}
+                onClick={() => handleIsVanillaChange(option.value)}
+              >
+                {option.label}
+              </div>
+            ))}
+          </div>
+        </fieldset>
+        <fieldset className="mt-3">
+          <legend className="block text-gray-200 font-semibold text-lg mb-1">Modded</legend>
+          <div className="flex flex-wrap">
+            {moddedOptions.map((option) => (
+              <div
+                key={option.label}
+                className={`cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-24 text-center border border-black  hover:text-white ${
+                  isSSG &&
+                  ((isModded === true && option.value === true) ||
+                    (isModded === false && option.value === false))
+                    ? "bg-rustOne text-white"
+                    : "bg-zinc-700 text-gray-200"
+                }`}
+                onClick={() => handleIsModdedChange(option.value)}
+              >
+                {option.label}
+              </div>
+            ))}
+          </div>
+        </fieldset>
+        <fieldset className="mt-3">
+          <legend className="block text-gray-200 font-semibold text-lg mb-1">
+            Hardcore / Softcore
+          </legend>
+          <div className="flex flex-wrap">
+            {hardcoreSoftcoreOptions.map((option) => (
+              <div
+                key={option.value}
+                className={`cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-24 text-center border border-black  hover:text-white ${
+                  isSSG && wipeRotation.includes(option.value)
+                    ? "bg-rustOne text-white"
+                    : "bg-zinc-700 text-gray-200"
+                }`}
+                onClick={() => handleHardcoreSoftcoreChange(option.value)}
               >
                 {option.label}
               </div>

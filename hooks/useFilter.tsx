@@ -15,7 +15,10 @@ const useFilter = (setFilter: Dispatch<SetStateAction<FilterType>>): UseFilterHo
     includedCountries,
     excludedCountries,
     maxDistance,
-    userLocation
+    userLocation,
+    isVanilla,
+    isModded,
+    hardcoreSoftcore
   ) => {
     let newFilter: FilterType = {
       $and: [

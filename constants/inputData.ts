@@ -31,3 +31,18 @@ export const ratesOptions = [
   { value: 500, label: "500x" },
   { value: 1000, label: "1000x" },
 ];
+
+export const vanillaOptions = [
+  { value: true, label: "Vanilla" },
+  { value: false, label: "Not Vanilla" },
+];
+
+export const moddedOptions = [
+  { value: true, label: "Modded" },
+  { value: false, label: "Not Modded" },
+];
+
+export const hardcoreSoftcoreOptions = [
+  { value: "hardcore", label: "hardcore" },
+  { value: "softcore", label: "softcore" },
+];
