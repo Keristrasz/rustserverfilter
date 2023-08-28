@@ -140,7 +140,6 @@ const Form: React.FC<FormProps> = ({
     } else {
       setHardcoreSoftcore([...hardcoreSoftcore, option]);
     }
-    console.log(hardcoreSoftcore);
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -197,7 +196,6 @@ const Form: React.FC<FormProps> = ({
     } else {
       setWipeRotation([...wipeRotation, option]);
     }
-    console.log(wipeRotation);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
