@@ -17,9 +17,11 @@ class ErrorBoundary extends React.Component {
     if (this.state.hasError) {
       // You can render any custom fallback UI
       return (
-        <h1 className="text-center text-2xl m-8">
-          Something went wrong. Try refreshing the page
-        </h1>
+        <div className="flex justify-center items-center">
+          <p className="text-center text-2xl m-8">
+            Something went wrong. Try refreshing the page
+          </p>
+        </div>
       );
     }
 
