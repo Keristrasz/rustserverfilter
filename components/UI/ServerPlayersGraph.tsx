@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { getCustomDate } from "@/utils/inputFunctions";
+import { getCustomShortDate } from "@/utils/inputFunctions";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend } from "recharts";
 
 type PlayersHistory = [number, number][];
@@ -41,7 +41,7 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
       })
       .map((entry: { timestamp: number; playerCount: number }) => {
         return {
-          timestamp: getCustomDate(entry.timestamp / 1000),
+          timestamp: getCustomShortDate(entry.timestamp / 1000),
           playerCount: entry.playerCount,
         };
       });
@@ -52,7 +52,7 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
       })
       .map((entry: { timestamp: number; playerCount: number }) => {
         return {
-          timestamp: getCustomDate(entry.timestamp / 1000),
+          timestamp: getCustomShortDate(entry.timestamp / 1000),
           playerCount: entry.playerCount,
         };
       });
@@ -64,7 +64,7 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
       })
       .map((entry: { timestamp: number; playerCount: number }) => {
         return {
-          timestamp: getCustomDate(entry.timestamp / 1000),
+          timestamp: getCustomShortDate(entry.timestamp / 1000),
           playerCount: entry.playerCount,
         };
       });
@@ -76,7 +76,7 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
       })
       .map((entry: { timestamp: number; playerCount: number }) => {
         return {
-          timestamp: getCustomDate(entry.timestamp / 1000),
+          timestamp: getCustomShortDate(entry.timestamp / 1000),
           playerCount: entry.playerCount,
         };
       });

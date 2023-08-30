@@ -8,7 +8,7 @@ import React, {
   MouseEvent,
   ReactElement,
 } from "react";
-import { allCountries } from "@/constants/countries";
+import { allCountriesFull } from "@/constants/countries";
 
 interface SelectIncludedCountriesProps {
   countries: string[];
@@ -104,8 +104,8 @@ function SelectIncludeCountries({
     }
   };
 
-  const filteredOptions = allCountries.filter((country) =>
-    country.toLowerCase().startsWith(inputValue.toLowerCase())
+  const filteredOptions = allCountriesFull.filter((country) =>
+    country.name.toLowerCase().startsWith(inputValue.toLowerCase())
   );
 
   return (
@@ -143,16 +143,19 @@ function SelectIncludeCountries({
           className="z-50 absolute w-full mt-2 bg-zinc-700 rounded-md shadow-lg"
         >
           <div className="max-h-80 overflow-auto">
-            {filteredOptions.map((el: String) => (
-              <label key={String(el)} className="block px-4 py-2 cursor-pointer select-none">
+            {filteredOptions.map((el) => (
+              <label
+                key={String(el.name)}
+                className="block px-4 py-2 cursor-pointer select-none"
+              >
                 <input
                   type="checkbox"
                   className="h-4 w-4 border-rustOne rounded focus:ring-2 focus:ring-black text-rustOne !bg-none"
-                  value={String(el)}
-                  checked={countries.includes(String(el))}
+                  value={String(el.name)}
+                  checked={countries.includes(String(el.name))}
                   onChange={handleCountryChange}
                 />
-                <span className="ml-2 text-gray-200">{el}</span>
+                <span className="ml-2 text-gray-200">{el.name}</span>
               </label>
             ))}
           </div>

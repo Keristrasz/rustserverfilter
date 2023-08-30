@@ -44,3 +44,6 @@ mainSlugBuildData.json
 /.vscode
 public/mainSlugBuildData.json
 /public/mainSlugBuildData.json
+.env.local-mocked
+public/mainSlugBuildData.json
+public/mainSlugBuildData.json

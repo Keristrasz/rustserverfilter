@@ -150,210 +150,421 @@ export const allCountries: String[] = [
 export const allCountriesFull = [
   {
     name: "United States",
-    flag: "🇺🇸",
+    flag: "US",
   },
   {
     name: "United Kingdom",
-    flag: "🇬🇧",
+    flag: "GB",
   },
   {
     name: "Russia",
-    flag: "🇷🇺",
+    flag: "RU",
   },
   {
     name: "Germany",
-    flag: "🇩🇪",
+    flag: "DE",
   },
   {
     name: "China",
-    flag: "🇨🇳",
+    flag: "CN",
   },
   {
     name: "France",
-    flag: "🇫🇷",
+    flag: "FR",
   },
   {
     name: "Japan",
-    flag: "🇯🇵",
+    flag: "JP",
   },
   {
     name: "Canada",
-    flag: "🇨🇦",
+    flag: "CA",
   },
   {
     name: "Netherlands",
-    flag: "🇳🇱",
+    flag: "NL",
   },
   {
     name: "Spain",
-    flag: "🇪🇸",
+    flag: "ES",
   },
   {
     name: "Singapore",
-    flag: "🇸🇬",
+    flag: "SG",
   },
   {
     name: "Czechia",
-    flag: "🇨🇿",
+    flag: "CZ",
   },
   {
     name: "Ukraine",
-    flag: "🇺🇦",
+    flag: "UA",
   },
   {
     name: "Italy",
-    flag: "🇮🇹",
+    flag: "IT",
   },
   {
     name: "Poland",
-    flag: "🇵🇱",
+    flag: "PL",
   },
   {
     name: "Finland",
-    flag: "🇫🇮",
+    flag: "FI",
   },
   {
     name: "Norway",
-    flag: "🇳🇴",
+    flag: "NO",
   },
   {
     name: "South Korea",
-    flag: "🇰🇷",
+    flag: "KR",
   },
   {
     name: "Australia",
-    flag: "🇦🇺",
+    flag: "AU",
   },
   {
     name: "Brazil",
-    flag: "🇧🇷",
+    flag: "BR",
   },
   {
     name: "Austria",
-    flag: "🇦🇹",
+    flag: "AT",
   },
   {
     name: "Mexico",
-    flag: "🇲🇽",
+    flag: "MX",
   },
   {
     name: "Sweden",
-    flag: "🇸🇪",
+    flag: "SE",
   },
   {
     name: "Denmark",
-    flag: "🇩🇰",
+    flag: "DK",
   },
   {
     name: "Switzerland",
-    flag: "🇨🇭",
+    flag: "CH",
   },
   {
     name: "Turkey",
-    flag: "🇹🇷",
+    flag: "TR",
   },
   {
     name: "Colombia",
-    flag: "🇨🇴",
+    flag: "CO",
   },
   {
     name: "Argentina",
-    flag: "🇦🇷",
+    flag: "AR",
   },
   {
     name: "Belgium",
-    flag: "🇧🇪",
+    flag: "BE",
   },
   {
     name: "India",
-    flag: "🇮🇳",
+    flag: "IN",
   },
   {
     name: "Thailand",
-    flag: "🇹🇭",
+    flag: "TH",
   },
   {
     name: "Taiwan",
-    flag: "🇹🇼",
+    flag: "TW",
   },
   {
     name: "South Africa",
-    flag: "🇿🇦",
+    flag: "ZA",
   },
   {
     name: "Indonesia",
-    flag: "🇮🇩",
+    flag: "ID",
   },
   {
     name: "Greece",
-    flag: "🇬🇷",
+    flag: "GR",
   },
   {
     name: "Ireland",
-    flag: "🇮🇪",
+    flag: "IE",
   },
   {
     name: "Portugal",
-    flag: "🇵🇹",
+    flag: "PT",
   },
   {
     name: "New Zealand",
-    flag: "🇳🇿",
+    flag: "NZ",
   },
   {
     name: "Egypt",
-    flag: "🇪🇬",
+    flag: "EG",
   },
   {
     name: "Malaysia",
-    flag: "🇲🇾",
+    flag: "MY",
   },
   {
     name: "Israel",
-    flag: "🇮🇱",
+    flag: "IL",
   },
   {
     name: "Saudi Arabia",
-    flag: "🇸🇦",
+    flag: "SA",
   },
   {
     name: "United Arab Emirates",
-    flag: "🇦🇪",
+    flag: "AE",
   },
   {
     name: "Vietnam",
-    flag: "🇻🇳",
+    flag: "VN",
   },
   {
     name: "Philippines",
-    flag: "🇵🇭",
+    flag: "PH",
   },
   {
     name: "Chile",
-    flag: "🇨🇱",
+    flag: "CL",
   },
   {
     name: "Peru",
-    flag: "🇵🇪",
+    flag: "PE",
   },
   {
     name: "Romania",
-    flag: "🇷🇴",
+    flag: "RO",
   },
   {
     name: "Nigeria",
-    flag: "🇳🇬",
+    flag: "NG",
   },
   {
     name: "Iran",
-    flag: "🇮🇷",
+    flag: "IR",
   },
   {
     name: "Pakistan",
-    flag: "🇵🇰",
+    flag: "PK",
   },
   {
     name: "Kenya",
-    flag: "🇰🇪",
+    flag: "KE",
   },
 ];
+
+// export const allCountriesFull = [
+//   {
+//     name: "United States",
+//     flag: "🇺🇸",
+//   },
+//   {
+//     name: "United Kingdom",
+//     flag: "🇬🇧",
+//   },
+//   {
+//     name: "Russia",
+//     flag: "🇷🇺",
+//   },
+//   {
+//     name: "Germany",
+//     flag: "🇩🇪",
+//   },
+//   {
+//     name: "China",
+//     flag: "🇨🇳",
+//   },
+//   {
+//     name: "France",
+//     flag: "🇫🇷",
+//   },
+//   {
+//     name: "Japan",
+//     flag: "🇯🇵",
+//   },
+//   {
+//     name: "Canada",
+//     flag: "🇨🇦",
+//   },
+//   {
+//     name: "Netherlands",
+//     flag: "🇳🇱",
+//   },
+//   {
+//     name: "Spain",
+//     flag: "🇪🇸",
+//   },
+//   {
+//     name: "Singapore",
+//     flag: "🇸🇬",
+//   },
+//   {
+//     name: "Czechia",
+//     flag: "🇨🇿",
+//   },
+//   {
+//     name: "Ukraine",
+//     flag: "🇺🇦",
+//   },
+//   {
+//     name: "Italy",
+//     flag: "🇮🇹",
+//   },
+//   {
+//     name: "Poland",
+//     flag: "🇵🇱",
+//   },
+//   {
+//     name: "Finland",
+//     flag: "🇫🇮",
+//   },
+//   {
+//     name: "Norway",
+//     flag: "🇳🇴",
+//   },
+//   {
+//     name: "South Korea",
+//     flag: "🇰🇷",
+//   },
+//   {
+//     name: "Australia",
+//     flag: "🇦🇺",
+//   },
+//   {
+//     name: "Brazil",
+//     flag: "🇧🇷",
+//   },
+//   {
+//     name: "Austria",
+//     flag: "🇦🇹",
+//   },
+//   {
+//     name: "Mexico",
+//     flag: "🇲🇽",
+//   },
+//   {
+//     name: "Sweden",
+//     flag: "🇸🇪",
+//   },
+//   {
+//     name: "Denmark",
+//     flag: "🇩🇰",
+//   },
+//   {
+//     name: "Switzerland",
+//     flag: "🇨🇭",
+//   },
+//   {
+//     name: "Turkey",
+//     flag: "🇹🇷",
+//   },
+//   {
+//     name: "Colombia",
+//     flag: "🇨🇴",
+//   },
+//   {
+//     name: "Argentina",
+//     flag: "🇦🇷",
+//   },
+//   {
+//     name: "Belgium",
+//     flag: "🇧🇪",
+//   },
+//   {
+//     name: "India",
+//     flag: "🇮🇳",
+//   },
+//   {
+//     name: "Thailand",
+//     flag: "🇹🇭",
+//   },
+//   {
+//     name: "Taiwan",
+//     flag: "🇹🇼",
+//   },
+//   {
+//     name: "South Africa",
+//     flag: "🇿🇦",
+//   },
+//   {
+//     name: "Indonesia",
+//     flag: "🇮🇩",
+//   },
+//   {
+//     name: "Greece",
+//     flag: "🇬🇷",
+//   },
+//   {
+//     name: "Ireland",
+//     flag: "🇮🇪",
+//   },
+//   {
+//     name: "Portugal",
+//     flag: "🇵🇹",
+//   },
+//   {
+//     name: "New Zealand",
+//     flag: "🇳🇿",
+//   },
+//   {
+//     name: "Egypt",
+//     flag: "🇪🇬",
+//   },
+//   {
+//     name: "Malaysia",
+//     flag: "🇲🇾",
+//   },
+//   {
+//     name: "Israel",
+//     flag: "🇮🇱",
+//   },
+//   {
+//     name: "Saudi Arabia",
+//     flag: "🇸🇦",
+//   },
+//   {
+//     name: "United Arab Emirates",
+//     flag: "🇦🇪",
+//   },
+//   {
+//     name: "Vietnam",
+//     flag: "🇻🇳",
+//   },
+//   {
+//     name: "Philippines",
+//     flag: "🇵🇭",
+//   },
+//   {
+//     name: "Chile",
+//     flag: "🇨🇱",
+//   },
+//   {
+//     name: "Peru",
+//     flag: "🇵🇪",
+//   },
+//   {
+//     name: "Romania",
+//     flag: "🇷🇴",
+//   },
+//   {
+//     name: "Nigeria",
+//     flag: "🇳🇬",
+//   },
+//   {
+//     name: "Iran",
+//     flag: "🇮🇷",
+//   },
+//   {
+//     name: "Pakistan",
+//     flag: "🇵🇰",
+//   },
+//   {
+//     name: "Kenya",
+//     flag: "🇰🇪",
+//   },
+// ];

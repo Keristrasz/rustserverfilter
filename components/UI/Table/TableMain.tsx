@@ -1,7 +1,12 @@
 import THead from "./TableHead";
 import React from "react";
 import { useRouter } from "next/router";
-import { calculateDistance, getCustomDate } from "@/utils/inputFunctions";
+import {
+  calculateDistance,
+  getCustomShortDate,
+  getHowMuchAgo,
+  getInHowMuch,
+} from "@/utils/inputFunctions";
 import {
   FilterType,
   SorterType,
@@ -14,6 +19,15 @@ import useCustomInfiniteQuery from "@/hooks/useCustomInfiniteQuery";
 import Spinner from "../Spinner";
 import { InfiniteData } from "@tanstack/react-query";
 import Link from "next/link";
+import { allCountriesFull } from "@/constants/countries";
+
+function getFlagOfCountry(nameOfCountry) {
+  const countryObj = allCountriesFull.find((obj) => nameOfCountry === obj.name);
+  if (countryObj && countryObj.flag) {
+    return `https://flagsapi.com/${countryObj.flag}/flat/24.png`;
+  }
+  return "";
+}
 
 const columnDataForMonitor = [
   {
@@ -33,18 +47,11 @@ const columnDataForMonitor = [
     value: "players",
   },
   {
-    tooltip: "Estimate of next wipe if needed data are provided. You can find more in FAQ",
+    tooltip: "Group size of server according to its title",
     isClickable: true,
-    styles: "w-2/12",
-    name: "NEXT WIPE",
-    value: "born_next",
-  },
-  {
-    tooltip: "Last wipe. Click for sorting in ascending or descending order",
-    isClickable: true,
-    styles: "w-2/12",
-    name: "LAST WIPE",
-    value: "born",
+    styles: "w-1/12",
+    name: "GROUP SIZE",
+    value: "max_group_size",
   },
   {
     tooltip: "Rate of server according to its title",
@@ -54,26 +61,33 @@ const columnDataForMonitor = [
     value: "rate",
   },
   {
-    tooltip: "Group size of server according to its title",
+    tooltip: "Last wipe. Click for sorting in ascending or descending order",
     isClickable: true,
-    styles: "w-1/12",
-    name: "GROUP SIZE",
-    value: "max_group_size",
-  },
-  {
-    tooltip: "",
-    isClickable: false,
     styles: "w-2/12",
-    name: "COUNTRY",
-    value: "rules.location.country",
+    name: "LAST WIPE",
+    value: "born",
   },
   {
-    tooltip: "",
-    isClickable: false,
-    styles: "w-1/12",
-    name: "DISTANCE",
-    value: "rules.location.longitude",
+    tooltip: "Estimate of next wipe if needed data are provided. You can find more in FAQ",
+    isClickable: true,
+    styles: "w-2/12",
+    name: "NEXT WIPE",
+    value: "born_next",
   },
+  // {
+  //   tooltip: "",
+  //   isClickable: false,
+  //   styles: "w-2/12",
+  //   name: "COUNTRY",
+  //   value: "rules.location.country",
+  // },
+  // {
+  //   tooltip: "",
+  //   isClickable: false,
+  //   styles: "w-1/12",
+  //   name: "DISTANCE",
+  //   value: "rules.location.longitude",
+  // },
 ];
 const columnDataForMonitorForMobile = [
   {
@@ -159,6 +173,23 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
     columnData = !isMobile ? columnDataForMonitor : columnDataForMonitorForMobile;
   }
 
+  function getDistance(mappedServer: ServerPrimaryDataType) {
+    if (
+      userLocation &&
+      mappedServer.rules?.location?.latitude &&
+      mappedServer.rules?.location?.longitude
+    ) {
+      return calculateDistance(
+        mappedServer.rules?.location?.latitude,
+        mappedServer.rules?.location?.longitude,
+        userLocation.latitude,
+        userLocation.longitude
+      );
+    } else {
+      return "";
+    }
+  }
+
   function getColumnValue(
     column: columnDataForMonitorType,
     mappedServer: ServerPrimaryDataType
@@ -166,25 +197,41 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
     const { value } = column;
 
     if (value === "born_next" || value === "born") {
-      return getCustomDate(mappedServer[value]);
-    } else if (value === "rules.location.country") {
-      return mappedServer.rules?.location?.country;
-    } else if (value === "rules.location.longitude") {
-      if (
-        userLocation &&
-        mappedServer.rules?.location?.latitude &&
-        mappedServer.rules?.location?.longitude
-      ) {
-        return calculateDistance(
-          mappedServer.rules?.location?.latitude,
-          mappedServer.rules?.location?.longitude,
-          userLocation.latitude,
-          userLocation.longitude
+      if (value === "born") {
+        return (
+          <>
+            <p>{getHowMuchAgo(mappedServer[value])}</p>
+            <p className="text-gray-500">{getCustomShortDate(mappedServer[value])}</p>
+          </>
         );
       } else {
-        return "";
+        return (
+          <>
+            <p>{getInHowMuch(mappedServer[value])}</p>
+            <p className="text-gray-500">{getCustomShortDate(mappedServer[value])}</p>
+          </>
+        );
       }
-    } else if (value === "rate") {
+    }
+    // else if (value === "rules.location.country") {
+    //   return mappedServer.rules?.location?.country;
+    // } else if (value === "rules.location.longitude") {
+    //   if (
+    //     userLocation &&
+    //     mappedServer.rules?.location?.latitude &&
+    //     mappedServer.rules?.location?.longitude
+    //   ) {
+    //     return calculateDistance(
+    //       mappedServer.rules?.location?.latitude,
+    //       mappedServer.rules?.location?.longitude,
+    //       userLocation.latitude,
+    //       userLocation.longitude
+    //     );
+    //   } else {
+    //     return "";
+    //   }
+    // }
+    else if (value === "rate") {
       return mappedServer[value] ? mappedServer[value] + "x" : "";
     } else if (value === "max_group_size") {
       if (mappedServer[value] === 1) {
@@ -236,8 +283,10 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
     isResultsRendered = <div>An error has occurred: {error.message}</div>;
   } else if (status === "success" || initialDataSSG) {
     isResultsRendered = (
-      <div className="overflow-x-clip m-4 mb-8 max-w-6xl ">
-        <table className=" table-fixed border w-full border-black  ">
+      <div className="overflow-x-clip my-4 max-w-6xl border border-black">
+        <table className="table-fixed w-full ">
+          {/* <div className="overflow-x-clip m-4 mb-8 max-w-6xl">
+        <table className="table-fixed border w-full border-black rounded-xl "> */}
           <THead
             setFilter={setFilter}
             setSorter={setSorter}
@@ -245,7 +294,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
             isSSG={isSSG}
             columnData={columnData}
           />
-          <tbody className="bg-zinc-700 divide-y divide-zinc-950">
+          <tbody className="bg-zinc-700 divide-y-8 divide-zinc-950">
             {data?.pages[0]?.totalCount[0]?.totalCount ? (
               <tr>
                 <td
@@ -272,7 +321,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   return (
                     <tr
                       key={mappedServer.addr}
-                      className="hover:bg-zinc-800 clickable-row cursor-pointer"
+                      className="hover:bg-zinc-800 clickable-row cursor-pointer h-16"
                       onClick={() => {
                         router.push({
                           pathname: `/server-detail/${mappedServer.addr.replace(/:/g, ".")}`,
@@ -285,7 +334,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                         column.value === "name" ? (
                           <td
                             key={column.value}
-                            className={`px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-green-400 ${column.styles}`}
+                            className={`px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-green-400  ${column.styles}`}
                           >
                             <Link
                               href={{
@@ -294,22 +343,43 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                                   "."
                                 )}`,
                               }}
+                              className="text-lg"
                             >
                               {getColumnValue(column, mappedServer)}
                             </Link>
+                            <div className="flex flex-row justify-between text-gray-500">
+                              <div className="flex items-center">
+                                {getFlagOfCountry(mappedServer.rules?.location?.country) ? (
+                                  <img
+                                    src={getFlagOfCountry(
+                                      mappedServer.rules?.location?.country
+                                    )}
+                                    alt="flag"
+                                    className="mr-2"
+                                  ></img>
+                                ) : null}
+                                <p> {mappedServer.rules?.location?.country}</p>
+                              </div>
+
+                              <p>
+                                {getDistance(mappedServer)
+                                  ? `${getDistance(mappedServer)} km`
+                                  : null}
+                              </p>
+                            </div>
                           </td>
                         ) : column.value === "born" || column.value === "born_next" ? (
                           <td
                             suppressHydrationWarning={true}
                             key={column.value}
-                            className={`px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
+                            className={`p-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
                           >
                             {getColumnValue(column, mappedServer)}
                           </td>
                         ) : (
                           <td
                             key={column.value}
-                            className={`px-2 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
+                            className={`px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
                           >
                             {getColumnValue(column, mappedServer)}
                           </td>
@@ -318,11 +388,11 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                     </tr>
                   );
                 })}
-                {page.result.length > 0 && (
+                {/* {page.result.length > 0 && (
                   <tr>
                     <td className="bg-green-700" colSpan={11}></td>
                   </tr>
-                )}
+                )} */}
               </React.Fragment>
             ))}
           </tbody>

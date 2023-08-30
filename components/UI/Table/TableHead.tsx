@@ -28,10 +28,10 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, colu
           let sortColorClass = "";
 
           if (isSSG && sorter[column.value] === 1) {
-            sortColorClass = "bg-green-800";
+            sortColorClass = "bg-red-800";
             ("Arrow up");
           } else if (isSSG && sorter[column.value] === -1) {
-            sortColorClass = "bg-green-900";
+            sortColorClass = "bg-red-900";
             ("Arrow down");
           }
 
@@ -39,17 +39,17 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, colu
             <th
               onClick={() => updateSorter(column.value)}
               key={column.value}
-              className={`group relative text-xs px-2 py-2 h-8 text-left font-semibold text-green-400 tracking-tight hover:cursor-pointer transition hover:text-white ${column.styles} ${sortColorClass}`}
+              className={`group relative text-xs px-4 py-2 h-8 text-left font-semibold text-red-400 tracking-tight hover:cursor-pointer transition hover:text-white ${column.styles} ${sortColorClass}`}
             >
               <span className="flex items-center   hover-trigger group-hover:opacity-100 relative z-10">
                 {/* Value */}
                 {column.name}
                 {/* Arrow */}
                 {isSSG && sorter[column.value] === 1 && (
-                  <span className="text-2xl text-green-400 ml-0 mb-2">↑</span>
+                  <span className="text-2xl text-red-400 ml-0.5 mb-2">↑</span>
                 )}
                 {isSSG && sorter[column.value] === -1 && (
-                  <span className="text-2xl text-green-400 ml-0 mb-2">↓</span>
+                  <span className="text-2xl text-red-400 ml-0.5 mb-2">↓</span>
                 )}
                 {column.tooltip && (
                   <div className="text-gray-800 w-32 target-element invisible group-hover:visible transition-opacity absolute bg-white border border-gray-300 rounded p-2 mb-32 z-20">
@@ -61,7 +61,7 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, colu
           ) : (
             <th
               key={column.value}
-              className={`group text-xs px-2 py-2 h-8 text-left font-semibold text-gray-200 tracking-tight  ${column.styles}`}
+              className={`group text-xs px-4 py-2 h-8 text-left font-semibold text-gray-200 tracking-tight  ${column.styles}`}
             >
               {column.name}
               {column.tooltip && (

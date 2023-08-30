@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import useCustomSingleQuery from "@/hooks/useCustomSingleQuery";
 import Spinner from "@/components/UI/Spinner";
 import {
-  getCustomDate,
+  getCustomShortDate,
   calculateDistance,
   getTimeUptime,
   getLocation,
@@ -216,8 +216,8 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
               ? "Group size: " + replaceGroupSizeWithName(data.max_group_size) + ". "
               : "") +
             (data.rate ? "Rate: " + data.rate + "x. " : "") +
-            (data.born ? "Last wipe: " + getCustomDate(data.born) + ". " : "") +
-            (data.born_next ? "Next wipe: " + getCustomDate(data.born_next) + ". " : "") +
+            (data.born ? "Last wipe: " + getCustomShortDate(data.born) + ". " : "") +
+            (data.born_next ? "Next wipe: " + getCustomShortDate(data.born_next) + ". " : "") +
             (data.rules?.description && data.rules?.description.length < 150
               ? data.rules.description
                   .replace(/(?<=\S)\\t(?=\S)/g, " ")
@@ -256,8 +256,8 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
               ? "Group size: " + replaceGroupSizeWithName(data.max_group_size) + ". "
               : "") +
             (data.rate ? "Rate: " + data.rate + "x. " : "") +
-            (data.born ? "Last wipe: " + getCustomDate(data.born) + ". " : "") +
-            (data.born_next ? "Next wipe: " + getCustomDate(data.born_next) + ". " : "") +
+            (data.born ? "Last wipe: " + getCustomShortDate(data.born) + ". " : "") +
+            (data.born_next ? "Next wipe: " + getCustomShortDate(data.born_next) + ". " : "") +
             (data.rules?.description && data.rules?.description.length < 150
               ? data.rules.description
                   .replace(/(?<=\S)\\t(?=\S)/g, " ")
@@ -343,10 +343,10 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                       Players: {data.players} / {data.max_players}
                     </p>
                     <p className="text-gray-300" suppressHydrationWarning={true}>
-                      Last Wipe: {getCustomDate(data.born)}
+                      Last Wipe: {getCustomShortDate(data.born)}
                     </p>
                     <p className="text-gray-300" suppressHydrationWarning={true}>
-                      Next Wipe: {getCustomDate(data.born_next)}
+                      Next Wipe: {getCustomShortDate(data.born_next)}
                     </p>
                     {data.rate ? (
                       <p className="text-gray-300">Rate: {data.rate}x</p>
