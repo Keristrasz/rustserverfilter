@@ -53,6 +53,16 @@ const columnDataForMonitor = [
     name: "GROUP SIZE",
     value: "max_group_size",
   },
+  //   <input
+  //   id="search"
+  //   type="text"
+  //   className={`form-input  rounded-md shadow-sm mt-1 block w-full sm:w-64 border  bg-zinc-700 text-gray-200 focus:ring-0 focus:border-green-600 ${
+  //     isSSG && searchName ? "border-rustOne" : "border-black"
+  //   }`}
+  //   value={searchName}
+  //   placeholder="Server name"
+  //   onChange={handleSearchChange}
+  // />
   {
     tooltip: "Rate of server according to its title",
     isClickable: true,
@@ -201,14 +211,18 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
         return (
           <>
             <p>{getHowMuchAgo(mappedServer[value])}</p>
-            <p className="text-gray-500">{getCustomShortDate(mappedServer[value])}</p>
+            {getCustomShortDate(mappedServer[value]) ? (
+              <p className="text-gray-500">Wiped {getCustomShortDate(mappedServer[value])}</p>
+            ) : null}
           </>
         );
       } else {
         return (
           <>
             <p>{getInHowMuch(mappedServer[value])}</p>
-            <p className="text-gray-500">{getCustomShortDate(mappedServer[value])}</p>
+            {getCustomShortDate(mappedServer[value]) ? (
+              <p className="text-gray-500">Wipe {getCustomShortDate(mappedServer[value])}</p>
+            ) : null}
           </>
         );
       }
@@ -250,12 +264,11 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
     } else if (value === "rank") {
       if (mappedServer && mappedServer[value]) {
         //@ts-ignore
-        return Math.round(mappedServer[value] / 100);
+        return `#${Math.round(mappedServer[value] / 100)}`;
       }
     } else if (
       value === "addr" ||
       value === "name" ||
-      value === "rank" ||
       value === "players" ||
       value === "max_group_size"
     ) {
@@ -368,6 +381,18 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                               </p>
                             </div>
                           </td>
+                        ) : column.value === "rate" || column.value === "max_group_size" ? (
+                          <td
+                            suppressHydrationWarning={true}
+                            key={column.value}
+                            className={`p-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
+                          >
+                            {getColumnValue(column, mappedServer) && (
+                              <div className="rounded-lg mt-1 border border-black text-center bg-rustOne text-gray-200">
+                                {getColumnValue(column, mappedServer)}
+                              </div>
+                            )}
+                          </td>
                         ) : column.value === "born" || column.value === "born_next" ? (
                           <td
                             suppressHydrationWarning={true}
@@ -377,9 +402,18 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                             {getColumnValue(column, mappedServer)}
                           </td>
                         ) : (
+                          // : column.value === "players" ? (
+                          //   <td
+                          //     key={column.value}
+                          //     className={`px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
+                          //   >
+                          //     <p className="text-lg"> {getColumnValue(column, mappedServer)}</p>
+                          //     <p className="text-gray-500">Players</p>
+                          //   </td>
+                          // )
                           <td
                             key={column.value}
-                            className={`px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
+                            className={`px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-lg text-gray-200 ${column.styles}`}
                           >
                             {getColumnValue(column, mappedServer)}
                           </td>
