@@ -373,7 +373,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                                       mappedServer.rules?.location?.country
                                     )}
                                     alt="flag"
-                                    className="mr-2"
+                                    className="mr-2 w-[26px] h-[26px]"
                                   ></img>
                                 ) : null}
                                 <p> {mappedServer.rules?.location?.country}</p>
