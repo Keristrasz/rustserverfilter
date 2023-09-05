@@ -300,7 +300,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
     isResultsRendered = <div>An error has occurred: {error.message}</div>;
   } else if (status === "success" || initialDataSSG) {
     isResultsRendered = (
-      <div className="max-w-6xl w-full overflow-auto rounded-lg my-4 mb-8 border border-black">
+      <div className="max-w-6xl w-full overflow-x-auto overflow-y-clip rounded-lg my-4 mb-8 border border-black">
         <table className="w-full">
           {/* <div className="overflow-x-clip m-4 mb-8 max-w-6xl">
           my-4 max-w-6xl border border-black
@@ -316,21 +316,23 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
             {data?.pages[0]?.totalCount[0]?.totalCount ? (
               <tr>
                 <td
-                  className="whitespace-nowrap overflow-hidden overflow-ellipsis text-sm relative text-center bg-green-600 text-gray-200 [text-shadow:_1px_1px_1px_black]"
+                  className="text-sm relative text-center bg-green-600 text-gray-200 [text-shadow:_1px_1px_1px_black]"
                   colSpan={10}
                 >
                   Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
                 </td>
               </tr>
             ) : (
-              <tr>
-                <td
-                  className="whitespace-nowrap overflow-hidden overflow-ellipsis text-sm relative text-center bg-rustOne text-gray-200"
-                  colSpan={10}
-                >
-                  FOUND <b>0</b> SERVERS!
-                </td>
-              </tr>
+              <>
+                <tr>
+                  <td
+                    className="w-[2000px] text-sm relative text-center bg-rustOne text-gray-200"
+                    colSpan={10}
+                  >
+                    FOUND <b>0</b> SERVERS! Press the Reset button.
+                  </td>
+                </tr>
+              </>
             )}
 
             {data?.pages.map((page, pageIndex) => (
@@ -373,7 +375,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                                       mappedServer.rules?.location?.country
                                     )}
                                     alt="flag"
-                                    className="mr-2 w-[26px] h-[26px]"
+                                    className="mr-2 w-[24px] h-[24px]"
                                   ></img>
                                 ) : null}
                                 <p> {mappedServer.rules?.location?.country}</p>
