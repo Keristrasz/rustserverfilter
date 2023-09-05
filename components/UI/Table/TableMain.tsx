@@ -388,7 +388,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                             className={`p-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
                           >
                             {getColumnValue(column, mappedServer) && (
-                              <div className="rounded-lg mt-1 border border-black text-center bg-rustOne text-gray-200">
+                              <div className="rounded-lg mt-1 border border-black text-center bg-rustOne text-gray-200 [text-shadow:_0px_0px_8px_black]">
                                 {getColumnValue(column, mappedServer)}
                               </div>
                             )}
@@ -440,7 +440,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
       {isLoadingStatus}
       {isResultsRendered}
       {isFetching && !isLoading ? (
-        <div className="flex flex-wrap items-center mb-16">
+        <div className="flex flex-wrap items-center mb-8 mt-4">
           <Spinner />
           <h2 className="text-2xl font-bold mx-1 text-gray-200"> Loading more data...</h2>
         </div>
