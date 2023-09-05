@@ -34,22 +34,22 @@ const columnDataForMonitor = [
     tooltip:
       "If server answers to update call, score is added, or score is subtracted if it does not",
     isClickable: true,
-    styles: "w-1/12",
+    styles: "w-10",
     name: "SCORE",
     value: "rank",
   },
-  { isClickable: false, styles: "w-6/12", name: "NAME", value: "name" },
+  { isClickable: false, styles: "w-[30.5rem]", name: "NAME", value: "name" },
   {
     tooltip: "Current players online. Be careful this is often faked by server admins!",
     isClickable: true,
-    styles: "w-1/12",
+    styles: "w-12",
     name: "PLAYERS",
     value: "players",
   },
   {
     tooltip: "Group size of server according to its title",
     isClickable: true,
-    styles: "w-1/12",
+    styles: "w-10",
     name: "GROUP SIZE",
     value: "max_group_size",
   },
@@ -66,35 +66,35 @@ const columnDataForMonitor = [
   {
     tooltip: "Rate of server according to its title",
     isClickable: true,
-    styles: "w-1/12",
+    styles: "w-10",
     name: "RATE",
     value: "rate",
   },
   {
     tooltip: "Last wipe. Click for sorting in ascending or descending order",
     isClickable: true,
-    styles: "w-2/12",
+    styles: "w-20",
     name: "LAST WIPE",
     value: "born",
   },
   {
     tooltip: "Estimate of next wipe if needed data are provided. You can find more in FAQ",
     isClickable: true,
-    styles: "w-2/12",
+    styles: "w-20",
     name: "NEXT WIPE",
     value: "born_next",
   },
   // {
   //   tooltip: "",
   //   isClickable: false,
-  //   styles: "w-2/12",
+  //   styles: "",
   //   name: "COUNTRY",
   //   value: "rules.location.country",
   // },
   // {
   //   tooltip: "",
   //   isClickable: false,
-  //   styles: "w-1/12",
+  //   styles: "",
   //   name: "DISTANCE",
   //   value: "rules.location.longitude",
   // },
@@ -176,12 +176,12 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
 
   //adjust for mobile versions if is not SSG
 
-  if (isSSG) {
-    const MOBILE_WIDTH_THRESHOLD = 800; // Adjust the threshold as needed
-    const isMobile =
-      typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
-    columnData = !isMobile ? columnDataForMonitor : columnDataForMonitorForMobile;
-  }
+  // if (isSSG) {
+  //   const MOBILE_WIDTH_THRESHOLD = 1000; // Adjust the threshold as needed
+  //   const isMobile =
+  //     typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
+  //   columnData = !isMobile ? columnDataForMonitor : columnDataForMonitorForMobile;
+  // }
 
   function getDistance(mappedServer: ServerPrimaryDataType) {
     if (
@@ -210,18 +210,22 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
       if (value === "born") {
         return (
           <>
-            <p>{getHowMuchAgo(mappedServer[value])}</p>
+            <p suppressHydrationWarning={true}>{getHowMuchAgo(mappedServer[value])}</p>
             {getCustomShortDate(mappedServer[value]) ? (
-              <p className="text-gray-500">Wiped {getCustomShortDate(mappedServer[value])}</p>
+              <p suppressHydrationWarning={true} className="text-zinc-500">
+                Wiped {getCustomShortDate(mappedServer[value])}
+              </p>
             ) : null}
           </>
         );
       } else {
         return (
           <>
-            <p>{getInHowMuch(mappedServer[value])}</p>
+            <p suppressHydrationWarning={true}>{getInHowMuch(mappedServer[value])}</p>
             {getCustomShortDate(mappedServer[value]) ? (
-              <p className="text-gray-500">Wipe {getCustomShortDate(mappedServer[value])}</p>
+              <p suppressHydrationWarning={true} className="text-zinc-500">
+                Wipe {getCustomShortDate(mappedServer[value])}
+              </p>
             ) : null}
           </>
         );
@@ -296,9 +300,10 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
     isResultsRendered = <div>An error has occurred: {error.message}</div>;
   } else if (status === "success" || initialDataSSG) {
     isResultsRendered = (
-      <div className="overflow-x-clip my-4 max-w-6xl border border-black">
-        <table className="table-fixed w-full ">
+      <div className="max-w-6xl w-full overflow-auto rounded-lg my-4 mb-8 border border-black">
+        <table className="w-full">
           {/* <div className="overflow-x-clip m-4 mb-8 max-w-6xl">
+          my-4 max-w-6xl border border-black
         <table className="table-fixed border w-full border-black rounded-xl "> */}
           <THead
             setFilter={setFilter}
@@ -311,8 +316,8 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
             {data?.pages[0]?.totalCount[0]?.totalCount ? (
               <tr>
                 <td
-                  className="text-sm relative text-center bg-green-600 text-gray-200 [text-shadow:_1px_1px_1px_black]"
-                  colSpan={11}
+                  className="whitespace-nowrap overflow-hidden overflow-ellipsis text-sm relative text-center bg-green-600 text-gray-200 [text-shadow:_1px_1px_1px_black]"
+                  colSpan={10}
                 >
                   Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
                 </td>
@@ -320,8 +325,8 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
             ) : (
               <tr>
                 <td
-                  className="text-sm relative text-center bg-rustOne text-gray-200"
-                  colSpan={11}
+                  className="whitespace-nowrap overflow-hidden overflow-ellipsis text-sm relative text-center bg-rustOne text-gray-200"
+                  colSpan={10}
                 >
                   FOUND <b>0</b> SERVERS!
                 </td>
@@ -334,7 +339,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                   return (
                     <tr
                       key={mappedServer.addr}
-                      className="hover:bg-zinc-800 clickable-row cursor-pointer h-16"
+                      className="hover:bg-zinc-800 clickable-row cursor-pointer"
                       onClick={() => {
                         router.push({
                           pathname: `/server-detail/${mappedServer.addr.replace(/:/g, ".")}`,
@@ -347,7 +352,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                         column.value === "name" ? (
                           <td
                             key={column.value}
-                            className={`px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-green-400  ${column.styles}`}
+                            className={`px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-green-400`}
                           >
                             <Link
                               href={{
@@ -356,11 +361,11 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                                   "."
                                 )}`,
                               }}
-                              className="text-lg"
+                              className={`text-md whitespace-nowrap overflow-hidden overflow-ellipsis block ${column.styles}`}
                             >
                               {getColumnValue(column, mappedServer)}
                             </Link>
-                            <div className="flex flex-row justify-between text-gray-500">
+                            <div className="flex flex-row justify-between text-zinc-500">
                               <div className="flex items-center">
                                 {getFlagOfCountry(mappedServer.rules?.location?.country) ? (
                                   <img
@@ -374,7 +379,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                                 <p> {mappedServer.rules?.location?.country}</p>
                               </div>
 
-                              <p>
+                              <p className="pr-4">
                                 {getDistance(mappedServer)
                                   ? `${getDistance(mappedServer)} km`
                                   : null}
@@ -383,12 +388,11 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                           </td>
                         ) : column.value === "rate" || column.value === "max_group_size" ? (
                           <td
-                            suppressHydrationWarning={true}
                             key={column.value}
                             className={`p-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
                           >
                             {getColumnValue(column, mappedServer) && (
-                              <div className="rounded-lg mt-1 border border-black text-center bg-rustOne text-gray-200 [text-shadow:_0px_0px_8px_black]">
+                              <div className="h-8 flex justify-center items-center rounded-lg mt-1 border border-black text-center bg-green-600 text-gray-200 [text-shadow:_0px_0px_8px_black]">
                                 {getColumnValue(column, mappedServer)}
                               </div>
                             )}
@@ -401,16 +405,14 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                           >
                             {getColumnValue(column, mappedServer)}
                           </td>
+                        ) : column.value === "players" ? (
+                          <td
+                            key={column.value}
+                            className={`px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
+                          >
+                            <p className="text-lg"> {getColumnValue(column, mappedServer)}</p>
+                          </td>
                         ) : (
-                          // : column.value === "players" ? (
-                          //   <td
-                          //     key={column.value}
-                          //     className={`px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
-                          //   >
-                          //     <p className="text-lg"> {getColumnValue(column, mappedServer)}</p>
-                          //     <p className="text-gray-500">Players</p>
-                          //   </td>
-                          // )
                           <td
                             key={column.value}
                             className={`px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-lg text-gray-200 ${column.styles}`}

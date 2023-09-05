@@ -22,7 +22,7 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, colu
   const updateSorter = useSorter(setFilter, setSorter);
 
   return (
-    <thead className="bg-zinc-800 sticky top-0 z-10">
+    <thead className="bg-zinc-800 sticky z-10">
       <tr>
         {columnData.map((column) => {
           let sortColorClass = "";
@@ -39,9 +39,11 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, colu
             <th
               onClick={() => updateSorter(column.value)}
               key={column.value}
-              className={`group relative text-xs px-4 py-2 h-8 text-left font-semibold text-green-400 tracking-tight hover:cursor-pointer transition hover:text-white ${column.styles} ${sortColorClass}`}
+              className={`group relative text-xs px-4 py-2 text-left font-semibold text-green-400 tracking-tight hover:cursor-pointer transition hover:text-white ${column.styles} ${sortColorClass}`}
             >
-              <span className="flex items-center   hover-trigger group-hover:opacity-100 relative z-10">
+              <span
+                className={`flex items-center hover-trigger group-hover:opacity-100 relative z-10 ${column.styles}`}
+              >
                 {/* Value */}
                 {column.name}
                 {/* Arrow */}
@@ -61,14 +63,14 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, colu
           ) : (
             <th
               key={column.value}
-              className={`group text-xs px-4 py-2 h-8 text-left font-semibold text-gray-200 tracking-tight  ${column.styles}`}
+              className={`group text-xs px-4 py-2 text-left font-semibold text-gray-200 tracking-tight ${column.styles}`}
             >
               {column.name}
-              {column.tooltip && (
-                <div className="text-gray-800 target-element invisible group-hover:visible transition-opacity absolute bg-white border border-gray-300 rounded p-2 mb-32 z-20">
+              {/* {column.tooltip && (
+                <div className="text-gray-800 w-32 target-element invisible group-hover:visible transition-opacity absolute bg-white border border-gray-300 rounded p-2 mb-32 z-20">
                   {column.tooltip}
                 </div>
-              )}
+              )} */}
             </th>
           );
         })}
@@ -76,4 +78,5 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, colu
     </thead>
   );
 };
-export default React.memo(THead);
+export default THead;
+// export default React.memo(THead);
