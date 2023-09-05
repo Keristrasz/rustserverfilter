@@ -38,7 +38,7 @@ const columnDataForMonitor = [
     name: "SCORE",
     value: "rank",
   },
-  { isClickable: false, styles: "w-[30.5rem]", name: "NAME", value: "name" },
+  { isClickable: false, styles: "w-72 lg:w-[30.5rem]", name: "NAME", value: "name" },
   {
     tooltip: "Current players online. Be careful this is often faked by server admins!",
     isClickable: true,
@@ -361,7 +361,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                                   "."
                                 )}`,
                               }}
-                              className={`text-md whitespace-nowrap overflow-hidden overflow-ellipsis block ${column.styles}`}
+                              className={`lg:text-lg text-md -md whitespace-nowrap overflow-hidden overflow-ellipsis block ${column.styles}`}
                             >
                               {getColumnValue(column, mappedServer)}
                             </Link>
@@ -379,7 +379,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                                 <p> {mappedServer.rules?.location?.country}</p>
                               </div>
 
-                              <p className="pr-4">
+                              <p className="pr-1">
                                 {getDistance(mappedServer)
                                   ? `${getDistance(mappedServer)} km`
                                   : null}
@@ -410,12 +410,15 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
                             key={column.value}
                             className={`px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
                           >
-                            <p className="text-lg"> {getColumnValue(column, mappedServer)}</p>
+                            <p className="lg:text-lg text-md">
+                              {" "}
+                              {getColumnValue(column, mappedServer)}
+                            </p>
                           </td>
                         ) : (
                           <td
                             key={column.value}
-                            className={`px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-lg text-gray-200 ${column.styles}`}
+                            className={`lg:text-lg text-md px-4 py-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
                           >
                             {getColumnValue(column, mappedServer)}
                           </td>

@@ -11,11 +11,13 @@ import React, {
 import { allCountriesFull } from "@/constants/countries";
 
 interface SelectIncludedCountriesProps {
+  id: string;
   countries: string[];
   setCountries: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 function SelectIncludeCountries({
+  id,
   countries,
   setCountries,
 }: SelectIncludedCountriesProps): ReactElement {
@@ -34,16 +36,16 @@ function SelectIncludeCountries({
     };
   }, []);
 
-  useEffect(() => {
-    const storedCountries = localStorage.getItem("includedCountries");
-    if (storedCountries) {
-      setCountries(JSON.parse(storedCountries));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedCountries = localStorage.getItem("includedCountries");
+  //   if (storedCountries) {
+  //     setCountries(JSON.parse(storedCountries));
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    localStorage.setItem("includedCountries", JSON.stringify(countries));
-  }, [countries]);
+  // useEffect(() => {
+  //   localStorage.setItem("includedCountries", JSON.stringify(countries));
+  // }, [countries]);
 
   const handleToggle = (): void => {
     setIsOpen(!isOpen);
@@ -127,7 +129,8 @@ function SelectIncludeCountries({
         <div className="flex-grow flex items-center">
           <input
             type="text"
-            id="includeCountries"
+            id={id}
+            name={id}
             className="bg-transparent focus:outline-none border-none focus:ring-0 w-full"
             placeholder="Type country"
             value={inputValue}
@@ -149,6 +152,8 @@ function SelectIncludeCountries({
                 className="block px-4 py-2 cursor-pointer select-none"
               >
                 <input
+                  id={String(el.name) + id}
+                  name={String(el.name) + id}
                   type="checkbox"
                   className="h-4 w-4 border-rustOne rounded focus:ring-2 focus:ring-black text-rustOne !bg-none"
                   value={String(el.name)}

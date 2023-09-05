@@ -53,12 +53,12 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, colu
                 {isSSG && sorter[column.value] === -1 && (
                   <span className="text-2xl text-green-400 ml-0.5 mb-2">↓</span>
                 )}
-                {column.tooltip && (
-                  <div className="text-gray-800 w-32 target-element invisible group-hover:visible transition-opacity absolute bg-white border border-gray-300 rounded p-2 mb-32 z-20">
-                    {column.tooltip}
-                  </div>
-                )}
               </span>
+              {column.tooltip && (
+                <div className="text-gray-800 w-32 target-element invisible group-hover:visible transition-opacity absolute bg-white border border-gray-300 rounded p-2 z-20 mt-1 ml-2">
+                  {column.tooltip}
+                </div>
+              )}
             </th>
           ) : (
             <th

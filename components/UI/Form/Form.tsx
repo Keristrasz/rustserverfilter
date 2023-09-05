@@ -8,7 +8,7 @@ import {
   hardcoreSoftcoreOptions,
 } from "@/constants/inputData";
 import SelectIncludeCountries from "./SelectIncludeCountries";
-import SelectExcludeCountries from "./SelectExcludeCountries";
+// import SelectExcludeCountries from "../../../utils/test/SelectExcludeCountries";
 import useFilter from "@/hooks/useFilter";
 import { userLocationType, SorterType, FilterType } from "../../../constants/TGlobal";
 import { toast } from "react-toastify";
@@ -413,6 +413,7 @@ const Form: React.FC<FormProps> = ({
                   }`}
                 >
                   <input
+                    id={option.label}
                     type="checkbox"
                     className="hidden"
                     value={option.value}
@@ -439,6 +440,7 @@ const Form: React.FC<FormProps> = ({
                   }`}
                 >
                   <input
+                    id={option.label}
                     type="checkbox"
                     className="hidden"
                     value={option.value}
@@ -553,6 +555,7 @@ const Form: React.FC<FormProps> = ({
                   }`}
                 >
                   <input
+                    id={option.label}
                     type="checkbox"
                     className="hidden"
                     value={option.value}
@@ -579,6 +582,7 @@ const Form: React.FC<FormProps> = ({
                   }`}
                 >
                   <input
+                    id={option.label}
                     type="checkbox"
                     className="hidden"
                     value={option.label}
@@ -608,6 +612,7 @@ const Form: React.FC<FormProps> = ({
                   }`}
                 >
                   <input
+                    id={option.label}
                     type="checkbox"
                     className="hidden"
                     value={option.label}
@@ -637,6 +642,7 @@ const Form: React.FC<FormProps> = ({
                   }`}
                 >
                   <input
+                    id={option.label}
                     type="checkbox"
                     className="hidden"
                     value={option.value}
@@ -659,6 +665,7 @@ const Form: React.FC<FormProps> = ({
             Include Countries
           </label>
           <SelectIncludeCountries
+            id="includeCountries"
             countries={includedCountries}
             setCountries={setIncludedCountries}
           />
@@ -670,7 +677,8 @@ const Form: React.FC<FormProps> = ({
           >
             Exclude Countries
           </label>
-          <SelectExcludeCountries
+          <SelectIncludeCountries
+            id="excludeCountries"
             countries={excludedCountries}
             setCountries={setExcludedCountries}
           />
@@ -737,7 +745,6 @@ const Form: React.FC<FormProps> = ({
             onChange={handleSearchChange}
           />
         </div>
-
         <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4  sm:ml-0">
           <label
             htmlFor="minPlayers"
@@ -802,6 +809,7 @@ const Form: React.FC<FormProps> = ({
                 }`}
               >
                 <input
+                  id={option.label}
                   type="checkbox"
                   className="hidden"
                   value={option.value}
@@ -828,6 +836,7 @@ const Form: React.FC<FormProps> = ({
                 }`}
               >
                 <input
+                  id={option.label}
                   type="checkbox"
                   className="hidden"
                   value={option.value}
