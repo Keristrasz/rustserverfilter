@@ -107,7 +107,7 @@ function Home({ initialDataSSG }: HomeProps) {
       <Head>
         <title>Rust Server Filter | Solo, Duo, Trio - Best Rust Servers</title>
         <meta property="og:locale" content="en_US" />
-        
+
         <meta
           name="description"
           content="Discover FUTURE WIPES! Filter SOLO DUO TRIO QUAD servers. Search rates 2x, 3x, 5x. Find best rust servers by advanced filtering, last wipe, distance and more!"
@@ -145,9 +145,13 @@ function Home({ initialDataSSG }: HomeProps) {
         <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
         <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#da532c" />
+
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#da532c" />
+        <meta name="apple-mobile-web-app-title" content="rustserverfilter" />
+        <meta name="application-name" content="rustserverfilter" />
 
         {/* <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"></link>
