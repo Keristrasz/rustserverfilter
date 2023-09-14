@@ -133,6 +133,12 @@ function Home({ initialDataSSG }: HomeProps) {
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="48x48" href="/icons/favicon-48x48.png" />
         <link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96x96.png" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="192x192"
+          href="/android-icon-192x192.png"
+        ></link>
         <link rel="shortcut icon" type="image/x-icon" href="/icons/favicon.ico" />
         <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png" />
         <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png" />
@@ -163,6 +169,7 @@ function Home({ initialDataSSG }: HomeProps) {
           sizes="180x180"
           href="/icons/apple-icon-180x180.png"
         />
+        <link rel="apple-touch-icon" sizes="192x192" href="/icons/apple-icon.png" />
         <link rel="manifest" href="/icons/manifest.json" />
         <meta name="msapplication-config" content="/icons/icons/browserconfig.xml" />
         <meta name="msapplication-TileColor" content="#d44026" />
