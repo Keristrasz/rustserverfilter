@@ -137,7 +137,7 @@ function Home({ initialDataSSG }: HomeProps) {
           rel="icon"
           type="image/png"
           sizes="192x192"
-          href="/android-icon-192x192.png"
+          href="/icons/android-icon-192x192.png"
         ></link>
         <link rel="shortcut icon" type="image/x-icon" href="/icons/favicon.ico" />
         <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png" />
@@ -171,7 +171,7 @@ function Home({ initialDataSSG }: HomeProps) {
         />
         <link rel="apple-touch-icon" sizes="192x192" href="/icons/apple-icon.png" />
         <link rel="manifest" href="/icons/manifest.json" />
-        <meta name="msapplication-config" content="/icons/icons/browserconfig.xml" />
+        <meta name="msapplication-config" content="/icons/browserconfig.xml" />
         <meta name="msapplication-TileColor" content="#d44026" />
         <meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png" />
         <meta name="theme-color" content="#d44026" />
