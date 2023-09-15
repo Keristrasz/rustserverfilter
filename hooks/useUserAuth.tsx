@@ -6,8 +6,8 @@ const useUserAuth = () => {
     queryKey: ["userAuth"],
     queryFn: getAppAuth,
     keepPreviousData: true,
-    cacheTime: 1000 * 999999,
-    staleTime: 1000 * 999999,
+    cacheTime: 1000 * 99999,
+    staleTime: 1000 * 99999,
   });
 
   return _app;

@@ -9,7 +9,6 @@ const useInfiniteScroll = (
   useEffect(() => {
     inView;
     if (inView && hasNextPage) {
-      ("fetching next page");
       fetchNextPage();
     }
   }, [inView, hasNextPage]);
