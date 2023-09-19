@@ -9,6 +9,7 @@ Create a new Next.js component or open an existing one.
 Add the button element to your component's JSX:
 
 jsx
+
 Copy code
 <button onClick={toggleFullView}>Switch to Full View</button>
 Define the CSS styles for the full view mode in a CSS file or a CSS module.
