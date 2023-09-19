@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 
-import BodyWrapper from "@/components/hoc/BodyWrapper";
+import BodyWrapper from "@/components/HOC/BodyWrapper";
 
 const FAQ = () => {
   const faqData = [

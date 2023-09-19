@@ -22,9 +22,8 @@ import fetchSingleServer from "@/services/fetchSingleServer";
 import getAppAuth from "@/services/getAppAuth";
 import { groupSizeOptions } from "@/constants/formInputOptions";
 
-import BodyWrapper from "@/components/hoc/BodyWrapper";
-
-import { Spinner } from "@/components/ui/Spinner";
+import BodyWrapper from "@/components/HOC/BodyWrapper";
+import { Spinner } from "@/components/UI/Spinner";
 import ServerGraphs from "@/components/page-components/server-detail/ServerPlayersGraph";
 
 import useCustomSingleQuery from "@/hooks/useCustomSingleQuery";

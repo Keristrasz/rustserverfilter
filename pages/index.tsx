@@ -14,9 +14,9 @@ import {
 import useUserAuth from "../hooks/useUserAuth";
 import useQueryLocation from "@/hooks/useQueryLocation";
 
-import BodyWrapper from "@/components/hoc/BodyWrapper";
-import { Table } from "@/components/ui/Table";
-import { Form } from "@/components/ui/Form";
+import BodyWrapper from "@/components/HOC/BodyWrapper";
+import { Table } from "@/components/UI/Table";
+import { Form } from "@/components/UI/Form";
 
 //TODO Distance sort by loaded initialDataSSG
 
