@@ -24,7 +24,7 @@ import { groupSizeOptions } from "@/constants/formInputOptions";
 
 import BodyWrapper from "@/components/hoc/BodyWrapper";
 
-import Spinner from "@/components/ui/Spinner/Spinner";
+import { Spinner } from "@/components/ui/Spinner";
 import ServerGraphs from "@/components/page-components/server-detail/ServerPlayersGraph";
 
 import useCustomSingleQuery from "@/hooks/useCustomSingleQuery";
