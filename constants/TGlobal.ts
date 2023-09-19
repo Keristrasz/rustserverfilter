@@ -31,7 +31,7 @@ export interface ServerPrimaryDataType {
   difficulty: string;
   rank?: number;
   rules?: RulesType;
-  players_history?: number[][];
+  players_history?: [number, number][];
   gameport?: string;
 }
 

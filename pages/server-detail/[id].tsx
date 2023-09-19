@@ -79,7 +79,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const file = path.join(process.cwd(), "constants/mainSlugBuildData.json");
   fs.writeFileSync(file, JSON.stringify(initialData), "utf-8");
 
-  const paths = initialData.result.map((page: ServerPrimaryDataType) => ({
+  const paths = initialData!.result.map((page: ServerPrimaryDataType) => ({
     params: { id: page.addr.toString().split(":").join(".") },
   }));
 
@@ -95,10 +95,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const fileToReadJSONFrom = path.join(process.cwd(), "constants/mainSlugBuildData.json");
   const dataFromGetStaticPaths = JSON.parse(
     fs.readFileSync(fileToReadJSONFrom, "utf-8")
-  ) as Array<{ params: { slug: Array<string>; routeId: string } }>;
+  ) as QueryResponseType;
 
+  //@ts-ignore
   const { id } = params;
-  const fetchIP = id ? replaceLastDotWithColon(id.toString()) : null;
+  const fetchIP = id ? replaceLastDotWithColon(id.toString()) : "";
   let initialDataSSG = dataFromGetStaticPaths.result.find((page: ServerPrimaryDataType) => {
     return fetchIP === page.addr;
   });
@@ -139,7 +140,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 
   const router = useRouter();
   const { id } = router.query;
-  const fetchIP = id ? replaceLastDotWithColon(id.toString()) : null;
+  const fetchIP = id ? replaceLastDotWithColon(id.toString()) : "";
   const { queryData, isLoading, isFetching, error, status } = useCustomSingleQuery(
     fetchIP as string
   );
@@ -157,7 +158,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
     const fetchServerLocation = async () => {
       try {
         const { latitude, longitude, country, city, region } = await getLocation(
-          data?.addr.split(":").slice(0, 1)
+          data?.addr.split(":").slice(0, 1)[0]
         );
         setServerLocationData({ latitude, longitude, country, city, region });
       } catch (error) {
@@ -174,7 +175,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
   }, []);
 
   const handleCopyClick = () => {
-    const textToCopy = data.addr.split(":").slice(0, 1) + ":" + data.gameport;
+    const textToCopy = data.addr.split(":").slice(0, 1)[0] + ":" + data.gameport;
     navigator.clipboard
       .writeText("client.connect " + textToCopy)
       .then(() => {
