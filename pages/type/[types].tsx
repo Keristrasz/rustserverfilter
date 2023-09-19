@@ -41,7 +41,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     initialFilterSSG,
     initialSorterSSG,
     0,
-    40,
+    30,
     await getAppAuth()
   );
 
