@@ -1,13 +1,13 @@
-import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
-import { Layout } from "@/components/ui/Layout";
+import ErrorBoundary from "../components/hoc/ErrorBoundary";
+import { Layout } from "../components/ui/Layout";
 import { Analytics } from "@vercel/analytics/react";
 import { ToastContainer } from "react-toastify";
+import "@/styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
-import ErrorBoundary from "@/components/hoc/ErrorBoundary";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
