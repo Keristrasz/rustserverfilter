@@ -14,7 +14,7 @@ import { calculateDistance } from "@/utils/calculateDistance";
 import { countriesOptions } from "@/constants/formInputOptions";
 
 import THead from "./subcomponents/TableHead";
-import { Spinner } from "../Spinner";
+import Spinner from "../Spinner/Spinner";
 
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useCustomInfiniteQuery from "@/hooks/useCustomInfiniteQuery";
@@ -455,4 +455,4 @@ const Table: React.FC<TableProps> = ({
 };
 
 // export default React.memo(Table);
-export { Table };
+export default Table;

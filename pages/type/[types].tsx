@@ -18,7 +18,7 @@ import useUserAuth from "../../hooks/useUserAuth";
 import useQueryLocation from "@/hooks/useQueryLocation";
 
 import BodyWrapper from "@/components/hoc/BodyWrapper";
-import { Table } from "@/components/ui/Table";
+import Table from "@/components/ui/Table/Table";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = typesConfigs.map((config) => ({

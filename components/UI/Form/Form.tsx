@@ -903,4 +903,4 @@ const Form: React.FC<FormProps> = ({
   //
 };
 
-export { Form };
+export default Form;
