@@ -1,15 +1,44 @@
+// import React, { useEffect, useState } from "react";
+// import { useRouter } from "next/router";
+// import { GetStaticProps, GetStaticPaths } from "next";
+// import { toast } from "react-toastify";
+// import Head from "next/head";
+// import fs from "fs";
+// import path from "path";
+
+// import { getCustomShortDate, getTimeUptime } from "@/utils/timeFunctions";
+// import { calculateDistance } from "@/utils/calculateDistance";
+// import { getLocation } from "@/services/getLocation";
+// import { LocationData } from "@/constants/TGlobal";
+// import {
+//   userLocationType,
+//   SorterType,
+//   FilterType,
+//   ServerPrimaryDataType,
+//   QueryResponseType,
+// } from "@/constants/TGlobal";
+// import { fetchAllServers } from "@/services/fetchAllServers";
+// import fetchSingleServer from "@/services/fetchSingleServer";
+// import getAppAuth from "@/services/getAppAuth";
+// import { groupSizeOptions } from "@/constants/formInputOptions";
+
+// import BodyWrapper from "@/components/HOC/BodyWrapper";
+// import { Spinner } from "@/components/UI/Spinner";
+// import ServerGraphs from "@/components/page-components/server-detail/ServerPlayersGraph";
+
+// import useCustomSingleQuery from "@/hooks/useCustomSingleQuery";
+// import useQueryLocation from "@/hooks/useQueryLocation";
+
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { GetStaticProps, GetStaticPaths } from "next";
-import { toast } from "react-toastify";
-import Head from "next/head";
-import fs from "fs";
-import path from "path";
-
+import useCustomSingleQuery from "@/hooks/useCustomSingleQuery";
+import { Spinner } from "@/components/UI/Spinner";
 import { getCustomShortDate, getTimeUptime } from "@/utils/timeFunctions";
-import { calculateDistance } from "@/utils/calculateDistance";
 import { getLocation } from "@/services/getLocation";
+import { calculateDistance } from "@/utils/calculateDistance";
+import BodyWrapper from "@/components/HOC/BodyWrapper";
 import { LocationData } from "@/constants/TGlobal";
+import Head from "next/head";
 import {
   userLocationType,
   SorterType,
@@ -17,17 +46,19 @@ import {
   ServerPrimaryDataType,
   QueryResponseType,
 } from "@/constants/TGlobal";
+import ServerGraphs from "@/components/page-components/server-detail/ServerPlayersGraph";
+import { toast } from "react-toastify";
+import useQueryLocation from "@/hooks/useQueryLocation";
 import { fetchAllServers } from "@/services/fetchAllServers";
 import fetchSingleServer from "@/services/fetchSingleServer";
+import { GetStaticProps, GetStaticPaths } from "next";
+
 import getAppAuth from "@/services/getAppAuth";
+
+import fs from "fs";
+import path from "path";
+
 import { groupSizeOptions } from "@/constants/formInputOptions";
-
-import BodyWrapper from "@/components/HOC/BodyWrapper";
-import { Spinner } from "@/components/UI/Spinner";
-import ServerGraphs from "@/components/page-components/server-detail/ServerPlayersGraph";
-
-import useCustomSingleQuery from "@/hooks/useCustomSingleQuery";
-import useQueryLocation from "@/hooks/useQueryLocation";
 
 function replaceLastDotWithColon(input: string) {
   const lastIndex = input.lastIndexOf(".");
