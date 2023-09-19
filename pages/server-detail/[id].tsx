@@ -76,10 +76,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 
   // create a json file to store information for getStaticProps == SSG
-  const file = path.join(process.cwd(), "public/mainSlugBuildData.json");
+  const file = path.join(process.cwd(), "constants/mainSlugBuildData.json");
   fs.writeFileSync(file, JSON.stringify(initialData), "utf-8");
 
-  const paths = initialData!.result.map((page: ServerPrimaryDataType) => ({
+  const paths = initialData.result.map((page: ServerPrimaryDataType) => ({
     params: { id: page.addr.toString().split(":").join(".") },
   }));
 
@@ -92,12 +92,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const app = await getAppAuth();
   // get data stored from getStaticPaths
-  const fileToReadJSONFrom = path.join(process.cwd(), "public/mainSlugBuildData.json");
+  const fileToReadJSONFrom = path.join(process.cwd(), "constants/mainSlugBuildData.json");
   const dataFromGetStaticPaths = JSON.parse(
     fs.readFileSync(fileToReadJSONFrom, "utf-8")
-  ) as QueryResponseType;
+  ) as Array<{ params: { slug: Array<string>; routeId: string } }>;
 
-  //@ts-ignore
   const { id } = params;
   const fetchIP = id ? replaceLastDotWithColon(id.toString()) : null;
   let initialDataSSG = dataFromGetStaticPaths.result.find(
@@ -142,7 +141,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 
   const router = useRouter();
   const { id } = router.query;
-  const fetchIP = id ? replaceLastDotWithColon(id.toString()) : "";
+  const fetchIP = id ? replaceLastDotWithColon(id.toString()) : null;
   const { queryData, isLoading, isFetching, error, status } = useCustomSingleQuery(
     fetchIP as string
   );
@@ -162,7 +161,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
     const fetchServerLocation = async () => {
       try {
         const { latitude, longitude, country, city, region } = await getLocation(
-          data.addr.split(":").slice(0, 1)[0]
+          data?.addr.split(":").slice(0, 1)
         );
         setServerLocationData({ latitude, longitude, country, city, region });
       } catch (error) {
@@ -372,7 +371,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     <p className="text-gray-300">
                       Game Ip:{" "}
                       <span
-                        className="font-bold text-rustFour hover:cursor-pointer hover:text-green-500"
+                        className="font-bold text-rustFour hover:cursor-pointer hover:text-green-570"
                         onClick={handleCopyClick}
                       >
                         {data.addr.split(":").slice(0, 1) + ":" + data.gameport}
@@ -407,7 +406,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                         URL:{" "}
                         {isUrl(data.rules.url) ? (
                           <a
-                            className="text-blue-400 underline hover:text-blue-500"
+                            className="text-blue-400 underline hover:text-blue-570"
                             href={data.rules.url}
                           >
                             {data.rules.url.length > 25
