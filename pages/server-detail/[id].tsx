@@ -79,7 +79,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const file = path.join(process.cwd(), "constants/mainSlugBuildData.json");
   fs.writeFileSync(file, JSON.stringify(initialData), "utf-8");
 
-  const paths = initialData!.result.map((page: ServerPrimaryDataType) => ({
+  const paths = initialData.result.map((page: ServerPrimaryDataType) => ({
     params: { id: page.addr.toString().split(":").join(".") },
   }));
 
@@ -162,7 +162,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
     const fetchServerLocation = async () => {
       try {
         const { latitude, longitude, country, city, region } = await getLocation(
-          data?.addr.split(":").slice(0, 1)[0]
+          data.addr.split(":").slice(0, 1)
         );
         setServerLocationData({ latitude, longitude, country, city, region });
       } catch (error) {
@@ -179,7 +179,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
   }, []);
 
   const handleCopyClick = () => {
-    const textToCopy = data.addr.split(":").slice(0, 1)[0] + ":" + data.gameport;
+    const textToCopy = data.addr.split(":").slice(0, 1) + ":" + data.gameport;
     navigator.clipboard
       .writeText("client.connect " + textToCopy)
       .then(() => {
