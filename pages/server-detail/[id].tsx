@@ -76,7 +76,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 
   // create a json file to store information for getStaticProps == SSG
-  const file = path.join(process.cwd(), "public/mainSlugBuildData.json");
+  const file = path.join(process.cwd(), "constants/mainSlugBuildData.json");
   fs.writeFileSync(file, JSON.stringify(initialData), "utf-8");
 
   const paths = initialData.result.map((page: ServerPrimaryDataType) => ({
@@ -92,7 +92,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const app = await getAppAuth();
   // get data stored from getStaticPaths
-  const fileToReadJSONFrom = path.join(process.cwd(), "public/mainSlugBuildData.json");
+  const fileToReadJSONFrom = path.join(process.cwd(), "constants/mainSlugBuildData.json");
   const dataFromGetStaticPaths = JSON.parse(
     fs.readFileSync(fileToReadJSONFrom, "utf-8")
   ) as Array<{ params: { slug: Array<string>; routeId: string } }>;
