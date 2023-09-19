@@ -2,9 +2,9 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 
-import { typesConfigs } from "@/constants/serverTypeOptions";
-
 import BodyWrapper from "@/components/hoc/BodyWrapper";
+
+import { typesConfigs } from "@/constants/serverTypeOptions";
 
 const FAQ = () => {
   return (
