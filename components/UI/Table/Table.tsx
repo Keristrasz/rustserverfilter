@@ -76,7 +76,8 @@ const columnDataForMonitor = [
     value: "born",
   },
   {
-    tooltip: "Estimate of next wipe if needed data are provided. You can find more in FAQ",
+    tooltip:
+      "Estimate of next wipe if needed data are provided. You can find more in FAQ",
     isClickable: true,
     styles: "w-20",
     name: "NEXT WIPE",
@@ -113,7 +114,8 @@ const columnDataForMonitorForMobile = [
     value: "players",
   },
   {
-    tooltip: "Estimate of next wipe if needed data are provided. You can find more in FAQ",
+    tooltip:
+      "Estimate of next wipe if needed data are provided. You can find more in FAQ",
     isClickable: true,
     styles: "w-3/12 text-xs",
     name: "NEXT WIPE",
@@ -317,7 +319,8 @@ const Table: React.FC<TableProps> = ({
                   className="text-sm relative text-center bg-green-600 text-gray-200 [text-shadow:_1px_1px_1px_black]"
                   colSpan={10}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
+                  SERVERS
                 </td>
               </tr>
             ) : (
@@ -342,7 +345,10 @@ const Table: React.FC<TableProps> = ({
                       className="hover:bg-zinc-800 clickable-row cursor-pointer"
                       onClick={() => {
                         router.push({
-                          pathname: `/server-detail/${mappedServer.addr.replace(/:/g, ".")}`,
+                          pathname: `/server-detail/${mappedServer.addr.replace(
+                            /:/g,
+                            "."
+                          )}`,
                         });
                       }}
                       role="link"
@@ -367,7 +373,9 @@ const Table: React.FC<TableProps> = ({
                             </Link>
                             <div className="flex flex-row justify-between text-zinc-500">
                               <div className="flex items-center">
-                                {getFlagOfCountry(mappedServer.rules?.location?.country) ? (
+                                {getFlagOfCountry(
+                                  mappedServer.rules?.location?.country
+                                ) ? (
                                   <img
                                     src={getFlagOfCountry(
                                       mappedServer.rules?.location?.country
@@ -386,7 +394,8 @@ const Table: React.FC<TableProps> = ({
                               </p>
                             </div>
                           </td>
-                        ) : column.value === "rate" || column.value === "max_group_size" ? (
+                        ) : column.value === "rate" ||
+                          column.value === "max_group_size" ? (
                           <td
                             key={column.value}
                             className={`p-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
@@ -445,7 +454,7 @@ const Table: React.FC<TableProps> = ({
       {isLoadingStatus}
       {isResultsRendered}
       {isFetching && !isLoading ? (
-        <div className="flex flex-wrap items-center mb-8 mt-4">
+        <div className="flex flex-wrap items-center mb-8 mt-0">
           <Spinner />
           <h2 className="text-2xl font-bold mx-1 text-gray-200"> Loading more data...</h2>
         </div>
