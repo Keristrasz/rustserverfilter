@@ -4,7 +4,6 @@ const useSorter = (
   setFilter: React.Dispatch<React.SetStateAction<FilterType>>,
   setSorter: React.Dispatch<React.SetStateAction<SorterType>>
 ) => {
-  console.log("useSorter recreated");
   const roundBySeconds = 100;
   const nowMiliseconds = new Date().getTime();
   const nowSeconds = Math.floor(nowMiliseconds / 1000 / roundBySeconds) * roundBySeconds - 100;
