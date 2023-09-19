@@ -2,7 +2,7 @@ import { useInfiniteQuery, QueryFunctionContext } from "@tanstack/react-query";
 import { fetchAllServers } from "@/services/fetchAllServers";
 import { SorterType, FilterType, QueryResponseType } from "../constants/TGlobal";
 
-let pageSize = 30;
+let pageSize = 40;
 
 const useCustomInfiniteQuery = (filter: FilterType, sorter: SorterType, app: any) => {
   const queryKey = ["searchResults", filter, sorter, pageSize];
