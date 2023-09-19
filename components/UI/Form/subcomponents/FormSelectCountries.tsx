@@ -1,4 +1,3 @@
-"use client";
 import React, {
   useState,
   useEffect,
@@ -8,19 +7,20 @@ import React, {
   MouseEvent,
   ReactElement,
 } from "react";
-import { allCountriesFull } from "@/constants/countries";
 
-interface SelectIncludedCountriesProps {
+import { countriesOptions } from "@/constants/formInputOptions";
+
+interface SelectCountriesProps {
   id: string;
   countries: string[];
   setCountries: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-function SelectIncludeCountries({
+function FormSelectCountries({
   id,
   countries,
   setCountries,
-}: SelectIncludedCountriesProps): ReactElement {
+}: SelectCountriesProps): ReactElement {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const optionsRef = useRef<HTMLDivElement>(null);
@@ -106,7 +106,7 @@ function SelectIncludeCountries({
     }
   };
 
-  const filteredOptions = allCountriesFull.filter((country) =>
+  const filteredOptions = countriesOptions.filter((country) =>
     country.name.toLowerCase().startsWith(inputValue.toLowerCase())
   );
 
@@ -170,4 +170,4 @@ function SelectIncludeCountries({
   );
 }
 
-export default SelectIncludeCountries;
+export default FormSelectCountries;

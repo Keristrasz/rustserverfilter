@@ -19,6 +19,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/HOC/ErrorBoundary.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/hoc/ErrorBoundary.jsx"],
   "exclude": ["node_modules"]
 }

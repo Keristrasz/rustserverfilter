@@ -5,13 +5,13 @@ function Header() {
   return (
     <header className="flex justify-between items-center w-full bg-rustOne px-4">
       <Link href="/" className="flex justify-between items-center hover:text-white">
-        <img src="/rust-server-logo.jpg" width={100} height={100} alt="rust server" />
+        <img src="/rust-server-logo.jpg" width={100} height={100} alt="rust server logo" />
         <div>
           <h2 className="font-rust text-xl sm:text-4xl tracking-[0.065rem] [text-shadow:_3px_3px_0_rgb(0_0_0_/_40%)]">
             RUST SERVER FILTER
           </h2>
           <h3 className="hidden md:block [text-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]">
-            Search, find, filter, sort your solo duo trio quad rust servers
+            Advanced filters for Rust servers. Browse, search, find, sort.
           </h3>
         </div>
       </Link>

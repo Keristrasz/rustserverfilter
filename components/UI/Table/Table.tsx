@@ -1,28 +1,26 @@
-import THead from "./TableHead";
 import React from "react";
 import { useRouter } from "next/router";
-import {
-  calculateDistance,
-  getCustomShortDate,
-  getHowMuchAgo,
-  getInHowMuch,
-} from "@/utils/inputFunctions";
+import { InfiniteData } from "@tanstack/react-query";
+import Link from "next/link";
+
 import {
   FilterType,
   SorterType,
   ServerPrimaryDataType,
   QueryResponseType,
 } from "@/constants/TGlobal";
+import { getCustomShortDate, getHowMuchAgo, getInHowMuch } from "@/utils/timeFunctions";
+import { calculateDistance } from "@/utils/calculateDistance";
+import { countriesOptions } from "@/constants/formInputOptions";
+
+import THead from "./subcomponents/TableHead";
+import { Spinner } from "../Spinner";
+
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useCustomInfiniteQuery from "@/hooks/useCustomInfiniteQuery";
 
-import Spinner from "../Spinner";
-import { InfiniteData } from "@tanstack/react-query";
-import Link from "next/link";
-import { allCountriesFull } from "@/constants/countries";
-
-function getFlagOfCountry(nameOfCountry) {
-  const countryObj = allCountriesFull.find((obj) => nameOfCountry === obj.name);
+function getFlagOfCountry(nameOfCountry: string | undefined) {
+  const countryObj = countriesOptions.find((obj) => nameOfCountry === obj.name);
   if (countryObj && countryObj.flag) {
     return `https://flagsapi.com/${countryObj.flag}/flat/24.png`;
   }
@@ -132,7 +130,7 @@ const columnDataForMonitorForMobile = [
 
 let columnData = columnDataForMonitor;
 
-interface ResultsTableProps {
+interface TableProps {
   app: any;
   filter: FilterType;
   sorter: SorterType;
@@ -152,7 +150,7 @@ interface columnDataForMonitorType {
 }
 
 //@ts-ignore
-const ResultsTable: React.FC<ResultsTableProps> = ({
+const Table: React.FC<TableProps> = ({
   app,
   filter,
   sorter,
@@ -456,5 +454,5 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
   );
 };
 
-// export default React.memo(ResultsTable);
-export default ResultsTable;
+// export default React.memo(Table);
+export { Table };

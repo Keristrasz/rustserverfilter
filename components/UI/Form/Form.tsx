@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+
+import { toast } from "react-toastify";
+
 import {
   groupSizeOptions,
   ratesOptions,
@@ -6,12 +9,12 @@ import {
   vanillaOptions,
   moddedOptions,
   hardcoreSoftcoreOptions,
-} from "@/constants/inputData";
-import SelectIncludeCountries from "./SelectIncludeCountries";
-// import SelectExcludeCountries from "../../../utils/test/SelectExcludeCountries";
-import useFilter from "@/hooks/useFilter";
+} from "@/constants/formInputOptions";
 import { userLocationType, SorterType, FilterType } from "../../../constants/TGlobal";
-import { toast } from "react-toastify";
+
+import FormSelectCountries from "./subcomponents/FormSelectCountries";
+
+import useFilter from "@/hooks/useFilter";
 
 let didLocationToastRun = false;
 
@@ -664,7 +667,7 @@ const Form: React.FC<FormProps> = ({
           >
             Include Countries
           </label>
-          <SelectIncludeCountries
+          <FormSelectCountries
             id="includeCountries"
             countries={includedCountries}
             setCountries={setIncludedCountries}
@@ -677,7 +680,7 @@ const Form: React.FC<FormProps> = ({
           >
             Exclude Countries
           </label>
-          <SelectIncludeCountries
+          <FormSelectCountries
             id="excludeCountries"
             countries={excludedCountries}
             setCountries={setExcludedCountries}
@@ -900,4 +903,4 @@ const Form: React.FC<FormProps> = ({
   //
 };
 
-export default Form;
+export { Form };
