@@ -99,7 +99,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   //@ts-ignore
   const { id } = params;
-  const fetchIP = id ? replaceLastDotWithColon(id.toString()) : "";
+  const fetchIP = id ? replaceLastDotWithColon(id.toString()) : null;
   let initialDataSSG = dataFromGetStaticPaths.result.find(
     (page: ServerPrimaryDataType) => {
       return fetchIP === page.addr;
