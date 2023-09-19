@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { InfiniteData } from "@tanstack/react-query";
+import Head from "next/head";
+import { GetStaticProps, GetStaticPaths } from "next";
+import { useRouter } from "next/router";
+
+import getAppAuth from "@/services/getAppAuth";
+import { fetchAllServers } from "@/services/fetchAllServers";
+import { typesConfigs } from "@/constants/serverTypeOptions";
 import {
   userLocationType,
   SorterType,
   FilterType,
   QueryResponseType,
 } from "../../constants/TGlobal";
+
 import useUserAuth from "../../hooks/useUserAuth";
 import useQueryLocation from "@/hooks/useQueryLocation";
-import ResultsTable from "@/components/UI/Table/TableMain";
-import BodyWrapper from "@/components/HOC/BodyWrapper";
-import { InfiniteData } from "@tanstack/react-query";
-import Head from "next/head";
-import { GetStaticProps, GetStaticPaths } from "next";
-import { fetchAllServers } from "@/utils/fetchAllServers";
-import getAppAuth from "@/utils/getAppAuth";
-import { typesConfigs } from "@/constants/serverTypeConfigs";
-import { useRouter } from "next/router";
+
+import BodyWrapper from "@/components/hoc/BodyWrapper";
+import { Table } from "@/components/ui/Table";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = typesConfigs.map((config) => ({
@@ -93,9 +96,7 @@ function Types({
 
   const configType = typesConfigs.find((config) => config.href === types);
   const initialFilterOnFrontEnd = configType?.initialFilterSSG;
-  const initialFilter = initialFilterOnFrontEnd
-    ? initialFilterOnFrontEnd
-    : initialFilterSSG;
+  const initialFilter = initialFilterOnFrontEnd ? initialFilterOnFrontEnd : initialFilterSSG;
 
   const app = useUserAuth();
   const [sorter, setSorter] = useState<SorterType>(initialSorterSSG);
@@ -136,31 +137,11 @@ function Types({
         <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png" />
         <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png" />
-        <link
-          rel="apple-touch-icon"
-          sizes="114x114"
-          href="/icons/apple-icon-114x114.png"
-        />
-        <link
-          rel="apple-touch-icon"
-          sizes="120x120"
-          href="/icons/apple-icon-120x120.png"
-        />
-        <link
-          rel="apple-touch-icon"
-          sizes="144x144"
-          href="/icons/apple-icon-144x144.png"
-        />
-        <link
-          rel="apple-touch-icon"
-          sizes="152x152"
-          href="/icons/apple-icon-152x152.png"
-        />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/icons/apple-icon-180x180.png"
-        />
+        <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png" />
         <link rel="apple-touch-icon" sizes="192x192" href="/icons/apple-icon.png" />
         <link rel="manifest" href="/icons/manifest.json" />
         <meta name="msapplication-config" content="/icons/browserconfig.xml" />
@@ -182,7 +163,7 @@ function Types({
           {desc}
         </p>
       </section>
-      <ResultsTable
+      <Table
         app={app}
         filter={filter}
         sorter={sorter}

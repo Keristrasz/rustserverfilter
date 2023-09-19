@@ -1,5 +1,5 @@
 import { useInfiniteQuery, QueryFunctionContext } from "@tanstack/react-query";
-import { fetchAllServers } from "@/utils/fetchAllServers";
+import { fetchAllServers } from "@/services/fetchAllServers";
 import { SorterType, FilterType, QueryResponseType } from "../constants/TGlobal";
 
 let pageSize = 40;

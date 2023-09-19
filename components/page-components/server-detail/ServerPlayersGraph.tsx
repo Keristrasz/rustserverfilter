@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { getCustomShortDate } from "@/utils/inputFunctions";
+import React from "react";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import { getCustomShortDate } from "@/utils/timeFunctions";
 
 type PlayersHistory = [number, number][];
 

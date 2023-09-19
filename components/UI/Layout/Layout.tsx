@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import AnimatedBackground from "./AnimatedBackground";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+
+import Header from "./subcomponents/Header";
+import Footer from "./subcomponents/Footer";
+import AnimatedBackground from "./subcomponents/AnimatedBackground";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // causes hydration errors
@@ -30,4 +30,4 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   );
 };
 
-export default Layout;
+export { Layout };

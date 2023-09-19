@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from "react";
+import { InfiniteData } from "@tanstack/react-query";
+import { GetStaticProps } from "next";
+import Head from "next/head";
+
+import getAppAuth from "@/services/getAppAuth";
 import {
   userLocationType,
   SorterType,
   FilterType,
   QueryResponseType,
 } from "../constants/TGlobal";
+
 import useUserAuth from "../hooks/useUserAuth";
 import useQueryLocation from "@/hooks/useQueryLocation";
-import ResultsTable from "@/components/UI/Table/TableMain";
-import Form from "@/components/UI/Form/Form";
-import BodyWrapper from "@/components/HOC/BodyWrapper";
-import { InfiniteData } from "@tanstack/react-query";
-import getAppAuth from "@/utils/getAppAuth";
+
+import BodyWrapper from "@/components/hoc/BodyWrapper";
+import { Table } from "@/components/ui/Table";
+import { Form } from "@/components/ui/Form";
 
 //TODO Distance sort by loaded initialDataSSG
 
-import { fetchAllServers } from "@/utils/fetchAllServers";
-import { GetStaticProps } from "next";
-import Head from "next/head";
+import { fetchAllServers } from "@/services/fetchAllServers";
 
 export const getStaticProps: GetStaticProps = async () => {
   // Fetch initialSorter and initialFilter from an API or any other initialDataSSG source
@@ -105,12 +108,12 @@ function Home({ initialDataSSG }: HomeProps) {
   return (
     <BodyWrapper>
       <Head>
-        <title>Rust Server Filter | Solo, Duo, Trio - Best Rust Servers</title>
+        <title>Rust Server Filter | All public Rust servers</title>
         <meta property="og:locale" content="en_US" />
 
         <meta
           name="description"
-          content="Discover FUTURE WIPES! Filter SOLO DUO TRIO QUAD servers. Search rates 2x, 3x, 5x. Find best rust servers by advanced filtering, last wipe, distance and more!"
+          content="The most advanced FILTERS for Rust servers! Discover FUTURE WIPES! Filter SOLO DUO TRIO QUAD servers. Find best rust servers by last wipe, distance, mod and more!"
           key="desc"
         />
         <meta
@@ -119,7 +122,7 @@ function Home({ initialDataSSG }: HomeProps) {
         />
         <meta
           property="og:description"
-          content="Discover FUTURE WIPES! Filter SOLO DUO TRIO QUAD servers. Search rates 2x, 3x, 5x. Find best rust servers by advanced filtering, last wipe, distance and more!"
+          content="The most advanced FILTERS for Rust servers! Discover FUTURE WIPES! Filter SOLO DUO TRIO QUAD servers. Find best rust servers by last wipe, distance, mod and more!"
         />
 
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
@@ -144,31 +147,11 @@ function Home({ initialDataSSG }: HomeProps) {
         <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png" />
         <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png" />
-        <link
-          rel="apple-touch-icon"
-          sizes="114x114"
-          href="/icons/apple-icon-114x114.png"
-        />
-        <link
-          rel="apple-touch-icon"
-          sizes="120x120"
-          href="/icons/apple-icon-120x120.png"
-        />
-        <link
-          rel="apple-touch-icon"
-          sizes="144x144"
-          href="/icons/apple-icon-144x144.png"
-        />
-        <link
-          rel="apple-touch-icon"
-          sizes="152x152"
-          href="/icons/apple-icon-152x152.png"
-        />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/icons/apple-icon-180x180.png"
-        />
+        <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png" />
         <link rel="apple-touch-icon" sizes="192x192" href="/icons/apple-icon.png" />
         <link rel="manifest" href="/icons/manifest.json" />
         <meta name="msapplication-config" content="/icons/browserconfig.xml" />
@@ -187,7 +170,7 @@ function Home({ initialDataSSG }: HomeProps) {
         sorter={sorter}
         isSSG={isSSG}
       />
-      <ResultsTable
+      <Table
         app={app}
         filter={filter}
         sorter={sorter}

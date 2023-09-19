@@ -1,29 +1,4 @@
-import axios from "axios";
-import { LocationData } from "../constants/TGlobal";
 import { format, formatDistanceToNowStrict } from "date-fns";
-
-export function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
-  const earthRadius = 6371; // Radius of the Earth in kilometers
-
-  const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
-
-  const dLat = toRadians(lat2 - lat1);
-  const dLon = toRadians(lon2 - lon1);
-
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(toRadians(lat1)) *
-      Math.cos(toRadians(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
-
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const distance = Math.floor(earthRadius * c);
-
-  return distance;
-}
-
-const now = new Date();
 
 export function getCustomShortDate(timestamp: number) {
   if (timestamp == null || timestamp < 1652630662) {
@@ -38,6 +13,28 @@ export function getTimeUptime(timestamp: number) {
   const hours = date.getHours();
 
   return `${hours} hours `;
+}
+
+export function getHowMuchAgo(timestamp: number) {
+  if (timestamp == null || timestamp < 1652630662) {
+    return "";
+  }
+
+  const date = new Date(timestamp * 1000);
+
+  const timeAgo = formatDistanceToNowStrict(date, { addSuffix: true });
+
+  return `${timeAgo}`;
+}
+
+export function getInHowMuch(timestamp: number) {
+  if (timestamp == null || timestamp < 1652630662) {
+    return "";
+  }
+
+  const date = new Date(timestamp * 1000);
+
+  return `${formatDistanceToNowStrict(date, { addSuffix: true })}`;
 }
 
 // export function getHowMuchAgo(timestamp: number) {
@@ -110,45 +107,3 @@ export function getTimeUptime(timestamp: number) {
 //   const months = Math.floor(timeDifference / 2592000000);
 //   return `In ${months} months`;
 // }
-
-export function getHowMuchAgo(timestamp: number) {
-  if (timestamp == null || timestamp < 1652630662) {
-    return "";
-  }
-
-  const date = new Date(timestamp * 1000);
-
-  const timeAgo = formatDistanceToNowStrict(date, { addSuffix: true });
-
-  return `${timeAgo}`;
-}
-
-export function getInHowMuch(timestamp: number) {
-  if (timestamp == null || timestamp < 1652630662) {
-    return "";
-  }
-
-  const date = new Date(timestamp * 1000);
-
-  return `${formatDistanceToNowStrict(date, { addSuffix: true })}`;
-}
-
-export async function getLocation(ip: string): Promise<LocationData> {
-  const url = `https://ipapi.co/${ip}/json`;
-
-  try {
-    const response = await axios.get(url);
-    const { latitude, longitude, country_name, city, region } = response.data;
-    const returnData: LocationData = {
-      latitude,
-      longitude,
-      country: country_name,
-      city,
-      region,
-    };
-    return returnData;
-  } catch (error) {
-    error;
-    throw error;
-  }
-}
