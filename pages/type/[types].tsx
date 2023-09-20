@@ -13,6 +13,7 @@ import {
   FilterType,
   QueryResponseType,
 } from "../../constants/TGlobal";
+import { pageSize } from "@/constants/pageSize";
 
 import useUserAuth from "../../hooks/useUserAuth";
 import useQueryLocation from "@/hooks/useQueryLocation";
@@ -41,7 +42,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     initialFilterSSG,
     initialSorterSSG,
     0,
-    40,
+    pageSize,
     await getAppAuth()
   );
 
