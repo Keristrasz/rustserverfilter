@@ -1,6 +1,8 @@
 import React from "react";
-import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend } from "recharts";
+// import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import { getCustomShortDate } from "@/utils/timeFunctions";
+import TestChart from "./TestChart";
+import HeatMap from "./HeatMap";
 
 type PlayersHistory = [number, number][];
 
@@ -10,15 +12,16 @@ interface TServerGraphs {
 }
 
 const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
-  let chartWidth = 500;
-  let chartHeight = 300;
+  let chartWidth = "600";
+  let chartHeight = "350";
 
   const MOBILE_WIDTH_THRESHOLD = 640;
-  const isMobile = typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
+  const isMobile =
+    typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
 
   if (isMobile) {
-    chartHeight = 300;
-    chartWidth = 300;
+    chartWidth = "300";
+    chartHeight = "350";
   }
 
   if (players_history) {
@@ -39,47 +42,93 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
         const entryTimestamp = entry.timestamp;
         return entryTimestamp >= last3DaysDate && entryTimestamp <= currentTimestamp;
       })
-      .map((entry: { timestamp: number; playerCount: number }) => {
-        return {
-          timestamp: getCustomShortDate(entry.timestamp / 1000),
-          playerCount: entry.playerCount,
-        };
-      });
+      .reduce(
+        (result, entry) => {
+          result.timestamp.push(getCustomShortDate(entry.timestamp / 1000));
+          result.playerCount.push(entry.playerCount);
+          return result;
+        },
+        { timestamp: [], playerCount: [] }
+      );
     const filteredDataLast7Days = formattedData
       .filter((entry: { timestamp: number; playerCount: number }) => {
         const entryTimestamp = entry.timestamp;
         return entryTimestamp >= last7DaysDate && entryTimestamp <= currentTimestamp;
       })
-      .map((entry: { timestamp: number; playerCount: number }) => {
-        return {
-          timestamp: getCustomShortDate(entry.timestamp / 1000),
-          playerCount: entry.playerCount,
-        };
-      });
+      .reduce(
+        (result, entry) => {
+          result.timestamp.push(getCustomShortDate(entry.timestamp / 1000));
+          result.playerCount.push(entry.playerCount);
+          return result;
+        },
+        { timestamp: [], playerCount: [] }
+      );
 
     const filteredDataLast30Days = formattedData
       .filter((entry: { timestamp: number; playerCount: number }) => {
         const entryTimestamp = entry.timestamp;
         return entryTimestamp >= last30DaysDate && entryTimestamp <= currentTimestamp;
       })
-      .map((entry: { timestamp: number; playerCount: number }) => {
-        return {
-          timestamp: getCustomShortDate(entry.timestamp / 1000),
-          playerCount: entry.playerCount,
-        };
-      });
+      .reduce(
+        (result, entry) => {
+          result.timestamp.push(getCustomShortDate(entry.timestamp / 1000));
+          result.playerCount.push(entry.playerCount);
+          return result;
+        },
+        { timestamp: [], playerCount: [] }
+      );
 
-    const filteredDataLast3Months = formattedData
-      .filter((entry: { timestamp: number; playerCount: number }) => {
-        const entryTimestamp = entry.timestamp;
-        return entryTimestamp >= last3MonthsDate && entryTimestamp <= currentTimestamp;
-      })
-      .map((entry: { timestamp: number; playerCount: number }) => {
-        return {
-          timestamp: getCustomShortDate(entry.timestamp / 1000),
-          playerCount: entry.playerCount,
+    // const filteredDataLast3Months = formattedData.reduce((result, entry) => {
+    //   const entryTimestamp = entry.timestamp;
+    //   const playerCount = entry.playerCount;
+
+    //   if (entryTimestamp >= last3MonthsDate && entryTimestamp <= currentTimestamp) {
+    //     result[entryTimestamp] = playerCount;
+    //   }
+
+    //   return result;
+    // }, {});
+
+    // Assuming you have the data in 'formattedData', 'last3MonthsDate', and 'currentTimestamp'
+
+    // Filter the data to the last 3 months
+    const filteredDataLast3Months = formattedData.filter((entry) => {
+      const entryTimestamp = entry.timestamp;
+      return entryTimestamp >= last3MonthsDate && entryTimestamp <= currentTimestamp;
+    });
+
+    // Initialize an object to store the daily averages
+    const dailyAveragesLast3Months = {};
+
+    // Calculate daily averages
+    filteredDataLast3Months.forEach((entry) => {
+      const entryTimestamp = entry.timestamp;
+      const playerCount = entry.playerCount;
+      const entryDate = new Date(entryTimestamp * 1000).toLocaleDateString();
+
+      if (!dailyAveragesLast3Months[entryDate]) {
+        dailyAveragesLast3Months[entryDate] = {
+          sum: 0,
+          count: 0,
         };
-      });
+      }
+
+      dailyAveragesLast3Months[entryDate].sum += playerCount;
+      dailyAveragesLast3Months[entryDate].count++;
+    });
+
+    // Calculate daily averages for the last 3 months and store in an object with timestamps as keys
+    const dailyAveragesObject = {};
+
+    for (const day in dailyAveragesLast3Months) {
+      const { sum, count } = dailyAveragesLast3Months[day];
+      const dailyAverage = sum / count;
+      const timestamp = new Date(day).getTime() / 1000;
+      dailyAveragesObject[timestamp] = dailyAverage;
+    }
+
+    console.log("Daily Averages for Last 3 Months (90 days):");
+    // console.log(dailyAveragesObject);
 
     const graphArrayInput = [
       {
@@ -100,52 +149,25 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
       },
     ];
 
-    return (
+    return isSSG ? (
       <section className="flex flex-wrap justify-center my-8">
-        {graphArrayInput.map((el) => (
+        {graphArrayInput.map((el, index) => (
           <article
             key={el.heading}
-            className="m-2 text-center border border-black bg-zinc-800 rounded-2xl p-2"
+            className={`m-2 text-center border border-black bg-zinc-800 rounded-2xl p-2 h-[300px] w-[550px]`}
           >
             <h3 className="text-xl font-bold text-gray-200 mb-4">{el.heading}</h3>
-            <AreaChart width={chartWidth} height={chartHeight} data={el.function}>
-              <XAxis
-                ticks={[
-                  el.function[0]?.timestamp,
-                  el.function[el.function.length - 1]?.timestamp,
-                ]}
-                dataKey="timestamp"
-                tick={{ fill: "#ccc" }}
-                axisLine={{ stroke: "#ccc" }}
-                tickLine={{ stroke: "#ccc" }}
-              />
-              <YAxis
-                tick={{ fill: "#ccc" }}
-                axisLine={{ stroke: "#ccc" }}
-                tickLine={{ stroke: "#ccc" }}
-              />
-              <Tooltip
-                labelStyle={{ color: "#fff" }}
-                contentStyle={{
-                  background: "#363636",
-                  color: "#FFFFFF",
-                  border: "1px solid #000000",
-                }}
-              />
-              <Legend />
-              <Area
-                type="monotone"
-                dataKey="playerCount"
-                name="Player Count"
-                stroke="#e07965"
-                fill="#e07965"
-                isAnimationActive={false}
-              />
-            </AreaChart>
+            {/* {isSSG && <TestChart X={formattedDataTestX} Y={formattedDataTestY} />} */}
+
+            {index !== 3 ? (
+              <TestChart X={el.function.timestamp} Y={el.function.playerCount} />
+            ) : (
+              <HeatMap data={el.function} />
+            )}
           </article>
         ))}
       </section>
-    );
+    ) : null;
   }
   return null;
 };

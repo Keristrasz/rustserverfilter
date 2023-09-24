@@ -1,5 +1,7 @@
 /\*_ @type {import('next').NextConfig} _/;
 const path = require("path");
+const withTM = require("next-transpile-modules")(["frappe-charts"]);
+
 const nextConfig = {
   reactStrictMode: false,
   typescript: {
@@ -93,7 +95,9 @@ const nextConfig = {
   // },
 };
 
-module.exports = nextConfig;
+module.exports = withTM(nextConfig);
+
+// module.exports = nextConfig;
 
 //for caching the pages correctly, but doesnt look like its working?
 // async headers() {

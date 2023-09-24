@@ -574,7 +574,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
               </section>
             )}
             {data.players_history ? (
-              <ServerGraphs players_history={data.players_history} />
+              <ServerGraphs players_history={data.players_history} isSSG={isSSG} />
             ) : (
               <section className="flex flex-wrap justify-center my-8">
                 {Array.from({ length: 4 }).map((_, index) => (
