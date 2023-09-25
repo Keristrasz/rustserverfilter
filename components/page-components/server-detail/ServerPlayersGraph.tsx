@@ -16,8 +16,7 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
   let chartHeight = "350";
 
   const MOBILE_WIDTH_THRESHOLD = 640;
-  const isMobile =
-    typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
+  const isMobile = typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
 
   if (isMobile) {
     chartWidth = "300";
@@ -104,7 +103,7 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
     filteredDataLast3Months.forEach((entry) => {
       const entryTimestamp = entry.timestamp;
       const playerCount = entry.playerCount;
-      const entryDate = new Date(entryTimestamp * 1000).toLocaleDateString();
+      const entryDate = new Date(entryTimestamp).toLocaleDateString();
 
       if (!dailyAveragesLast3Months[entryDate]) {
         dailyAveragesLast3Months[entryDate] = {
@@ -117,18 +116,19 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
       dailyAveragesLast3Months[entryDate].count++;
     });
 
+    console.log(dailyAveragesLast3Months);
     // Calculate daily averages for the last 3 months and store in an object with timestamps as keys
     const dailyAveragesObject = {};
 
     for (const day in dailyAveragesLast3Months) {
       const { sum, count } = dailyAveragesLast3Months[day];
-      const dailyAverage = sum / count;
+      const dailyAverage = Math.ceil(sum / count);
       const timestamp = new Date(day).getTime() / 1000;
       dailyAveragesObject[timestamp] = dailyAverage;
     }
 
     console.log("Daily Averages for Last 3 Months (90 days):");
-    // console.log(dailyAveragesObject);
+    console.log(dailyAveragesObject);
 
     const graphArrayInput = [
       {
@@ -144,7 +144,7 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
         heading: "Player History (Last 30 Days)",
       },
       {
-        function: filteredDataLast3Months,
+        function: dailyAveragesObject,
         heading: "Player History (Last 3 Months)",
       },
     ];
