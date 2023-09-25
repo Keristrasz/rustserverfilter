@@ -21,8 +21,8 @@ const TestChart = ({ X, Y }) => {
         type="line"
         colors={["#21ba45"]}
         axisOptions={{ xAxisMode: "tick", yAxisMode: "tick", xIsSeries: 1 }}
-        lineOptions={{ hideDots: 1, regionFill: 1 }}
-        animate={1}
+        // lineOptions={{ hideDots: 1, regionFill: 1 }}
+        animate={0}
         // height={250}
         data={{
           labels: X,
