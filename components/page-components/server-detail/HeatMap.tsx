@@ -6,11 +6,15 @@ const ReactFrappeChart = dynamic(import("react-frappe-charts"), { ssr: false });
 
 const HeatMap = ({ data }) => {
   const timestampsLast3Months = Object.keys(data);
-  const startDate = new Date(parseInt(timestampsLast3Months[0]) / 1000);
+  const startTimestamp = parseInt(timestampsLast3Months[0]);
+  const endTimestamp = timestampsLast3Months[timestampsLast3Months.length - 1];
+  const startDate = new Date(startTimestamp * 1000);
   const endDate = new Date(
-    parseInt(timestampsLast3Months[timestampsLast3Months.length - 1]) / 1000
+    parseInt(timestampsLast3Months[timestampsLast3Months.length - 1] * 1000)
   );
-  console.log(timestampsLast3Months);
+  console.log("startts" + startTimestamp);
+  console.log(data);
+  console.log(timestampsLast3Months[timestampsLast3Months.length - 1]);
   console.log(startDate, endDate);
   console.log(endDate);
 

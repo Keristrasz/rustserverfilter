@@ -16,7 +16,8 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
   let chartHeight = "350";
 
   const MOBILE_WIDTH_THRESHOLD = 640;
-  const isMobile = typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
+  const isMobile =
+    typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
 
   if (isMobile) {
     chartWidth = "300";
@@ -103,7 +104,7 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
     filteredDataLast3Months.forEach((entry) => {
       const entryTimestamp = entry.timestamp;
       const playerCount = entry.playerCount;
-      const entryDate = new Date(entryTimestamp).toLocaleDateString();
+      const entryDate = new Date(entryTimestamp).toISOString().split("T")[0];
 
       if (!dailyAveragesLast3Months[entryDate]) {
         dailyAveragesLast3Months[entryDate] = {
