@@ -1,11 +1,13 @@
 import { format, formatDistanceToNowStrict } from "date-fns";
 
-export function getCustomShortDate(timestamp: number) {
+export function getCustomShortDate(timestamp: number, short?: boolean) {
   if (timestamp == null || timestamp < 1652630662) {
     return "";
   }
 
-  return format(new Date(timestamp * 1000), "HH:mm, MMM dd");
+  return short
+    ? format(new Date(timestamp * 1000), "MMM dd")
+    : format(new Date(timestamp * 1000), "HH:mm, EEE, MMM dd");
 }
 
 export function getTimeUptime(timestamp: number) {
