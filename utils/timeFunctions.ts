@@ -6,8 +6,8 @@ export function getCustomShortDate(timestamp: number, short?: boolean) {
   }
 
   return short
-    ? format(new Date(timestamp * 1000), "MMM dd")
-    : format(new Date(timestamp * 1000), "HH:mm, EEE, MMM dd");
+    ? format(new Date(timestamp * 1000), "EEE, MMM dd")
+    : format(new Date(timestamp * 1000), "HH:mm EEE, MMM dd");
 }
 
 export function getTimeUptime(timestamp: number) {
