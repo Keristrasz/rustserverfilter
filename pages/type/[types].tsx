@@ -12,7 +12,7 @@ import {
   SorterType,
   FilterType,
   QueryResponseType,
-} from "../../constants/TGlobal";
+} from "../../types/TGlobal";
 import { pageSize } from "@/constants/pageSize";
 
 import useUserAuth from "../../hooks/useUserAuth";

@@ -22,7 +22,7 @@ interface ObjectPushedIntoArray {
   count: number;
   min: number;
   max: number;
-  date?: string; // Make the timestamp property optional
+  date?: string; 
   average?: number;
 }
 

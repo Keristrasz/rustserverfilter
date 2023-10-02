@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { userLocationType } from "../constants/TGlobal";
+import { userLocationType } from "../types/TGlobal";
 
 type SetUserLocation = React.Dispatch<React.SetStateAction<userLocationType | null>>;
 

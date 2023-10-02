@@ -8,7 +8,7 @@ import {
   SorterType,
   ServerPrimaryDataType,
   QueryResponseType,
-} from "@/constants/TGlobal";
+} from "@/types/TGlobal";
 import { getCustomShortDate, getHowMuchAgo, getInHowMuch } from "@/utils/timeFunctions";
 import { calculateDistance } from "@/utils/calculateDistance";
 import { countriesOptions } from "@/constants/formInputOptions";

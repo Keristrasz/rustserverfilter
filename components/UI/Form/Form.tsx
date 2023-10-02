@@ -10,7 +10,7 @@ import {
   moddedOptions,
   hardcoreSoftcoreOptions,
 } from "@/constants/formInputOptions";
-import { userLocationType, SorterType, FilterType } from "../../../constants/TGlobal";
+import { userLocationType, SorterType, FilterType } from "../../../types/TGlobal";
 
 import FormSelectCountries from "./subcomponents/FormSelectCountries";
 

@@ -1,7 +1,7 @@
 import { useInfiniteQuery, QueryFunctionContext } from "@tanstack/react-query";
 import { fetchAllServers } from "@/services/fetchAllServers";
 import { pageSize } from "@/constants/pageSize";
-import { SorterType, FilterType, QueryResponseType } from "../constants/TGlobal";
+import { SorterType, FilterType, QueryResponseType } from "../types/TGlobal";
 
 const useCustomInfiniteQuery = (filter: FilterType, sorter: SorterType, app: any) => {
   const queryKey = ["searchResults", filter, sorter, pageSize];

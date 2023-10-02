@@ -9,14 +9,14 @@ import path from "path";
 import { getCustomShortDate, getTimeUptime } from "@/utils/timeFunctions";
 import { calculateDistance } from "@/utils/calculateDistance";
 import { getLocation } from "@/services/getLocation";
-import { LocationData } from "@/constants/TGlobal";
+import { LocationData } from "@/types/TGlobal";
 import {
   userLocationType,
   SorterType,
   FilterType,
   ServerPrimaryDataType,
   QueryResponseType,
-} from "@/constants/TGlobal";
+} from "@/types/TGlobal";
 import { fetchAllServers } from "@/services/fetchAllServers";
 import fetchSingleServer from "@/services/fetchSingleServer";
 import getAppAuth from "@/services/getAppAuth";

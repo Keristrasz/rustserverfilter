@@ -1,12 +1,4 @@
-import { SorterType, FilterType } from "./TGlobal";
-
-const roundBySeconds = 100;
-const nowMiliseconds = () => new Date().getTime();
-// if not in function, value is saved on BE and sent with the building date
-const nowSeconds = () =>
-  Math.floor(nowMiliseconds() / 1000 / roundBySeconds) * roundBySeconds - 100;
-const timestampTenMonthsAgo = () =>
-  Math.floor((nowMiliseconds() / 1000 - 28000000) / roundBySeconds) * roundBySeconds;
+import { SorterType, FilterType } from "../types/TGlobal";
 
 interface TypesConfig {
   title: string;
@@ -18,6 +10,13 @@ interface TypesConfig {
   href: string;
   text: string;
 }
+const roundBySeconds = 100;
+const nowMiliseconds = () => new Date().getTime();
+// if not in function, value is saved on BE and sent with the building date
+const nowSeconds = () =>
+  Math.floor(nowMiliseconds() / 1000 / roundBySeconds) * roundBySeconds - 100;
+const timestampTenMonthsAgo = () =>
+  Math.floor((nowMiliseconds() / 1000 - 28000000) / roundBySeconds) * roundBySeconds;
 
 export const typesConfigs: TypesConfig[] = [
   {

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LocationData } from "../constants/TGlobal";
+import { LocationData } from "../types/TGlobal";
 
 export async function getLocation(ip: string): Promise<LocationData> {
   const url = `https://ipapi.co/${ip}/json`;

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { FilterType, UseFilterHookType } from "@/constants/TGlobal";
+import { FilterType, UseFilterHookType } from "@/types/TGlobal";
 
 const useFilter = (setFilter: Dispatch<SetStateAction<FilterType>>): UseFilterHookType => {
   const updateFilter: UseFilterHookType = (

@@ -1,4 +1,4 @@
-import { FilterType, SorterType } from "@/constants/TGlobal";
+import { FilterType, SorterType } from "@/types/TGlobal";
 
 const useSorter = (
   setFilter: React.Dispatch<React.SetStateAction<FilterType>>,
