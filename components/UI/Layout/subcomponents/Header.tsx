@@ -24,7 +24,7 @@ function Header() {
       <div>
         {links.map((link, index) => (
           <Link
-            key={index} // It's recommended to use a unique key when mapping elements.
+            key={index}
             href={link.href}
             className="text-gray-200 m-1 sm:m-0.5 [text-shadow:_2px_2px_2px_rgb(0_0_0_/_60%)] font-rust tracking-[0.100rem] text-center px-1 mx-4 rounded sm:w-30 text-lg md:text-lg transition-all cursor-pointer hover:text-white block"
           >
