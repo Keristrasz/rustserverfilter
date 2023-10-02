@@ -19,7 +19,6 @@ interface TServerGraphs {
 }
 
 const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
-
   if (players_history) {
     const formattedData = players_history.map((entry: number[]) => ({
       timestamp: entry[1],
@@ -58,7 +57,7 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
     const filteredDataLast3Months = formattedData.map(
       (entry: { timestamp: number; playerCount: number }) => {
         return {
-          timestamp: getCustomShortDate(entry.timestamp / 1000, true),
+          timestamp: getCustomShortDate(entry.timestamp / 1000, "day-date"),
           playerCount: entry.playerCount,
         };
       }
@@ -73,10 +72,7 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
       const playerCount = entry.playerCount;
       // convert timestamp to the DAY only, so there can be only 24 values
       // Check if objectPushedIntoArray should be initialized or updated
-      if (
-        objectPushedIntoArray === null ||
-        objectPushedIntoArray.date !== entryTimestamp
-      ) {
+      if (objectPushedIntoArray === null || objectPushedIntoArray.date !== entryTimestamp) {
         if (objectPushedIntoArray !== null) {
           // Calculate and add the average
           objectPushedIntoArray.average = Math.ceil(
@@ -114,8 +110,6 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
         dailyAveragesLast3Months.push(objectPushedIntoArray);
       }
     });
-
-    console.log(dailyAveragesLast3Months);
 
     const graphArrayInput = [
       {
@@ -198,7 +192,8 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
                     ticks={[
                       el.graphData[Math.floor(el.graphData.length / 7)]?.date!,
                       el.graphData[Math.floor(el.graphData.length / 2)]?.date!,
-                      el.graphData[el.graphData.length - 1]?.date!,
+                      el.graphData[Math.floor(el.graphData.length - el.graphData.length / 7)]
+                        ?.date!,
                     ]}
                     dataKey="date"
                     axisLine={{ stroke: "#ccc" }}

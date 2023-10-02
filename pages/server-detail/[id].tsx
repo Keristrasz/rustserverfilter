@@ -366,12 +366,12 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                 <div className="md:flex md:flex-wrap mb-4">
                   {/* BASIC INFO */}
                   <div className="mr-4 mb-4">
-                    <h4 className="text-lg font-medium text-rustFour">Server info:</h4>
+                    <h3 className="text-lg font-medium text-rustFour">Server info:</h3>
                     {data.rank && <p className="text-gray-300">Score: {data.rank / 100}</p>}
                     <p className="text-gray-300">
                       Game Ip:{" "}
                       <span
-                        className="font-bold text-rustFour hover:cursor-pointer hover:text-green-570"
+                        className="font-bold text-rustFour hover:cursor-pointer hover:text-green-500"
                         onClick={handleCopyClick}
                       >
                         {data.addr.split(":").slice(0, 1) + ":" + data.gameport}
@@ -399,14 +399,14 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   {/* ADDITIONAL INFO */}
 
                   <div className="mb-2 mr-4">
-                    <h4 className="text-lg font-medium text-rustFour">Aditional info:</h4>
+                    <h3 className="text-lg font-medium text-rustFour">Aditional info:</h3>
 
                     {data.rules?.url ? (
                       <p className="text-gray-400">
                         URL:{" "}
                         {isUrl(data.rules.url) ? (
                           <a
-                            className="text-blue-400 underline hover:text-blue-570"
+                            className="text-blue-400 underline hover:text-blue-500"
                             href={data.rules.url}
                           >
                             {data.rules.url.length > 25
@@ -441,7 +441,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 
                   {data.rules?.location ? (
                     <div className="">
-                      <h4 className="text-lg font-medium text-rustFour">Location:</h4>
+                      <h3 className="text-lg font-medium text-rustFour">Location:</h3>
                       <p className="text-gray-300">Country: {data.rules?.location?.country}</p>
                       <p className="text-gray-300">
                         Distance:{" "}
@@ -474,7 +474,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     </div>
                   ) : (
                     <div>
-                      <h4 className="text-lg font-medium text-rustFour">Location</h4>
+                      <h3 className="text-lg font-medium text-rustFour">Location:</h3>
                       {serverLocationData?.country && (
                         <p className="text-gray-300">Country: {serverLocationData.country}</p>
                       )}

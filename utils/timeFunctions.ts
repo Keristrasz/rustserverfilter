@@ -1,13 +1,24 @@
 import { format, formatDistanceToNowStrict } from "date-fns";
 
-export function getCustomShortDate(timestamp: number, short?: boolean) {
+export function getCustomShortDate(timestamp: number, useCase?: string) {
   if (timestamp == null || timestamp < 1652630662) {
     return "";
   }
 
-  return short
-    ? format(new Date(timestamp * 1000), "EEE, MMM dd")
-    : format(new Date(timestamp * 1000), "HH:mm EEE, MMM dd");
+  let formattedDate;
+  switch (useCase) {
+    case "hour-date":
+      formattedDate = format(new Date(timestamp * 1000), "HH:mm, MMM dd");
+      break;
+    case "day-date":
+      formattedDate = format(new Date(timestamp * 1000), "EEE, MMM dd");
+      break;
+    default:
+      formattedDate = format(new Date(timestamp * 1000), "HH:mm EEE, MMM dd");
+      break;
+  }
+
+  return formattedDate;
 }
 
 export function getTimeUptime(timestamp: number) {
