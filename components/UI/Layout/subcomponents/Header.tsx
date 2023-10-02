@@ -1,6 +1,12 @@
 import React from "react";
 import Link from "next/link";
 
+const links = [
+  { href: "/", text: "HOME" },
+  { href: "/about", text: "ABOUT" },
+  { href: "/FAQ", text: "FAQ" },
+];
+
 function Header() {
   return (
     <header className="flex justify-between items-center w-full bg-rustOne px-4">
@@ -16,27 +22,15 @@ function Header() {
         </div>
       </Link>
       <div>
-        <Link
-          href="/"
-          className="text-gray-200 [text-shadow:_3px_3px_0_rgb(0_0_0_/_40%)] font-rust tracking-[0.100rem] text-center px-1 mx-4 rounded sm:w-30 text-md md:text-lg transition-all cursor-pointer hover:text-white
-          block"
-        >
-          HOME
-        </Link>
-        <Link
-          href="/about"
-          className="text-gray-200 [text-shadow:_3px_3px_0_rgb(0_0_0_/_40%)] font-rust tracking-[0.100rem] text-center px-1 mx-4 rounded sm:w-30 text-md md:text-lg transition-all cursor-pointer hover:text-white
-          block"
-        >
-          ABOUT
-        </Link>
-        <Link
-          href="/FAQ"
-          className="text-gray-200 [text-shadow:_3px_3px_0_rgb(0_0_0_/_40%)] font-rust tracking-[0.100rem] text-center px-1 mx-4 rounded sm:w-30 text-md md:text-lg transition-all cursor-pointer hover:text-white
-          block"
-        >
-          FAQ
-        </Link>
+        {links.map((link, index) => (
+          <Link
+            key={index} // It's recommended to use a unique key when mapping elements.
+            href={link.href}
+            className="text-gray-200 [text-shadow:_3px_3px_0_rgb(0_0_0_/_40%)] font-rust tracking-[0.100rem] text-center px-1 mx-4 rounded sm:w-30 text-lg md:text-lg transition-all cursor-pointer hover:text-white block"
+          >
+            {link.text}
+          </Link>
+        ))}
       </div>
     </header>
   );
