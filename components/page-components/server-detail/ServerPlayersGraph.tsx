@@ -1,6 +1,10 @@
 import React from "react";
 // import dynamic from "next/dynamic";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
+// const { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } = dynamic(
+//   () => import("recharts"),
+//   { ssr: false }
+// );
 
 // const AreaChart = dynamic(() => import("recharts/es6/chart/AreaChart"), { ssr: false });
 // const Area = dynamic(() => import("recharts/es6/cartesian/Area"), { ssr: false });
@@ -13,7 +17,44 @@ import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } f
 //   { ssr: false }
 // );
 
-import { getCustomShortDate } from "@/utils/timeFunctions";
+// const AreaChart = dynamic(
+//   () => import("recharts/es6/chart/AreaChart").then((mod) => mod.AreaChart),
+//   {
+//     ssr: false,
+//   }
+// );
+// const Area = dynamic(() => import("recharts/es6/cartesian/Area").then((mod) => mod.Area), {
+//   ssr: false,
+// });
+// const XAxis = dynamic(() => import("recharts/es6/cartesian/XAxis").then((mod) => mod.XAxis), {
+//   ssr: false,
+// });
+// const YAxis = dynamic(() => import("recharts/es6/cartesian/YAxis").then((mod) => mod.YAxis), {
+//   ssr: false,
+// });
+// const Tooltip = dynamic(
+//   () => import("recharts/es6/component/Tooltip").then((mod) => mod.Tooltip),
+//   {
+//     ssr: false,
+//   }
+// );
+// const Legend = dynamic(
+//   () => import("recharts/es6/component/Legend").then((mod) => mod.Legend),
+//   {
+//     ssr: false,
+//   }
+// );
+// const ResponsiveContainer = dynamic(
+//   () =>
+//     import("recharts/es6/component/ResponsiveContainer").then(
+//       (mod) => mod.ResponsiveContainer
+//     ),
+//   {
+//     ssr: false,
+//   }
+// );
+
+import { getCustomShortDate, getHowMuchAgo } from "@/utils/timeFunctions";
 
 type PlayersHistory = [number, number][];
 
@@ -22,7 +63,7 @@ interface ObjectPushedIntoArray {
   count: number;
   min: number;
   max: number;
-  date?: string; 
+  date?: string;
   average?: number;
 }
 
@@ -42,15 +83,16 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isSSG })
     const currentTimestamp = Math.floor(currentDate.getTime());
     const last1DayDate = currentTimestamp - 86400 * 1 * 1000;
     const last7DaysDate = currentTimestamp - 86400 * 7 * 1000;
+    const last30DaysDate = currentTimestamp - 86400 * 30 * 1000;
 
-    const filteredDataLast3Days = formattedData
+    const filteredDataLast1Day = formattedData
       .filter((entry: { timestamp: number; playerCount: number }) => {
         const entryTimestamp = entry.timestamp;
         return entryTimestamp >= last1DayDate && entryTimestamp <= currentTimestamp;
       })
       .map((entry: { timestamp: number; playerCount: number }) => {
         return {
-          date: getCustomShortDate(entry.timestamp / 1000),
+          date: getHowMuchAgo(entry.timestamp / 1000),
           playerCount: entry.playerCount,
         };
       });
@@ -58,6 +100,17 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isSSG })
       .filter((entry: { timestamp: number; playerCount: number }) => {
         const entryTimestamp = entry.timestamp;
         return entryTimestamp >= last7DaysDate && entryTimestamp <= currentTimestamp;
+      })
+      .map((entry: { timestamp: number; playerCount: number }) => {
+        return {
+          date: getCustomShortDate(entry.timestamp / 1000),
+          playerCount: entry.playerCount,
+        };
+      });
+    const filteredDataLast30Days = formattedData
+      .filter((entry: { timestamp: number; playerCount: number }) => {
+        const entryTimestamp = entry.timestamp;
+        return entryTimestamp >= last30DaysDate && entryTimestamp <= currentTimestamp;
       })
       .map((entry: { timestamp: number; playerCount: number }) => {
         return {
@@ -126,7 +179,7 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isSSG })
 
     const graphArrayInput = [
       {
-        graphData: filteredDataLast3Days,
+        graphData: filteredDataLast1Day,
         graphHeading: "Player History - Last 24 hours",
         graphWidth: "",
       },
@@ -134,6 +187,11 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isSSG })
         graphData: filteredDataLast7Days,
         graphHeading: "Player History - Last 7 days",
         graphWidth: "",
+      },
+      {
+        graphData: filteredDataLast30Days,
+        graphHeading: "Player History - Last 30 days",
+        graphWidth: "xl:w-[1065px]",
       },
       {
         graphData: dailyAveragesLast3Months,
@@ -229,7 +287,7 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isSSG })
                   <Legend
                     wrapperStyle={{ marginLeft: "25px" }} // Move the legend to the right by 20 pixels
                   />
-                  {index !== 2 ? customAreaSingle : customAreaStacked}
+                  {index! <= 2 ? customAreaSingle : customAreaStacked}
                 </AreaChart>
               </ResponsiveContainer>
             </div>

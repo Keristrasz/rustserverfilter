@@ -499,29 +499,21 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                 </div>
               </section>
             )}
-            {data.players_history ? (
+            {data.players_history && isSSG ? (
               <ServerPlayersGraphs players_history={data.players_history} />
             ) : (
               <section className="flex flex-wrap justify-center my-8">
-                {Array.from({ length: 3 }).map((_, index) =>
-                  index !== 2 ? (
-                    <article
-                      key={index}
-                      className={`flex flex-col text-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 sm:w-[525px] h-[350px] w-[325px]`}
-                    >
-                      <h3 className="text-xl font-bold text-gray-200 my-2">Loading...</h3>
-                      <div className="bg-zinc-600 animate-pulse rounded-md w-[95%] h-[80%]"></div>
-                    </article>
-                  ) : (
-                    <article
-                      key={index}
-                      className={`flex flex-col text-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 xl:w-[1065px] sm:w-[525px] h-[350px] w-[325px]`}
-                    >
-                      <h3 className="text-xl font-bold text-gray-200 my-2">Loading...</h3>
-                      <div className="bg-zinc-600 animate-pulse rounded-md w-[95%] h-[80%]"></div>
-                    </article>
-                  )
-                )}
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <article
+                    key={index}
+                    className={`flex flex-col text-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 ${
+                      index < 2 ? "sm:w-[525px]" : "xl:w-[1065px]"
+                    } h-[350px] w-[325px]`}
+                  >
+                    <h3 className="text-xl font-bold text-gray-200 my-2">Loading...</h3>
+                    <div className="bg-zinc-600 animate-pulse rounded-md w-[95%] h-[80%]"></div>
+                  </article>
+                ))}
               </section>
             )}
           </main>
@@ -532,3 +524,29 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 };
 
 export default ServerDetailsPage;
+
+// {data.players_history ? (
+//   <ServerPlayersGraphs players_history={data.players_history} />
+// ) : (
+//   <section className="flex flex-wrap justify-center my-8">
+//     {Array.from({ length: 4 }).map((_, index) =>
+//       index < 2 ? (
+//         <article
+//           key={index}
+//           className={`flex flex-col text-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 sm:w-[525px] h-[350px] w-[325px]`}
+//         >
+//           <h3 className="text-xl font-bold text-gray-200 my-2">Loading...</h3>
+//           <div className="bg-zinc-600 animate-pulse rounded-md w-[95%] h-[80%]"></div>
+//         </article>
+//       ) : (
+//         <article
+//           key={index}
+//           className={`flex flex-col text-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 xl:w-[1065px] sm:w-[525px] h-[350px] w-[325px]`}
+//         >
+//           <h3 className="text-xl font-bold text-gray-200 my-2">Loading...</h3>
+//           <div className="bg-zinc-600 animate-pulse rounded-md w-[95%] h-[80%]"></div>
+//         </article>
+//       )
+//     )}
+//   </section>
+// )}

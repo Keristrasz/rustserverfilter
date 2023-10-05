@@ -1,5 +1,8 @@
 /\*_ @type {import('next').NextConfig} _/;
 const path = require("path");
+// const withBundleAnalyzer = require("@next/bundle-analyzer")({
+//   enabled: "true",
+// });
 const nextConfig = {
   reactStrictMode: false,
   typescript: {
@@ -94,18 +97,4 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-
-//for caching the pages correctly, but doesnt look like its working?
-// async headers() {
-// return [
-// {
-// source: "/path/to/static/page",
-// headers: [
-// {
-// key: "Cache-Control",
-// value: "s-maxage=600, stale-while-revalidate",
-// },
-// ],
-// },
-// ];
-// },
+// module.exports = withBundleAnalyzer(nextConfig);
