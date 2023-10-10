@@ -1,6 +1,6 @@
 import React from "react";
 import useSorter from "@/hooks/useSorter";
-import { FilterType, SorterType } from "@/constants/TGlobal";
+import { FilterType, SorterType } from "@/types/TGlobal";
 
 interface ColumnData {
   isClickable: boolean;

@@ -4,12 +4,7 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 
 import getAppAuth from "@/services/getAppAuth";
-import {
-  userLocationType,
-  SorterType,
-  FilterType,
-  QueryResponseType,
-} from "../constants/TGlobal";
+import { userLocationType, SorterType, FilterType, QueryResponseType } from "../types/TGlobal";
 import { pageSize } from "@/constants/pageSize";
 
 import useUserAuth from "../hooks/useUserAuth";
@@ -29,13 +24,6 @@ export const getStaticProps: GetStaticProps = async () => {
   const initialFilterSSG: FilterType = {
     $and: [{ rank: { $gte: 500 } }, { players: { $gte: 0 } }],
   };
-
-  // const app = await getAppAuth();
-  // const app = Realm.getApp(process.env.NEXT_PUBLIC_APP_ID || "");
-  // if (app && !app.currentUser) {
-  //   const anonymousUser = Realm.Credentials.anonymous();
-  //   await app.logIn(anonymousUser);
-  // }
 
   const _initialDataSSG: QueryResponseType = await fetchAllServers(
     initialFilterSSG,

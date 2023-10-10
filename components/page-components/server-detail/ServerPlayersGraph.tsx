@@ -1,14 +1,60 @@
 import React from "react";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
-import { getCustomShortDate } from "@/utils/timeFunctions";
+// import dynamic from "next/dynamic";
+import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
+// const { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } = dynamic(
+//   () => import("recharts"),
+//   { ssr: false }
+// );
+
+// const AreaChart = dynamic(() => import("recharts/es6/chart/AreaChart"), { ssr: false });
+// const Area = dynamic(() => import("recharts/es6/cartesian/Area"), { ssr: false });
+// const XAxis = dynamic(() => import("recharts/es6/cartesian/XAxis"), { ssr: false });
+// const YAxis = dynamic(() => import("recharts/es6/cartesian/YAxis"), { ssr: false });
+// const Tooltip = dynamic(() => import("recharts/es6/component/Tooltip"), { ssr: false });
+// const Legend = dynamic(() => import("recharts/es6/component/Legend"), { ssr: false });
+// const ResponsiveContainer = dynamic(
+//   () => import("recharts/es6/component/ResponsiveContainer"),
+//   { ssr: false }
+// );
+
+// const AreaChart = dynamic(
+//   () => import("recharts/es6/chart/AreaChart").then((mod) => mod.AreaChart),
+//   {
+//     ssr: false,
+//   }
+// );
+// const Area = dynamic(() => import("recharts/es6/cartesian/Area").then((mod) => mod.Area), {
+//   ssr: false,
+// });
+// const XAxis = dynamic(() => import("recharts/es6/cartesian/XAxis").then((mod) => mod.XAxis), {
+//   ssr: false,
+// });
+// const YAxis = dynamic(() => import("recharts/es6/cartesian/YAxis").then((mod) => mod.YAxis), {
+//   ssr: false,
+// });
+// const Tooltip = dynamic(
+//   () => import("recharts/es6/component/Tooltip").then((mod) => mod.Tooltip),
+//   {
+//     ssr: false,
+//   }
+// );
+// const Legend = dynamic(
+//   () => import("recharts/es6/component/Legend").then((mod) => mod.Legend),
+//   {
+//     ssr: false,
+//   }
+// );
+// const ResponsiveContainer = dynamic(
+//   () =>
+//     import("recharts/es6/component/ResponsiveContainer").then(
+//       (mod) => mod.ResponsiveContainer
+//     ),
+//   {
+//     ssr: false,
+//   }
+// );
+
+import { getCustomShortDate, getHowMuchAgo } from "@/utils/timeFunctions";
 
 type PlayersHistory = [number, number][];
 
@@ -17,7 +63,7 @@ interface ObjectPushedIntoArray {
   count: number;
   min: number;
   max: number;
-  timestamp?: string; // Make the timestamp property optional
+  date?: string;
   average?: number;
 }
 
@@ -26,18 +72,7 @@ interface TServerGraphs {
   isSSG?: Boolean;
 }
 
-const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
-  // let chartWidth = 1000;
-  // let chartWidthSm = 500;
-
-  // const MOBILE_WIDTH_THRESHOLD = 640;
-  // const isMobile = typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
-
-  // if (isMobile) {
-  //   chartWidth = 300;
-  //   chartWidthSm = 300;
-  // }
-
+const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
   if (players_history) {
     const formattedData = players_history.map((entry: number[]) => ({
       timestamp: entry[1],
@@ -46,18 +81,18 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
 
     const currentDate = new Date();
     const currentTimestamp = Math.floor(currentDate.getTime());
-    const last3DaysDate = currentTimestamp - 86400 * 3 * 1000;
+    const last1DayDate = currentTimestamp - 86400 * 1 * 1000;
     const last7DaysDate = currentTimestamp - 86400 * 7 * 1000;
     const last30DaysDate = currentTimestamp - 86400 * 30 * 1000;
 
-    const filteredDataLast3Days = formattedData
+    const filteredDataLast1Day = formattedData
       .filter((entry: { timestamp: number; playerCount: number }) => {
         const entryTimestamp = entry.timestamp;
-        return entryTimestamp >= last3DaysDate && entryTimestamp <= currentTimestamp;
+        return entryTimestamp >= last1DayDate && entryTimestamp <= currentTimestamp;
       })
       .map((entry: { timestamp: number; playerCount: number }) => {
         return {
-          timestamp: getCustomShortDate(entry.timestamp / 1000),
+          date: getHowMuchAgo(entry.timestamp / 1000),
           playerCount: entry.playerCount,
         };
       });
@@ -68,11 +103,10 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
       })
       .map((entry: { timestamp: number; playerCount: number }) => {
         return {
-          timestamp: getCustomShortDate(entry.timestamp / 1000),
+          date: getCustomShortDate(entry.timestamp / 1000),
           playerCount: entry.playerCount,
         };
       });
-
     const filteredDataLast30Days = formattedData
       .filter((entry: { timestamp: number; playerCount: number }) => {
         const entryTimestamp = entry.timestamp;
@@ -80,7 +114,7 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
       })
       .map((entry: { timestamp: number; playerCount: number }) => {
         return {
-          timestamp: getCustomShortDate(entry.timestamp / 1000),
+          date: getCustomShortDate(entry.timestamp / 1000),
           playerCount: entry.playerCount,
         };
       });
@@ -89,33 +123,22 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
     const filteredDataLast3Months = formattedData.map(
       (entry: { timestamp: number; playerCount: number }) => {
         return {
-          timestamp: getCustomShortDate(entry.timestamp / 1000, true),
+          timestamp: getCustomShortDate(entry.timestamp / 1000, "day-date"),
           playerCount: entry.playerCount,
         };
       }
     );
 
-    let dailyAveragesLast3Months = [];
+    let dailyAveragesLast3Months: ObjectPushedIntoArray[] = [];
     let objectPushedIntoArray: ObjectPushedIntoArray | null = null; // Initialize as null
-    // let objectPushedIntoArray: ObjectPushedIntoArray = {
-    //   sum: 0,
-    //   count: 0,
-    //   min: 0,
-    //   max: 0,
-    // };
 
     // Calculate daily averages
     filteredDataLast3Months.map((entry, index) => {
       const entryTimestamp = entry.timestamp;
       const playerCount = entry.playerCount;
       // convert timestamp to the DAY only, so there can be only 24 values
-      // const entryDate = new Date(entryTimestamp).toISOString().split("T")[0];
-
       // Check if objectPushedIntoArray should be initialized or updated
-      if (
-        objectPushedIntoArray === null ||
-        objectPushedIntoArray.timestamp !== entryTimestamp
-      ) {
+      if (objectPushedIntoArray === null || objectPushedIntoArray.date !== entryTimestamp) {
         if (objectPushedIntoArray !== null) {
           // Calculate and add the average
           objectPushedIntoArray.average = Math.ceil(
@@ -131,7 +154,7 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
           count: 1,
           min: playerCount,
           max: playerCount,
-          timestamp: entryTimestamp,
+          date: entryTimestamp,
         };
       } else {
         // Update the existing objectPushedIntoArray
@@ -147,154 +170,106 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
 
       // Push the final objectPushedIntoArray if it's the last iteration
       if (index === filteredDataLast3Months.length - 1) {
+        objectPushedIntoArray.average = Math.ceil(
+          objectPushedIntoArray.sum / objectPushedIntoArray.count
+        );
         dailyAveragesLast3Months.push(objectPushedIntoArray);
       }
     });
 
-    console.log(dailyAveragesLast3Months);
-
-    // // Calculate daily averages for the last 3 months and store in an object with timestamps as keys
-    // const dailyAveragesObject = {};
-
-    // for (const day in dailyAveragesLast3Months) {
-    //   const { sum, count } = dailyAveragesLast3Months[day];
-    //   const dailyAverage = Math.ceil(sum / count);
-    //   const timestamp = new Date(day).getTime() / 1000;
-    //   dailyAveragesObject[timestamp] = dailyAverage;
-    // }
-
-    // console.log("Daily Averages for Last 3 Months (90 days):");
-    // console.log(dailyAveragesObject);
-
-    // const timestampsLast3Months = Object.keys(data);
-    // const startTimestamp = parseInt(timestampsLast3Months[0]);
-    // const endTimestamp = timestampsLast3Months[timestampsLast3Months.length - 1];
-    // const startDate = new Date(startTimestamp * 1000);
-    // const endDate = new Date(
-    //   parseInt(timestampsLast3Months[timestampsLast3Months.length - 1] * 1000)
-    // );
-
     const graphArrayInput = [
       {
-        function: filteredDataLast3Days,
-        heading: "Player History - Last 3 days (hourly)",
+        graphData: filteredDataLast1Day,
+        graphHeading: "Player History - Last 24 hours",
+        graphWidth: "",
       },
       {
-        function: filteredDataLast7Days,
-        heading: "Player History - Last 7 days (hourly)",
+        graphData: filteredDataLast7Days,
+        graphHeading: "Player History - Last 7 days",
+        graphWidth: "",
       },
       {
-        function: filteredDataLast30Days,
-        heading: "Player History - Last 30 days (hourly)",
+        graphData: filteredDataLast30Days,
+        graphHeading: "Player History - Last 30 days",
+        graphWidth: "xl:w-[1065px]",
       },
-      // {
-      //   function: filteredDataLast3Months,
-      //   heading: "Player History - Last 3 Months (daily)",
-      // },
+      {
+        graphData: dailyAveragesLast3Months,
+        graphHeading: "Player History - Last 3 Months",
+        graphWidth: "xl:w-[1065px]",
+      },
     ];
 
-    const customStackedAreaChart = (
-      <article
-        className={`sm:m-2 my-2 mx-0 text-center border border-black bg-zinc-800 rounded-2xl p-2 sm:w-[525px] w-[325px] h-[350px]`}
-      >
-        <h3 className="text-xl font-bold text-gray-200 mb-4">
-          Player History - Last 3 Months (daily)
-        </h3>
-        <div className="w-full sm:h-72 h-64">
-          <ResponsiveContainer>
-            <AreaChart
-              data={dailyAveragesLast3Months}
-              margin={{
-                top: 10,
-                right: 5,
-                left: -5,
-                bottom: 0,
-              }}
-            >
-              <XAxis
-                ticks={[
-                  dailyAveragesLast3Months[0]?.timestamp,
-                  dailyAveragesLast3Months[dailyAveragesLast3Months.length - 1]
-                    ?.timestamp,
-                ]}
-                dataKey="timestamp"
-                tick={{ fill: "#ccc" }}
-                axisLine={{ stroke: "#ccc" }}
-                tickLine={{ stroke: "#ccc" }}
-              />
-              <YAxis
-                tick={{ fill: "#ccc" }}
-                axisLine={{ stroke: "#ccc" }}
-                tickLine={{ stroke: "#ccc" }}
-              />
-              <Tooltip
-                labelStyle={{ color: "#fff" }}
-                contentStyle={{
-                  background: "#363636",
-                  color: "#FFFFFF",
-                  border: "1px solid #000000",
-                }}
-              />
-              <Legend />
-              <Area
-                type="monotone"
-                dataKey="average"
-                name="Average"
-                stroke="#FFFF00"
-                fill="#FFFF00"
-                isAnimationActive={false}
-              />
-              <Area
-                type="monotone"
-                dataKey="min"
-                name="Min"
-                stroke="#008000"
-                fill="#008000"
-                isAnimationActive={false}
-              />
-              <Area
-                type="monotone"
-                dataKey="max"
-                name="Max"
-                stroke="#e07965"
-                fill="#e07965"
-                isAnimationActive={false}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-      </article>
+    const customAreaSingle = (
+      <Area
+        type="monotone"
+        dataKey="playerCount"
+        name="Player Count"
+        stroke="#e07965"
+        fill="#e07965"
+        isAnimationActive={false}
+      />
+    );
+
+    const customAreaStacked = (
+      <>
+        <Area
+          type="monotone"
+          dataKey="max"
+          name="Max"
+          stroke="#e07965"
+          fill="#e07965"
+          isAnimationActive={false}
+        />
+        <Area
+          type="monotone"
+          dataKey="average"
+          name="Average"
+          stroke="#FFFF00"
+          fill="#FFFF00"
+          isAnimationActive={false}
+        />
+        <Area
+          type="monotone"
+          dataKey="min"
+          name="Min"
+          stroke="#16a34a"
+          fill="#16a34a"
+          isAnimationActive={false}
+        />
+      </>
     );
 
     return (
       <section className="flex flex-wrap justify-center my-8">
-        {graphArrayInput.map((el) => (
+        {graphArrayInput.map((el, index) => (
           <article
-            key={el.heading}
-            className={`sm:m-2 my-2 mx-0 text-center border border-black bg-zinc-800 rounded-2xl p-2 sm:w-[525px] w-[325px] h-[350px]`}
+            key={el.graphHeading}
+            className={`sm:m-2 my-2 mx-0 text-center border border-black bg-zinc-800 rounded-2xl p-2 ${el.graphWidth} sm:w-[525px] w-[325px] h-[350px]`}
           >
-            <h3 className="text-xl font-bold text-gray-200 mb-4">{el.heading}</h3>
-            <div className="w-full sm:h-72 h-64">
+            <h3 className="text-xl font-bold text-gray-200 my-2">{el.graphHeading}</h3>
+            <div className="w-full h-72">
               <ResponsiveContainer>
                 <AreaChart
-                  data={el.function}
+                  data={el.graphData}
                   margin={{
                     top: 10,
                     right: 5,
-                    left: -5,
+                    left: -15,
                     bottom: 0,
                   }}
                 >
                   <XAxis
                     ticks={[
-                      el.function[0]?.timestamp,
-                      el.function[el.function.length - 1]?.timestamp,
+                      el.graphData[Math.floor(el.graphData.length / 7)]?.date!,
+                      el.graphData[Math.floor(el.graphData.length / 2)]?.date!,
+                      el.graphData[Math.floor(el.graphData.length - el.graphData.length / 7)]
+                        ?.date!,
                     ]}
-                    dataKey="timestamp"
-                    tick={{ fill: "#ccc" }}
+                    dataKey="date"
                     axisLine={{ stroke: "#ccc" }}
                     tickLine={{ stroke: "#ccc" }}
-                    interval={0}
+                    tick={{ fill: "#ccc" }}
                   />
                   <YAxis
                     tick={{ fill: "#ccc" }}
@@ -309,24 +284,18 @@ const ServerGraphs: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
                       border: "1px solid #000000",
                     }}
                   />
-                  <Legend />
-                  <Area
-                    type="monotone"
-                    dataKey="playerCount"
-                    name="Player Count"
-                    stroke="#e07965"
-                    fill="#e07965"
-                    isAnimationActive={false}
+                  <Legend
+                    wrapperStyle={{ marginLeft: "25px" }} // Move the legend to the right by 20 pixels
                   />
+                  {index! <= 2 ? customAreaSingle : customAreaStacked}
                 </AreaChart>
               </ResponsiveContainer>
             </div>
           </article>
         ))}
-        {customStackedAreaChart}
       </section>
     );
   }
   return null;
 };
-export default ServerGraphs;
+export default ServerPlayersGraph;

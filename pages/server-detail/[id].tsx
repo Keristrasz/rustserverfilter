@@ -9,14 +9,14 @@ import path from "path";
 import { getCustomShortDate, getTimeUptime } from "@/utils/timeFunctions";
 import { calculateDistance } from "@/utils/calculateDistance";
 import { getLocation } from "@/services/getLocation";
-import { LocationData } from "@/constants/TGlobal";
+import { LocationData } from "@/types/TGlobal";
 import {
   userLocationType,
   SorterType,
   FilterType,
   ServerPrimaryDataType,
   QueryResponseType,
-} from "@/constants/TGlobal";
+} from "@/types/TGlobal";
 import { fetchAllServers } from "@/services/fetchAllServers";
 import fetchSingleServer from "@/services/fetchSingleServer";
 import getAppAuth from "@/services/getAppAuth";
@@ -24,41 +24,10 @@ import { groupSizeOptions } from "@/constants/formInputOptions";
 
 import BodyWrapper from "@/components/HOC/BodyWrapper";
 import { Spinner } from "@/components/UI/Spinner";
-import ServerGraphs from "@/components/page-components/server-detail/ServerPlayersGraph";
+import ServerPlayersGraphs from "@/components/page-components/server-detail/ServerPlayersGraph";
 
 import useCustomSingleQuery from "@/hooks/useCustomSingleQuery";
 import useQueryLocation from "@/hooks/useQueryLocation";
-
-// import React, { useEffect, useState } from "react";
-// import { useRouter } from "next/router";
-// import useCustomSingleQuery from "@/hooks/useCustomSingleQuery";
-// import { Spinner } from "@/components/UI/Spinner";
-// import { getCustomShortDate, getTimeUptime } from "@/utils/timeFunctions";
-// import { getLocation } from "@/services/getLocation";
-// import { calculateDistance } from "@/utils/calculateDistance";
-// import BodyWrapper from "@/components/HOC/BodyWrapper";
-// import { LocationData } from "@/constants/TGlobal";
-// import Head from "next/head";
-// import {
-//   userLocationType,
-//   SorterType,
-//   FilterType,
-//   ServerPrimaryDataType,
-//   QueryResponseType,
-// } from "@/constants/TGlobal";
-// import ServerGraphs from "@/components/page-components/server-detail/ServerPlayersGraph";
-// import { toast } from "react-toastify";
-// import useQueryLocation from "@/hooks/useQueryLocation";
-// import { fetchAllServers } from "@/services/fetchAllServers";
-// import fetchSingleServer from "@/services/fetchSingleServer";
-// import { GetStaticProps, GetStaticPaths } from "next";
-
-// import getAppAuth from "@/services/getAppAuth";
-
-// import fs from "fs";
-// import path from "path";
-
-// import { groupSizeOptions } from "@/constants/formInputOptions";
 
 function replaceLastDotWithColon(input: string) {
   const lastIndex = input.lastIndexOf(".");
@@ -366,12 +335,12 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                 <div className="md:flex md:flex-wrap mb-4">
                   {/* BASIC INFO */}
                   <div className="mr-4 mb-4">
-                    <h4 className="text-lg font-medium text-rustFour">Server info:</h4>
+                    <h3 className="text-lg font-medium text-rustFour">Server info:</h3>
                     {data.rank && <p className="text-gray-300">Score: {data.rank / 100}</p>}
                     <p className="text-gray-300">
                       Game Ip:{" "}
                       <span
-                        className="font-bold text-rustFour hover:cursor-pointer hover:text-green-570"
+                        className="font-bold text-rustFour hover:cursor-pointer hover:text-green-500"
                         onClick={handleCopyClick}
                       >
                         {data.addr.split(":").slice(0, 1) + ":" + data.gameport}
@@ -399,14 +368,14 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   {/* ADDITIONAL INFO */}
 
                   <div className="mb-2 mr-4">
-                    <h4 className="text-lg font-medium text-rustFour">Aditional info:</h4>
+                    <h3 className="text-lg font-medium text-rustFour">Aditional info:</h3>
 
                     {data.rules?.url ? (
                       <p className="text-gray-400">
                         URL:{" "}
                         {isUrl(data.rules.url) ? (
                           <a
-                            className="text-blue-400 underline hover:text-blue-570"
+                            className="text-blue-400 underline hover:text-blue-500"
                             href={data.rules.url}
                           >
                             {data.rules.url.length > 25
@@ -441,7 +410,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 
                   {data.rules?.location ? (
                     <div className="">
-                      <h4 className="text-lg font-medium text-rustFour">Location:</h4>
+                      <h3 className="text-lg font-medium text-rustFour">Location:</h3>
                       <p className="text-gray-300">Country: {data.rules?.location?.country}</p>
                       <p className="text-gray-300">
                         Distance:{" "}
@@ -474,7 +443,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     </div>
                   ) : (
                     <div>
-                      <h4 className="text-lg font-medium text-rustFour">Location</h4>
+                      <h3 className="text-lg font-medium text-rustFour">Location:</h3>
                       {serverLocationData?.country && (
                         <p className="text-gray-300">Country: {serverLocationData.country}</p>
                       )}
@@ -530,16 +499,18 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                 </div>
               </section>
             )}
-            {data.players_history ? (
-              <ServerGraphs players_history={data.players_history} />
+            {data.players_history && isSSG ? (
+              <ServerPlayersGraphs players_history={data.players_history} />
             ) : (
               <section className="flex flex-wrap justify-center my-8">
                 {Array.from({ length: 4 }).map((_, index) => (
                   <article
                     key={index}
-                    className={`flex flex-col text-center justify-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2  sm:w-[525px] h-[350px] w-[325px]`}
+                    className={`flex flex-col text-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 ${
+                      index < 2 ? "sm:w-[525px]" : "xl:w-[1065px]"
+                    } h-[350px] w-[325px]`}
                   >
-                    <h3 className="text-xl font-bold text-gray-200 mb-4">Loading...</h3>
+                    <h3 className="text-xl font-bold text-gray-200 my-2">Loading...</h3>
                     <div className="bg-zinc-600 animate-pulse rounded-md w-[95%] h-[80%]"></div>
                   </article>
                 ))}
@@ -553,3 +524,29 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 };
 
 export default ServerDetailsPage;
+
+// {data.players_history ? (
+//   <ServerPlayersGraphs players_history={data.players_history} />
+// ) : (
+//   <section className="flex flex-wrap justify-center my-8">
+//     {Array.from({ length: 4 }).map((_, index) =>
+//       index < 2 ? (
+//         <article
+//           key={index}
+//           className={`flex flex-col text-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 sm:w-[525px] h-[350px] w-[325px]`}
+//         >
+//           <h3 className="text-xl font-bold text-gray-200 my-2">Loading...</h3>
+//           <div className="bg-zinc-600 animate-pulse rounded-md w-[95%] h-[80%]"></div>
+//         </article>
+//       ) : (
+//         <article
+//           key={index}
+//           className={`flex flex-col text-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 xl:w-[1065px] sm:w-[525px] h-[350px] w-[325px]`}
+//         >
+//           <h3 className="text-xl font-bold text-gray-200 my-2">Loading...</h3>
+//           <div className="bg-zinc-600 animate-pulse rounded-md w-[95%] h-[80%]"></div>
+//         </article>
+//       )
+//     )}
+//   </section>
+// )}
