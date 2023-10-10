@@ -212,7 +212,7 @@ const Table: React.FC<TableProps> = ({
           <>
             <p suppressHydrationWarning={true}>{getHowMuchAgo(mappedServer[value])}</p>
             {getCustomShortDate(mappedServer[value], "hour-date") ? (
-              <p suppressHydrationWarning={true} className="text-zinc-500">
+              <p suppressHydrationWarning={true} className="text-zinc-400">
                 Wiped {getCustomShortDate(mappedServer[value], "hour-date")}
               </p>
             ) : null}
@@ -223,7 +223,7 @@ const Table: React.FC<TableProps> = ({
           <>
             <p suppressHydrationWarning={true}>{getInHowMuch(mappedServer[value])}</p>
             {getCustomShortDate(mappedServer[value], "hour-date") ? (
-              <p suppressHydrationWarning={true} className="text-zinc-500">
+              <p suppressHydrationWarning={true} className="text-zinc-400">
                 Wipe {getCustomShortDate(mappedServer[value], "hour-date")}
               </p>
             ) : null}
@@ -371,7 +371,7 @@ const Table: React.FC<TableProps> = ({
                             >
                               {getColumnValue(column, mappedServer)}
                             </Link>
-                            <div className="flex flex-row justify-between text-zinc-500">
+                            <div className="flex flex-row justify-between text-zinc-400">
                               <div className="flex items-center">
                                 {getFlagOfCountry(
                                   mappedServer.rules?.location?.country
