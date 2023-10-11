@@ -23,9 +23,6 @@ export const calculateGraph = (players_history: PlayersHistory) => {
   const last1DayDate = currentTimestamp - 86400 * 1 * 1000;
   const last7DaysDate = currentTimestamp - 86400 * 7 * 1000;
   const last30DaysDate = currentTimestamp - 86400 * 30 * 1000;
-  // const last1DayDate = useMemo(() => currentTimestamp - 86400 * 1 * 1000, []);
-  // const last7DaysDate = useMemo(() => currentTimestamp - 86400 * 7 * 1000, []);
-  // const last30DaysDate = useMemo(() => currentTimestamp - 86400 * 30 * 1000, []);
 
   const filteredDataLast1Day = formattedData
     .filter((entry: { timestamp: number; playerCount: number }) => {

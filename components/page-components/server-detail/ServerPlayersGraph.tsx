@@ -72,16 +72,20 @@ const customAreaStacked = (
     />
   </>
 );
+
 const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
   const [isMounted, setIsMounted] = useState(false);
 
-  let graphArrayInput = [];
+  const graphArrayInput = useMemo(() => {
+    if (players_history) {
+      return calculateGraph(players_history);
+    }
+    return null;
+  }, [players_history]);
 
   let mountedGraph;
 
-  if (players_history) {
-    graphArrayInput = calculateGraph(players_history);
-
+  if (graphArrayInput) {
     mountedGraph = (
       <section className="flex flex-wrap justify-center my-8">
         {graphArrayInput.map((el, index) => (
