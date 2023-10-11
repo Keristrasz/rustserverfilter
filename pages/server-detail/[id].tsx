@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { toast } from "react-toastify";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 import fs from "fs";
 import path from "path";
 
@@ -24,10 +25,15 @@ import { groupSizeOptions } from "@/constants/formInputOptions";
 
 import BodyWrapper from "@/components/HOC/BodyWrapper";
 import { Spinner } from "@/components/UI/Spinner";
-import ServerPlayersGraphs from "@/components/page-components/server-detail/ServerPlayersGraph";
+// import ServerPlayersGraphs from "@/components/page-components/server-detail/ServerPlayersGraph";
 
 import useCustomSingleQuery from "@/hooks/useCustomSingleQuery";
 import useQueryLocation from "@/hooks/useQueryLocation";
+
+// otherwise this is going to get in chunk for home page
+const ServerPlayersGraphs = dynamic(
+  () => import("@/components/page-components/server-detail/ServerPlayersGraph")
+);
 
 function replaceLastDotWithColon(input: string) {
   const lastIndex = input.lastIndexOf(".");
@@ -118,33 +124,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 interface ServerDetailsPageTypes {
   initialDataSSG: ServerPrimaryDataType;
-  // isSSG: Boolean;
 }
 
 const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG }) => {
-  // // let isMobile = false;
-  // // let chartWidth = 518;
-  // // let chartHeight = 362;
-
-  // const MOBILE_WIDTH_THRESHOLD = 640; // Adjust the threshold as needed
-  // let isMobile =
-  //   typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
-  // // if (isMobile) {
-  // //   // chartHeight = 362;
-  // //   // chartWidth = 318;
-  // //   chartHeight = 100;
-  // //   chartWidth = 100;
-  // // }
-
-  // let chartWidth = isMobile ? 318 : 518;
-  // let chartHeight = isMobile ? 362 : 362;
-
   const router = useRouter();
   const { id } = router.query;
   const fetchIP = id ? replaceLastDotWithColon(id.toString()) : null;
-  const { queryData, isLoading, isFetching, error, status } = useCustomSingleQuery(
-    fetchIP as string
-  );
+  const { queryData, isFetching, error, status } = useCustomSingleQuery(fetchIP as string);
 
   let data = initialDataSSG;
   if (queryData) {

@@ -1,58 +1,14 @@
-import React from "react";
+import React, { useMemo } from "react";
 // import dynamic from "next/dynamic";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
-// const { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } = dynamic(
-//   () => import("recharts"),
-//   { ssr: false }
-// );
 
 // const AreaChart = dynamic(() => import("recharts/es6/chart/AreaChart"), { ssr: false });
 // const Area = dynamic(() => import("recharts/es6/cartesian/Area"), { ssr: false });
 // const XAxis = dynamic(() => import("recharts/es6/cartesian/XAxis"), { ssr: false });
-// const YAxis = dynamic(() => import("recharts/es6/cartesian/YAxis"), { ssr: false });
-// const Tooltip = dynamic(() => import("recharts/es6/component/Tooltip"), { ssr: false });
-// const Legend = dynamic(() => import("recharts/es6/component/Legend"), { ssr: false });
-// const ResponsiveContainer = dynamic(
-//   () => import("recharts/es6/component/ResponsiveContainer"),
-//   { ssr: false }
-// );
 
-// const AreaChart = dynamic(
-//   () => import("recharts/es6/chart/AreaChart").then((mod) => mod.AreaChart),
-//   {
-//     ssr: false,
-//   }
-// );
 // const Area = dynamic(() => import("recharts/es6/cartesian/Area").then((mod) => mod.Area), {
 //   ssr: false,
 // });
-// const XAxis = dynamic(() => import("recharts/es6/cartesian/XAxis").then((mod) => mod.XAxis), {
-//   ssr: false,
-// });
-// const YAxis = dynamic(() => import("recharts/es6/cartesian/YAxis").then((mod) => mod.YAxis), {
-//   ssr: false,
-// });
-// const Tooltip = dynamic(
-//   () => import("recharts/es6/component/Tooltip").then((mod) => mod.Tooltip),
-//   {
-//     ssr: false,
-//   }
-// );
-// const Legend = dynamic(
-//   () => import("recharts/es6/component/Legend").then((mod) => mod.Legend),
-//   {
-//     ssr: false,
-//   }
-// );
-// const ResponsiveContainer = dynamic(
-//   () =>
-//     import("recharts/es6/component/ResponsiveContainer").then(
-//       (mod) => mod.ResponsiveContainer
-//     ),
-//   {
-//     ssr: false,
-//   }
-// );
 
 import { getCustomShortDate, getHowMuchAgo } from "@/utils/timeFunctions";
 
@@ -81,9 +37,13 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isSSG })
 
     const currentDate = new Date();
     const currentTimestamp = Math.floor(currentDate.getTime());
+
     const last1DayDate = currentTimestamp - 86400 * 1 * 1000;
     const last7DaysDate = currentTimestamp - 86400 * 7 * 1000;
     const last30DaysDate = currentTimestamp - 86400 * 30 * 1000;
+    // const last1DayDate = useMemo(() => currentTimestamp - 86400 * 1 * 1000, []);
+    // const last7DaysDate = useMemo(() => currentTimestamp - 86400 * 7 * 1000, []);
+    // const last30DaysDate = useMemo(() => currentTimestamp - 86400 * 30 * 1000, []);
 
     const filteredDataLast1Day = formattedData
       .filter((entry: { timestamp: number; playerCount: number }) => {
