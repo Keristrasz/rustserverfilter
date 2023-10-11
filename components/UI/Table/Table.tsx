@@ -76,7 +76,8 @@ const columnDataForMonitor = [
     value: "born",
   },
   {
-    tooltip: "Estimate of next wipe if needed data are provided. You can find more in FAQ",
+    tooltip:
+      "Estimate of next wipe if needed data are provided. You can find more in FAQ",
     isClickable: true,
     styles: "w-20",
     name: "NEXT WIPE",
@@ -113,7 +114,8 @@ const columnDataForMonitorForMobile = [
     value: "players",
   },
   {
-    tooltip: "Estimate of next wipe if needed data are provided. You can find more in FAQ",
+    tooltip:
+      "Estimate of next wipe if needed data are provided. You can find more in FAQ",
     isClickable: true,
     styles: "w-3/12 text-xs",
     name: "NEXT WIPE",
@@ -210,7 +212,7 @@ const Table: React.FC<TableProps> = ({
           <>
             <p suppressHydrationWarning={true}>{getHowMuchAgo(mappedServer[value])}</p>
             {getCustomShortDate(mappedServer[value], "hour-date") ? (
-              <p suppressHydrationWarning={true} className="text-zinc-500">
+              <p suppressHydrationWarning={true} className="text-zinc-400">
                 Wiped {getCustomShortDate(mappedServer[value], "hour-date")}
               </p>
             ) : null}
@@ -221,7 +223,7 @@ const Table: React.FC<TableProps> = ({
           <>
             <p suppressHydrationWarning={true}>{getInHowMuch(mappedServer[value])}</p>
             {getCustomShortDate(mappedServer[value], "hour-date") ? (
-              <p suppressHydrationWarning={true} className="text-zinc-500">
+              <p suppressHydrationWarning={true} className="text-zinc-400">
                 Wipe {getCustomShortDate(mappedServer[value], "hour-date")}
               </p>
             ) : null}
@@ -317,7 +319,8 @@ const Table: React.FC<TableProps> = ({
                   className="text-sm relative text-center bg-green-600 text-gray-200 [text-shadow:_1px_1px_1px_black]"
                   colSpan={10}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
+                  SERVERS
                 </td>
               </tr>
             ) : (
@@ -342,7 +345,10 @@ const Table: React.FC<TableProps> = ({
                       className="hover:bg-zinc-800 clickable-row cursor-pointer"
                       onClick={() => {
                         router.push({
-                          pathname: `/server-detail/${mappedServer.addr.replace(/:/g, ".")}`,
+                          pathname: `/server-detail/${mappedServer.addr.replace(
+                            /:/g,
+                            "."
+                          )}`,
                         });
                       }}
                       role="link"
@@ -365,9 +371,11 @@ const Table: React.FC<TableProps> = ({
                             >
                               {getColumnValue(column, mappedServer)}
                             </Link>
-                            <div className="flex flex-row justify-between text-zinc-500">
+                            <div className="flex flex-row justify-between text-zinc-400">
                               <div className="flex items-center">
-                                {getFlagOfCountry(mappedServer.rules?.location?.country) ? (
+                                {getFlagOfCountry(
+                                  mappedServer.rules?.location?.country
+                                ) ? (
                                   <img
                                     src={getFlagOfCountry(
                                       mappedServer.rules?.location?.country
@@ -386,13 +394,14 @@ const Table: React.FC<TableProps> = ({
                               </p>
                             </div>
                           </td>
-                        ) : column.value === "rate" || column.value === "max_group_size" ? (
+                        ) : column.value === "rate" ||
+                          column.value === "max_group_size" ? (
                           <td
                             key={column.value}
-                            className={`p-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
+                            className={`p-2 pl-0.5 pr-4 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
                           >
                             {getColumnValue(column, mappedServer) && (
-                              <div className="h-8 flex justify-center items-center rounded-lg mt-1 border border-black text-center bg-green-600 text-gray-200 [text-shadow:_0px_0px_8px_black]">
+                              <div className="h-8 flex justify-center items-center rounded-lg border border-black text-center bg-green-600 text-gray-200 [text-shadow:_0px_0px_8px_black]">
                                 {getColumnValue(column, mappedServer)}
                               </div>
                             )}
