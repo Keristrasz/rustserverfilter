@@ -1,7 +1,7 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 // import dynamic from "next/dynamic";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
-
+import { calculateGraph } from "@/utils/calculateGraph";
 // const AreaChart = dynamic(() => import("recharts/es6/chart/AreaChart"), { ssr: false });
 // const Area = dynamic(() => import("recharts/es6/cartesian/Area"), { ssr: false });
 // const XAxis = dynamic(() => import("recharts/es6/cartesian/XAxis"), { ssr: false });
@@ -10,197 +10,79 @@ import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } f
 //   ssr: false,
 // });
 
-import { getCustomShortDate, getHowMuchAgo } from "@/utils/timeFunctions";
-
 type PlayersHistory = [number, number][];
 
-interface ObjectPushedIntoArray {
-  sum: number;
-  count: number;
-  min: number;
-  max: number;
-  date?: string;
-  average?: number;
-}
-
 interface TServerGraphs {
-  players_history: PlayersHistory;
+  players_history: PlayersHistory | null;
   isSSG?: Boolean;
 }
 
+const loadingGraph = (
+  <section className="flex flex-wrap justify-center my-8">
+    {Array.from({ length: 4 }).map((_, index) => (
+      <article
+        key={index}
+        className={`flex flex-col text-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 ${
+          index < 2 ? "sm:w-[525px]" : "xl:w-[1065px]"
+        } sm:w-[525px]  h-[350px] w-[325px]`}
+      >
+        <h3 className="text-xl font-bold text-gray-200 my-2">Loading...</h3>
+        <div className="bg-zinc-600 animate-pulse rounded-md w-[95%] h-[80%]"></div>
+      </article>
+    ))}
+  </section>
+);
+
+const customAreaSingle = (
+  <Area
+    type="monotone"
+    dataKey="playerCount"
+    name="Player Count"
+    stroke="#e07965"
+    fill="#e07965"
+    isAnimationActive={false}
+  />
+);
+
+const customAreaStacked = (
+  <>
+    <Area
+      type="monotone"
+      dataKey="max"
+      name="Max"
+      stroke="#e07965"
+      fill="#e07965"
+      isAnimationActive={false}
+    />
+    <Area
+      type="monotone"
+      dataKey="average"
+      name="Average"
+      stroke="#FFFF00"
+      fill="#FFFF00"
+      isAnimationActive={false}
+    />
+    <Area
+      type="monotone"
+      dataKey="min"
+      name="Min"
+      stroke="#16a34a"
+      fill="#16a34a"
+      isAnimationActive={false}
+    />
+  </>
+);
 const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  let graphArrayInput = [];
+
+  let mountedGraph;
+
   if (players_history) {
-    const formattedData = players_history.map((entry: number[]) => ({
-      timestamp: entry[1],
-      playerCount: entry[0],
-    }));
+    graphArrayInput = calculateGraph(players_history);
 
-    const currentDate = new Date();
-    const currentTimestamp = Math.floor(currentDate.getTime());
-
-    const last1DayDate = currentTimestamp - 86400 * 1 * 1000;
-    const last7DaysDate = currentTimestamp - 86400 * 7 * 1000;
-    const last30DaysDate = currentTimestamp - 86400 * 30 * 1000;
-    // const last1DayDate = useMemo(() => currentTimestamp - 86400 * 1 * 1000, []);
-    // const last7DaysDate = useMemo(() => currentTimestamp - 86400 * 7 * 1000, []);
-    // const last30DaysDate = useMemo(() => currentTimestamp - 86400 * 30 * 1000, []);
-
-    const filteredDataLast1Day = formattedData
-      .filter((entry: { timestamp: number; playerCount: number }) => {
-        const entryTimestamp = entry.timestamp;
-        return entryTimestamp >= last1DayDate && entryTimestamp <= currentTimestamp;
-      })
-      .map((entry: { timestamp: number; playerCount: number }) => {
-        return {
-          date: getHowMuchAgo(entry.timestamp / 1000),
-          playerCount: entry.playerCount,
-        };
-      });
-    const filteredDataLast7Days = formattedData
-      .filter((entry: { timestamp: number; playerCount: number }) => {
-        const entryTimestamp = entry.timestamp;
-        return entryTimestamp >= last7DaysDate && entryTimestamp <= currentTimestamp;
-      })
-      .map((entry: { timestamp: number; playerCount: number }) => {
-        return {
-          date: getCustomShortDate(entry.timestamp / 1000),
-          playerCount: entry.playerCount,
-        };
-      });
-    const filteredDataLast30Days = formattedData
-      .filter((entry: { timestamp: number; playerCount: number }) => {
-        const entryTimestamp = entry.timestamp;
-        return entryTimestamp >= last30DaysDate && entryTimestamp <= currentTimestamp;
-      })
-      .map((entry: { timestamp: number; playerCount: number }) => {
-        return {
-          date: getCustomShortDate(entry.timestamp / 1000),
-          playerCount: entry.playerCount,
-        };
-      });
-
-    // Filtered by backend, there are no more than 3 months of data
-    const filteredDataLast3Months = formattedData.map(
-      (entry: { timestamp: number; playerCount: number }) => {
-        return {
-          timestamp: getCustomShortDate(entry.timestamp / 1000, "day-date"),
-          playerCount: entry.playerCount,
-        };
-      }
-    );
-
-    let dailyAveragesLast3Months: ObjectPushedIntoArray[] = [];
-    let objectPushedIntoArray: ObjectPushedIntoArray | null = null; // Initialize as null
-
-    // Calculate daily averages
-    filteredDataLast3Months.map((entry, index) => {
-      const entryTimestamp = entry.timestamp;
-      const playerCount = entry.playerCount;
-      // convert timestamp to the DAY only, so there can be only 24 values
-      // Check if objectPushedIntoArray should be initialized or updated
-      if (objectPushedIntoArray === null || objectPushedIntoArray.date !== entryTimestamp) {
-        if (objectPushedIntoArray !== null) {
-          // Calculate and add the average
-          objectPushedIntoArray.average = Math.ceil(
-            objectPushedIntoArray.sum / objectPushedIntoArray.count
-          );
-          // Push the previous objectPushedIntoArray if it's not the first iteration
-          dailyAveragesLast3Months.push(objectPushedIntoArray);
-        }
-
-        // Initialize a new objectPushedIntoArray
-        objectPushedIntoArray = {
-          sum: playerCount,
-          count: 1,
-          min: playerCount,
-          max: playerCount,
-          date: entryTimestamp,
-        };
-      } else {
-        // Update the existing objectPushedIntoArray
-        objectPushedIntoArray.sum += playerCount;
-        objectPushedIntoArray.count++;
-        if (playerCount < objectPushedIntoArray.min || objectPushedIntoArray.min === 0) {
-          objectPushedIntoArray.min = playerCount;
-        }
-        if (playerCount > objectPushedIntoArray.max) {
-          objectPushedIntoArray.max = playerCount;
-        }
-      }
-
-      // Push the final objectPushedIntoArray if it's the last iteration
-      if (index === filteredDataLast3Months.length - 1) {
-        objectPushedIntoArray.average = Math.ceil(
-          objectPushedIntoArray.sum / objectPushedIntoArray.count
-        );
-        dailyAveragesLast3Months.push(objectPushedIntoArray);
-      }
-    });
-
-    const graphArrayInput = [
-      {
-        graphData: filteredDataLast1Day,
-        graphHeading: "Player History - Last 24 hours",
-        graphWidth: "",
-      },
-      {
-        graphData: filteredDataLast7Days,
-        graphHeading: "Player History - Last 7 days",
-        graphWidth: "",
-      },
-      {
-        graphData: filteredDataLast30Days,
-        graphHeading: "Player History - Last 30 days",
-        graphWidth: "xl:w-[1065px]",
-      },
-      {
-        graphData: dailyAveragesLast3Months,
-        graphHeading: "Player History - Last 3 Months",
-        graphWidth: "xl:w-[1065px]",
-      },
-    ];
-
-    const customAreaSingle = (
-      <Area
-        type="monotone"
-        dataKey="playerCount"
-        name="Player Count"
-        stroke="#e07965"
-        fill="#e07965"
-        isAnimationActive={false}
-      />
-    );
-
-    const customAreaStacked = (
-      <>
-        <Area
-          type="monotone"
-          dataKey="max"
-          name="Max"
-          stroke="#e07965"
-          fill="#e07965"
-          isAnimationActive={false}
-        />
-        <Area
-          type="monotone"
-          dataKey="average"
-          name="Average"
-          stroke="#FFFF00"
-          fill="#FFFF00"
-          isAnimationActive={false}
-        />
-        <Area
-          type="monotone"
-          dataKey="min"
-          name="Min"
-          stroke="#16a34a"
-          fill="#16a34a"
-          isAnimationActive={false}
-        />
-      </>
-    );
-
-    return (
+    mountedGraph = (
       <section className="flex flex-wrap justify-center my-8">
         {graphArrayInput.map((el, index) => (
           <article
@@ -247,7 +129,7 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isSSG })
                   <Legend
                     wrapperStyle={{ marginLeft: "25px" }} // Move the legend to the right by 20 pixels
                   />
-                  {index! <= 2 ? customAreaSingle : customAreaStacked}
+                  {index <= 2 ? customAreaSingle : customAreaStacked}
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -255,7 +137,10 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isSSG })
         ))}
       </section>
     );
+
+    if (!isMounted) setIsMounted(true);
   }
-  return null;
+  return isMounted && players_history ? mountedGraph : loadingGraph;
 };
+
 export default ServerPlayersGraph;
