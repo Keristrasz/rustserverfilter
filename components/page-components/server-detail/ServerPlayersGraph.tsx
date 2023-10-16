@@ -144,7 +144,7 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isSSG })
 
     if (!isMounted) setIsMounted(true);
   }
-  return isMounted && players_history ? mountedGraph : loadingGraph;
+  return isMounted && graphArrayInput && isSSG ? mountedGraph : loadingGraph;
 };
 
 export default ServerPlayersGraph;
