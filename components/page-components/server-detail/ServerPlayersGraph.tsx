@@ -1,8 +1,16 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 // import dynamic from "next/dynamic";
-import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import { calculateGraph } from "@/utils/calculateGraph";
 // const AreaChart = dynamic(() => import("recharts/es6/chart/AreaChart"), { ssr: false });
 // const Area = dynamic(() => import("recharts/es6/cartesian/Area"), { ssr: false });
@@ -76,11 +84,14 @@ const customAreaStacked = (
 );
 
 const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isFetching }) => {
-  // isMounted in parent
-  // const [isMounted, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  });
 
   const graphArrayInput = useMemo(() => {
-    if (players_history) {
+    if (players_history && isMounted) {
       return calculateGraph(players_history);
     }
     return null;
@@ -112,8 +123,9 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isFetchi
                     ticks={[
                       el.graphData[Math.floor(el.graphData.length / 7)]?.date!,
                       el.graphData[Math.floor(el.graphData.length / 2)]?.date!,
-                      el.graphData[Math.floor(el.graphData.length - el.graphData.length / 7)]
-                        ?.date!,
+                      el.graphData[
+                        Math.floor(el.graphData.length - el.graphData.length / 7)
+                      ]?.date!,
                     ]}
                     dataKey="date"
                     axisLine={{ stroke: "#ccc" }}
@@ -144,11 +156,8 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isFetchi
         ))}
       </section>
     );
-
-    // if (!isMounted) setIsMounted(true);
   }
-  // return isMounted && !isFetching ? mountedGraph : loadingGraph;
-  return !isFetching ? mountedGraph : loadingGraph;
+  return !isFetching && graphArrayInput ? mountedGraph : loadingGraph;
 };
 
 export default ServerPlayersGraph;
