@@ -9,6 +9,7 @@ interface ObjectPushedIntoArray {
   average?: number;
 }
 
+import { match } from "assert";
 import { getHowMuchAgo, getCustomShortDate } from "./timeFunctions";
 
 export const calculateGraph = (players_history: PlayersHistory) => {
@@ -23,6 +24,7 @@ export const calculateGraph = (players_history: PlayersHistory) => {
   const last1DayDate = currentTimestamp - 86400 * 1 * 1000;
   const last7DaysDate = currentTimestamp - 86400 * 7 * 1000;
   const last30DaysDate = currentTimestamp - 86400 * 30 * 1000;
+  const last90DaysDate = currentTimestamp - 86400 * 90 * 1000;
 
   const filteredDataLast1Day = formattedData
     .filter((entry: { timestamp: number; playerCount: number }) => {
@@ -35,6 +37,30 @@ export const calculateGraph = (players_history: PlayersHistory) => {
         playerCount: entry.playerCount,
       };
     });
+
+  let templateDataLast1Day = [];
+  let templateDataLast7Days = [];
+  let templateDataLast30Days = [];
+
+  // Calculate the nearest past hour at XX:30
+  const currentHourWith30Minutes = new Date();
+  currentHourWith30Minutes.setMinutes(30, 0, 0);
+
+  for (let i = 0; i < 24; i++) {
+    const date = getHowMuchAgo(currentHourWith30Minutes.getTime() / 1000);
+    const matchingEntry = filteredDataLast1Day.find((el) => el.date === date);
+    const matchingDate = matchingEntry?.playerCount;
+    templateDataLast1Day.unshift({
+      date,
+      playerCount: matchingDate ? matchingDate : 0,
+    });
+
+    // Subtract 1 hour to move to the previous XX:30 timestamp
+    currentHourWith30Minutes.setTime(currentHourWith30Minutes.getTime() - 60 * 60 * 1000);
+  }
+
+  console.log(templateDataLast1Day);
+
   const filteredDataLast7Days = formattedData
     .filter((entry: { timestamp: number; playerCount: number }) => {
       const entryTimestamp = entry.timestamp;
@@ -46,6 +72,22 @@ export const calculateGraph = (players_history: PlayersHistory) => {
         playerCount: entry.playerCount,
       };
     });
+
+  for (let i = 0; i < 24 * 7; i++) {
+    const date = getCustomShortDate(currentHourWith30Minutes.getTime() / 1000);
+    const matchingEntry = filteredDataLast7Days.find((el) => el.date === date);
+    const matchingDate = matchingEntry?.playerCount;
+    templateDataLast7Days.unshift({
+      date,
+      playerCount: matchingDate ? matchingDate : 0,
+    });
+
+    // Subtract 1 hour to move to the previous XX:30 timestamp
+    currentHourWith30Minutes.setTime(currentHourWith30Minutes.getTime() - 60 * 60 * 1000);
+  }
+
+  console.log(templateDataLast7Days);
+
   const filteredDataLast30Days = formattedData
     .filter((entry: { timestamp: number; playerCount: number }) => {
       const entryTimestamp = entry.timestamp;
@@ -57,6 +99,19 @@ export const calculateGraph = (players_history: PlayersHistory) => {
         playerCount: entry.playerCount,
       };
     });
+
+  for (let i = 0; i < 24 * 30; i++) {
+    const date = getCustomShortDate(currentHourWith30Minutes.getTime() / 1000);
+    const matchingEntry = filteredDataLast30Days.find((el) => el.date === date);
+    const matchingDate = matchingEntry?.playerCount;
+    templateDataLast30Days.unshift({
+      date,
+      playerCount: matchingDate ? matchingDate : 0,
+    });
+
+    // Subtract 1 hour to move to the previous XX:30 timestamp
+    currentHourWith30Minutes.setTime(currentHourWith30Minutes.getTime() - 60 * 60 * 1000);
+  }
 
   // Filtered by backend, there are no more than 3 months of data
   const filteredDataLast3Months = formattedData.map(
@@ -118,17 +173,17 @@ export const calculateGraph = (players_history: PlayersHistory) => {
 
   const graphArrayInput = [
     {
-      graphData: filteredDataLast1Day,
+      graphData: templateDataLast1Day,
       graphHeading: "Player History - Last 24 hours",
       graphWidth: "",
     },
     {
-      graphData: filteredDataLast7Days,
+      graphData: templateDataLast7Days,
       graphHeading: "Player History - Last 7 days",
       graphWidth: "",
     },
     {
-      graphData: filteredDataLast30Days,
+      graphData: templateDataLast30Days,
       graphHeading: "Player History - Last 30 days",
       graphWidth: "xl:w-[1065px]",
     },
