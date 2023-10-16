@@ -24,7 +24,7 @@ export const calculateGraph = (players_history: PlayersHistory) => {
   const last1DayDate = currentTimestamp - 60 * 60 * 24 * 1 * 1000;
   const last7DaysDate = currentTimestamp - 60 * 60 * 24 * 7 * 1000;
   const last30DaysDate = currentTimestamp - 86400 * 30 * 1000;
-  const last90DaysDate = currentTimestamp - 86400 * 90 * 1000;
+  // const last90DaysDate = currentTimestamp - 86400 * 90 * 1000;
 
   const filteredDataLast1Day = formattedData
     .filter((entry: { timestamp: number; playerCount: number }) => {
@@ -38,29 +38,29 @@ export const calculateGraph = (players_history: PlayersHistory) => {
       };
     });
 
-  let templateDataLast1Day = [];
-  let templateDataLast7Days = [];
-  let templateDataLast30Days = [];
-  let templateDataLast0Days = [];
+  // let templateDataLast1Day = [];
+  // let templateDataLast7Days = [];
+  // let templateDataLast30Days = [];
+  // let templateDataLast0Days = [];
 
-  // Calculate the nearest past hour at XX:30
-  const currentHourWith30Minutes = new Date();
-  currentHourWith30Minutes.setMinutes(30, 0, 0);
+  // // Calculate the nearest past hour at XX:30
+  // const currentHourWith30Minutes = new Date();
+  // currentHourWith30Minutes.setMinutes(30, 0, 0);
 
-  for (let i = 0; i < 24; i++) {
-    const date = getHowMuchAgo(currentHourWith30Minutes.getTime() / 1000);
-    const matchingEntry = filteredDataLast1Day.find((el) => el.date === date);
-    const matchingDate = matchingEntry?.playerCount;
-    templateDataLast1Day.unshift({
-      date,
-      playerCount: matchingDate ? matchingDate : 0,
-    });
+  // for (let i = 0; i < 24; i++) {
+  //   const date = getHowMuchAgo(currentHourWith30Minutes.getTime() / 1000);
+  //   const matchingEntry = filteredDataLast1Day.find((el) => el.date === date);
+  //   const matchingDate = matchingEntry?.playerCount;
+  //   templateDataLast1Day.unshift({
+  //     date,
+  //     playerCount: matchingDate ? matchingDate : 0,
+  //   });
 
-    // Subtract 1 hour to move to the previous XX:30 timestamp
-    currentHourWith30Minutes.setTime(currentHourWith30Minutes.getTime() - 60 * 60 * 1000);
-  }
+  //   // Subtract 1 hour to move to the previous XX:30 timestamp
+  //   currentHourWith30Minutes.setTime(currentHourWith30Minutes.getTime() - 60 * 60 * 1000);
+  // }
 
-  console.log(templateDataLast1Day);
+  // console.log(templateDataLast1Day);
 
   const filteredDataLast7Days = formattedData
     .filter((entry: { timestamp: number; playerCount: number }) => {
@@ -74,20 +74,20 @@ export const calculateGraph = (players_history: PlayersHistory) => {
       };
     });
 
-  for (let i = 0; i < 24 * 7; i++) {
-    const date = getCustomShortDate(currentHourWith30Minutes.getTime() / 1000);
-    const matchingEntry = filteredDataLast7Days.find((el) => el.date === date);
-    const matchingDate = matchingEntry?.playerCount;
-    templateDataLast7Days.unshift({
-      date,
-      playerCount: matchingDate ? matchingDate : 0,
-    });
+  // for (let i = 0; i < 24 * 6; i++) {
+  //   const date = getCustomShortDate(currentHourWith30Minutes.getTime() / 1000);
+  //   const matchingEntry = filteredDataLast7Days.find((el) => el.date === date);
+  //   const matchingDate = matchingEntry?.playerCount;
+  //   templateDataLast7Days.push({
+  //     date,
+  //     playerCount: matchingDate ? matchingDate : 0,
+  //   });
 
-    // Subtract 1 hour to move to the previous XX:30 timestamp
-    currentHourWith30Minutes.setTime(currentHourWith30Minutes.getTime() - 60 * 60 * 1000);
-  }
+  //   // Subtract 1 hour to move to the previous XX:30 timestamp
+  //   currentHourWith30Minutes.setTime(currentHourWith30Minutes.getTime() - 60 * 60 * 1000);
+  // }
 
-  console.log(templateDataLast7Days);
+  // console.log(templateDataLast7Days);
 
   const filteredDataLast30Days = formattedData
     .filter((entry: { timestamp: number; playerCount: number }) => {
@@ -101,18 +101,18 @@ export const calculateGraph = (players_history: PlayersHistory) => {
       };
     });
 
-  for (let i = 0; i < 24 * 30; i++) {
-    const date = getCustomShortDate(currentHourWith30Minutes.getTime() / 1000);
-    const matchingEntry = filteredDataLast30Days.find((el) => el.date === date);
-    const matchingDate = matchingEntry?.playerCount;
-    templateDataLast30Days.unshift({
-      date,
-      playerCount: matchingDate ? matchingDate : 0,
-    });
+  // for (let i = 0; i < 24; i++) {
+  //   const date = getCustomShortDate(currentHourWith30Minutes.getTime() / 1000);
+  //   const matchingEntry = filteredDataLast30Days.find((el) => el.date === date);
+  //   const matchingDate = matchingEntry?.playerCount;
+  //   templateDataLast30Days.unshift({
+  //     date,
+  //     playerCount: matchingDate ? matchingDate : 0,
+  //   });
 
-    // Subtract 1 hour to move to the previous XX:30 timestamp
-    currentHourWith30Minutes.setTime(currentHourWith30Minutes.getTime() - 60 * 60 * 1000);
-  }
+  //   // Subtract 1 hour to move to the previous XX:30 timestamp
+  //   currentHourWith30Minutes.setTime(currentHourWith30Minutes.getTime() - 60 * 60 * 1000);
+  // }
 
   // Filtered by backend, there are no more than 3 months of data
   const filteredDataLast3Months = formattedData.map(
@@ -172,32 +172,32 @@ export const calculateGraph = (players_history: PlayersHistory) => {
     }
   });
 
-  for (let i = 0; i < 24 * 30; i++) {
-    const date = getCustomShortDate(currentHourWith30Minutes.getTime() / 1000);
-    const matchingEntry = filteredDataLast30Days.find((el) => el.date === date);
-    const matchingDate = matchingEntry?.playerCount;
-    templateDataLast30Days.unshift({
-      date,
-      playerCount: matchingDate ? matchingDate : 0,
-    });
+  // for (let i = 0; i < 24 * 30; i++) {
+  //   const date = getCustomShortDate(currentHourWith30Minutes.getTime() / 1000);
+  //   const matchingEntry = filteredDataLast30Days.find((el) => el.date === date);
+  //   const matchingDate = matchingEntry?.playerCount;
+  //   templateDataLast30Days.unshift({
+  //     date,
+  //     playerCount: matchingDate ? matchingDate : 0,
+  //   });
 
-    // Subtract 1 hour to move to the previous XX:30 timestamp
-    currentHourWith30Minutes.setTime(currentHourWith30Minutes.getTime() - 60 * 60 * 1000);
-  }
+  //   // Subtract 1 hour to move to the previous XX:30 timestamp
+  //   currentHourWith30Minutes.setTime(currentHourWith30Minutes.getTime() - 60 * 60 * 1000);
+  // }
 
   const graphArrayInput = [
     {
-      graphData: templateDataLast1Day,
+      graphData: filteredDataLast1Day,
       graphHeading: "Player History - Last 24 hours",
       graphWidth: "",
     },
     {
-      graphData: templateDataLast7Days,
+      graphData: filteredDataLast7Days,
       graphHeading: "Player History - Last 7 days",
       graphWidth: "",
     },
     {
-      graphData: templateDataLast30Days,
+      graphData: filteredDataLast30Days,
       graphHeading: "Player History - Last 30 days",
       graphWidth: "xl:w-[1065px]",
     },

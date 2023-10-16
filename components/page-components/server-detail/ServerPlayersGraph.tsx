@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useMemo, useState } from "react";
 // import dynamic from "next/dynamic";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
