@@ -187,11 +187,11 @@ export const calculateGraph = (players_history: PlayersHistory) => {
       graphHeading: "Player History - Last 30 days",
       graphWidth: "xl:w-[1065px]",
     },
-    {
-      graphData: dailyAveragesLast3Months,
-      graphHeading: "Player History - Last 3 Months",
-      graphWidth: "xl:w-[1065px]",
-    },
+    // {
+    //   graphData: dailyAveragesLast3Months,
+    //   graphHeading: "Player History - Last 3 Months",
+    //   graphWidth: "xl:w-[1065px]",
+    // },
   ];
 
   return graphArrayInput;
