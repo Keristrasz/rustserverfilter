@@ -21,8 +21,8 @@ export const calculateGraph = (players_history: PlayersHistory) => {
   const currentDate = new Date();
   const currentTimestamp = Math.floor(currentDate.getTime());
 
-  const last1DayDate = currentTimestamp - 86400 * 1 * 1000;
-  const last7DaysDate = currentTimestamp - 86400 * 7 * 1000;
+  const last1DayDate = currentTimestamp - 60 * 60 * 24 * 1 * 1000;
+  const last7DaysDate = currentTimestamp - 60 * 60 * 24 * 7 * 1000;
   const last30DaysDate = currentTimestamp - 86400 * 30 * 1000;
   const last90DaysDate = currentTimestamp - 86400 * 90 * 1000;
 
@@ -41,6 +41,7 @@ export const calculateGraph = (players_history: PlayersHistory) => {
   let templateDataLast1Day = [];
   let templateDataLast7Days = [];
   let templateDataLast30Days = [];
+  let templateDataLast0Days = [];
 
   // Calculate the nearest past hour at XX:30
   const currentHourWith30Minutes = new Date();
@@ -171,6 +172,19 @@ export const calculateGraph = (players_history: PlayersHistory) => {
     }
   });
 
+  for (let i = 0; i < 24 * 30; i++) {
+    const date = getCustomShortDate(currentHourWith30Minutes.getTime() / 1000);
+    const matchingEntry = filteredDataLast30Days.find((el) => el.date === date);
+    const matchingDate = matchingEntry?.playerCount;
+    templateDataLast30Days.unshift({
+      date,
+      playerCount: matchingDate ? matchingDate : 0,
+    });
+
+    // Subtract 1 hour to move to the previous XX:30 timestamp
+    currentHourWith30Minutes.setTime(currentHourWith30Minutes.getTime() - 60 * 60 * 1000);
+  }
+
   const graphArrayInput = [
     {
       graphData: templateDataLast1Day,
@@ -187,11 +201,11 @@ export const calculateGraph = (players_history: PlayersHistory) => {
       graphHeading: "Player History - Last 30 days",
       graphWidth: "xl:w-[1065px]",
     },
-    // {
-    //   graphData: dailyAveragesLast3Months,
-    //   graphHeading: "Player History - Last 3 Months",
-    //   graphWidth: "xl:w-[1065px]",
-    // },
+    {
+      graphData: dailyAveragesLast3Months,
+      graphHeading: "Player History - Last 3 Months",
+      graphWidth: "xl:w-[1065px]",
+    },
   ];
 
   return graphArrayInput;

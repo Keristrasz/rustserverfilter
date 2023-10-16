@@ -485,7 +485,7 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                 </div>
               </section>
             )}
-            <ServerPlayersGraphs players_history={data.players_history || null} />
+            <ServerPlayersGraphs players_history={data.players_history || null} isFetching={isFetching} isSSG={isSSG} />
           </main>
         )}
       </div>

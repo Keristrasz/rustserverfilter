@@ -14,6 +14,7 @@ type PlayersHistory = [number, number][];
 
 interface TServerGraphs {
   players_history: PlayersHistory | null;
+  isFetching?: Boolean;
   isSSG?: Boolean;
 }
 
@@ -73,7 +74,11 @@ const customAreaStacked = (
   </>
 );
 
-const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history }) => {
+const ServerPlayersGraph: React.FC<TServerGraphs> = ({
+  players_history,
+  isFetching,
+  isSSG,
+}) => {
   const [isMounted, setIsMounted] = useState(false);
 
   const graphArrayInput = useMemo(() => {
@@ -144,7 +149,7 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history }) => {
 
     if (!isMounted) setIsMounted(true);
   }
-  return isMounted && players_history ? mountedGraph : loadingGraph;
+  return isMounted && !isFetching && players_history && isSSG ? mountedGraph : loadingGraph;
 };
 
 export default ServerPlayersGraph;
