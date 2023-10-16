@@ -21,10 +21,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <div className="flex-grow relative">
-        {isVideoBackgroundRendered && <AnimatedBackground />}
-        {children}
-      </div>
+      {isVideoBackgroundRendered && <AnimatedBackground />}
+      <div className="flex-grow relative">{children}</div>
       <Footer />
     </div>
   );
