@@ -73,7 +73,7 @@ const customAreaStacked = (
   </>
 );
 
-const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isSSG }) => {
+const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history }) => {
   const [isMounted, setIsMounted] = useState(false);
 
   const graphArrayInput = useMemo(() => {
@@ -95,7 +95,7 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isSSG })
           >
             <h3 className="text-xl font-bold text-gray-200 my-2">{el.graphHeading}</h3>
             <div className="w-full h-72">
-              <ResponsiveContainer>
+              <ResponsiveContainer width="100%" height="100%">
                 <AreaChart
                   data={el.graphData}
                   margin={{
@@ -144,7 +144,7 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isSSG })
 
     if (!isMounted) setIsMounted(true);
   }
-  return isMounted && graphArrayInput && isSSG ? mountedGraph : loadingGraph;
+  return isMounted ? mountedGraph : loadingGraph;
 };
 
 export default ServerPlayersGraph;
