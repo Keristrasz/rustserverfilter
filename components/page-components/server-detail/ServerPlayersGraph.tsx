@@ -95,7 +95,7 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history }) => {
           >
             <h3 className="text-xl font-bold text-gray-200 my-2">{el.graphHeading}</h3>
             <div className="w-full h-72">
-              <ResponsiveContainer width="99%%" height="99%%" minWidth="0">
+              <ResponsiveContainer width="100%" height="250px" minWidth="0">
                 <AreaChart
                   data={el.graphData}
                   margin={{
