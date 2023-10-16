@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 // import dynamic from "next/dynamic";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { calculateGraph } from "@/utils/calculateGraph";
@@ -76,6 +76,7 @@ const customAreaStacked = (
 );
 
 const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isFetching }) => {
+  // isMounted in parent
   // const [isMounted, setIsMounted] = useState(false);
 
   const graphArrayInput = useMemo(() => {

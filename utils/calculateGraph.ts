@@ -9,7 +9,7 @@ interface ObjectPushedIntoArray {
   average?: number;
 }
 
-import { match } from "assert";
+// import { match } from "assert";
 import { getHowMuchAgo, getCustomShortDate } from "./timeFunctions";
 
 export const calculateGraph = (players_history: PlayersHistory) => {
