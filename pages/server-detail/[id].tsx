@@ -21,11 +21,10 @@ import {
 import { fetchAllServers } from "@/services/fetchAllServers";
 import fetchSingleServer from "@/services/fetchSingleServer";
 import getAppAuth from "@/services/getAppAuth";
-import { groupSizeOptions } from "@/constants/formInputOptions";
+import { replaceGroupSizeWithName, replaceLastDotWithColon } from "@/utils/replace";
 
 import BodyWrapper from "@/components/HOC/BodyWrapper";
 import { Spinner } from "@/components/UI/Spinner";
-// import ServerPlayersGraphs from "@/components/page-components/server-detail/ServerPlayersGraph";
 
 import useCustomSingleQuery from "@/hooks/useCustomSingleQuery";
 import useQueryLocation from "@/hooks/useQueryLocation";
@@ -34,21 +33,6 @@ import useQueryLocation from "@/hooks/useQueryLocation";
 const ServerPlayersGraphs = dynamic(
   () => import("@/components/page-components/server-detail/ServerPlayersGraph")
 );
-
-function replaceLastDotWithColon(input: string) {
-  const lastIndex = input.lastIndexOf(".");
-  if (lastIndex !== -1) {
-    return input.substring(0, lastIndex) + ":" + input.substring(lastIndex + 1);
-  }
-  return input;
-}
-
-function replaceGroupSizeWithName(input: number) {
-  const foundOption = groupSizeOptions.find((el) => el.value === input);
-  if (foundOption) {
-    return foundOption.label;
-  }
-}
 
 // should dedupe the fetch requests
 
@@ -107,9 +91,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   //@ts-ignore - id always exists
   const { id } = params;
   const fetchIP = replaceLastDotWithColon(id.toString());
-  let initialDataSSG = dataFromGetStaticPaths.result.find((page: ServerPrimaryDataType) => {
-    return fetchIP === page.addr;
-  });
+  let initialDataSSG = dataFromGetStaticPaths.result.find(
+    (page: ServerPrimaryDataType) => {
+      return fetchIP === page.addr;
+    }
+  );
   if (!initialDataSSG) {
     initialDataSSG = await fetchSingleServer(app, fetchIP);
   }
@@ -130,7 +116,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
   const router = useRouter();
   const { id } = router.query;
   const fetchIP = id ? replaceLastDotWithColon(id.toString()) : null;
-  const { queryData, isFetching, error, status } = useCustomSingleQuery(fetchIP as string);
+  const { queryData, isFetching, error, status } = useCustomSingleQuery(
+    fetchIP as string
+  );
 
   let data = initialDataSSG;
   if (queryData) {
@@ -139,7 +127,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 
   const userLocation: userLocationType | null = useQueryLocation() || null;
 
-  const [serverLocationData, setServerLocationData] = useState<LocationData | undefined>();
+  const [serverLocationData, setServerLocationData] = useState<
+    LocationData | undefined
+  >();
 
   useEffect(() => {
     const fetchServerLocation = async () => {
@@ -190,7 +180,6 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
               : data.name
             : "Server detail - Rust"}
         </title>
-
         <meta
           name="description"
           content={
@@ -202,7 +191,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
               : "") +
             (data.rate ? "Rate: " + data.rate + "x. " : "") +
             (data.born ? "Last wipe: " + getCustomShortDate(data.born) + ". " : "") +
-            (data.born_next ? "Next wipe: " + getCustomShortDate(data.born_next) + ". " : "") +
+            (data.born_next
+              ? "Next wipe: " + getCustomShortDate(data.born_next) + ". "
+              : "") +
             (data.rules?.description && data.rules?.description.length < 150
               ? data.rules.description
                   .replace(/(?<=\S)\\t(?=\S)/g, " ")
@@ -220,7 +211,6 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
           }
           key="desc"
         />
-
         <meta
           property="og:title"
           content={
@@ -242,7 +232,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
               : "") +
             (data.rate ? "Rate: " + data.rate + "x. " : "") +
             (data.born ? "Last wipe: " + getCustomShortDate(data.born) + ". " : "") +
-            (data.born_next ? "Next wipe: " + getCustomShortDate(data.born_next) + ". " : "") +
+            (data.born_next
+              ? "Next wipe: " + getCustomShortDate(data.born_next) + ". "
+              : "") +
             (data.rules?.description && data.rules?.description.length < 150
               ? data.rules.description
                   .replace(/(?<=\S)\\t(?=\S)/g, " ")
@@ -259,9 +251,11 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
               : "Specific information about server - Rust")
           }
         />
-
         <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
-        <meta property="og:url" content={`https://rustserverfilter.com/server-detail/${id}`} />
+        <meta
+          property="og:url"
+          content={`https://rustserverfilter.com/server-detail/${id}`}
+        />
         <meta property="og:type" content="website" />
 
         <meta
@@ -283,11 +277,31 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
         <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png" />
         <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png" />
-        <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png" />
-        <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png" />
-        <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png" />
-        <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png" />
+        <link
+          rel="apple-touch-icon"
+          sizes="114x114"
+          href="/icons/apple-icon-114x114.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="120x120"
+          href="/icons/apple-icon-120x120.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="144x144"
+          href="/icons/apple-icon-144x144.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="152x152"
+          href="/icons/apple-icon-152x152.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/icons/apple-icon-180x180.png"
+        />
         <link rel="apple-touch-icon" sizes="192x192" href="/icons/apple-icon.png" />
         <link rel="manifest" href="/icons/manifest.json" />
         <meta name="msapplication-config" content="/icons/browserconfig.xml" />
@@ -322,7 +336,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   {/* BASIC INFO */}
                   <div className="mr-4 mb-4">
                     <h3 className="text-lg font-medium text-rustFour">Server info:</h3>
-                    {data.rank && <p className="text-gray-300">Score: {data.rank / 100}</p>}
+                    {data.rank && (
+                      <p className="text-gray-300">Score: {data.rank / 100}</p>
+                    )}
                     <p className="text-gray-300">
                       Game Ip:{" "}
                       <span
@@ -376,7 +392,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                       <p className="text-gray-400">URL: </p>
                     )}
                     <p className="text-gray-400">Modded: {data.modded ? "Yes" : "No"}</p>
-                    <p className="text-gray-400">Vanilla: {data.vanilla ? "Yes" : "No"}</p>
+                    <p className="text-gray-400">
+                      Vanilla: {data.vanilla ? "Yes" : "No"}
+                    </p>
                     <p className="text-gray-400">Wipe Rotation: {data.wipe_rotation}</p>
                     <p className="text-gray-400">Softcore/Hardcore: {data.difficulty}</p>
 
@@ -397,7 +415,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                   {data.rules?.location ? (
                     <div className="">
                       <h3 className="text-lg font-medium text-rustFour">Location:</h3>
-                      <p className="text-gray-300">Country: {data.rules?.location?.country}</p>
+                      <p className="text-gray-300">
+                        Country: {data.rules?.location?.country}
+                      </p>
                       <p className="text-gray-300">
                         Distance:{" "}
                         {userLocation &&
@@ -412,7 +432,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                           : ""}
                       </p>
                       {serverLocationData?.region ? (
-                        <p className="text-gray-400">Region: {serverLocationData.region}</p>
+                        <p className="text-gray-400">
+                          Region: {serverLocationData.region}
+                        </p>
                       ) : (
                         <p className="text-gray-400">Region:</p>
                       )}
@@ -422,7 +444,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                         <p className="text-gray-400">City:</p>
                       )}
 
-                      <p className="text-gray-400">Latitude: {data.rules.location.latitude}</p>
+                      <p className="text-gray-400">
+                        Latitude: {data.rules.location.latitude}
+                      </p>
                       <p className="text-gray-400">
                         Longitude: {data.rules.location.longitude}
                       </p>
@@ -431,7 +455,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                     <div>
                       <h3 className="text-lg font-medium text-rustFour">Location:</h3>
                       {serverLocationData?.country && (
-                        <p className="text-gray-300">Country: {serverLocationData.country}</p>
+                        <p className="text-gray-300">
+                          Country: {serverLocationData.country}
+                        </p>
                       )}
                       {serverLocationData?.latitude &&
                         serverLocationData?.longitude &&
@@ -448,7 +474,9 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
                           </p>
                         )}
                       {serverLocationData?.region && (
-                        <p className="text-gray-400">Region: {serverLocationData.region}</p>
+                        <p className="text-gray-400">
+                          Region: {serverLocationData.region}
+                        </p>
                       )}
                       {serverLocationData?.city && (
                         <p className="text-gray-400">City: {serverLocationData.city}</p>
@@ -497,29 +525,3 @@ const ServerDetailsPage: React.FC<ServerDetailsPageTypes> = ({ initialDataSSG })
 };
 
 export default ServerDetailsPage;
-
-// {data.players_history ? (
-//   <ServerPlayersGraphs players_history={data.players_history} />
-// ) : (
-//   <section className="flex flex-wrap justify-center my-8">
-//     {Array.from({ length: 4 }).map((_, index) =>
-//       index < 2 ? (
-//         <article
-//           key={index}
-//           className={`flex flex-col text-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 sm:w-[525px] h-[350px] w-[325px]`}
-//         >
-//           <h3 className="text-xl font-bold text-gray-200 my-2">Loading...</h3>
-//           <div className="bg-zinc-600 animate-pulse rounded-md w-[95%] h-[80%]"></div>
-//         </article>
-//       ) : (
-//         <article
-//           key={index}
-//           className={`flex flex-col text-center items-center m-2 border border-black bg-zinc-800 rounded-2xl p-2 xl:w-[1065px] sm:w-[525px] h-[350px] w-[325px]`}
-//         >
-//           <h3 className="text-xl font-bold text-gray-200 my-2">Loading...</h3>
-//           <div className="bg-zinc-600 animate-pulse rounded-md w-[95%] h-[80%]"></div>
-//         </article>
-//       )
-//     )}
-//   </section>
-// )}
