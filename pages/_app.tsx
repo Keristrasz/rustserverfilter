@@ -4,7 +4,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
 import ErrorBoundary from "../components/HOC/ErrorBoundary";
 import { Layout } from "../components/UI/Layout";
-import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ToastContainer } from "react-toastify";
 import "@/styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,7 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <ToastContainer autoClose={5000} position="top-center" />
         </ErrorBoundary>
       </Layout>
-      <Analytics />
+      <SpeedInsights />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
