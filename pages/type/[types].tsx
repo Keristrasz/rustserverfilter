@@ -76,12 +76,6 @@ interface TypesProps {
   initialFilterSSG: FilterType;
 }
 
-// const title = "Best 2x Rate Servers | Rust Server Filter - Double the Fun in Rust";
-// const desc =
-//   "Experience twice the excitement on the best 2x rate servers with our advanced server filter. Find servers with 2x rates for resources, loot, and progression, filtered by wipe cycles, player counts, and distance. Find your 2x server for Rust adventure!";
-// const h1 = "BEST 2x RATE SERVERS";
-// const addr = "https://rustserverfilter.com/types/types/best-2x-servers";
-
 function Types({
   title,
   desc,
