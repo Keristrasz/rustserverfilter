@@ -6,6 +6,7 @@ import ErrorBoundary from "../components/HOC/ErrorBoundary";
 import { Layout } from "../components/UI/Layout";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ToastContainer } from "react-toastify";
+import { Analytics } from "@vercel/analytics/react";
 import "@/styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -18,8 +19,9 @@ export default function App({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
           <ToastContainer autoClose={5000} position="top-center" />
         </ErrorBoundary>
+        <Analytics />
+        <SpeedInsights />
       </Layout>
-      <SpeedInsights />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
