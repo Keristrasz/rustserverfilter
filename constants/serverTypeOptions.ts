@@ -23,7 +23,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Best 2x Rate Servers | Rust Server Filter - Double the Fun in Rust",
     desc: "Experience twice the excitement on the best 2x rate servers with our advanced server filter. Find servers with 2x rates for resources, loot, and progression, filtered by wipe cycles, player counts, and distance. Find your 2x server for Rust adventure!",
     h1: "BEST 2x RATE SERVERS",
-    addr: "https://rustserverfilter.com/types/types/best-2x-servers",
+    addr: "https://rustserverfilter.com/type/best-2x-servers",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [{ rank: { $gte: 4000 } }, { players: { $gte: 20 } }, { rate: { $in: [2] } }],
@@ -35,7 +35,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Best Trio Servers | Rust Server Filter - Find Top Rust Trio Servers",
     desc: "Looking for the best Rust trio servers? Explore our advanced server filter with wipe, player count, distance options and more. Find your Rust trio servers now!",
     h1: "BEST TRIO SERVERS",
-    addr: "https://rustserverfilter.com/types/best-trio-servers",
+    addr: "https://rustserverfilter.com/type/best-trio-servers",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
@@ -51,7 +51,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Best Duo Servers | Rust Server Filter - Find Top Rust Duo Adventures",
     desc: "Embark on epic Rust duo adventures with our advanced server filter. Explore top duo servers filtered by player count, rates, and distance. Find your server for an unforgettable duo gaming experience!",
     h1: "BEST DUO SERVERS",
-    addr: "https://rustserverfilter.com/types/best-duo-servers",
+    addr: "https://rustserverfilter.com/type/best-duo-servers",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
@@ -67,7 +67,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Best Solo Servers | Rust Server Filter - Find Top Rust Solo Servers",
     desc: "Searching for Rust solo servers? Our server filter allows you to narrow down options by wipe frequency, player population, and proximity. Don't compromise – find the best solo servers today!",
     h1: "BEST SOLO SERVERS",
-    addr: "https://rustserverfilter.com/types/best-solo-servers",
+    addr: "https://rustserverfilter.com/type/best-solo-servers",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
@@ -83,7 +83,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Best Beginner Servers | Rust Server Filter - Start Your Rust Journey Here",
     desc: "Looking for the best Rust beginner servers for new players? Our server filter allows you to narrow down options by wipe frequency, player activity, and distance. Find your beginner server now!",
     h1: "BEST BEGINNER SERVERS",
-    addr: "https://rustserverfilter.com/types/types/best-beginner-servers",
+    addr: "https://rustserverfilter.com/type/type/best-beginner-servers",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
@@ -99,7 +99,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Best PVP Servers | Rust Server Filter - Discover Top Rust PVP Servers",
     desc: "Engage in intense PVP battles on the best Rust servers with our advanced server filter. Filter by wipe cycles, player counts, and distance to find the ultimate PVP arenas. Find your server now for adrenaline-pumping action!",
     h1: "BEST PVP SERVERS",
-    addr: "https://rustserverfilter.com/types/best-pvp-servers",
+    addr: "https://rustserverfilter.com/type/best-pvp-servers",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
@@ -115,7 +115,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Best PVE Servers | Rust Server Filter - Explore Top Rust PVE Realms",
     desc: "Immerse yourself in the best PVE gameplay on Rust servers with our advanced server filter. Filter by wipe cycles, player counts, and distance to find the ultimate PVE realms. Find your server now for a thrilling PVE adventure!",
     h1: "BEST PVE SERVERS",
-    addr: "https://rustserverfilter.com/types/best-pve-servers",
+    addr: "https://rustserverfilter.com/type/best-pve-servers",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
@@ -131,7 +131,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Best Rust Servers | Rust Server Filter - Find Top Rust Servers",
     desc: "Find the top Rust servers using our powerful server filter. Customize your gaming adventure by sorting servers based on wipe schedules, player populations, and geographical proximity. Join today and dominate the Rust world!",
     h1: "BEST RUST SERVERS",
-    addr: "https://rustserverfilter.com/types/best-rust-servers",
+    addr: "https://rustserverfilter.com/type/best-rust-servers",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [{ rank: { $gte: 4000 } }, { players: { $gte: 100 } }],
@@ -143,7 +143,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Best Recently Wiped Servers | Rust Server Filter - Start Fresh in Rust",
     desc: "Begin anew on the best recently wiped servers with our advanced server filter. Find fresh Rust servers, filtered by wipe cycles, player counts, and distance. Find freshly just wiped server for a thrilling Rust gameplay!",
     h1: "BEST RECENTLY WIPED SERVERS",
-    addr: "https://rustserverfilter.com/types/best-wiped-servers",
+    addr: "https://rustserverfilter.com/type/best-wiped-servers",
     initialSorterSSG: { born: -1 },
     initialFilterSSG: {
       $and: [
@@ -159,7 +159,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Upcoming Wipe Servers | Prepare for Fresh Starts - Wiping soon servers",
     desc: "Get ready for fresh start wiping soon servers with our advanced server filter. Find rust server about to wipe, rust servers that wipe today, rust servers wiping soon. Find server now and prepare for a wipe-reset thrill!",
     h1: "BEST SERVERS WIPING SOON",
-    addr: "https://rustserverfilter.com/types/servers-wipe-soon",
+    addr: "https://rustserverfilter.com/type/servers-wipe-soon",
     initialSorterSSG: { born_next: 1 },
     initialFilterSSG: {
       $and: [
@@ -172,10 +172,11 @@ export const typesConfigs: TypesConfig[] = [
     text: "Servers about to wipe",
   },
   {
-    title: "Facepunch Official Servers | Rust Server Filter - Explore Rust's Official Realms",
+    title:
+      "Facepunch Official Servers | Rust Server Filter - Explore Rust's Official Realms",
     desc: "Immerse yourself in the official Rust experience on the best Facepunch servers. Discover Facepunch official servers, filtered by wipe cycles, player counts, and distance. Join now for Rust gameplay sanctioned by the creators!",
     h1: "FACEPUNCH SERVERS",
-    addr: "https://rustserverfilter.com/types/facepunch",
+    addr: "https://rustserverfilter.com/type/facepunch",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
@@ -191,7 +192,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Reddit Servers | Rust Server Filter - Join the Reddit Rust Community",
     desc: "Explore the Reddit Rust community on official Reddit servers. Filter by wipe cycles, player counts, and distance to become part of the Reddit Rust adventure. Join now and collaborate with fellow Redditors in Rust!",
     h1: "REDDIT SERVERS",
-    addr: "https://rustserverfilter.com/types/reddit",
+    addr: "https://rustserverfilter.com/type/reddit",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
@@ -207,7 +208,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Rustafied Servers | Rust Server Filter for Rustafied Gaming",
     desc: "Experience Rustafied gaming on their official servers. Customize your gameplay with the server filter, sorting by wipe schedules, player populations, and geographical proximity. Join today for Rustafied-approved Rust gameplay!",
     h1: "RUSTAFIED SERVERS",
-    addr: "https://rustserverfilter.com/types/rustafied",
+    addr: "https://rustserverfilter.com/type/rustafied",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
@@ -223,7 +224,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Rusticated Servers | Filter for Rusticated Gaming Experience",
     desc: "Immerse yourself in the Rusticated gaming experience on their official servers. Filter servers by wipe frequency, player activity, and distance for a Rusticated adventure. Join now and enjoy the Rusticated community!",
     h1: "RUSTICATED SERVERS",
-    addr: "https://rustserverfilter.com/types/rusticated",
+    addr: "https://rustserverfilter.com/type/rusticated",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
@@ -239,7 +240,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Rustoria Servers | Rust Server Filter - Unleash Rustoria's Gameplay",
     desc: "Unleash Rustoria's gameplay on their official servers. Filter by wipe cycles, player counts, and distance to thrive in the Rustoria realm. Join now and conquer Rustoria's challenges!",
     h1: "RUSTORIA SERVERS",
-    addr: "https://rustserverfilter.com/types/rustoria",
+    addr: "https://rustserverfilter.com/type/rustoria",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
@@ -255,7 +256,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Rusty Moose Servers | RUST Server Filter for Rusty Moose Gaming",
     desc: "Delve into Rusty Moose gaming on their official servers. Customize your Rusty Moose adventure using the server filter, sorting by wipe schedules, player populations, and geographical proximity. Join today and test your skills on Rusty Moose servers!",
     h1: "RUSTY MOOSE SERVERS",
-    addr: "https://rustserverfilter.com/types/rusty-moose",
+    addr: "https://rustserverfilter.com/type/rusty-moose",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
@@ -271,7 +272,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Survivors.gg Servers | Filter for Survivors.gg Rust Community",
     desc: "Be a part of the Survivors.gg Rust community on their servers. Filter servers by wipe frequency, player activity, and distance to join the Survivors.gg journey. Find your server now for an engaging Rust experience!",
     h1: "SURVIVORS.GG SERVERS",
-    addr: "https://rustserverfilter.com/types/survivors",
+    addr: "https://rustserverfilter.com/type/survivors",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
@@ -287,7 +288,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Vital Rust Servers | Rust Server Filter - Experience Vital Rust",
     desc: "Experience Vital Rust on their official servers. Filter by wipe cycles, player counts, and distance to embark on a Vital Rust adventure. Join now and be a vital part of the Rust community!",
     h1: "VITAL RUST SERVERS",
-    addr: "https://rustserverfilter.com/types/vital-rust",
+    addr: "https://rustserverfilter.com/type/vital-rust",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
@@ -303,7 +304,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Warbandits Servers | Rust Server Filter for Warbandits Rust Experience",
     desc: "Immerse yourself in the Warbandits Rust experience on their official servers. Customize your gaming adventure using the server filter, sorting by wipe schedules, player populations, and geographical proximity. Find server and join the Warbandits Rust realm!",
     h1: "WARBANDITS SERVERS",
-    addr: "https://rustserverfilter.com/types/warbandits",
+    addr: "https://rustserverfilter.com/type/warbandits",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
@@ -319,7 +320,7 @@ export const typesConfigs: TypesConfig[] = [
     title: "Rust Zombie Servers | Server Filter for Apocalyptic Gaming",
     desc: "Dive into apocalyptic gaming on Rust zombie servers. Customize your gameplay with the server filter, sorting by zombie-themed servers, wipe schedules, player populations, and geographical proximity. Join today and survive the zombie-infested Rust world!",
     h1: "ZOMBIE SERVERS",
-    addr: "https://rustserverfilter.com/types/zombie-servers",
+    addr: "https://rustserverfilter.com/type/zombie-servers",
     initialSorterSSG: { players: -1 },
     initialFilterSSG: {
       $and: [
