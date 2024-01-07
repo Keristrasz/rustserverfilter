@@ -28,7 +28,7 @@ export const faqData = [
   {
     question: "What is the recommended way to search for rust servers?",
     answer:
-      "Use server score (at least 50+) to filter stable server. Always look at player history to see how many people were playing on the server, be careful these information can be faked and there is a lot of fake servers. You can filter some of them by exluding countries with a lot of fake servers (for some reason a lot of fake servers are in Russia).",
+      "Use server score (at least 50+) to filter stable server. Always look at player history to see how many people were playing on the server, be careful these information can be faked and there is a lot of fake servers (you can usually tell by player history) ",
   },
   {
     question: "How to join rust server with ip?",
