@@ -19,6 +19,12 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/HOC/ErrorBoundary.jsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "components/HOC/ErrorBoundary.jsx",
+    "pages/api/sitemap.js"
+  ],
   "exclude": ["node_modules"]
 }
