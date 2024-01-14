@@ -5,6 +5,7 @@ import { useState } from "react";
 // import { useRouter } from "next/router";
 // import Head from "next/head";
 import Script from "next/script";
+import Head from "next/head";
 import ErrorBoundary from "../components/HOC/ErrorBoundary";
 import { Layout } from "../components/UI/Layout";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -31,6 +32,14 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Layout>
+        {/* Adsense */}
+        <Head>
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7866529652972535"
+            crossOrigin="anonymous"
+          />
+        </Head>
         {/* Google Analytics */}
         <Script
           strategy="afterInteractive"
