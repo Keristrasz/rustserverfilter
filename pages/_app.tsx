@@ -47,12 +47,12 @@ export default function App({ Component, pageProps }: AppProps) {
   `}
         </Script>
         {/* Adsense */}
-        {/* <Script
+        <Script
           id="adsense"
           strategy="afterInteractive"
           crossOrigin="anonymous"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7866529652972535"
-        ></Script> */}
+        ></Script>
 
         <ErrorBoundary fallback="Error">
           <Component {...pageProps} />

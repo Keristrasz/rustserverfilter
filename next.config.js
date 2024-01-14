@@ -30,7 +30,7 @@ const nextConfig = {
               {
                 key: "Content-Security-Policy",
                 value:
-                  "default-src 'self'; style-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com; img-src 'self' https://flagsapi.com/; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://vercel.live https://fonts.googleapis.com https://fonts.gstatic.com 'wasm-unsafe-eval'; connect-src 'self' https://*.google-analytics.com https://realm.mongodb.com https://vitals.vercel-insights.com/ https://ipapi.co/; object-src 'none'",
+                  "default-src 'self'; style-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com; img-src 'self' https://flagsapi.com/; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://vercel.live https://fonts.googleapis.com https://fonts.gstatic.com 'wasm-unsafe-eval'; connect-src 'self' https://pagead2.googlesyndication.com https://*.google-analytics.com https://realm.mongodb.com https://vitals.vercel-insights.com/ https://ipapi.co/; object-src 'none'",
               },
               // Site cannot be loaded as iframe (like yb videos) in any other website
               {
