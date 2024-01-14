@@ -30,7 +30,8 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Layout>
-        <Head>
+        {/* LAST WORKING VERSION */}
+        {/* <Head>
           <script
             dangerouslySetInnerHTML={{
               __html: `
@@ -44,7 +45,21 @@ export default function App({ Component, pageProps }: AppProps) {
             `,
             }}
           />
-        </Head>
+        </Head> */}
+        <Script
+          id="ga-tracking"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '${gtag.GA_TRACKING_ID}', {
+        page_path: window.location.pathname,
+      });
+    `,
+          }}
+        />
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <Script
           strategy="afterInteractive"
