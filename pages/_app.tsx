@@ -33,13 +33,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <Layout>
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <Script
-          // strategy="afterInteractive"
+          strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
         />
-        <Script
-          id="ga-tracking"
-          // strategy="afterInteractive"
-        >
+        <Script id="ga-tracking" strategy="afterInteractive">
           {`
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -49,6 +46,12 @@ export default function App({ Component, pageProps }: AppProps) {
     });
   `}
         </Script>
+        <Script
+          id="adsense"
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7866529652972535"
+        ></Script>
 
         <ErrorBoundary fallback="Error">
           <Component {...pageProps} />
