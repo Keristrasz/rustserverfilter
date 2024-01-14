@@ -30,23 +30,13 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Layout>
-        {/* LAST WORKING VERSION */}
-        {/* <Head>
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-
-              gtag('config', '${gtag.GA_TRACKING_ID}', {
-                page_path: window.location.pathname,
-              });
-            `,
-            }}
-          />
-        </Head> */}
+        {/* Global Site Tag (gtag.js) - Google Analytics */}
         <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+        />
+        {/* LAST WORKING VERSION */}
+        {/* <Script
           id="ga-tracking"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
@@ -59,12 +49,18 @@ export default function App({ Component, pageProps }: AppProps) {
       });
     `,
           }}
-        />
-        {/* Global Site Tag (gtag.js) - Google Analytics */}
-        <Script
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
-        />
+        /> */}
+        <Script id="ga-tracking" strategy="afterInteractive">
+          {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${gtag.GA_TRACKING_ID}', {
+      page_path: window.location.pathname,
+    });
+  `}
+        </Script>
+
         <ErrorBoundary fallback="Error">
           <Component {...pageProps} />
           <ToastContainer autoClose={5000} position="top-center" />
