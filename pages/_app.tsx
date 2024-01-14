@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 // import { useRouter } from "next/router";
 // import Head from "next/head";
 import Script from "next/script";
@@ -31,7 +31,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Layout>
-        {/* Global Site Tag (gtag.js) - Google Analytics */}
+        {/* Google Analytics */}
         <Script
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
@@ -46,6 +46,7 @@ export default function App({ Component, pageProps }: AppProps) {
     });
   `}
         </Script>
+        {/* Adsense */}
         <Script
           id="adsense"
           strategy="afterInteractive"
