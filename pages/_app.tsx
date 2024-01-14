@@ -12,12 +12,10 @@ import { ToastContainer } from "react-toastify";
 import { Analytics } from "@vercel/analytics/react";
 import "@/styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
-import { headers } from "next/headers";
 // import * as gtag from "../scripts/gtag";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
-  const nonce = headers().get("x-nonce") || undefined;
 
   // const router = useRouter();
   // useEffect(() => {
@@ -38,7 +36,7 @@ export default function App({ Component, pageProps }: AppProps) {
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
         />
-        <Script nonce={nonce} id="ga-tracking" strategy="afterInteractive">
+        <Script id="ga-tracking" strategy="afterInteractive">
           {`
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
