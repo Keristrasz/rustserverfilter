@@ -29,8 +29,7 @@ function getFlagOfCountry(nameOfCountry: string | undefined) {
 
 const columnDataForMonitor = [
   {
-    tooltip:
-      "If server answers to update call, score is added, or score is subtracted if it does not",
+    tooltip: "Bigger score is better, check FAQ if you want to know more.",
     isClickable: true,
     styles: "w-10",
     name: "SCORE",
@@ -38,14 +37,14 @@ const columnDataForMonitor = [
   },
   { isClickable: false, styles: "w-72 lg:w-[30.5rem]", name: "NAME", value: "name" },
   {
-    tooltip: "Current players online. Be careful this is often faked by server admins!",
+    tooltip: "Current players online. Click to sort.",
     isClickable: true,
     styles: "w-12",
     name: "PLAYERS",
     value: "players",
   },
   {
-    tooltip: "Group size of server according to its title",
+    tooltip: "Maximum player group/clan size allowed on server.",
     isClickable: true,
     styles: "w-10",
     name: "GROUP SIZE",
@@ -62,14 +61,14 @@ const columnDataForMonitor = [
   //   onChange={handleSearchChange}
   // />
   {
-    tooltip: "Rate of server according to its title",
+    tooltip: "Server rate for gathering resources.",
     isClickable: true,
     styles: "w-10",
     name: "RATE",
     value: "rate",
   },
   {
-    tooltip: "Last wipe. Click for sorting in ascending or descending order",
+    tooltip: "Last wipe. Click to sort. If you want to know more check out the FAQ.",
     isClickable: true,
     styles: "w-20",
     name: "LAST WIPE",
@@ -77,7 +76,7 @@ const columnDataForMonitor = [
   },
   {
     tooltip:
-      "Estimate of next wipe if needed data are provided. You can find more in FAQ",
+      "Estimate of next wipe, if needed data are provided. You can find more in FAQ.",
     isClickable: true,
     styles: "w-20",
     name: "NEXT WIPE",
@@ -97,37 +96,6 @@ const columnDataForMonitor = [
   //   name: "DISTANCE",
   //   value: "rules.location.longitude",
   // },
-];
-const columnDataForMonitorForMobile = [
-  {
-    tooltip: "",
-    isClickable: false,
-    styles: "w-7/12 text-xs p-0",
-    name: "NAME",
-    value: "name",
-  },
-  {
-    tooltip: "Current players online",
-    isClickable: true,
-    styles: "w-2/12 text-xs",
-    name: "PLRS",
-    value: "players",
-  },
-  {
-    tooltip:
-      "Estimate of next wipe if needed data are provided. You can find more in FAQ",
-    isClickable: true,
-    styles: "w-3/12 text-xs",
-    name: "NEXT WIPE",
-    value: "born_next",
-  },
-  {
-    tooltip: "Last wipe. Click for sorting in ascending or descending order",
-    isClickable: true,
-    styles: "w-3/12 text-xs p-0",
-    name: "LAST WIPE",
-    value: "born",
-  },
 ];
 
 let columnData = columnDataForMonitor;
