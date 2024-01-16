@@ -78,10 +78,10 @@ const FAQ = () => {
       </Head>
       <h1 className="text-xs mt-4 text-gray-300">Frequently asked questions</h1>
       <div className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 m-4 mb-8 max-w-4xl border border-black">
-        <h3 className="text-gray-200 text-center font-semibold text-2xl mb-2">FAQ</h3>
+        <h2 className="text-gray-200 text-center font-semibold text-2xl mb-2">FAQ</h2>
         {faqData.map((faq, index) => (
           <div key={index} className="mb-6">
-            <h2 className="text-rustFour text-lg mb-2">{faq.question}</h2>
+            <h3 className="text-rustFour text-lg mb-2">{faq.question}</h3>
             <p className="text-gray-200">{faq.answer}</p>
           </div>
         ))}
@@ -90,9 +90,9 @@ const FAQ = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h3 className="text-rustFour text-center font-semibold text-xl mb-2 hover:text-rustOne">
+          <h4 className="text-rustFour text-center font-semibold text-xl mb-2 hover:text-rustOne">
             Do you have specific question? Join discord and ask!
-          </h3>
+          </h4>
         </Link>
       </div>
     </BodyWrapper>

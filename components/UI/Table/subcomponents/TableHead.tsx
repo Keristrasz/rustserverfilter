@@ -22,7 +22,7 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, colu
   const updateSorter = useSorter(setFilter, setSorter);
 
   return (
-    <thead className="bg-zinc-700 sticky z-10">
+    <thead className="bg-zinc-800 sticky z-10">
       <tr>
         {columnData.map((column) => {
           let sortColorClass = "";

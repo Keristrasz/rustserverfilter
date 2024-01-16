@@ -2,15 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 // import dynamic from "next/dynamic";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { calculateGraph } from "@/utils/calculateGraph";
 // const AreaChart = dynamic(() => import("recharts/es6/chart/AreaChart"), { ssr: false });
 // const Area = dynamic(() => import("recharts/es6/cartesian/Area"), { ssr: false });
@@ -90,12 +82,14 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isFetchi
     setIsMounted(true);
   });
 
-  const graphArrayInput = useMemo(() => {
-    if (players_history && isMounted) {
-      return calculateGraph(players_history);
-    }
-    return null;
-  }, [players_history]);
+  // const graphArrayInput = useMemo(() => {
+  //   if (players_history && isMounted) {
+  //     return calculateGraph(players_history);
+  //   }
+  //   return null;
+  // }, [players_history]);
+  
+  const graphArrayInput = players_history && isMounted ? calculateGraph(players_history) : null;
 
   let mountedGraph;
 
@@ -123,9 +117,8 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isFetchi
                     ticks={[
                       el.graphData[Math.floor(el.graphData.length / 7)]?.date!,
                       el.graphData[Math.floor(el.graphData.length / 2)]?.date!,
-                      el.graphData[
-                        Math.floor(el.graphData.length - el.graphData.length / 7)
-                      ]?.date!,
+                      el.graphData[Math.floor(el.graphData.length - el.graphData.length / 7)]
+                        ?.date!,
                     ]}
                     dataKey="date"
                     axisLine={{ stroke: "#ccc" }}

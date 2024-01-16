@@ -33,12 +33,11 @@ const useCustomSingleQuery = (ip: string) => {
 
   const queryOptions = {
     enabled: !!app && !!app.currentUser,
-    keepPreviousData: true,
+    keepPreviousData: false,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    retry: false,
-    staleTime: 1000 * 300,
-    cacheTime: 1000 * 300,
+    retry: true,
+    staleTime: 3000 * 1000,
   };
 
   const { data, isLoading, isFetching, error, status } = useQuery(

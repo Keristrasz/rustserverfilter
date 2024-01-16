@@ -18,12 +18,11 @@ const getLocation = async (): Promise<userLocationType> => {
 
 const useQueryLocation = (): userLocationType | undefined => {
   const { data } = useQuery<userLocationType>(["location"], getLocation, {
-    keepPreviousData: true,
+    keepPreviousData: false,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    retry: false,
-    staleTime: 99999 * 1000,
-    cacheTime: 99999 * 1000,
+    retry: true,
+    cacheTime: 10000 * 1000,
   });
 
   return data;

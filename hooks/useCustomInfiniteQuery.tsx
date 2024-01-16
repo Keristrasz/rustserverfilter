@@ -16,8 +16,7 @@ const useCustomInfiniteQuery = (filter: FilterType, sorter: SorterType, app: any
     keepPreviousData: true,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    retry: false,
-    staleTime: 1000 * 300,
+    retry: true,
     cacheTime: 1000 * 300,
     getNextPageParam: (lastPage: QueryResponseType, allPages: QueryResponseType[]) => {
       const totalCount = lastPage.totalCount[0]?.totalCount || 0;

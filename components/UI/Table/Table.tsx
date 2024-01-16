@@ -75,8 +75,7 @@ const columnDataForMonitor = [
     value: "born",
   },
   {
-    tooltip:
-      "Estimate of next wipe, if needed data are provided. You can find more in FAQ.",
+    tooltip: "Estimate of next wipe, if needed data are provided. You can find more in FAQ.",
     isClickable: true,
     styles: "w-20",
     name: "NEXT WIPE",
@@ -280,15 +279,14 @@ const Table: React.FC<TableProps> = ({
             isSSG={isSSG}
             columnData={columnData}
           />
-          <tbody className="bg-zinc-700 divide-y-8 divide-zinc-950">
+          <tbody className="bg-zinc-800 divide-y-8 divide-zinc-950">
             {data?.pages[0]?.totalCount[0]?.totalCount ? (
               <tr>
                 <td
                   className="text-sm relative text-center bg-green-600 text-gray-200 [text-shadow:_1px_1px_1px_black]"
                   colSpan={10}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
-                  SERVERS
+                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
                 </td>
               </tr>
             ) : (
@@ -310,13 +308,10 @@ const Table: React.FC<TableProps> = ({
                   return (
                     <tr
                       key={mappedServer.addr}
-                      className="hover:bg-zinc-800 clickable-row cursor-pointer"
+                      className="hover:bg-zinc-900 clickable-row cursor-pointer"
                       onClick={() => {
                         router.push({
-                          pathname: `/server-detail/${mappedServer.addr.replace(
-                            /:/g,
-                            "."
-                          )}`,
+                          pathname: `/server-detail/${mappedServer.addr.replace(/:/g, ".")}`,
                         });
                       }}
                       role="link"
@@ -341,9 +336,7 @@ const Table: React.FC<TableProps> = ({
                             </Link>
                             <div className="flex flex-row justify-between text-zinc-400">
                               <div className="flex items-center">
-                                {getFlagOfCountry(
-                                  mappedServer.rules?.location?.country
-                                ) ? (
+                                {getFlagOfCountry(mappedServer.rules?.location?.country) ? (
                                   <img
                                     src={getFlagOfCountry(
                                       mappedServer.rules?.location?.country
@@ -362,14 +355,13 @@ const Table: React.FC<TableProps> = ({
                               </p>
                             </div>
                           </td>
-                        ) : column.value === "rate" ||
-                          column.value === "max_group_size" ? (
+                        ) : column.value === "rate" || column.value === "max_group_size" ? (
                           <td
                             key={column.value}
                             className={`p-2 pl-0.5 pr-4 whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-200 ${column.styles}`}
                           >
                             {getColumnValue(column, mappedServer) && (
-                              <div className="h-8 flex justify-center items-center rounded-lg border border-black text-center bg-green-600 text-gray-200 [text-shadow:_0px_0px_8px_black]">
+                              <div className="h-8 flex justify-center items-center rounded-lg border border-black text-center bg-green-600 text-gray-200 font-medium [text-shadow:_1px_1px_1px_black]">
                                 {getColumnValue(column, mappedServer)}
                               </div>
                             )}

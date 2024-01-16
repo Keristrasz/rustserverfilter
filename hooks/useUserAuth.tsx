@@ -5,9 +5,9 @@ const useUserAuth = () => {
   const { data: _app } = useQuery({
     queryKey: ["userAuth"],
     queryFn: getAppAuth,
-    keepPreviousData: true,
-    cacheTime: 1000 * 99999,
-    staleTime: 1000 * 99999,
+    keepPreviousData: false,
+    retry: true,
+    cacheTime: 30 * 1000,
   });
 
   return _app;

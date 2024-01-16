@@ -59,15 +59,27 @@ const FAQ = () => {
         <meta name="apple-mobile-web-app-title" content="Rust Server Filter" />
         <meta name="application-name" content="Rust Server Filter" />
       </Head>
-      <h1 className="text-xs mt-4 text-gray-300">About</h1>
+      <h1 className="text-xs mt-4 text-gray-300">About Rust Server Filter</h1>
       <div className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 m-4 mb-8 max-w-4xl border border-black">
-        <h3 className="text-gray-200 text-center font-semibold text-2xl mb-3">
+        <h2 className="text-gray-200 text-center font-semibold text-2xl mb-3">
           About Rust Server Filter
-        </h3>
+        </h2>
         <div className="mb-6">
-          <h2 className="text-rustFour text-lg mb-2">
+          <h3 className="text-rustFour text-lg mb-2">Find servers by below specifications:</h3>
+          <div className="flex flex-wrap mb-4">
+            {typesConfigs.map((link, index) => (
+              <Link
+                key={index}
+                href={`/type/${link.href}`}
+                className="cursor-pointer rounded-md p-2 pt-1 pb-0.5 mr-2 mb-1 text-center border bg-zinc-700 border-black hover:bg-rustOne"
+              >
+                {link.text}
+              </Link>
+            ))}
+          </div>
+          <h3 className="text-rustFour text-lg mb-2">
             Best Rust Servers with advanced filtering!
-          </h2>
+          </h3>
           <p className="text-gray-200">
             Are you looking for the best Rust servers to play on? With the Rust Servers Filter,
             you can easily search for servers based on various criteria such as wipe, player
@@ -79,9 +91,9 @@ const FAQ = () => {
           </p>
         </div>
         <div className="mb-6">
-          <h2 className="text-rustFour text-lg mb-2">
+          <h3 className="text-rustFour text-lg mb-2">
             What is the difference between this and other rust server listings?
-          </h2>
+          </h3>
           <p>
             I made this website because other server finders did not meet what we needed. We
             wanted to find upcoming wipes of servers or also filter by solo duo trio and with
@@ -91,22 +103,10 @@ const FAQ = () => {
             server list there is!
           </p>
         </div>
-        <h2 className="text-rustFour text-lg mb-2">Find servers by below specifications:</h2>
-        <div className="flex flex-wrap">
-          {typesConfigs.map((link, index) => (
-            <Link
-              key={index}
-              href={`/type/${link.href}`}
-              className="cursor-pointer rounded-md p-2 pt-1 pb-0.5 mr-2 mb-1 text-center border bg-zinc-700 border-black hover:bg-rustOne"
-            >
-              {link.text}
-            </Link>
-          ))}
-        </div>
         <Link href="https://discord.gg/D6hF8hhBFj" target="_blank" rel="noopener noreferrer">
-          <h3 className="text-rustFour text-center font-semibold text-xl my-2 hover:text-rustOne">
+          <h4 className="text-rustFour text-center font-semibold text-xl my-2 hover:text-rustOne">
             Do you have specific question? Join discord and ask!
-          </h3>
+          </h4>
         </Link>
       </div>
     </BodyWrapper>
