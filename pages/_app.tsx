@@ -5,7 +5,6 @@ import { useState } from "react";
 // import { useRouter } from "next/router";
 // import Head from "next/head";
 import Script from "next/script";
-import Head from "next/head";
 import ErrorBoundary from "../components/HOC/ErrorBoundary";
 import { Layout } from "../components/UI/Layout";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -13,7 +12,6 @@ import { ToastContainer } from "react-toastify";
 import { Analytics } from "@vercel/analytics/react";
 import "@/styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
-// import * as gtag from "../scripts/gtag";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
@@ -33,13 +31,20 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Layout>
         {/* Adsense */}
-        <Head>
+        {/* <Head>
           <script
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7866529652972535"
             crossOrigin="anonymous"
           />
-        </Head>
+        </Head> */}
+        {/* Adsense */}
+        {/* <Script
+          id="adsense"
+          strategy="lazyOnload"
+          crossOrigin="anonymous"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7866529652972535"
+        ></Script> */}
         {/* Google Analytics */}
         <Script
           strategy="afterInteractive"
@@ -55,18 +60,6 @@ export default function App({ Component, pageProps }: AppProps) {
     });
   `}
         </Script>
-        {/* Adsense */}
-        {/* <Script
-          id="adsense"
-          strategy="lazyOnload"
-          crossOrigin="anonymous"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7866529652972535"
-        ></Script> */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7866529652972535"
-          crossOrigin="anonymous"
-        />
 
         <ErrorBoundary fallback="Error">
           <Component {...pageProps} />
