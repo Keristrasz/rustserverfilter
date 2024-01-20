@@ -26,13 +26,13 @@ export default async function handler(req, res) {
   </url>
   <url>
     <loc>https://rustserverfilter.com/about</loc>
-    <lastmod>2023-12-16T00:00:00.000Z</lastmod>
+    <lastmod>2024-01-19T00:00:00.000Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.50</priority>
   </url>
   <url>
     <loc>https://rustserverfilter.com/FAQ</loc>
-    <lastmod>2023-12-16T00:00:00.000Z</lastmod>
+    <lastmod>2024-01-19T00:00:00.000Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.50</priority>
   </url>
@@ -65,7 +65,7 @@ export default async function handler(req, res) {
 
   const initialData = await fetchAllServers(initialFilter, initialSorter, 0, 500, app);
 
-  //2023-12-17T09:00:00.000Z
+  //2024-01-19T09:00:00.000Z
 
   const dynamicUrls = initialData.result
     .map((server) => {
