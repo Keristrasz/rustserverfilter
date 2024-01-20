@@ -2,9 +2,15 @@ import React, { useState, useEffect } from "react";
 import { InfiniteData } from "@tanstack/react-query";
 import { GetStaticProps } from "next";
 import Head from "next/head";
+import Link from "next/link";
 
 import getAppAuth from "@/services/getAppAuth";
-import { userLocationType, SorterType, FilterType, QueryResponseType } from "../types/TGlobal";
+import {
+  userLocationType,
+  SorterType,
+  FilterType,
+  QueryResponseType,
+} from "../types/TGlobal";
 import { pageSize } from "@/constants/pageSize";
 
 import useUserAuth from "../hooks/useUserAuth";
@@ -13,6 +19,7 @@ import useQueryLocation from "@/hooks/useQueryLocation";
 import BodyWrapper from "@/components/HOC/BodyWrapper";
 import { Table } from "@/components/UI/Table";
 import { Form } from "@/components/UI/Form";
+import { typesConfigs } from "@/constants/serverTypeOptions";
 
 //TODO Distance sort by loaded initialDataSSG
 
@@ -136,11 +143,31 @@ function Home({ initialDataSSG }: HomeProps) {
         <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png" />
         <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png" />
-        <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png" />
-        <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png" />
-        <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png" />
-        <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png" />
+        <link
+          rel="apple-touch-icon"
+          sizes="114x114"
+          href="/icons/apple-icon-114x114.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="120x120"
+          href="/icons/apple-icon-120x120.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="144x144"
+          href="/icons/apple-icon-144x144.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="152x152"
+          href="/icons/apple-icon-152x152.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/icons/apple-icon-180x180.png"
+        />
         <link rel="apple-touch-icon" sizes="192x192" href="/icons/apple-icon.png" />
         <link rel="manifest" href="/icons/manifest.json" />
         <meta name="msapplication-config" content="/icons/browserconfig.xml" />
@@ -151,6 +178,17 @@ function Home({ initialDataSSG }: HomeProps) {
         <meta name="apple-mobile-web-app-title" content="Rust Server Filter" />
         <meta name="application-name" content="Rust Server Filter" />
       </Head>
+      <section className="text-center bg-zinc-800 rounded-lg p-8 py-4 mx-4 mt-10 max-w-6xl border border-black w-full">
+        <p className="text-lg mb-2 font-rust sm:text-2xl tracking-[0.065rem]">
+          Welcome to Rust Server Filter!
+        </p>
+        <p>
+          Are you looking for a Rust server to play? Here you can find your server with
+          advanced filters and with great user experience. You can filter by server rates,
+          group size, wipe date, distance, map size, wipre rotations, countries, distance
+          and more. Find your server here and check its server details for more!
+        </p>
+      </section>
       <Form
         userLocation={userLocation}
         setFilter={setFilter}
@@ -169,6 +207,22 @@ function Home({ initialDataSSG }: HomeProps) {
         initialDataSSG={initialDataSSG}
         isSSG={isSSG}
       />
+      <section className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 mx-4 mb-8 max-w-6xl border border-black w-full">
+        <h2 className="w-full font-semibold text-xl text-center sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:ml-0 ">
+          Did you not find server you are looking for? Try out our predefined types:
+        </h2>
+        <div className="flex flex-wrap mb-4">
+          {typesConfigs.map((link, index) => (
+            <Link
+              key={index}
+              href={`/type/${link.href}`}
+              className="cursor-pointer rounded-md p-2 pt-1 pb-0.5 mr-2 mb-1 text-center border bg-zinc-700 border-black hover:bg-rustOne"
+            >
+              {link.text}
+            </Link>
+          ))}
+        </div>
+      </section>
     </BodyWrapper>
   );
 }

@@ -3,6 +3,7 @@ import { InfiniteData } from "@tanstack/react-query";
 import Head from "next/head";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import getAppAuth from "@/services/getAppAuth";
 import { fetchAllServers } from "@/services/fetchAllServers";
@@ -86,14 +87,14 @@ function Types({
   initialSorterSSG,
   initialFilterSSG,
 }: TypesProps) {
+  const app = useUserAuth();
   const router = useRouter();
   const { types } = router.query;
-
   const configType = typesConfigs.find((config) => config.href === types);
   const initialFilterOnFrontEnd = configType?.initialFilterSSG;
-  const initialFilter = initialFilterOnFrontEnd ? initialFilterOnFrontEnd : initialFilterSSG;
-
-  const app = useUserAuth();
+  const initialFilter = initialFilterOnFrontEnd
+    ? initialFilterOnFrontEnd
+    : initialFilterSSG;
   const [sorter, setSorter] = useState<SorterType>(initialSorterSSG);
   const [filter, setFilter] = useState<FilterType>(initialFilter);
   const userLocation: userLocationType | null = useQueryLocation() || null;
@@ -101,7 +102,9 @@ function Types({
   useEffect(() => {
     setIsSSG(true);
   }, []);
-
+  useEffect(() => {
+    setFilter(initialFilter);
+  }, [types]);
   return (
     <BodyWrapper>
       <Head>
@@ -132,11 +135,31 @@ function Types({
         <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png" />
         <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png" />
-        <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png" />
-        <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png" />
-        <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png" />
-        <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png" />
+        <link
+          rel="apple-touch-icon"
+          sizes="114x114"
+          href="/icons/apple-icon-114x114.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="120x120"
+          href="/icons/apple-icon-120x120.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="144x144"
+          href="/icons/apple-icon-144x144.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="152x152"
+          href="/icons/apple-icon-152x152.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/icons/apple-icon-180x180.png"
+        />
         <link rel="apple-touch-icon" sizes="192x192" href="/icons/apple-icon.png" />
         <link rel="manifest" href="/icons/manifest.json" />
         <meta name="msapplication-config" content="/icons/browserconfig.xml" />
@@ -168,6 +191,31 @@ function Types({
         initialDataSSG={initialDataSSG}
         isSSG={isSSG}
       />
+      <section className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 mx-4 mb-8 max-w-6xl border border-black w-full">
+        <h2 className="w-full font-semibold text-xl text-center sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:ml-0 ">
+          Did you not find server you are looking for? Try our home page with advanced
+          filters, or just predefined types.
+        </h2>
+        <div className="flex justify-center items-center mb-2 border-b-2 border-b-zinc-500 pb-2">
+          <Link
+            href={"/"}
+            className="text-lg cursor-pointer rounded-md p-2 pt-1 pb-0.5 mr-2 text-center border bg-zinc-700 border-black hover:bg-rustOne"
+          >
+            Home page with advanced filters
+          </Link>
+        </div>
+        <div className="flex flex-wrap mb-4">
+          {typesConfigs.map((link, index) => (
+            <Link
+              key={index}
+              href={`/type/${link.href}`}
+              className="cursor-pointer rounded-md p-2 pt-1 pb-0.5 mr-2 mb-1 text-center border bg-zinc-700 border-black hover:bg-rustOne"
+            >
+              {link.text}
+            </Link>
+          ))}
+        </div>
+      </section>
     </BodyWrapper>
   );
 }

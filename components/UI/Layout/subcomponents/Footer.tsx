@@ -2,7 +2,7 @@ import Link from "next/link";
 
 function Footer() {
   return (
-    <footer className="w-full flex justify-end bg-zinc-700 py-[0.41em] px-4 mt-auto left-0 bottom-0">
+    <footer className="w-full flex justify-end bg-zinc-800 py-[0.41em] px-4 mt-auto left-0 bottom-0">
       <Link
         href="https://discord.gg/D6hF8hhBFj"
         target="_blank"
