@@ -1,16 +1,8 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
-// import dynamic from "next/dynamic";
+import React, { useEffect, useState } from "react";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { calculateGraph } from "@/utils/calculateGraph";
-// const AreaChart = dynamic(() => import("recharts/es6/chart/AreaChart"), { ssr: false });
-// const Area = dynamic(() => import("recharts/es6/cartesian/Area"), { ssr: false });
-// const XAxis = dynamic(() => import("recharts/es6/cartesian/XAxis"), { ssr: false });
-
-// const Area = dynamic(() => import("recharts/es6/cartesian/Area").then((mod) => mod.Area), {
-//   ssr: false,
-// });
 
 type PlayersHistory = [number, number][];
 
@@ -80,16 +72,10 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isFetchi
 
   useEffect(() => {
     setIsMounted(true);
-  });
+  }, []);
 
-  // const graphArrayInput = useMemo(() => {
-  //   if (players_history && isMounted) {
-  //     return calculateGraph(players_history);
-  //   }
-  //   return null;
-  // }, [players_history]);
-  
-  const graphArrayInput = players_history && isMounted ? calculateGraph(players_history) : null;
+  const graphArrayInput =
+    players_history && isMounted ? calculateGraph(players_history) : null;
 
   let mountedGraph;
 

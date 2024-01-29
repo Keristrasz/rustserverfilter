@@ -60,7 +60,6 @@ export default function App({ Component, pageProps }: AppProps) {
     });
   `}
         </Script>
-
         <ErrorBoundary fallback="Error">
           <Component {...pageProps} />
           <ToastContainer autoClose={5000} position="top-center" />

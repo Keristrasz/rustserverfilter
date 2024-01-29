@@ -13,7 +13,6 @@ import {
 import { userLocationType, SorterType, FilterType } from "../../../types/TGlobal";
 
 import FormSelectCountries from "./subcomponents/FormSelectCountries";
-
 import useFilter from "@/hooks/useFilter";
 
 let didLocationToastRun = false;
@@ -472,92 +471,6 @@ const Form: React.FC<FormProps> = ({
             </div>
           </fieldset>
         </div>
-        {/* <div className="flex flex-row flex-wrap justify-between">
-          <fieldset className="mt-3">
-            <legend className="block text-gray-200 font-semibold text-lg mb-1">
-              Wipe Rotation
-            </legend>
-            <div className="flex flex-wrap">
-              {wipeRatesOptions.map((option) => (
-                <div
-                  key={option.value}
-                  className={`cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-24 text-center border border-black  hover:text-white ${
-                    isSSG && wipeRotation.includes(option.value)
-                      ? "bg-rustOne text-white"
-                      : "bg-zinc-700 text-gray-200"
-                  }`}
-                  onClick={() => handleWipeRotationChange(option.value)}
-                >
-                  {option.label}
-                </div>
-              ))}
-            </div>
-          </fieldset>
-          <fieldset className="mt-3">
-            <legend className="block text-gray-200 font-semibold text-lg mb-1">
-              Vanilla
-            </legend>
-            <div className="flex flex-wrap">
-              {vanillaOptions.map((option) => (
-                <div
-                  key={option.label}
-                  className={`cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-28 text-center border border-black  hover:text-white ${
-                    isSSG &&
-                    ((isVanilla === true && option.value === true) ||
-                      (isVanilla === false && option.value === false))
-                      ? "bg-rustOne text-white"
-                      : "bg-zinc-700 text-gray-200"
-                  }`}
-                  onClick={() => handleIsVanillaChange(option.value)}
-                >
-                  {option.label}
-                </div>
-              ))}
-            </div>
-          </fieldset>
-          <fieldset className="mt-3">
-            <legend className="block text-gray-200 font-semibold text-lg mb-1">
-              Modded
-            </legend>
-            <div className="flex flex-wrap">
-              {moddedOptions.map((option) => (
-                <div
-                  key={option.label}
-                  className={`cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-[7.5rem] text-center border border-black  hover:text-white ${
-                    isSSG &&
-                    ((isModded === true && option.value === true) ||
-                      (isModded === false && option.value === false))
-                      ? "bg-rustOne text-white"
-                      : "bg-zinc-700 text-gray-200"
-                  }`}
-                  onClick={() => handleIsModdedChange(option.value)}
-                >
-                  {option.label}
-                </div>
-              ))}
-            </div>
-          </fieldset>
-          <fieldset className="mt-3">
-            <legend className="block text-gray-200 font-semibold text-lg mb-1">
-              Hardcore / Softcore
-            </legend>
-            <div className="flex flex-wrap">
-              {hardcoreSoftcoreOptions.map((option) => (
-                <div
-                  key={option.value}
-                  className={`cursor-pointer rounded-md px-3 pt-1 pb-0.5 mr-2 mb-1 w-24 text-center border border-black  hover:text-white ${
-                    isSSG && hardcoreSoftcore.includes(option.value)
-                      ? "bg-rustOne text-white"
-                      : "bg-zinc-700 text-gray-200"
-                  }`}
-                  onClick={() => handleHardcoreSoftcoreChange(option.value)}
-                >
-                  {option.label}
-                </div>
-              ))}
-            </div>
-          </fieldset>
-        </div> */}
         <div className="flex flex-row flex-wrap justify-between">
           <fieldset className="mt-3">
             <legend className="block text-gray-200 font-semibold text-lg mb-1">

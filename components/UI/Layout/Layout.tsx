@@ -16,7 +16,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       typeof window !== "undefined" && window.innerWidth > MOBILE_WIDTH_THRESHOLD
     );
   }, []);
-  // isMobile = typeof window !== "undefined" && window.innerWidth < MOBILE_WIDTH_THRESHOLD;
 
   return (
     <div className="flex flex-col min-h-screen">

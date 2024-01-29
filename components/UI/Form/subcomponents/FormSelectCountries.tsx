@@ -36,17 +36,6 @@ function FormSelectCountries({
     };
   }, []);
 
-  // useEffect(() => {
-  //   const storedCountries = localStorage.getItem("includedCountries");
-  //   if (storedCountries) {
-  //     setCountries(JSON.parse(storedCountries));
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem("includedCountries", JSON.stringify(countries));
-  // }, [countries]);
-
   const handleToggle = (): void => {
     setIsOpen(!isOpen);
     if (!isOpen && inputRef.current) {

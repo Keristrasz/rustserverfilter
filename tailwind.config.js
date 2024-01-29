@@ -12,20 +12,13 @@ module.exports = {
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
         rustOne: "#d44024",
-        rustTwo: "#c75640",
-        rustThree: "#bb6958",
         rustFour: "#e07965",
-        rustFive: "#d42444",
       },
     },
   },
-  plugins: [
-    // Other plugins...
-    require("@tailwindcss/forms"),
-  ],
+  plugins: [require("@tailwindcss/forms")],
 };
