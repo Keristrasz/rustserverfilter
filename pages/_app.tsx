@@ -3,7 +3,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
 // import { useRouter } from "next/router";
-// import Head from "next/head";
+import Head from "next/head";
 import Script from "next/script";
 import ErrorBoundary from "../components/HOC/ErrorBoundary";
 import { Layout } from "../components/UI/Layout";
@@ -31,13 +31,13 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Layout>
         {/* Adsense */}
-        {/* <Head>
+        <Head>
           <script
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7866529652972535"
             crossOrigin="anonymous"
           />
-        </Head> */}
+        </Head>
         {/* Adsense */}
         {/* <Script
           id="adsense"
