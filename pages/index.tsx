@@ -153,17 +153,17 @@ function Home({ initialDataSSG }: HomeProps) {
         <meta name="apple-mobile-web-app-title" content="Rust Server Filter" />
         <meta name="application-name" content="Rust Server Filter" />
       </Head>
-      {/* <section className="text-center bg-zinc-800 rounded-lg p-8 py-4 mx-4 mt-10 max-w-6xl border border-black w-full">
+      <section className="text-center bg-zinc-800 rounded-lg p-8 py-4 mx-4 mt-10 max-w-6xl border border-black w-full">
         <p className="text-lg mb-2 font-rust sm:text-2xl tracking-[0.065rem]">
           Welcome to Rust Server Filter!
         </p>
         <p>
           Are you looking for a Rust server to play? Here you can find your server with
           advanced filters and with great user experience. You can filter by server rates,
-          group size, wipe date, distance, map size, wipre rotations, countries, distance
-          and more. Find your server here and check its server details for more!
+          group size, wipe date, distance, map size, wipre rotations, countries, distance and
+          more. Find your server here and check its server details for more!
         </p>
-      </section> */}
+      </section>
       <Form
         userLocation={userLocation}
         setFilter={setFilter}
