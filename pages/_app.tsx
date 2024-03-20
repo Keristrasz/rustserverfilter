@@ -31,13 +31,13 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Layout>
         {/* Adsense */}
-        <Head>
+        {/* <Head>
           <script
             async={true}
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7866529652972535"
             crossOrigin="anonymous"
           />
-        </Head>
+        </Head> */}
         {/* Adsense */}
         {/* <Script
           id="adsense"
