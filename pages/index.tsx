@@ -5,7 +5,12 @@ import Head from "next/head";
 import Link from "next/link";
 
 import getAppAuth from "@/services/getAppAuth";
-import { userLocationType, SorterType, FilterType, QueryResponseType } from "../types/TGlobal";
+import {
+  userLocationType,
+  SorterType,
+  FilterType,
+  QueryResponseType,
+} from "../types/TGlobal";
 import { pageSize } from "@/constants/pageSize";
 
 import useUserAuth from "../hooks/useUserAuth";
@@ -19,6 +24,7 @@ import { typesConfigs } from "@/constants/serverTypeOptions";
 //TODO Distance sort by loaded initialDataSSG
 
 import { fetchAllServers } from "@/services/fetchAllServers";
+import { toast } from "react-toastify";
 
 export const getStaticProps: GetStaticProps = async () => {
   // Fetch initialSorter and initialFilter from an API or any other initialDataSSG source
@@ -94,6 +100,14 @@ function Home({ initialDataSSG }: HomeProps) {
 
   useEffect(() => {
     setIsSSG(true);
+    {
+      toast.warning(
+        "Rust Server Filter is shutting down. Data will no longer be maintained and updated.",
+        {
+          autoClose: 20000,
+        }
+      );
+    }
   }, []);
 
   return (
@@ -116,40 +130,114 @@ function Home({ initialDataSSG }: HomeProps) {
           content="The most advanced FILTERS for Rust servers! Discover FUTURE WIPES! Filter SOLO DUO TRIO QUAD servers. Find best rust servers by last wipe, distance, mod and more!"
         />
 
-        <meta property="og:image" content="https://rustserverfilter.com/logo-og.jpg" />
+        <meta
+          property="og:image"
+          content="https://rustserverfilter.com/logo-og.jpg"
+        />
         <meta property="og:url" content="https://rustserverfilter.com/" />
         <meta property="og:type" content="website" />
 
         <link rel="canonical" href="https://rustserverfilter.com" />
         <meta property="og:type" content="website" />
 
-        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="48x48" href="/icons/favicon-48x48.png" />
-        <link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96x96.png" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/icons/favicon-16x16.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/icons/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="48x48"
+          href="/icons/favicon-48x48.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="96x96"
+          href="/icons/favicon-96x96.png"
+        />
         <link
           rel="icon"
           type="image/png"
           sizes="192x192"
           href="/icons/android-icon-192x192.png"
         ></link>
-        <link rel="shortcut icon" type="image/x-icon" href="/icons/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png" />
-        <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png" />
-        <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png" />
-        <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png" />
-        <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png" />
-        <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png" />
-        <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png" />
-        <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png" />
-        <link rel="apple-touch-icon" sizes="192x192" href="/icons/apple-icon.png" />
+        <link
+          rel="shortcut icon"
+          type="image/x-icon"
+          href="/icons/favicon.ico"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="57x57"
+          href="/icons/apple-icon-57x57.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="60x60"
+          href="/icons/apple-icon-60x60.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="72x72"
+          href="/icons/apple-icon-72x72.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="76x76"
+          href="/icons/apple-icon-76x76.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="114x114"
+          href="/icons/apple-icon-114x114.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="120x120"
+          href="/icons/apple-icon-120x120.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="144x144"
+          href="/icons/apple-icon-144x144.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="152x152"
+          href="/icons/apple-icon-152x152.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/icons/apple-icon-180x180.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="192x192"
+          href="/icons/apple-icon.png"
+        />
         <link rel="manifest" href="/icons/manifest.json" />
         <meta name="msapplication-config" content="/icons/browserconfig.xml" />
         <meta name="msapplication-TileColor" content="#d44026" />
-        <meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png" />
+        <meta
+          name="msapplication-TileImage"
+          content="/icons/ms-icon-144x144.png"
+        />
         <meta name="theme-color" content="#d44026" />
-        <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#d44026" />
+        <link
+          rel="mask-icon"
+          href="/icons/safari-pinned-tab.svg"
+          color="#d44026"
+        />
         <meta name="apple-mobile-web-app-title" content="Rust Server Filter" />
         <meta name="application-name" content="Rust Server Filter" />
       </Head>
@@ -158,10 +246,11 @@ function Home({ initialDataSSG }: HomeProps) {
           Welcome to Rust Server Filter!
         </p>
         <p>
-          Are you looking for a Rust server to play? Here you can find your server with
-          advanced filters and with great user experience. You can filter by server rates,
-          group size, wipe date, distance, map size, wipre rotations, countries, distance and
-          more. Find your server here and check its server details for more!
+          Are you looking for a Rust server to play? Here you can find your
+          server with advanced filters and with great user experience. You can
+          filter by server rates, group size, wipe date, distance, map size,
+          wipre rotations, countries, distance and more. Find your server here
+          and check its server details for more!
         </p>
       </section>
       <Form
@@ -184,7 +273,8 @@ function Home({ initialDataSSG }: HomeProps) {
       />
       <section className="bg-zinc-800 rounded-lg p-10 pt-6 pb-4 mx-4 mb-8 max-w-6xl border border-black w-full">
         <h2 className="w-full font-semibold text-xl text-center sm:w-auto flex-grow sm:flex-grow-0 sm:mr-8 sm:mb-4 sm:ml-0 ">
-          Did you not find server you are looking for? Try out our predefined types:
+          Did you not find server you are looking for? Try out our predefined
+          types:
         </h2>
         <div className="flex flex-wrap mb-4">
           {typesConfigs.map((link, index) => (

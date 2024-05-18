@@ -19,17 +19,25 @@ export const calculateGraph = (players_history: PlayersHistory) => {
   }));
 
   const currentDate = new Date();
-  const currentTimestamp = Math.floor(currentDate.getTime());
+  // changed to stale data since it cannot be maintained
+  const april19_2024 = new Date(2024, 3, 19);
+  const may13_2024 = new Date(2024, 4, 14);
 
-  const last1DayDate = currentTimestamp - 60 * 60 * 24 * 1 * 1000;
-  const last7DaysDate = currentTimestamp - 60 * 60 * 24 * 7 * 1000;
-  const last30DaysDate = currentTimestamp - 86400 * 30 * 1000;
-  // const last90DaysDate = currentTimestamp - 86400 * 90 * 1000;
+  const currentTimestamp = Math.floor(currentDate.getTime());
+  const april19_2024_timestamp = Math.floor(april19_2024.getTime());
+  const may13_2024_timestamp = Math.floor(may13_2024.getTime());
+
+  const last1DayDate = april19_2024_timestamp - 60 * 60 * 24 * 1 * 1000;
+  const last7DaysDate = april19_2024_timestamp - 60 * 60 * 24 * 7 * 1000;
+  const last30DaysDate = may13_2024_timestamp - 86400 * 30 * 1000;
 
   const filteredDataLast1Day = formattedData
     .filter((entry: { timestamp: number; playerCount: number }) => {
       const entryTimestamp = entry.timestamp;
-      return entryTimestamp >= last1DayDate && entryTimestamp <= currentTimestamp;
+      return (
+        entryTimestamp >= last1DayDate &&
+        entryTimestamp <= april19_2024_timestamp
+      );
     })
     .map((entry: { timestamp: number; playerCount: number }) => {
       return {
@@ -38,34 +46,13 @@ export const calculateGraph = (players_history: PlayersHistory) => {
       };
     });
 
-  // let templateDataLast1Day = [];
-  // let templateDataLast7Days = [];
-  // let templateDataLast30Days = [];
-  // let templateDataLast0Days = [];
-
-  // // Calculate the nearest past hour at XX:30
-  // const currentHourWith30Minutes = new Date();
-  // currentHourWith30Minutes.setMinutes(30, 0, 0);
-
-  // for (let i = 0; i < 24; i++) {
-  //   const date = getHowMuchAgo(currentHourWith30Minutes.getTime() / 1000);
-  //   const matchingEntry = filteredDataLast1Day.find((el) => el.date === date);
-  //   const matchingDate = matchingEntry?.playerCount;
-  //   templateDataLast1Day.unshift({
-  //     date,
-  //     playerCount: matchingDate ? matchingDate : 0,
-  //   });
-
-  //   // Subtract 1 hour to move to the previous XX:30 timestamp
-  //   currentHourWith30Minutes.setTime(currentHourWith30Minutes.getTime() - 60 * 60 * 1000);
-  // }
-
-  // console.log(templateDataLast1Day);
-
   const filteredDataLast7Days = formattedData
     .filter((entry: { timestamp: number; playerCount: number }) => {
       const entryTimestamp = entry.timestamp;
-      return entryTimestamp >= last7DaysDate && entryTimestamp <= currentTimestamp;
+      return (
+        entryTimestamp >= last7DaysDate &&
+        entryTimestamp <= april19_2024_timestamp
+      );
     })
     .map((entry: { timestamp: number; playerCount: number }) => {
       return {
@@ -73,26 +60,13 @@ export const calculateGraph = (players_history: PlayersHistory) => {
         playerCount: entry.playerCount,
       };
     });
-
-  // for (let i = 0; i < 24 * 6; i++) {
-  //   const date = getCustomShortDate(currentHourWith30Minutes.getTime() / 1000);
-  //   const matchingEntry = filteredDataLast7Days.find((el) => el.date === date);
-  //   const matchingDate = matchingEntry?.playerCount;
-  //   templateDataLast7Days.push({
-  //     date,
-  //     playerCount: matchingDate ? matchingDate : 0,
-  //   });
-
-  //   // Subtract 1 hour to move to the previous XX:30 timestamp
-  //   currentHourWith30Minutes.setTime(currentHourWith30Minutes.getTime() - 60 * 60 * 1000);
-  // }
-
-  // console.log(templateDataLast7Days);
 
   const filteredDataLast30Days = formattedData
     .filter((entry: { timestamp: number; playerCount: number }) => {
       const entryTimestamp = entry.timestamp;
-      return entryTimestamp >= last30DaysDate && entryTimestamp <= currentTimestamp;
+      return (
+        entryTimestamp >= last30DaysDate && entryTimestamp <= currentTimestamp
+      );
     })
     .map((entry: { timestamp: number; playerCount: number }) => {
       return {
@@ -100,19 +74,6 @@ export const calculateGraph = (players_history: PlayersHistory) => {
         playerCount: entry.playerCount,
       };
     });
-
-  // for (let i = 0; i < 24; i++) {
-  //   const date = getCustomShortDate(currentHourWith30Minutes.getTime() / 1000);
-  //   const matchingEntry = filteredDataLast30Days.find((el) => el.date === date);
-  //   const matchingDate = matchingEntry?.playerCount;
-  //   templateDataLast30Days.unshift({
-  //     date,
-  //     playerCount: matchingDate ? matchingDate : 0,
-  //   });
-
-  //   // Subtract 1 hour to move to the previous XX:30 timestamp
-  //   currentHourWith30Minutes.setTime(currentHourWith30Minutes.getTime() - 60 * 60 * 1000);
-  // }
 
   // Filtered by backend, there are no more than 3 months of data
   const filteredDataLast3Months = formattedData.map(
@@ -133,7 +94,10 @@ export const calculateGraph = (players_history: PlayersHistory) => {
     const playerCount = entry.playerCount;
     // convert timestamp to the DAY only, so there can be only 24 values
     // Check if objectPushedIntoArray should be initialized or updated
-    if (objectPushedIntoArray === null || objectPushedIntoArray.date !== entryTimestamp) {
+    if (
+      objectPushedIntoArray === null ||
+      objectPushedIntoArray.date !== entryTimestamp
+    ) {
       if (objectPushedIntoArray !== null) {
         // Calculate and add the average
         objectPushedIntoArray.average = Math.ceil(
@@ -155,7 +119,10 @@ export const calculateGraph = (players_history: PlayersHistory) => {
       // Update the existing objectPushedIntoArray
       objectPushedIntoArray.sum += playerCount;
       objectPushedIntoArray.count++;
-      if (playerCount < objectPushedIntoArray.min || objectPushedIntoArray.min === 0) {
+      if (
+        playerCount < objectPushedIntoArray.min ||
+        objectPushedIntoArray.min === 0
+      ) {
         objectPushedIntoArray.min = playerCount;
       }
       if (playerCount > objectPushedIntoArray.max) {
@@ -171,19 +138,6 @@ export const calculateGraph = (players_history: PlayersHistory) => {
       dailyAveragesLast3Months.push(objectPushedIntoArray);
     }
   });
-
-  // for (let i = 0; i < 24 * 30; i++) {
-  //   const date = getCustomShortDate(currentHourWith30Minutes.getTime() / 1000);
-  //   const matchingEntry = filteredDataLast30Days.find((el) => el.date === date);
-  //   const matchingDate = matchingEntry?.playerCount;
-  //   templateDataLast30Days.unshift({
-  //     date,
-  //     playerCount: matchingDate ? matchingDate : 0,
-  //   });
-
-  //   // Subtract 1 hour to move to the previous XX:30 timestamp
-  //   currentHourWith30Minutes.setTime(currentHourWith30Minutes.getTime() - 60 * 60 * 1000);
-  // }
 
   const graphArrayInput = [
     {

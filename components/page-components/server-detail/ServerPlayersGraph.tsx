@@ -1,7 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import { calculateGraph } from "@/utils/calculateGraph";
 
 type PlayersHistory = [number, number][];
@@ -67,7 +75,10 @@ const customAreaStacked = (
   </>
 );
 
-const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isFetching }) => {
+const ServerPlayersGraph: React.FC<TServerGraphs> = ({
+  players_history,
+  isFetching,
+}) => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -87,9 +98,15 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isFetchi
             key={el.graphHeading}
             className={`sm:m-2 my-2 mx-0 text-center border border-black bg-zinc-800 rounded-2xl p-2 ${el.graphWidth} sm:w-[525px] w-[325px] h-[350px]`}
           >
-            <h3 className="text-xl font-bold text-gray-200 my-2">{el.graphHeading}</h3>
+            <h3 className="text-xl font-bold text-gray-200 my-2">
+              {el.graphHeading}
+            </h3>
             <div className="w-full h-72">
-              <ResponsiveContainer width={"100%"} height={"100%"} minWidth={"0"}>
+              <ResponsiveContainer
+                width={"100%"}
+                height={"100%"}
+                minWidth={"0"}
+              >
                 <AreaChart
                   data={el.graphData}
                   margin={{
@@ -103,8 +120,11 @@ const ServerPlayersGraph: React.FC<TServerGraphs> = ({ players_history, isFetchi
                     ticks={[
                       el.graphData[Math.floor(el.graphData.length / 7)]?.date!,
                       el.graphData[Math.floor(el.graphData.length / 2)]?.date!,
-                      el.graphData[Math.floor(el.graphData.length - el.graphData.length / 7)]
-                        ?.date!,
+                      el.graphData[
+                        Math.floor(
+                          el.graphData.length - el.graphData.length / 7
+                        )
+                      ]?.date!,
                     ]}
                     dataKey="date"
                     axisLine={{ stroke: "#ccc" }}

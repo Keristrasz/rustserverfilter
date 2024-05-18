@@ -9,7 +9,11 @@ import {
   ServerPrimaryDataType,
   QueryResponseType,
 } from "@/types/TGlobal";
-import { getCustomShortDate, getHowMuchAgo, getInHowMuch } from "@/utils/timeFunctions";
+import {
+  getCustomShortDate,
+  getHowMuchAgo,
+  getInHowMuch,
+} from "@/utils/timeFunctions";
 import { calculateDistance } from "@/utils/calculateDistance";
 import { countriesOptions } from "@/constants/formInputOptions";
 
@@ -35,7 +39,12 @@ const columnDataForMonitor = [
     name: "SCORE",
     value: "rank",
   },
-  { isClickable: false, styles: "w-72 lg:w-[30.5rem]", name: "NAME", value: "name" },
+  {
+    isClickable: false,
+    styles: "w-72 lg:w-[30.5rem]",
+    name: "NAME",
+    value: "name",
+  },
   {
     tooltip: "Current players online. Click to sort.",
     isClickable: true,
@@ -68,7 +77,8 @@ const columnDataForMonitor = [
     value: "rate",
   },
   {
-    tooltip: "Last wipe. Click to sort. If you want to know more check out the FAQ.",
+    tooltip:
+      "Last wipe. Click to sort. If you want to know more check out the FAQ.",
     isClickable: true,
     styles: "w-20",
     name: "LAST WIPE",
@@ -131,8 +141,15 @@ const Table: React.FC<TableProps> = ({
   isSSG,
 }) => {
   // ("resulttablerender");
-  const { queryData, isFetching, isLoading, error, status, fetchNextPage, hasNextPage } =
-    useCustomInfiniteQuery(filter, sorter, app);
+  const {
+    queryData,
+    isFetching,
+    isLoading,
+    error,
+    status,
+    fetchNextPage,
+    hasNextPage,
+  } = useCustomInfiniteQuery(filter, sorter, app);
 
   const ref = useInfiniteScroll(hasNextPage, fetchNextPage);
 
@@ -178,7 +195,9 @@ const Table: React.FC<TableProps> = ({
       if (value === "born") {
         return (
           <>
-            <p suppressHydrationWarning={true}>{getHowMuchAgo(mappedServer[value])}</p>
+            <p suppressHydrationWarning={true}>
+              {getHowMuchAgo(mappedServer[value])}
+            </p>
             {getCustomShortDate(mappedServer[value], "hour-date") ? (
               <p suppressHydrationWarning={true} className="text-zinc-400">
                 Wiped {getCustomShortDate(mappedServer[value], "hour-date")}
@@ -189,7 +208,9 @@ const Table: React.FC<TableProps> = ({
       } else {
         return (
           <>
-            <p suppressHydrationWarning={true}>{getInHowMuch(mappedServer[value])}</p>
+            <p suppressHydrationWarning={true}>
+              {getInHowMuch(mappedServer[value])}
+            </p>
             {getCustomShortDate(mappedServer[value], "hour-date") ? (
               <p suppressHydrationWarning={true} className="text-zinc-400">
                 Wipe {getCustomShortDate(mappedServer[value], "hour-date")}
@@ -255,12 +276,18 @@ const Table: React.FC<TableProps> = ({
     isLoadingStatus = (
       <div className="flex flex-wrap mt-4 items-center">
         <Spinner />
-        <p className="text-2xl font-bold mx-1 text-gray-200"> Loading results...</p>
+        <p className="text-2xl font-bold mx-1 text-gray-200">
+          {" "}
+          Loading results...
+        </p>
       </div>
     );
   } else {
     isLoadingStatus = (
-      <p className="text-2xl font-bold mx-2 mt-4 text-gray-200"> Results loaded</p>
+      <p className="text-2xl font-bold mx-2 mt-4 text-gray-200">
+        {" "}
+        Results loaded
+      </p>
     );
   }
 
@@ -268,7 +295,7 @@ const Table: React.FC<TableProps> = ({
     isResultsRendered = <div>An error has occurred: {error.message}</div>;
   } else if (status === "success" || initialDataSSG) {
     isResultsRendered = (
-      <main className="max-w-6xl w-full overflow-x-auto overflow-y-clip rounded-lg my-4 mb-8 border border-black">
+      <main className="max-w-6xl w-full overflow-x-auto xl:overflow-x-hidden overflow-y-clip rounded-lg my-4 mb-8 border border-black">
         <table className="w-full">
           {/* <div className="overflow-x-clip m-4 mb-8 max-w-6xl">
           my-4 max-w-6xl border border-black
@@ -287,8 +314,8 @@ const Table: React.FC<TableProps> = ({
                   className="text-sm relative text-center bg-green-600 text-gray-200 [text-shadow:_1px_1px_1px_black]"
                   colSpan={10}
                 >
-                  Success! FOUND <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b>{" "}
-                  SERVERS
+                  Success! FOUND{" "}
+                  <b>{data?.pages[0]?.totalCount[0]?.totalCount}</b> SERVERS
                 </td>
               </tr>
             ) : (
@@ -374,7 +401,8 @@ const Table: React.FC<TableProps> = ({
                               </div>
                             )}
                           </td>
-                        ) : column.value === "born" || column.value === "born_next" ? (
+                        ) : column.value === "born" ||
+                          column.value === "born_next" ? (
                           <td
                             suppressHydrationWarning={true}
                             key={column.value}
@@ -424,7 +452,10 @@ const Table: React.FC<TableProps> = ({
       {isFetching && !isLoading ? (
         <div className="flex flex-wrap items-center mb-8 mt-0">
           <Spinner />
-          <h2 className="text-2xl font-bold mx-1 text-gray-200"> Loading more data...</h2>
+          <h2 className="text-2xl font-bold mx-1 text-gray-200">
+            {" "}
+            Loading more data...
+          </h2>
         </div>
       ) : null}
     </>

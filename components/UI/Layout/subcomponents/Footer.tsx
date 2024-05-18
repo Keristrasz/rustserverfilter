@@ -4,7 +4,7 @@ function Footer() {
   return (
     <footer className="w-full flex justify-end bg-zinc-800 py-[0.41em] px-4 mt-auto left-0 bottom-0">
       <Link
-        href="https://discord.gg/D6hF8hhBFj"
+        href="https://discord.gg/D6hF8hhBFjXs"
         target="_blank"
         rel="noopener noreferrer"
       >

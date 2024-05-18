@@ -18,7 +18,13 @@ interface THeadProps {
   columnData: ColumnData[];
 }
 
-const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, columnData }) => {
+const THead: React.FC<THeadProps> = ({
+  setFilter,
+  setSorter,
+  sorter,
+  isSSG,
+  columnData,
+}) => {
   const updateSorter = useSorter(setFilter, setSorter);
 
   return (
@@ -55,7 +61,7 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, colu
                 )}
               </span>
               {column.tooltip && (
-                <div className="text-gray-800 w-32 target-element invisible group-hover:visible transition-opacity absolute bg-white border border-gray-300 rounded p-2 z-20 mt-1 ml-2">
+                <div className="text-gray-800 w-24 target-element invisible group-hover:visible transition-opacity absolute bg-white border border-gray-300 rounded p-2 z-50 mt-1 ml-2">
                   {column.tooltip}
                 </div>
               )}
@@ -66,11 +72,6 @@ const THead: React.FC<THeadProps> = ({ setFilter, setSorter, sorter, isSSG, colu
               className={`group text-xs px-4 py-2 text-left font-semibold text-gray-200 tracking-tight ${column.styles}`}
             >
               {column.name}
-              {/* {column.tooltip && (
-                <div className="text-gray-800 w-32 target-element invisible group-hover:visible transition-opacity absolute bg-white border border-gray-300 rounded p-2 mb-32 z-20">
-                  {column.tooltip}
-                </div>
-              )} */}
             </th>
           );
         })}
